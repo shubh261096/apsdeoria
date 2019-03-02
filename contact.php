@@ -1,3 +1,51 @@
+<?php
+if(!empty($_POST["contact_us"])) {
+	/* Form Required Field Validation */
+	foreach($_POST as $key=>$value) {
+    if($_POST['email']){
+      continue;
+    }
+		if(empty($_POST['full_name'])) {
+      $error_message = "Full name is required";
+      break;
+    }
+    if(empty($_POST['phone_no'])) {
+      $error_message = "Phone  number is required";
+      break;
+    }
+    if(empty($_POST['subject'])) {
+      $error_message = "Subject is required";
+      break;
+    }
+    if(empty($_POST['message'])) {
+      $error_message = "Message is required";
+      break;
+		}
+  }
+
+  /* Email Validation */
+  if(!empty($_POST['email'])){
+    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+      $error_message = "Invalid Email Address";
+    }
+  }
+
+	if(!isset($error_message)) {
+		require_once("dbcontroller.php");
+		$db_handle = new DBController();
+		$query = "INSERT INTO contact_us (full_name, phone_no, email, subject, message) VALUES
+		('" . $_POST["full_name"] . "', '" . $_POST["phone_no"] . "', '" . $_POST["email"] . "', '" . $_POST["subject"] . "', '" . $_POST["message"] . "')";
+		$result = $db_handle->insertQuery($query);
+		if(!empty($result)) {
+			$error_message = "";
+			$success_message = "Thank-you for contacting us!";	
+			unset($_POST);
+		} else {
+			$error_message = "Oops! There is a problem. Please Try Again!";	
+		}
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -97,7 +145,7 @@
                   <li><a href="news.html">News</a></li>
                 </ul>
               </li> -->
-              <li><a href="contact.html">Contact</a></li>
+              <li><a href="contact.php">Contact</a></li>
             </ul>
           </div>
         </div>
@@ -137,29 +185,43 @@
                 <div class="col-md-7 col-md-push-1  probootstrap-animate" id="probootstrap-content">
                   <h2>Get In Touch</h2>
                   <p>Contact us using the form below.</p>
-                  <form action="#" method="post" class="probootstrap-form">
+                  <form name="frmRegistration" action="" method="post" class="probootstrap-form">
+                  <?php if(!empty($success_message)) { ?>	
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                      </button>
+                      <strong><?= $success_message ?></strong>
+                    </div>
+                  <?php } ?>
+                  <?php if(!empty($error_message)) { ?>	
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                      </button>
+                      <strong><?= $error_message ?></strong>
+                    </div>
+                  <?php } ?>
                     <div class="form-group">
-                      <label for="name">Full Name</label>
-                      <input type="text" class="form-control" id="name" name="name" required>
+                      <label for="full_name">Full Name</label>
+                      <input type="text" class="form-control" id="full_name" name="full_name" value="<?php if(isset($_POST['full_name'])) echo $_POST['full_name']; ?>">
                     </div>
                       <div class="form-group">
                       <label for="Phone">Phone No.</label>
-                      <input type="Tel" class="form-control" id="Phone" name="Phone" required>
+                      <input type="Tel" class="form-control" id="phone_no" name="phone_no" value="<?php if(isset($_POST['phone_no'])) echo $_POST['phone_no']; ?>">
                     </div>
                     <div class="form-group">
-                      <label for="email">Email</label>
-                      <input type="email" class="form-control" id="email" name="email">
+                      <label for="emailAddress">Email</label>
+                      <input type="emailAddress" class="form-control" id="emailAddress" name="email" value="<?php if(isset($_POST['email'])) echo $_POST['email']; ?>">
                     </div>
                     <div class="form-group">
                       <label for="subject">Subject</label>
-                      <input type="text" class="form-control" id="subject" name="subject">
+                      <input type="text" class="form-control" id="subject" name="subject" value="<?php if(isset($_POST['subject'])) echo $_POST['subject']; ?>">
                     </div>
                     <div class="form-group">
                       <label for="message">Message</label>
-                      <textarea cols="30" rows="10" class="form-control" id="message" name="message"></textarea>
+                      <textarea cols="30" rows="10" class="form-control" id="message" name="message" value="<?php if(isset($_POST['message'])) echo $_POST['message']; ?>"></textarea>
                     </div>
                     <div class="form-group">
-                      <input type="submit" class="btn btn-primary btn-lg" id="submit" name="submit" value="Send Message">
+                      <input type="submit" class="btn btn-primary btn-lg" id="submit" name="contact_us" value="Send Message">
                     </div>
                   </form>
                 </div>
@@ -202,7 +264,7 @@
                   <li><a href="index.html">Home</a></li>
                   <li><a href="about.html">About Us</a></li>
                   <li><a href="events.html">Events</a></li>
-                  <li><a href="contact.html">Contact</a></li>
+                  <li><a href="contact.php">Contact</a></li>
                 </ul>
               </div>
             </div>
