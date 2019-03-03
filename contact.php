@@ -2,9 +2,6 @@
 if(!empty($_POST["contact_us"])) {
 	/* Form Required Field Validation */
 	foreach($_POST as $key=>$value) {
-    if($_POST['email']){
-      continue;
-    }
 		if(empty($_POST['full_name'])) {
       $error_message = "Full name is required";
       break;
@@ -20,13 +17,13 @@ if(!empty($_POST["contact_us"])) {
     if(empty($_POST['message'])) {
       $error_message = "Message is required";
       break;
-		}
-  }
-
-  /* Email Validation */
-  if(!empty($_POST['email'])){
-    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-      $error_message = "Invalid Email Address";
+    }
+    /* Email Validation */
+    if(!empty($_POST['email'])){
+      if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+        $error_message = "Invalid Email Address";
+        break;
+      }
     }
   }
 
