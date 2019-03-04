@@ -55,7 +55,6 @@ if(!empty($_POST["contact_us"])) {
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="css/styles-merged.css">
     <link rel="stylesheet" href="css/style.min.css">
-    <link rel="stylesheet" href="css/custom.css">
 
     <!--[if lt IE 9]>
       <script src="js/vendor/html5shiv.min.js"></script>
@@ -262,6 +261,7 @@ if(!empty($_POST["contact_us"])) {
                   <li><a href="about.html">About Us</a></li>
                   <li><a href="events.html">Events</a></li>
                   <li><a href="contact.php">Contact</a></li>
+                  <li><a href="privacy-policy.html">Privacy Policy</a></li>
                 </ul>
               </div>
             </div>
