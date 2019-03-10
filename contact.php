@@ -142,6 +142,7 @@ if(!empty($_POST["contact_us"])) {
                 </ul>
               </li> -->
               <li><a href="contact.php">Contact</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
             </ul>
           </div>
         </div>
@@ -261,6 +262,7 @@ if(!empty($_POST["contact_us"])) {
                   <li><a href="about.html">About Us</a></li>
                   <li><a href="events.html">Events</a></li>
                   <li><a href="contact.php">Contact</a></li>
+                  <li><a href="gallery.html">Gallery</a></li>
                   <li><a href="privacy-policy.html">Privacy Policy</a></li>
                 </ul>
               </div>
