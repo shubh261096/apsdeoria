@@ -24,15 +24,9 @@ class Login extends REST_Controller {
           'email'=>$email, 
           'type'=>$data['row']->type
           );
-          if(strcasecmp($data['row']->type, TEACHER) == 0) {  
-            $response['error'] = false;
-            $response['message'] = "Login Successfull";
-            $response['user'] = $user;
-          }elseif (strcasecmp($data['row']->type, PARENTS) == 0) {
-            $response['error'] = false;
-            $response['message'] = "Login Successfull";
-            $response['user'] = $user;
-          }
+          $response['error'] = false;
+          $response['message'] = "Login Successfull";
+          $response['user'] = $user;
           $httpStatus = REST_Controller::HTTP_OK;
       }else{
         $response['error'] = true;
