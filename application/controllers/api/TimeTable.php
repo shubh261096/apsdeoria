@@ -17,7 +17,7 @@ class TimeTable extends REST_Controller {
             $class_id = $this->input->post('class_id');
             $today = $this->input->post('today');
             $response = $this->get_timeTableByDay($class_id, $today);
-            if($response['error']){
+            if(!$response['error']){
                 $httpStatus = REST_Controller::HTTP_OK;
             } else {
                 $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
@@ -25,7 +25,7 @@ class TimeTable extends REST_Controller {
         } elseif(isTheseParametersAvailable(array('class_id'))) {
             $class_id = $this->input->post('class_id');
             $response = $this->get_timeTableByWeek($class_id);
-            if($response['error']){
+            if(!$response['error']){
                 $httpStatus = REST_Controller::HTTP_OK;
             } else {
                 $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
