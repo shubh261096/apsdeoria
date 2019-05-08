@@ -20,6 +20,7 @@ class Profile extends REST_Controller {
       if(!$data==false) {
         if (strcasecmp($type, PARENTS) == 0) {
           $data->parent = $this->ProfileModel->get_parentInfo($data->id); // Adding new key value in profile object for parent
+          $data->class_id = getClassDetails($data->class_id); // Changed class_id key with its details in the same data array.
         }
         $response['error'] = false;
         $response['message'] = "Profile Fetched Successfully";
@@ -27,7 +28,7 @@ class Profile extends REST_Controller {
         $httpStatus = REST_Controller::HTTP_OK;
       } else {
         $response['error'] = true;
-        $response['message'] = "Status is not active. Please contact administration";
+        $response['message'] = "No Data Found or Status is not active. Please contact administration";
         $httpStatus = REST_Controller::HTTP_UNAUTHORIZED;
       }
     }else{
