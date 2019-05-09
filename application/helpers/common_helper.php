@@ -2,6 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
     function isTheseParametersAvailable($params){
+        if(count($_POST) > sizeof($params)){ // checking here the count of post data and parameter required.
+            return false;
+        }
         foreach($params as $param){
             if(!isset($_POST[$param])){
             return false; 
