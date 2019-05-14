@@ -32,12 +32,12 @@ class Login extends REST_Controller {
         }else{
           $response['error'] = true;
           $response['message'] = "Status is not active. Please contact administration";
-          $httpStatus = REST_Controller::HTTP_UNAUTHORIZED;
+          $httpStatus = REST_Controller::HTTP_OK;
         }  
       } else {
         $response['error'] = true;
         $response['message'] = "Login unscuccesfull. Please try again!";
-        $httpStatus = REST_Controller::HTTP_UNAUTHORIZED;
+        $httpStatus = REST_Controller::HTTP_OK;
       }
       
     }else{
