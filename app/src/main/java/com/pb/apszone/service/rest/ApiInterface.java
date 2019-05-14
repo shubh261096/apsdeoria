@@ -1,6 +1,7 @@
 package com.pb.apszone.service.rest;
 
 import com.pb.apszone.service.model.LoginResponseModel;
+import com.pb.apszone.service.model.ProfileResponseModel;
 
 import java.util.Map;
 
@@ -13,4 +14,8 @@ public interface ApiInterface {
     @POST("Login")
     @FormUrlEncoded
     Call<LoginResponseModel> checkLogin(@FieldMap Map<String, String> params);
+
+    @POST("Profile")
+    @FormUrlEncoded
+    Call<ProfileResponseModel> getProfile(@FieldMap Map<String, String> params);
 }
