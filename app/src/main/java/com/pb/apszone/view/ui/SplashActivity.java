@@ -8,8 +8,13 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.pb.apszone.R;
+import com.pb.apszone.utils.KeyStorePref;
+
+import static com.pb.apszone.utils.AppConstants.KEY_USER_LOGIN_STATUS;
 
 public class SplashActivity extends AppCompatActivity {
+
+    KeyStorePref keyStorePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +24,15 @@ public class SplashActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
+        keyStorePref = KeyStorePref.getInstance(this);
+
         int SPLASH_TIME_OUT = 3000;
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            if (keyStorePref.getBoolean(KEY_USER_LOGIN_STATUS)) {
+                startActivity(new Intent(this, DashboardActivity.class));
+            } else {
+                startActivity(new Intent(this, LoginActivity.class));
+            }
         }, SPLASH_TIME_OUT);
     }
 }
