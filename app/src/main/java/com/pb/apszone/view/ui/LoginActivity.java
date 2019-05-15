@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.pb.apszone.R;
 import com.pb.apszone.utils.SnackbarUtils;
 import com.pb.apszone.viewModel.LoginViewModel;
-import com.pb.apszone.viewModel.SnackbarMessage;
+import com.pb.apszone.utils.SnackbarMessage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

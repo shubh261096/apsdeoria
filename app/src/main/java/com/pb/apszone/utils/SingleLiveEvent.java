@@ -1,4 +1,4 @@
-package com.pb.apszone.viewModel;
+package com.pb.apszone.utils;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.MutableLiveData;
