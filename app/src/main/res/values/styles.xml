@@ -12,4 +12,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Normal_Margin_Style" parent="MyMaterialTheme">
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginBottom">@dimen/activity_horizontal_margin</item>
+    </style>
+
+    <style name="Font_family_light" parent="MyMaterialTheme">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Font_family_regular" parent="MyMaterialTheme">
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
 </resources>

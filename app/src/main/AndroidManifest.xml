@@ -14,7 +14,10 @@
         android:theme="@style/MyMaterialTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".view.ui.ProfileActivity" />
-        <activity android:name=".view.ui.LoginActivity">
+        <activity
+            android:name=".view.ui.LoginActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity android:name=".view.ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
