@@ -7,13 +7,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/aps_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/aps_logo"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".view.ui.DashboardActivity"></activity>
+        <activity android:name=".view.ui.DashboardActivity" />
         <activity android:name=".view.ui.ProfileActivity" />
         <activity
             android:name=".view.ui.LoginActivity"

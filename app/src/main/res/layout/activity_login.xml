@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/myCoordinatorLayout"
     android:layout_width="match_parent"
@@ -10,114 +11,138 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#123" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/background_fade" />
-
-            <ScrollView
+            <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                tools:ignore="MissingConstraints">
 
-                <LinearLayout
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/colorPrimary"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:title="@string/toolbar_login" />
+
+            </android.support.design.widget.AppBarLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#123" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_fade" />
+
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                    android:orientation="vertical">
+                    android:layout_centerInParent="true">
 
-                    <EditText
-                        android:id="@+id/edt_email"
-                        style="@style/Font_family_light"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_right_16"
-                        android:layout_marginTop="@dimen/margin_top_8"
-                        android:layout_marginRight="@dimen/margin_right_16"
-                        android:layout_marginBottom="@dimen/margin_top_8"
-                        android:background="@drawable/edit_style"
-                        android:drawableStart="@drawable/ic_person"
-                        android:drawablePadding="@dimen/padding_16"
-                        android:hint="@string/hint_email"
-                        android:inputType="textEmailAddress"
-                        android:maxLength="30"
-                        android:maxLines="1"
-                        android:padding="@dimen/padding_16"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/white"
-                        android:textSize="@dimen/text_20"
-                        tools:ignore="Autofill" />
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/edt_email"
+                            style="@style/Font_family_light"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_right_16"
+                            android:layout_marginTop="@dimen/margin_top_8"
+                            android:layout_marginRight="@dimen/margin_right_16"
+                            android:layout_marginBottom="@dimen/margin_top_8"
+                            android:background="@drawable/edit_style"
+                            android:drawableStart="@drawable/ic_person"
+                            android:drawablePadding="@dimen/padding_16"
+                            android:hint="@string/hint_email"
+                            android:inputType="textEmailAddress"
+                            android:maxLength="30"
+                            android:maxLines="1"
+                            android:padding="@dimen/padding_16"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textSize="@dimen/text_20"
+                            tools:ignore="Autofill" />
 
 
-                    <EditText
-                        android:id="@+id/edt_password"
-                        style="@style/Font_family_light"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_right_16"
-                        android:layout_marginTop="@dimen/margin_top_8"
-                        android:layout_marginRight="@dimen/margin_right_16"
-                        android:layout_marginBottom="@dimen/margin_top_8"
-                        android:background="@drawable/edit_style"
-                        android:drawableStart="@drawable/ic_password"
-                        android:drawablePadding="@dimen/padding_16"
-                        android:hint="@string/hint_password"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:padding="@dimen/padding_16"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/white"
-                        android:textSize="@dimen/text_20"
-                        tools:ignore="Autofill" />
+                        <EditText
+                            android:id="@+id/edt_password"
+                            style="@style/Font_family_light"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_right_16"
+                            android:layout_marginTop="@dimen/margin_top_8"
+                            android:layout_marginRight="@dimen/margin_right_16"
+                            android:layout_marginBottom="@dimen/margin_top_8"
+                            android:background="@drawable/edit_style"
+                            android:drawableStart="@drawable/ic_password"
+                            android:drawablePadding="@dimen/padding_16"
+                            android:hint="@string/hint_password"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:padding="@dimen/padding_16"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textSize="@dimen/text_20"
+                            tools:ignore="Autofill" />
 
 
-                    <Button
-                        android:id="@+id/btn_login"
-                        style="@style/Font_family_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_right_16"
-                        android:layout_marginTop="@dimen/margin_top_8"
-                        android:layout_marginRight="@dimen/margin_right_16"
-                        android:layout_marginBottom="@dimen/margin_top_8"
-                        android:background="@drawable/blue_style"
-                        android:text="@string/login"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_20" />
+                        <Button
+                            android:id="@+id/btn_login"
+                            style="@style/Font_family_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_right_16"
+                            android:layout_marginTop="@dimen/margin_top_8"
+                            android:layout_marginRight="@dimen/margin_right_16"
+                            android:layout_marginBottom="@dimen/margin_top_8"
+                            android:background="@drawable/blue_style"
+                            android:text="@string/login"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_20" />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginStart="@dimen/margin_left_16"
-                        android:layout_marginEnd="@dimen/margin_right_16"
-                        android:layout_marginBottom="@dimen/margin_bottom_8"
-                        android:fontFamily="sans-serif-regular"
-                        android:paddingTop="@dimen/padding_16"
-                        android:paddingBottom="@dimen/padding_16"
-                        android:text="@string/need_help"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_20" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginStart="@dimen/margin_left_16"
+                            android:layout_marginEnd="@dimen/margin_right_16"
+                            android:layout_marginBottom="@dimen/margin_bottom_8"
+                            android:fontFamily="sans-serif-regular"
+                            android:paddingTop="@dimen/padding_16"
+                            android:paddingBottom="@dimen/padding_16"
+                            android:text="@string/need_help"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_20" />
 
-                </LinearLayout>
+                    </LinearLayout>
 
-            </ScrollView>
+                </ScrollView>
 
-        </RelativeLayout>
+            </RelativeLayout>
 
+        </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
 </android.support.design.widget.CoordinatorLayout>

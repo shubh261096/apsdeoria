@@ -7,4 +7,6 @@
     <string name="error_email_required">Email Required</string>
     <string name="error_valid_email">Enter Valid E-mail</string>
     <string name="error_password_required">Password Required</string>
+    <string name="toolbar_dashboard">Dashboard</string>
+    <string name="toolbar_login">Login</string>
 </resources>

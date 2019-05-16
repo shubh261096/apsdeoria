@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.service.rest.ApiClient;
@@ -83,6 +84,32 @@ public class Repository {
 
                     @Override
                     public void onFailure(@NonNull Call<ProfileResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        data.postValue(null);
+                    }
+                });
+        return data;
+    }
+
+    /* Dashboard UI Element Request */
+    public MutableLiveData<DashboardUIResponseModel> getDashboardUIElements() {
+        final MutableLiveData<DashboardUIResponseModel> data = new MutableLiveData<>();
+        apiService.getDashboardUIElements()
+                .enqueue(new Callback<DashboardUIResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<DashboardUIResponseModel> call, @Nullable Response<DashboardUIResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                data.postValue(response.body());
+                                Log.i("Response ", response.message());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<DashboardUIResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
                         data.postValue(null);
                     }
