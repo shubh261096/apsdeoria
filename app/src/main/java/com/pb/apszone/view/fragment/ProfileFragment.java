@@ -12,33 +12,42 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
+import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
+
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 
 public class ProfileFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     ProfileFragmentViewModel profileFragmentViewModel;
+    String user_type, user_id;
+    KeyStorePref keyStorePref;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
     public static ProfileFragment newInstance() {
-        ProfileFragment fragment = new ProfileFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-        return fragment;
+        return new ProfileFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        keyStorePref = KeyStorePref.getInstance(getContext());
+        if (getArguments() != null) {
+            user_id = getArguments().getString(KEY_USER_ID);
+            user_type = getArguments().getString(KEY_USER_TYPE);
+        } else {
+            user_id = keyStorePref.getString(KEY_USER_ID);
+            user_type = keyStorePref.getString(KEY_USER_TYPE);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
@@ -47,7 +56,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
-        profileFragmentViewModel.sendRequest("P101", "parent");
+        profileFragmentViewModel.sendRequest(user_id, user_type);
         subscribe();
     }
 

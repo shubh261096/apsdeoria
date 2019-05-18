@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pb.apszone.R;
@@ -18,6 +20,7 @@ import com.pb.apszone.view.adapter.DashboardAdapter;
 import com.pb.apszone.view.fragment.ProfileFragment;
 import com.pb.apszone.view.listener.OnDashboardItemClickListener;
 import com.pb.apszone.viewModel.DashboardViewModel;
+import com.pb.apszone.viewModel.ProfileFragmentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,22 +29,27 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
+import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
 
 public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener, ProfileFragment.OnFragmentInteractionListener {
 
     @BindView(R.id.rvDashboardUI)
     RecyclerView rvDashboardUI;
     DashboardViewModel dashboardViewModel;
+    ProfileFragmentViewModel profileFragmentViewModel;
     DashboardAdapter dashboardAdapter;
     private List<DashboardItem> dashboardItemList;
     private OnDashboardItemClickListener onDashboardItemClickListener;
     KeyStorePref keyStorePref;
-    String user_type;
+    String user_type, user_id;
     @BindView(R.id.user_name)
     TextView userName;
     @BindView(R.id.more_info)
     TextView moreInfo;
+    @BindView(R.id.user_dp)
+    ImageView userDp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +57,30 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
+        profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
         dashboardItemList = new ArrayList<>();
         onDashboardItemClickListener = this;
         keyStorePref = KeyStorePref.getInstance(this);
         user_type = keyStorePref.getString(KEY_USER_TYPE);
+        user_id = keyStorePref.getString(KEY_USER_ID);
         setUpGridView();
         subscribe();
+
+        profileFragmentViewModel.sendRequest(user_id, user_type);
+        subscribeProfile();
+    }
+
+    private void subscribeProfile() {
+        profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
+            if (profileResponseModel != null) {
+                if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
+                    if (TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE))
+                        userDp.setImageResource(R.drawable.profile_boy);
+                    else userDp.setImageResource(R.drawable.profile_girl);
+                }
+                userName.setText(profileResponseModel.getProfile().getFullname());
+            }
+        });
     }
 
     private void subscribe() {
@@ -100,6 +126,10 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     @OnClick(R.id.more_info)
     public void onMoreInfoClick() {
         Fragment fragment = ProfileFragment.newInstance();
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_USER_ID, user_id);
+        bundle.putString(KEY_USER_TYPE, user_type);
+        fragment.setArguments(bundle);
         replaceFragment(fragment);
     }
 
