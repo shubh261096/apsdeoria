@@ -14,7 +14,6 @@
         android:theme="@style/MyMaterialTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".view.ui.DashboardActivity" />
-        <activity android:name=".view.ui.ProfileActivity" />
         <activity
             android:name=".view.ui.LoginActivity"
             android:configChanges="keyboardHidden|orientation" />
