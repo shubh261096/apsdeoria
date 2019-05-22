@@ -37,19 +37,19 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
 
     @BindView(R.id.rvDashboardUI)
     RecyclerView rvDashboardUI;
-    DashboardViewModel dashboardViewModel;
-    ProfileFragmentViewModel profileFragmentViewModel;
-    DashboardAdapter dashboardAdapter;
-    private List<DashboardItem> dashboardItemList;
-    private OnDashboardItemClickListener onDashboardItemClickListener;
-    KeyStorePref keyStorePref;
-    String user_type, user_id;
     @BindView(R.id.user_name)
     TextView userName;
     @BindView(R.id.more_info)
     TextView moreInfo;
     @BindView(R.id.user_dp)
     ImageView userDp;
+    DashboardViewModel dashboardViewModel;
+    ProfileFragmentViewModel profileFragmentViewModel;
+    DashboardAdapter dashboardAdapter;
+    private List<DashboardItem> dashboardItemList;
+    private OnDashboardItemClickListener onDashboardItemClickListener;
+    KeyStorePref keyStorePref;
+    private String user_type, user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +74,8 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
             if (profileResponseModel != null) {
                 if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
-                    if (TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE))
-                        userDp.setImageResource(R.drawable.profile_boy);
-                    else userDp.setImageResource(R.drawable.profile_girl);
+                    int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
+                    userDp.setImageResource(drawable);
                 }
                 userName.setText(profileResponseModel.getProfile().getFullname());
             }
