@@ -15,4 +15,6 @@
     <dimen name="text_size_name">16sp</dimen>
     <dimen name="card_view_margin">8dp</dimen>
     <dimen name="card_view_radius">6dp</dimen>
+    <dimen name="margin_top_5">5dp</dimen>
+    <dimen name="margin_top_10">10dp</dimen>
 </resources>

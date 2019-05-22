@@ -41,11 +41,6 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#123" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:background="@drawable/background_fade" />
 
                 <ScrollView
@@ -118,7 +113,7 @@
                             android:layout_marginBottom="@dimen/margin_top_8"
                             android:background="@drawable/blue_style"
                             android:text="@string/login"
-                            android:textColor="@color/white"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/text_20" />
 
 
