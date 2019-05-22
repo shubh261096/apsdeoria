@@ -32,6 +32,8 @@ import butterknife.OnClick;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
+import static com.pb.apszone.utils.CommonUtils.hideProgress;
+import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener, ProfileFragment.OnFragmentInteractionListener {
 
@@ -64,6 +66,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         user_type = keyStorePref.getString(KEY_USER_TYPE);
         user_id = keyStorePref.getString(KEY_USER_ID);
         setUpGridView();
+        showProgress(this, "Please wait...");
         subscribe();
 
         profileFragmentViewModel.sendRequest(user_id, user_type);
@@ -73,6 +76,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     private void subscribeProfile() {
         profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
             if (profileResponseModel != null) {
+                hideProgress();
                 if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
                     int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
                     userDp.setImageResource(drawable);
