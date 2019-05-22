@@ -47,7 +47,7 @@
             android:padding="@dimen/padding_8">
 
             <LinearLayout
-                android:id="@+id/lyID"
+                android:id="@+id/lyId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
