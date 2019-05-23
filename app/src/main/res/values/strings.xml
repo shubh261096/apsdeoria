@@ -9,19 +9,5 @@
     <string name="error_password_required">Password Required</string>
     <string name="toolbar_dashboard">Dashboard</string>
     <string name="toolbar_login">Login</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="more_info">More Info ></string>
-    <string name="text_id">ID</string>
-    <string name="text_email">Email</string>
-    <string name="text_phone">Phone</string>
-    <string name="text_date_of_birth">Date of birth</string>
-    <string name="text_class">Class</string>
-    <string name="text_address">Address</string>
-    <string name="text_father_name">Father\'s Name</string>
-    <string name="text_mother_name">Mother\'s Name</string>
-    <string name="text_guardian">Guardian</string>
-    <string name="text_husband_name">Husband\'s Name</string>
-    <string name="text_qualification">Qualification</string>
 </resources>
