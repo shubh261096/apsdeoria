@@ -20,4 +20,5 @@
     <dimen name="margin_top_3">3dp</dimen>
     <dimen name="margin_top_2">2dp</dimen>
     <dimen name="view_height_0_5">0.5dp</dimen>
+    <dimen name="text_14">14sp</dimen>
 </resources>
