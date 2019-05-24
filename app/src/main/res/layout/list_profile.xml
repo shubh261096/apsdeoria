@@ -18,7 +18,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/roboto_regular"
             android:gravity="start"
-            android:textColor="@color/hint_gray"
+            android:textColor="@color/hint_gray_80"
             android:textStyle="bold" />
 
         <TextView
