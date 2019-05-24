@@ -27,11 +27,13 @@
             tools:ignore="ContentDescription" />
 
         <TextView
+            android:layout_marginTop="@dimen/margin_top_5"
+            android:fontFamily="@font/roboto_regular"
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/media"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
     </LinearLayout>
 </android.support.v7.widget.CardView>
