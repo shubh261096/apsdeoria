@@ -17,4 +17,6 @@
     <color name="black_80">#B3000000</color>
     <color name="colorLightPrimary">#C5CAE9</color>
     <color name="button_color">#e8e8e8</color>
+    <color name="hint_gray">#80707070</color>
+    <color name="light_black">#424343</color>
 </resources>

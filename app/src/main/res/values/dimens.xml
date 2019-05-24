@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="padding_8">8dp</dimen>
+    <dimen name="padding_14">14dp</dimen>
     <dimen name="radius_32">32dp</dimen>
     <dimen name="padding_16">16dp</dimen>
     <dimen name="margin_top_8">8dp</dimen>
@@ -21,4 +22,6 @@
     <dimen name="margin_top_2">2dp</dimen>
     <dimen name="view_height_0_5">0.5dp</dimen>
     <dimen name="text_14">14sp</dimen>
+    <dimen name="text_32">32sp</dimen>
+    <dimen name="margin_top_16">16dp</dimen>
 </resources>
