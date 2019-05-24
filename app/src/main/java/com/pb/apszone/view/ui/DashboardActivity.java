@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.DashboardItem;
@@ -31,7 +32,9 @@ import butterknife.OnClick;
 
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
+import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_TIMETABLE;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
@@ -109,7 +112,11 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
 
     @Override
     public void onItemClick(int position, View view) {
-
+        if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
+            if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_TIMETABLE)) {
+                Toast.makeText(this, dashboardItemList.get(position).getName(), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override

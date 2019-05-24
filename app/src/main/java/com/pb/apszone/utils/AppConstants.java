@@ -34,4 +34,7 @@ public class AppConstants {
     public final static String KEY_FILTER_BY_DAY = "day";
     public final static String KEY_FILTER_BY_WEEK = "week";
 
+    /* DASHBOARD UI ELEMENT NAME*/
+    public final static String UI_ELEMENT_TIMETABLE = "Timetable";
+
 }
