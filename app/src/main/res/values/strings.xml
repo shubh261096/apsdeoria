@@ -9,7 +9,7 @@
     <string name="error_password_required">Password Required</string>
     <string name="toolbar_dashboard">Dashboard</string>
     <string name="toolbar_login">Login</string>
-    <string name="more_info">More Info ></string>
+    <string name="view_profile">View Profile ></string>
     <string name="school_name">Agrawal Public School</string>
     <string name="text_welcome">Welcome</string>
 </resources>
