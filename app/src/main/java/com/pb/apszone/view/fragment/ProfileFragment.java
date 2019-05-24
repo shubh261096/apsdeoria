@@ -43,6 +43,8 @@ import static com.pb.apszone.utils.AppConstants.PROFILE_QUALIFICATION;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
+import static com.pb.apszone.utils.CommonUtils.hideProgress;
+import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class ProfileFragment extends Fragment {
 
@@ -102,12 +104,14 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
         profileFragmentViewModel.sendRequest(user_id, user_type);
+        showProgress(getActivity(), "Please wait...");
         subscribe();
     }
 
     private void subscribe() {
         profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
             if (profileResponseModel != null) {
+                hideProgress();
                 /* Showing profile picture by gender */
                 if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
                     int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
