@@ -3,6 +3,7 @@ package com.pb.apszone.service.rest;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
+import com.pb.apszone.service.model.TimetableResponseModel;
 
 import java.util.Map;
 
@@ -23,4 +24,8 @@ public interface ApiInterface {
 
     @GET("Dashboard")
     Call<DashboardUIResponseModel> getDashboardUIElements();
+
+    @POST("TimeTable")
+    @FormUrlEncoded
+    Call<TimetableResponseModel> getTimeTable(@FieldMap Map<String, String> params);
 }

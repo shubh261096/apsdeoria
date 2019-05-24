@@ -29,4 +29,9 @@ public class AppConstants {
     public final static String PROFILE_GUARDIAN_NAME = "Guardian Name";
     public final static String PROFILE_HUSBAND_NAME = "Husband's Name";
     public final static String PROFILE_QUALIFICATION = "Qualification";
+
+    /* KEY TIMETABLE FILTER */
+    public final static String KEY_FILTER_BY_DAY = "day";
+    public final static String KEY_FILTER_BY_WEEK = "week";
+
 }

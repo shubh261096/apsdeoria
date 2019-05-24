@@ -3,15 +3,18 @@ package com.pb.apszone.service.repo;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
+import com.pb.apszone.service.model.TimetableResponseModel;
 import com.pb.apszone.service.rest.ApiClient;
 import com.pb.apszone.service.rest.ApiInterface;
 import com.pb.apszone.service.rest.LoginRequestModel;
 import com.pb.apszone.service.rest.ProfileRequestModel;
+import com.pb.apszone.service.rest.TimetableRequestModel;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,6 +23,9 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_DAY;
+import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_WEEK;
 
 public class Repository {
     private static ApiInterface apiService;
@@ -110,6 +116,39 @@ public class Repository {
 
                     @Override
                     public void onFailure(@NonNull Call<DashboardUIResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        data.postValue(null);
+                    }
+                });
+        return data;
+    }
+
+    /* TimeTable Request */
+    public MutableLiveData<TimetableResponseModel> getTimetable(TimetableRequestModel timetableRequestModel, String filter) {
+        final MutableLiveData<TimetableResponseModel> data = new MutableLiveData<>();
+        Map<String, String> params = new HashMap<>();
+        if (TextUtils.equals(filter, KEY_FILTER_BY_DAY)) {
+            params.put("class_id", timetableRequestModel.getClassId());
+            params.put("today", timetableRequestModel.getToday());
+        } else if (TextUtils.equals(filter, KEY_FILTER_BY_WEEK)) {
+            params.put("class_id", timetableRequestModel.getClassId());
+        }
+
+        apiService.getTimeTable(params)
+                .enqueue(new Callback<TimetableResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<TimetableResponseModel> call, @Nullable Response<TimetableResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                data.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<TimetableResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
                         data.postValue(null);
                     }
