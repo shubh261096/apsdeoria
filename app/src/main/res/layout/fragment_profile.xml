@@ -21,6 +21,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="@string/toolbar_profile"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:titleTextColor="@color/colorPrimary" />
 
     </android.support.design.widget.AppBarLayout>

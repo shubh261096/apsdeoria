@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.pb.apszone.view.adapter.ProfileAdapter;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +55,8 @@ public class ProfileFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.userClass)
     TextView userClass;
+    @BindView(R.id.toolbar_profile)
+    Toolbar toolbarProfile;
     private OnFragmentInteractionListener mListener;
     ProfileFragmentViewModel profileFragmentViewModel;
     String user_type, user_id;
@@ -90,6 +94,7 @@ public class ProfileFragment extends Fragment {
         rvProfileUI.setLayoutManager(new LinearLayoutManager(getActivity()));
         profileAdapter = new ProfileAdapter(profileValueHashmap, getActivity());
         rvProfileUI.setAdapter(profileAdapter);
+        toolbarProfile.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         return view;
     }
 
