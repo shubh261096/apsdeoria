@@ -8,6 +8,7 @@
     <string name="error_valid_email">Enter Valid E-mail</string>
     <string name="error_password_required">Password Required</string>
     <string name="toolbar_dashboard">Dashboard</string>
+    <string name="toolbar_profile">Profile</string>
     <string name="toolbar_login">Login</string>
     <string name="view_profile">View Profile ></string>
     <string name="school_name">Agrawal Public School</string>

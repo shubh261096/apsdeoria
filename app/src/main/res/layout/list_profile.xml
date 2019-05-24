@@ -1,28 +1,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/activity_horizontal_margin"
-    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-    android:orientation="vertical"
-    android:padding="@dimen/padding_8">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/input_text_key"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/padding_14"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_8">
 
-    <TextView
-        android:id="@+id/input_text_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top_3"
-        android:textColor="@color/black_80"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/input_text_key"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="start"
+            android:textColor="@color/hint_gray"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/input_text_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="start"
+            android:textColor="@color/black_80"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_0_5"
-        android:layout_marginTop="@dimen/margin_top_2"
         android:background="@color/light_gray" />
 
 </LinearLayout>
