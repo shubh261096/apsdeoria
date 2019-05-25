@@ -19,6 +19,7 @@ import com.pb.apszone.utils.AutoFitGridLayoutManager;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.DashboardAdapter;
 import com.pb.apszone.view.fragment.ProfileFragment;
+import com.pb.apszone.view.fragment.StudentTimetableFragment;
 import com.pb.apszone.view.listener.OnDashboardItemClickListener;
 import com.pb.apszone.viewModel.DashboardViewModel;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
@@ -80,6 +81,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
             if (profileResponseModel != null) {
                 hideProgress();
+                dashboardViewModel.putSharedPrefData(profileResponseModel); // Adding SharedPref in case student/parent
                 if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
                     int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
                     userDp.setImageResource(drawable);
@@ -114,7 +116,8 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     public void onItemClick(int position, View view) {
         if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
             if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_TIMETABLE)) {
-                Toast.makeText(this, dashboardItemList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Fragment fragment = StudentTimetableFragment.newInstance();
+                replaceFragment(fragment);
             }
         }
     }

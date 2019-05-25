@@ -13,4 +13,6 @@
     <string name="view_profile">View Profile ></string>
     <string name="school_name">Agrawal Public School</string>
     <string name="text_welcome">Welcome</string>
+    <string name="toolbar_timetable">Timetable</string>
+    <string name="text_recess">RECESS</string>
 </resources>
