@@ -80,4 +80,9 @@ public class StudentTimetableAdapter extends RecyclerView.Adapter<StudentTimetab
         return timetableItemList.size();
     }
 
+    public void clearData(){
+        timetableItemList.clear();
+        notifyDataSetChanged();
+    }
+
 }

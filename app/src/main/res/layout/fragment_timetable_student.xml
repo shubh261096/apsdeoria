@@ -27,12 +27,25 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <Spinner
+    <TextView
+        android:drawableEnd="@drawable/ic_spinner_down"
+        android:drawableTint="@color/lightPrimary"
+        android:padding="@dimen/padding_14"
         android:id="@+id/spinner_day"
+        android:textSize="@dimen/text_14"
+        android:textColor="@color/lightPrimary"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="@dimen/activity_horizontal_margin" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_style"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        tools:ignore="UnusedAttribute" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_top_2"
+        android:layerType="software"
+        android:src="@drawable/dotted_line"
+        tools:ignore="ContentDescription" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvTimetable"

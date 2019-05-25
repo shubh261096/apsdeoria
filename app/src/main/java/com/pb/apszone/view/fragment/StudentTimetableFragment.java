@@ -1,7 +1,9 @@
 package com.pb.apszone.view.fragment;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,7 +14,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.TimetableItem;
@@ -30,6 +33,7 @@ import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_DAY;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
+import static com.pb.apszone.utils.CommonUtils.getDayOfWeek;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
@@ -38,14 +42,15 @@ public class StudentTimetableFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.toolbar_timetable)
     Toolbar toolbarTimetable;
-    @BindView(R.id.spinner_day)
-    Spinner spinnerDay;
     @BindView(R.id.rvTimetable)
     RecyclerView rvTimetable;
+    @BindView(R.id.spinner_day)
+    TextView spinnerDay;
     private List<TimetableItem> timetableItemList;
     StudentTimetableFragmentViewModel studentTimetableFragmentViewModel;
     KeyStorePref keyStorePref;
     StudentTimetableAdapter studentTimetableAdapter;
+    private String day;
 
     public StudentTimetableFragment() {
         // Required empty public constructor
@@ -72,26 +77,51 @@ public class StudentTimetableFragment extends Fragment {
         studentTimetableAdapter = new StudentTimetableAdapter(timetableItemList, getActivity());
         rvTimetable.setAdapter(studentTimetableAdapter);
         toolbarTimetable.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
+        day = getDayOfWeek();
+        setUpSpinner();
         return view;
+    }
+
+    private void setUpSpinner() {
+        spinnerDay.setText(day);
+        spinnerDay.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            String[] days = getResources().getStringArray(R.array.day);
+            builder.setItems(days, (dialog, which) -> {
+                day = days[which];
+                spinnerDay.setText(day);
+                if (studentTimetableAdapter!=null){
+                    studentTimetableAdapter.clearData();
+                    subscribe();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         studentTimetableFragmentViewModel = ViewModelProviders.of(this).get(StudentTimetableFragmentViewModel.class);
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-            studentTimetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), "Monday"); // TODO call method#getDayOfWeek()
-        }
-        showProgress(getActivity(), "Please wait...");
         subscribe();
     }
 
     private void subscribe() {
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
+            studentTimetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day); // TODO call method#getDayOfWeek()
+        }
+        showProgress(getActivity(), "Please wait...");
         studentTimetableFragmentViewModel.getTimetable(KEY_FILTER_BY_DAY).observe(this, timetableResponseModel -> {
             if (timetableResponseModel != null) {
                 hideProgress();
-                List<TimetableItem> timetableItems = timetableResponseModel.getTimetable();
-                timetableItemList.addAll(timetableItems);
-                studentTimetableAdapter.notifyDataSetChanged();
+                if (!timetableResponseModel.isError()) {
+                    List<TimetableItem> timetableItems = timetableResponseModel.getTimetable();
+                    timetableItemList.addAll(timetableItems);
+                    studentTimetableAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getActivity(), timetableResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -111,5 +141,4 @@ public class StudentTimetableFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
 }
