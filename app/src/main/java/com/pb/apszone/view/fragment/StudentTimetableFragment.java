@@ -52,7 +52,7 @@ public class StudentTimetableFragment extends Fragment implements AdapterView.On
     KeyStorePref keyStorePref;
     StudentTimetableAdapter studentTimetableAdapter;
     private String day;
-    private static int checkInit = 0;
+    private int checkInit = 0;
 
     public StudentTimetableFragment() {
         // Required empty public constructor
