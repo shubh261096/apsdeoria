@@ -3,11 +3,11 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/card_view_height"
-    android:layout_margin="@dimen/card_view_margin"
+    android:layout_height="@dimen/dp_120"
+    android:layout_margin="@dimen/dp_8"
     android:background="@color/white"
-    android:elevation="@dimen/card_view_elevation"
-    card_view:cardCornerRadius="@dimen/card_view_radius">
+    android:elevation="@dimen/dp_4"
+    card_view:cardCornerRadius="@dimen/dp_6">
 
     <LinearLayout
         android:layout_gravity="center"
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/padding_8"
+        android:padding="@dimen/dp_8"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
@@ -27,7 +27,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:layout_marginTop="@dimen/margin_top_5"
+            android:layout_marginTop="@dimen/dp_5"
             android:fontFamily="@font/roboto_regular"
             android:id="@+id/name"
             android:layout_width="wrap_content"

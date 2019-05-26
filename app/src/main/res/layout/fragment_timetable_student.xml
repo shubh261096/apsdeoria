@@ -36,14 +36,14 @@
         android:dropDownWidth="match_parent"
         android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
         android:popupBackground="@drawable/spinner_dropdown_bg"
-        android:popupElevation="@dimen/margin_top_3"
+        android:popupElevation="@dimen/dp_3"
         android:stateListAnimator="@drawable/spinner_sla"
         tools:ignore="PrivateResource" />
 
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_top_2"
+        android:layout_height="@dimen/dp_2"
         android:layerType="software"
         android:src="@drawable/dotted_line"
         tools:ignore="ContentDescription" />
@@ -52,7 +52,7 @@
         android:id="@+id/rvTimetable"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/margin_top_10"
+        android:layout_marginBottom="@dimen/dp_10"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </LinearLayout>

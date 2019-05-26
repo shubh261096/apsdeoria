@@ -6,10 +6,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/padding_14"
+        android:layout_margin="@dimen/dp_14"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_8">
+        android:padding="@dimen/dp_8">
 
         <TextView
             android:id="@+id/input_text_key"
@@ -34,7 +34,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/view_height_0_5"
+        android:layout_height="@dimen/dp_0_5"
         android:background="@color/light_gray" />
 
 </LinearLayout>

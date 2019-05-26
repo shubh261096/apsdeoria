@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_top_10"
+            android:layout_marginTop="@dimen/dp_10"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_20"
             android:textStyle="bold" />
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_top_3"
+            android:layout_marginTop="@dimen/dp_3"
             android:textColor="@color/lightPrimary"
             android:textSize="@dimen/text_14"
             android:visibility="gone" />
@@ -63,7 +63,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_top_2"
+        android:layout_height="@dimen/dp_2"
         android:layerType="software"
         android:src="@drawable/dotted_line"
         tools:ignore="ContentDescription" />
@@ -72,7 +72,7 @@
         android:id="@+id/rvProfileUI"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/margin_top_10"
+        android:layout_marginBottom="@dimen/dp_10"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </LinearLayout>

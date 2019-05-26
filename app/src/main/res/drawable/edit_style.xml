@@ -8,11 +8,11 @@
         android:color="@color/colorPrimary" />
 
     <padding
-        android:bottom="@dimen/padding_8"
-        android:left="@dimen/padding_8"
-        android:right="@dimen/padding_8"
-        android:top="@dimen/padding_8" />
+        android:bottom="@dimen/dp_8"
+        android:left="@dimen/dp_8"
+        android:right="@dimen/dp_8"
+        android:top="@dimen/dp_8" />
 
-    <corners android:radius="@dimen/radius_32" />
+    <corners android:radius="@dimen/dp_32" />
 
 </shape>
