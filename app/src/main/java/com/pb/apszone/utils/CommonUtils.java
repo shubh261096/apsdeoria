@@ -64,29 +64,63 @@ public class CommonUtils {
         return df.format(Calendar.getInstance().getTime());
     }
 
-    public static boolean isTimeBetweenTwoTime(String initialTime, String finalTime) throws ParseException {
-        try {
-            Date time1 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).parse(initialTime);
-            Calendar calendar1 = Calendar.getInstance();
-            calendar1.setTime(time1);
+    public static boolean isTimeBetweenTwoTime(String argStartTime,
+                                               String argEndTime) throws ParseException {
+        String reg = "^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
+        if (argStartTime.matches(reg) && argEndTime.matches(reg)
+                && getCurrentTime().matches(reg)) {
+            boolean valid;
+            // Start Time
+            java.util.Date startTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                    .parse(argStartTime);
+            Calendar startCalendar = Calendar.getInstance();
+            startCalendar.setTime(startTime);
 
-            Date time2 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).parse(finalTime);
-            Calendar calendar2 = Calendar.getInstance();
-            calendar2.setTime(time2);
-            calendar2.add(Calendar.DATE, 1);
+            // Current Time
+            java.util.Date currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                    .parse(getCurrentTime());
+            Calendar currentCalendar = Calendar.getInstance();
+            currentCalendar.setTime(currentTime);
 
-            Date d = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).parse(getCurrentTime());
-            Calendar calendar3 = Calendar.getInstance();
-            calendar3.setTime(d);
-            calendar3.add(Calendar.DATE, 1);
+            // End Time
+            java.util.Date endTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                    .parse(argEndTime);
+            Calendar endCalendar = Calendar.getInstance();
+            endCalendar.setTime(endTime);
 
-            Date x = calendar3.getTime();
-            if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
-                return true;
+            if (currentTime.compareTo(endTime) < 0) {
+                currentCalendar.add(Calendar.DATE, 1);
+                currentTime = currentCalendar.getTime();
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+            if (startTime.compareTo(endTime) < 0) {
+
+                startCalendar.add(Calendar.DATE, 1);
+                startTime = startCalendar.getTime();
+
+            }
+            if (currentTime.before(startTime)) {
+                System.out.println(" Time is Lesser ");
+                valid = false;
+            } else {
+                if (currentTime.after(endTime)) {
+                    endCalendar.add(Calendar.DATE, 1);
+                    endTime = endCalendar.getTime();
+                }
+                System.out.println("Comparing , Start Time /n " + startTime);
+                System.out.println("Comparing , End Time /n " + endTime);
+                System.out.println("Comparing , Current Time /n " + currentTime);
+                if (currentTime.before(endTime)) {
+                    System.out.println("RESULT, Time lies b/w");
+                    valid = true;
+                } else {
+                    valid = false;
+                    System.out.println("RESULT, Time does not lies b/w");
+                }
+            }
+            return valid;
+        } else {
+            throw new IllegalArgumentException("Not a valid time, expecting HH:MM:SS format");
         }
-        return false;
     }
 }
