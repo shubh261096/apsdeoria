@@ -26,19 +26,20 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <TextView
-        android:drawableEnd="@drawable/ic_spinner_down"
-        android:drawableTint="@color/lightPrimary"
-        android:padding="@dimen/padding_14"
-        android:id="@+id/spinner_day"
-        android:textSize="@dimen/text_14"
-        android:textColor="@color/lightPrimary"
+    <Spinner
+        android:id="@+id/spinnerDay"
+        style="@style/Widget.AppCompat.Spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/spinner_style"
+        android:layout_height="?attr/dropdownListPreferredItemHeight"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        tools:ignore="UnusedAttribute" />
+        android:background="@drawable/spinner_bg"
+        android:dropDownWidth="match_parent"
+        android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+        android:popupBackground="@drawable/spinner_dropdown_bg"
+        android:popupElevation="@dimen/margin_top_3"
+        android:stateListAnimator="@drawable/spinner_sla"
+        tools:ignore="PrivateResource" />
+
 
     <ImageView
         android:layout_width="match_parent"

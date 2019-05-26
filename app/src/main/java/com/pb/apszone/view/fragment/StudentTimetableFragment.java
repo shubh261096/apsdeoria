@@ -1,9 +1,7 @@
 package com.pb.apszone.view.fragment;
 
-import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -14,7 +12,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
@@ -24,6 +24,7 @@ import com.pb.apszone.view.adapter.StudentTimetableAdapter;
 import com.pb.apszone.viewModel.StudentTimetableFragmentViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,20 +38,21 @@ import static com.pb.apszone.utils.CommonUtils.getDayOfWeek;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
-public class StudentTimetableFragment extends Fragment {
+public class StudentTimetableFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     Unbinder unbinder;
     @BindView(R.id.toolbar_timetable)
     Toolbar toolbarTimetable;
     @BindView(R.id.rvTimetable)
     RecyclerView rvTimetable;
-    @BindView(R.id.spinner_day)
-    TextView spinnerDay;
+    @BindView(R.id.spinnerDay)
+    Spinner spinnerDay;
     private List<TimetableItem> timetableItemList;
     StudentTimetableFragmentViewModel studentTimetableFragmentViewModel;
     KeyStorePref keyStorePref;
     StudentTimetableAdapter studentTimetableAdapter;
     private String day;
+    private static int checkInit = 0;
 
     public StudentTimetableFragment() {
         // Required empty public constructor
@@ -83,22 +85,13 @@ public class StudentTimetableFragment extends Fragment {
     }
 
     private void setUpSpinner() {
-        spinnerDay.setText(day);
-        spinnerDay.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            String[] days = getResources().getStringArray(R.array.day);
-            builder.setItems(days, (dialog, which) -> {
-                day = days[which];
-                spinnerDay.setText(day);
-                if (studentTimetableAdapter!=null){
-                    studentTimetableAdapter.clearData();
-                    subscribe();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        });
-
+        String[] days = getResources().getStringArray(R.array.day);
+        ArrayAdapter adapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), R.layout.spinner_item, days);
+        int pos = new ArrayList<>(Arrays.asList(days)).indexOf(day); // Getting current position by day
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown);
+        spinnerDay.setAdapter(adapter);
+        spinnerDay.setSelection(pos); // Setting current day
+        spinnerDay.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -109,7 +102,7 @@ public class StudentTimetableFragment extends Fragment {
 
     private void subscribe() {
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-            studentTimetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day); // TODO call method#getDayOfWeek()
+            studentTimetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day);
         }
         showProgress(getActivity(), "Please wait...");
         studentTimetableFragmentViewModel.getTimetable(KEY_FILTER_BY_DAY).observe(this, timetableResponseModel -> {
@@ -140,5 +133,22 @@ public class StudentTimetableFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        checkInit++;
+        if (checkInit > 1) {
+            day = parent.getItemAtPosition(position).toString();
+            if (studentTimetableAdapter != null) {
+                studentTimetableAdapter.clearData();
+                subscribe();
+            }
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
