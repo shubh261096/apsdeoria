@@ -44,7 +44,7 @@ class Attendance extends REST_Controller {
             */
             $response['error'] = false;
             $response['message'] = "Attendance fetched successfully";
-            $response['timetable'] = $data;
+            $response['attendance'] = $data;
         } else{
             $response['error'] = true;
             $response['message'] = "No data found";
