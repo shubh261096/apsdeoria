@@ -13,6 +13,7 @@ import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.utils.KeyStorePref;
 
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
 
@@ -34,8 +35,11 @@ public class DashboardViewModel extends AndroidViewModel {
 
     public void putSharedPrefData(ProfileResponseModel profileResponseModel) {
         if (TextUtils.equals(keyStorePref.getString(KEY_USER_TYPE), USER_TYPE_PARENT)) {
-            if (profileResponseModel.getProfile().getClassId().getId() != null) {
+            if (!TextUtils.isEmpty(profileResponseModel.getProfile().getClassId().getId())) {
                 keyStorePref.putString(KEY_STUDENT_CLASS_ID, profileResponseModel.getProfile().getClassId().getId());
+            }
+            if (!TextUtils.isEmpty(profileResponseModel.getProfile().getId())) {
+                keyStorePref.putString(KEY_STUDENT_ID, profileResponseModel.getProfile().getId());
             }
         }
     }
