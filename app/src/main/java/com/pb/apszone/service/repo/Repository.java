@@ -6,12 +6,14 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.service.model.TimetableResponseModel;
 import com.pb.apszone.service.rest.ApiClient;
 import com.pb.apszone.service.rest.ApiInterface;
+import com.pb.apszone.service.rest.AttendanceRequestModel;
 import com.pb.apszone.service.rest.LoginRequestModel;
 import com.pb.apszone.service.rest.ProfileRequestModel;
 import com.pb.apszone.service.rest.TimetableRequestModel;
@@ -149,6 +151,36 @@ public class Repository {
 
                     @Override
                     public void onFailure(@NonNull Call<TimetableResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        data.postValue(null);
+                    }
+                });
+        return data;
+    }
+
+    /* Attendance Request */
+    public MutableLiveData<AttendanceResponseModel> getAttendance(AttendanceRequestModel attendanceRequestModel) {
+        final MutableLiveData<AttendanceResponseModel> data = new MutableLiveData<>();
+        Map<String, String> params = new HashMap<>();
+        params.put("student_id", attendanceRequestModel.getStudentId());
+        params.put("month", attendanceRequestModel.getMonth());
+        params.put("year", attendanceRequestModel.getYear());
+
+        apiService.getAttendance(params)
+                .enqueue(new Callback<AttendanceResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<AttendanceResponseModel> call, @Nullable Response<AttendanceResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                data.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<AttendanceResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
                         data.postValue(null);
                     }

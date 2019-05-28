@@ -1,5 +1,6 @@
 package com.pb.apszone.service.rest;
 
+import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
@@ -28,4 +29,8 @@ public interface ApiInterface {
     @POST("TimeTable")
     @FormUrlEncoded
     Call<TimetableResponseModel> getTimeTable(@FieldMap Map<String, String> params);
+
+    @POST("Attendance")
+    @FormUrlEncoded
+    Call<AttendanceResponseModel> getAttendance(@FieldMap Map<String, String> params);
 }
