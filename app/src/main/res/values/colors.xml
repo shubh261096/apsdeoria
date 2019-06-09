@@ -23,4 +23,6 @@
     <color name="hint_gray_80">#CC707070</color>
     <color name="light_black">#424343</color>
     <color name="lightPrimary">#94A5E3</color>
+    <color name="red">#FF6260</color>
+    <color name="green">#3BDE86</color>
 </resources>

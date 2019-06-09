@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.pb.apszone.utils.CommonUtils.getFormatedDateTime;
+import static com.pb.apszone.utils.CommonUtils.getFormattedDateTime;
 import static com.pb.apszone.utils.CommonUtils.isTimeBetweenTwoTime;
 
 public class StudentTimetableAdapter extends RecyclerView.Adapter<StudentTimetableAdapter.StudentTimetableViewHolder> {
@@ -64,8 +64,8 @@ public class StudentTimetableAdapter extends RecyclerView.Adapter<StudentTimetab
         TimetableItem timetableItem = getItem(position);
         int pos = position + 1;
         studentTimetableViewHolder.listPosition.setText(String.valueOf(pos));
-        studentTimetableViewHolder.startTime.setText(getFormatedDateTime(timetableItem.getStartTime()));
-        studentTimetableViewHolder.endTime.setText(getFormatedDateTime(timetableItem.getEndTime()));
+        studentTimetableViewHolder.startTime.setText(getFormattedDateTime(timetableItem.getStartTime()));
+        studentTimetableViewHolder.endTime.setText(getFormattedDateTime(timetableItem.getEndTime()));
         try {
             if (isTimeBetweenTwoTime(timetableItem.getStartTime(), timetableItem.getEndTime())) {
                 studentTimetableViewHolder.activeClass.setVisibility(View.VISIBLE);

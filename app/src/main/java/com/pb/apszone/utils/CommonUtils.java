@@ -7,6 +7,7 @@ import android.util.Log;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -36,7 +37,7 @@ public class CommonUtils {
         return sdf.format(date);
     }
 
-    public static String getFormatedDateTime(String dateStr) {
+    public static String getFormattedDateTime(String dateStr) {
 
         String formattedDate = dateStr;
 
@@ -122,5 +123,45 @@ public class CommonUtils {
         } else {
             throw new IllegalArgumentException("Not a valid time, expecting HH:MM:SS format");
         }
+    }
+
+    public static Integer getNumOfDaysInMonth(String year, String month) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, getMonthNumber(month));
+        calendar.set(Calendar.YEAR, Integer.valueOf(year));
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
+    private static Integer getMonthNumber(String month){
+        Date date;
+        int monthNumber = 0;
+        try {
+            Calendar cal = Calendar.getInstance();
+            date = new SimpleDateFormat("MMMM", Locale.getDefault()).parse(month);
+            cal.setTime(date);
+            monthNumber =  cal.get(Calendar.MONTH);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return monthNumber;
+    }
+
+    public static Integer getFirstDayOfMonth(String year, String month) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.YEAR, Integer.valueOf(year));
+        calendar.set(Calendar.MONTH, getMonthNumber(month));
+        return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
+    public static String getCurrentMonth() {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", Locale.getDefault());
+        return month_date.format(cal.getTime());
+    }
+
+    public static String getCurrentYear() {
+        Calendar calendar = Calendar.getInstance();
+        return String.valueOf(calendar.get(Calendar.YEAR));
     }
 }

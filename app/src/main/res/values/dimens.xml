@@ -21,4 +21,5 @@
     <dimen name="dp_16">16dp</dimen>
     <dimen name="dp_32">32dp</dimen>
     <dimen name="dp_120">120dp</dimen>
+    <dimen name="text_18">18sp</dimen>
 </resources>
