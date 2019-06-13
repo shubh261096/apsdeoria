@@ -18,11 +18,7 @@ class Attendance extends REST_Controller {
       $month = $this->input->post('month');
       $year = $this->input->post('year'); 
       $response = $this->get_attendanceByMonth($student_id, $month, $year); // getting attendance by month & year
-      if(!$response['error']){
-          $httpStatus = REST_Controller::HTTP_OK;
-      } else {
-          $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
-      }
+      $httpStatus = REST_Controller::HTTP_OK;
     }else{
       $response['error'] = true;
       $response['message'] = "Parameters not found";
