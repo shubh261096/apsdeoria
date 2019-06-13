@@ -7,7 +7,6 @@ import android.util.Log;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -132,18 +131,37 @@ public class CommonUtils {
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
-    private static Integer getMonthNumber(String month){
+    private static Integer getMonthNumber(String month) {
         Date date;
         int monthNumber = 0;
         try {
             Calendar cal = Calendar.getInstance();
             date = new SimpleDateFormat("MMMM", Locale.getDefault()).parse(month);
             cal.setTime(date);
-            monthNumber =  cal.get(Calendar.MONTH);
+            monthNumber = cal.get(Calendar.MONTH);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return monthNumber;
+    }
+
+    public static String getStringMonthNumber(String month) {
+        Date date;
+        int monthNumber = 0;
+        try {
+            Calendar cal = Calendar.getInstance();
+            date = new SimpleDateFormat("MMMM", Locale.getDefault()).parse(month);
+            cal.setTime(date);
+            monthNumber = cal.get(Calendar.MONTH);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        monthNumber = monthNumber + 1; // This is done because monthNumber starts from zero for January
+        if (monthNumber <= 9) {
+            return "0" + monthNumber; // 0 is added in front to match the request value
+        } else {
+            return String.valueOf(monthNumber);
+        }
     }
 
     public static Integer getFirstDayOfMonth(String year, String month) {
@@ -163,5 +181,16 @@ public class CommonUtils {
     public static String getCurrentYear() {
         Calendar calendar = Calendar.getInstance();
         return String.valueOf(calendar.get(Calendar.YEAR));
+    }
+
+    public static String getFirstDateValueFromFullDate(String date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault());
+        try {
+            return (String) android.text.format.DateFormat.format("dd", simpleDateFormat.parse(date));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

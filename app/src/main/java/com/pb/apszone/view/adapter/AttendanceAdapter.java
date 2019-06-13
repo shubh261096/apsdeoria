@@ -3,23 +3,29 @@ package com.pb.apszone.view.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pb.apszone.R;
+import com.pb.apszone.service.model.AttendanceItem;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.pb.apszone.utils.CommonUtils.getFirstDateValueFromFullDate;
+
 
 public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.AttendanceViewHolder> {
 
     private Context context;
     private List<String> numDay;
+    private List<AttendanceItem> attendanceItemList;
+    private int i = 0;
 
     static class AttendanceViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.status)
@@ -33,15 +39,16 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
         }
     }
 
-    public AttendanceAdapter(Context context, List<String> numDay) {
+    public AttendanceAdapter(Context context, List<String> numDay, List<AttendanceItem> attendanceItemList) {
         this.context = context;
         this.numDay = numDay;
+        this.attendanceItemList = attendanceItemList;
     }
 
     @NonNull
     @Override
     public AttendanceViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                                  int viewType) {
+                                                   int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_attendance, parent, false);
         return new AttendanceViewHolder(view);
     }
@@ -50,12 +57,35 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
     @Override
     public void onBindViewHolder(@NonNull AttendanceViewHolder attendanceViewHolder, final int position) {
         attendanceViewHolder.day.setText(numDay.get(position));
-        if (!numDay.get(position).isEmpty()){
+        String day = parseDate(i);
+        String status = parseStatus(i);
+        if (!numDay.get(position).isEmpty()) {
             attendanceViewHolder.status.setVisibility(View.VISIBLE);
-            attendanceViewHolder.status.setBackgroundColor(context.getResources().getColor(R.color.green));
+            if (TextUtils.equals(attendanceViewHolder.day.getText(), day)) {
+                i++; // Increment the position by 1 if day value set in viewHolder is equal to day. This is a hack
+                if (TextUtils.equals(status, "1")) {
+                    attendanceViewHolder.status.setBackgroundColor(context.getResources().getColor(R.color.green));
+                } else {
+                    attendanceViewHolder.status.setBackgroundColor(context.getResources().getColor(R.color.red));
+                }
+            }
         } else {
             attendanceViewHolder.status.setVisibility(View.GONE);
         }
+    }
+
+    private String parseDate(int pos) {
+        if (pos < attendanceItemList.size()) {
+            return getFirstDateValueFromFullDate(attendanceItemList.get(pos).getDate());
+        }
+        return null;
+    }
+
+    private String parseStatus(int pos) {
+        if (pos < attendanceItemList.size()) {
+            return attendanceItemList.get(pos).getStatus();
+        }
+        return null;
     }
 
     @Override
@@ -65,6 +95,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
 
     public void clearData() {
         numDay.clear();
+        attendanceItemList.clear();
         notifyDataSetChanged();
     }
 
