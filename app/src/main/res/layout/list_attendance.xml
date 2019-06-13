@@ -20,10 +20,9 @@
 
     <View
         android:id="@+id/status"
-        android:layout_width="20dp"
-        android:layout_height="3dp"
+        android:layout_width="@dimen/dp_22"
+        android:layout_height="@dimen/dp_4"
         android:layout_marginTop="@dimen/dp_3"
-        android:background="@drawable/view_bg_round"
         android:visibility="gone" />
 
 </LinearLayout>

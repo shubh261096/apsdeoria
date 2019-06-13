@@ -8,7 +8,7 @@
     android:textSize="@dimen/text_14"
     android:layout_width="match_parent"
     android:layout_height="?attr/dropdownListPreferredItemHeight"
-    android:drawableEnd="@drawable/ic_spinner_down"
+    android:drawableEnd="@drawable/ic_angle_arrow_down"
     android:drawableTint="@color/colorPrimary_70"
     android:ellipsize="marquee"
     tools:ignore="PrivateResource,UnusedAttribute" />

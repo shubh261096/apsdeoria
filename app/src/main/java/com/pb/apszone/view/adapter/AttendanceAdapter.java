@@ -64,9 +64,9 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
             if (TextUtils.equals(attendanceViewHolder.day.getText(), day)) {
                 i++; // Increment the position by 1 if day value set in viewHolder is equal to day. This is a hack
                 if (TextUtils.equals(status, "1")) {
-                    attendanceViewHolder.status.setBackgroundColor(context.getResources().getColor(R.color.green));
+                    attendanceViewHolder.status.setBackground(context.getResources().getDrawable(R.drawable.view_bg_round_green));
                 } else {
-                    attendanceViewHolder.status.setBackgroundColor(context.getResources().getColor(R.color.red));
+                    attendanceViewHolder.status.setBackground(context.getResources().getDrawable(R.drawable.view_bg_round_red));
                 }
             }
         } else {
