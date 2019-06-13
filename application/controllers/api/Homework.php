@@ -17,11 +17,7 @@ class Homework extends REST_Controller {
       $class_id = $this->input->post('class_id');
       $date = $this->input->post('date');
       $response = $this->get_homeworkByDate($class_id, $date); // getting homework by date
-      if(!$response['error']){
-          $httpStatus = REST_Controller::HTTP_OK;
-      } else {
-          $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
-      }
+      $httpStatus = REST_Controller::HTTP_OK;
     }else{
       $response['error'] = true;
       $response['message'] = "Parameters not found";
@@ -49,7 +45,7 @@ class Homework extends REST_Controller {
             
             $response['error'] = false;
             $response['message'] = "Homework fetched successfully";
-            $response['timetable'] = $data;
+            $response['homework'] = $data;
         } else{
             $response['error'] = true;
             $response['message'] = "No data found";
