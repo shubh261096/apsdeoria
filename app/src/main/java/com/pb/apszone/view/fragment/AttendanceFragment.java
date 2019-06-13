@@ -59,6 +59,15 @@ public class AttendanceFragment extends Fragment {
     @BindView(R.id.toolbar_profile)
     Toolbar toolbarProfile;
     List<AttendanceItem> attendanceItemList = new ArrayList<>();
+    @BindView(R.id.card_monthly_attendance)
+    CardView cardMonthlyAttendance;
+    @BindView(R.id.card_calendar)
+    CardView cardCalendar;
+    @BindView(R.id.num_present)
+    TextView numPresent;
+    @BindView(R.id.num_absent)
+    TextView numAbsent;
+    private int presentCount, absentCount;
 
     public AttendanceFragment() {
         // Required empty public constructor
@@ -121,19 +130,36 @@ public class AttendanceFragment extends Fragment {
                 if (attendanceResponseModel != null) {
                     hideProgress();
                     if (!attendanceResponseModel.isError()) {
+                        updateUI(1);
                         setUpList(currentMonth, currentYear);
                         List<AttendanceItem> attendanceItems = attendanceResponseModel.getAttendance();
                         attendanceItemList.addAll(attendanceItems);
                         attendanceAdapter = new AttendanceAdapter(getActivity(), day, attendanceItemList);
                         rvAttendanceUI.setAdapter(attendanceAdapter);
                         attendanceAdapter.notifyDataSetChanged();
+                        getPresentAbsentCount();
+                        numPresent.setText(String.format(getString(R.string.present), presentCount));
+                        numAbsent.setText(String.format(getString(R.string.absent), absentCount));
                     } else {
+                        updateUI(0);
                         Toast.makeText(getActivity(), attendanceResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
 
+    }
+
+    private void updateUI(int visibility) {
+        presentCount = 0;
+        absentCount = 0;
+        if (visibility == 0) {
+            cardCalendar.setVisibility(View.GONE);
+            cardMonthlyAttendance.setVisibility(View.GONE);
+        } else {
+            cardCalendar.setVisibility(View.VISIBLE);
+            cardMonthlyAttendance.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -159,15 +185,26 @@ public class AttendanceFragment extends Fragment {
         builder.setItems(months, (dialog, which) -> {
             currentMonth = months[which];
             textMonth.setText(currentMonth);
+            updateUI(0);
             if (attendanceAdapter != null) {
                 attendanceAdapter.clearData();
-                subscribe();
-            } else {
-                subscribe();
             }
+            subscribe();
         });
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void getPresentAbsentCount() {
+        for (int i = 0; i < attendanceItemList.size(); i++) {
+            if (attendanceItemList.get(i).getStatus() != null) {
+                if (TextUtils.equals(attendanceItemList.get(i).getStatus(), "1")) {
+                    presentCount++;
+                } else {
+                    absentCount++;
+                }
+            }
+        }
     }
 }
