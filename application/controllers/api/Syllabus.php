@@ -16,17 +16,12 @@ class Syllabus extends REST_Controller {
       $response = array();
       $class_id = $this->input->post('class_id');
       $response = $this->get_syllabusByClass($class_id); // getting syllabus by class
-      if(!$response['error']){
-          $httpStatus = REST_Controller::HTTP_OK;
-      } else {
-          $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
-      }
+      $httpStatus = REST_Controller::HTTP_OK;
     }else{
       $response['error'] = true;
       $response['message'] = "Parameters not found";
       $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
     }
-    
     
     $this->response($response, $httpStatus);
     } 
