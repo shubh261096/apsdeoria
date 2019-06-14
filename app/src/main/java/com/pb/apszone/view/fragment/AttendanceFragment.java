@@ -35,8 +35,6 @@ import butterknife.Unbinder;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
 import static com.pb.apszone.utils.CommonUtils.getCurrentMonth;
 import static com.pb.apszone.utils.CommonUtils.getCurrentYear;
-import static com.pb.apszone.utils.CommonUtils.getFirstDayOfMonth;
-import static com.pb.apszone.utils.CommonUtils.getNumOfDaysInMonth;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
@@ -99,22 +97,6 @@ public class AttendanceFragment extends Fragment {
         return view;
     }
 
-    private void setUpList(String currentMonth, String currentYear) {
-        if (day.size() > 0) {
-            day.clear();
-        }
-        int numDay = getNumOfDaysInMonth(currentYear, currentMonth);
-        int skipPosition = getFirstDayOfMonth(currentYear, currentMonth);
-        for (int i = 0; i < skipPosition - 1; i++) {
-            day.add(i, "");
-        }
-        for (int i = 1; i <= 9; i++) {
-            day.add("0" + i);
-        }
-        for (int i = 10; i <= numDay; i++) {
-            day.add(String.valueOf(i));
-        }
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -131,7 +113,7 @@ public class AttendanceFragment extends Fragment {
                     hideProgress();
                     if (!attendanceResponseModel.isError()) {
                         updateUI(1);
-                        setUpList(currentMonth, currentYear);
+                        day = attendanceFragmentViewModel.setUpList(currentMonth, currentYear);
                         List<AttendanceItem> attendanceItems = attendanceResponseModel.getAttendance();
                         attendanceItemList.addAll(attendanceItems);
                         attendanceAdapter = new AttendanceAdapter(getActivity(), day, attendanceItemList);
