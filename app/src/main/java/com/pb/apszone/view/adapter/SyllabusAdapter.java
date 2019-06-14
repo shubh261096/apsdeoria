@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.SyllabusItem;
@@ -22,8 +21,9 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
 
     private final List<SyllabusItem> syllabusItemList;
     private Context context;
+    private final OnDownloadItemClickListener onDownloadItemClickListener;
 
-    static class SyllabusViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class SyllabusViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.subject_name)
         TextView subjectName;
         @BindView(R.id.subject_description)
@@ -31,22 +31,21 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
         @BindView(R.id.download_syllabus)
         TextView downloadSyllabus;
 
-
-        SyllabusViewHolder(final View itemView) {
+        SyllabusViewHolder(final View itemView, final OnDownloadItemClickListener clickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            downloadSyllabus.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(v.getContext(), String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+            downloadSyllabus.setOnClickListener(v -> {
+                if (clickListener != null) {
+                    clickListener.onItemClick(getAdapterPosition(), v);
+                }
+            });
         }
     }
 
-    public SyllabusAdapter(List<SyllabusItem> syllabusItemList, Context context) {
+    public SyllabusAdapter(List<SyllabusItem> syllabusItemList, Context context, OnDownloadItemClickListener onDownloadItemClickListener) {
         this.syllabusItemList = syllabusItemList;
         this.context = context;
+        this.onDownloadItemClickListener = onDownloadItemClickListener;
     }
 
     @NonNull
@@ -54,7 +53,7 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
     public SyllabusViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                                  int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_syllabus, parent, false);
-        return new SyllabusViewHolder(view);
+        return new SyllabusViewHolder(view, onDownloadItemClickListener);
     }
 
 
@@ -81,6 +80,10 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
     @Override
     public int getItemCount() {
         return syllabusItemList.size();
+    }
+
+    public interface OnDownloadItemClickListener {
+        void onItemClick(int position, View view);
     }
 
 }

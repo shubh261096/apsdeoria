@@ -1,15 +1,24 @@
 package com.pb.apszone.utils;
 
+import android.annotation.TargetApi;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 public class CommonUtils {
     private static ProgressDialog progressDialog;
@@ -192,5 +201,39 @@ public class CommonUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public static long beginDownload(String url, Context context) {
+        File file = new File(Objects.requireNonNull(context).getExternalFilesDir(null), "Download");
+        /*
+        Create a DownloadManager.Request with all the information necessary to start the download
+         */
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url))
+                .setMimeType(getMimeFromFileName(getFileNameFromURL(url)))
+                .setTitle(getFileNameFromURL(url))// Title of the Download Notification
+                .setDescription("Downloading") // Description of the Download Notification
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) // Visibility of the download Notification
+                .setDestinationUri(Uri.fromFile(file)) // Uri of the destination file
+                .setRequiresCharging(false) // Set if charging is required to begin the download
+                .setAllowedOverMetered(true) // Set if download is allowed on Mobile network
+                .setAllowedOverRoaming(true); // Set if download is allowed on roaming network
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+        if (downloadManager != null) {
+            return downloadManager.enqueue(request); // enqueue puts the download request in the queue.
+        } else {
+            return 0;
+        }
+    }
+
+    private static String getFileNameFromURL(String fileName) {
+        int pos = fileName.lastIndexOf("/");
+        return fileName.substring(pos + 1);
+    }
+
+    private static String getMimeFromFileName(String fileName) {
+        MimeTypeMap map = MimeTypeMap.getSingleton();
+        String ext = MimeTypeMap.getFileExtensionFromUrl(fileName);
+        return map.getMimeTypeFromExtension(ext);
     }
 }

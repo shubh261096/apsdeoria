@@ -1,7 +1,14 @@
 package com.pb.apszone.view.fragment;
 
+import android.annotation.TargetApi;
+import android.app.DownloadManager;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,14 +19,17 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.SyllabusItem;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.SyllabusAdapter;
+import com.pb.apszone.view.receiver.DownloadBroadcastReceiver;
 import com.pb.apszone.viewModel.SyllabusFragmentViewModel;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,11 +38,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static android.content.Context.DOWNLOAD_SERVICE;
+import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
+import static com.pb.apszone.utils.CommonUtils.beginDownload;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
-public class SyllabusFragment extends Fragment {
+public class SyllabusFragment extends Fragment implements SyllabusAdapter.OnDownloadItemClickListener {
 
     Unbinder unbinder;
     @BindView(R.id.toolbar_syllabus)
@@ -43,6 +56,7 @@ public class SyllabusFragment extends Fragment {
     SyllabusFragmentViewModel syllabusFragmentViewModel;
     KeyStorePref keyStorePref;
     SyllabusAdapter syllabusAdapter;
+    DownloadBroadcastReceiver downloadBroadcastReceiver;
 
     public SyllabusFragment() {
         // Required empty public constructor
@@ -66,9 +80,11 @@ public class SyllabusFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         syllabusItemList = new ArrayList<>();
         rvSyllabus.setLayoutManager(new LinearLayoutManager(getActivity()));
-        syllabusAdapter = new SyllabusAdapter(syllabusItemList, getActivity());
+        syllabusAdapter = new SyllabusAdapter(syllabusItemList, getActivity(), this);
         rvSyllabus.setAdapter(syllabusAdapter);
         toolbarSyllabus.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
+        downloadBroadcastReceiver = new DownloadBroadcastReceiver();
+        Objects.requireNonNull(getContext()).registerReceiver(downloadBroadcastReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         return view;
     }
 
@@ -112,5 +128,17 @@ public class SyllabusFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        Objects.requireNonNull(getContext()).unregisterReceiver(downloadBroadcastReceiver);
+    }
+
+    @Override
+    public void onItemClick(int position, View view) {
+        if (!TextUtils.isEmpty(syllabusItemList.get(position).getSyllabus())) {
+            if (URLUtil.isValidUrl(syllabusItemList.get(position).getSyllabus())) {
+                KEY_DOWNLOAD_ID = beginDownload(syllabusItemList.get(position).getSyllabus(), getContext());
+            } else {
+                Toast.makeText(getContext(), "Not a valid URL", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
