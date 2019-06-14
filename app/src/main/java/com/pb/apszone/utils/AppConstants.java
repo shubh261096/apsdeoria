@@ -39,5 +39,6 @@ public class AppConstants {
     /* DASHBOARD UI ELEMENT NAME*/
     public final static String UI_ELEMENT_TIMETABLE = "Timetable";
     public final static String UI_ELEMENT_ATTENDANCE = "Attendance";
+    public final static String UI_ELEMENT_SYLLABUS = "Syllabus";
 
 }

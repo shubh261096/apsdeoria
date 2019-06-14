@@ -23,4 +23,7 @@
     <dimen name="dp_120">120dp</dimen>
     <dimen name="text_18">18sp</dimen>
     <dimen name="dp_22">22dp</dimen>
+    <dimen name="text_17">17sp</dimen>
+    <dimen name="text_15">15sp</dimen>
+    <dimen name="text_13">13sp</dimen>
 </resources>

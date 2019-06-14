@@ -26,6 +26,7 @@
     <string name="monthly_attendance">Monthly Attendance</string>
     <string name="present">Present %d</string>
     <string name="absent">Absent %d</string>
+    <string name="toolbar_syllabus">Syllabus</string>
 
     <string-array name="day">
         <item>Monday</item>

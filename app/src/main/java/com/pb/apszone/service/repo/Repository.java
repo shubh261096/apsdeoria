@@ -10,12 +10,14 @@ import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
+import com.pb.apszone.service.model.SyllabusResponseModel;
 import com.pb.apszone.service.model.TimetableResponseModel;
 import com.pb.apszone.service.rest.ApiClient;
 import com.pb.apszone.service.rest.ApiInterface;
 import com.pb.apszone.service.rest.AttendanceRequestModel;
 import com.pb.apszone.service.rest.LoginRequestModel;
 import com.pb.apszone.service.rest.ProfileRequestModel;
+import com.pb.apszone.service.rest.SyllabusRequestModel;
 import com.pb.apszone.service.rest.TimetableRequestModel;
 
 import java.io.IOException;
@@ -181,6 +183,34 @@ public class Repository {
 
                     @Override
                     public void onFailure(@NonNull Call<AttendanceResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        data.postValue(null);
+                    }
+                });
+        return data;
+    }
+
+    /* Syllabus Request */
+    public MutableLiveData<SyllabusResponseModel> getSyllabus(SyllabusRequestModel syllabusRequestModel) {
+        final MutableLiveData<SyllabusResponseModel> data = new MutableLiveData<>();
+        Map<String, String> params = new HashMap<>();
+        params.put("class_id", syllabusRequestModel.getClassId());
+
+        apiService.getSyllabus(params)
+                .enqueue(new Callback<SyllabusResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<SyllabusResponseModel> call, @Nullable Response<SyllabusResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                data.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<SyllabusResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
                         data.postValue(null);
                     }

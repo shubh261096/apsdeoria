@@ -4,6 +4,7 @@ import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
+import com.pb.apszone.service.model.SyllabusResponseModel;
 import com.pb.apszone.service.model.TimetableResponseModel;
 
 import java.util.Map;
@@ -33,4 +34,8 @@ public interface ApiInterface {
     @POST("Attendance")
     @FormUrlEncoded
     Call<AttendanceResponseModel> getAttendance(@FieldMap Map<String, String> params);
+
+    @POST("Syllabus")
+    @FormUrlEncoded
+    Call<SyllabusResponseModel> getSyllabus(@FieldMap Map<String, String> params);
 }

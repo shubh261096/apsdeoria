@@ -20,6 +20,7 @@ import com.pb.apszone.view.adapter.DashboardAdapter;
 import com.pb.apszone.view.fragment.AttendanceFragment;
 import com.pb.apszone.view.fragment.ProfileFragment;
 import com.pb.apszone.view.fragment.StudentTimetableFragment;
+import com.pb.apszone.view.fragment.SyllabusFragment;
 import com.pb.apszone.view.listener.OnDashboardItemClickListener;
 import com.pb.apszone.viewModel.DashboardViewModel;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
@@ -34,6 +35,7 @@ import butterknife.OnClick;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_ATTENDANCE;
+import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_SYLLABUS;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_TIMETABLE;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
@@ -122,6 +124,10 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
             }
             if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_ATTENDANCE)) {
                 Fragment fragment = AttendanceFragment.newInstance();
+                replaceFragment(fragment);
+            }
+            if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_SYLLABUS)) {
+                Fragment fragment = SyllabusFragment.newInstance();
                 replaceFragment(fragment);
             }
         }
