@@ -1,14 +1,9 @@
 package com.pb.apszone.view.fragment;
 
-import android.annotation.TargetApi;
 import android.app.DownloadManager;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -29,7 +24,6 @@ import com.pb.apszone.view.adapter.SyllabusAdapter;
 import com.pb.apszone.view.receiver.DownloadBroadcastReceiver;
 import com.pb.apszone.viewModel.SyllabusFragmentViewModel;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static android.content.Context.DOWNLOAD_SERVICE;
 import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
 import static com.pb.apszone.utils.CommonUtils.beginDownload;
