@@ -35,7 +35,7 @@ class Syllabus extends REST_Controller
     if (!$data == false) {
       $response['error'] = false;
       $response['message'] = "Syllabus fetched successfully";
-      $response['timetable'] = $data;
+      $response['syllabus'] = $data;
     } else {
       $response['error'] = true;
       $response['message'] = "No data found";
