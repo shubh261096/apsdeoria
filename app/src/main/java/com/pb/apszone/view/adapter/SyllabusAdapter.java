@@ -65,6 +65,8 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
         }
         if (!TextUtils.isEmpty(syllabusItem.getDescription())) {
             syllabusViewHolder.subjectDescription.setText(syllabusItem.getDescription());
+        } else {
+            syllabusViewHolder.subjectDescription.setText("");
         }
         if (!TextUtils.isEmpty(syllabusItem.getSyllabus())) {
             syllabusViewHolder.downloadSyllabus.setVisibility(View.VISIBLE);
