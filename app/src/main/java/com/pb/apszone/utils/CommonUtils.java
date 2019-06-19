@@ -236,4 +236,36 @@ public class CommonUtils {
         String ext = MimeTypeMap.getFileExtensionFromUrl(fileName);
         return map.getMimeTypeFromExtension(ext);
     }
+
+    public static String getTodayDate() {
+        return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+    }
+
+    public static String getPreviousDate(String today) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Date date = null;
+        try {
+            date = dateFormat.parse(today);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, -1);
+        return dateFormat.format(calendar.getTime());
+    }
+
+    public static String getNextDate(String today) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Date date = null;
+        try {
+            date = dateFormat.parse(today);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, +1);
+        return dateFormat.format(calendar.getTime());
+    }
 }

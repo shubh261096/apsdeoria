@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
+import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.service.model.SyllabusResponseModel;
@@ -15,6 +16,7 @@ import com.pb.apszone.service.model.TimetableResponseModel;
 import com.pb.apszone.service.rest.ApiClient;
 import com.pb.apszone.service.rest.ApiInterface;
 import com.pb.apszone.service.rest.AttendanceRequestModel;
+import com.pb.apszone.service.rest.HomeworkRequestModel;
 import com.pb.apszone.service.rest.LoginRequestModel;
 import com.pb.apszone.service.rest.ProfileRequestModel;
 import com.pb.apszone.service.rest.SyllabusRequestModel;
@@ -211,6 +213,35 @@ public class Repository {
 
                     @Override
                     public void onFailure(@NonNull Call<SyllabusResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        data.postValue(null);
+                    }
+                });
+        return data;
+    }
+
+    /* Homework Request */
+    public MutableLiveData<HomeworkResponseModel> getHomework(HomeworkRequestModel homeworkRequestModel) {
+        final MutableLiveData<HomeworkResponseModel> data = new MutableLiveData<>();
+        Map<String, String> params = new HashMap<>();
+        params.put("class_id", homeworkRequestModel.getClassId());
+        params.put("date", homeworkRequestModel.getDate());
+
+        apiService.getHomework(params)
+                .enqueue(new Callback<HomeworkResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<HomeworkResponseModel> call, @Nullable Response<HomeworkResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                data.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<HomeworkResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
                         data.postValue(null);
                     }

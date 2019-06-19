@@ -2,6 +2,7 @@ package com.pb.apszone.service.rest;
 
 import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
+import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.service.model.SyllabusResponseModel;
@@ -38,4 +39,8 @@ public interface ApiInterface {
     @POST("Syllabus")
     @FormUrlEncoded
     Call<SyllabusResponseModel> getSyllabus(@FieldMap Map<String, String> params);
+
+    @POST("Homework")
+    @FormUrlEncoded
+    Call<HomeworkResponseModel> getHomework(@FieldMap Map<String, String> params);
 }
