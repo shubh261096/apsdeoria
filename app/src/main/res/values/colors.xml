@@ -3,26 +3,19 @@
     <color name="colorPrimary">#3350B8</color>
     <color name="colorPrimary_70">#B33350B8</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="textColorPrimary">#FFFFFF</color>
-    <color name="windowBackground">#FFFFFF</color>
-    <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#448AFF</color>
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="media">#61A4F5</color>
-    <color name="grayLight">#BEBEBE</color>
-    <color name="startBlue">#2F4F4F</color>
     <color name="activeClass">#32CD32</color>
     <color name="light_gray">#BDBDBD</color>
     <color name="light_gray_50">#80BDBDBD</color>
     <color name="black_80">#B3000000</color>
     <color name="colorLightPrimary">#C5CAE9</color>
-    <color name="button_color">#e8e8e8</color>
     <color name="hint_gray">#80707070</color>
     <color name="hint_gray_80">#CC707070</color>
     <color name="light_black">#424343</color>
-    <color name="lightPrimary">#94A5E3</color>
+    <color name="lightPrimary">#6b80cb</color>
     <color name="red">#FF6260</color>
     <color name="green">#3BDE86</color>
 </resources>
