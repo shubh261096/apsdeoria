@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +52,7 @@ public class AttendanceFragment extends Fragment {
     @BindView(R.id.textYear)
     TextView textYear;
     @BindView(R.id.rlMonth)
-    CardView rlMonth;
+    LinearLayout rlMonth;
     AttendanceFragmentViewModel attendanceFragmentViewModel;
     KeyStorePref keyStorePref;
     @BindView(R.id.toolbar_profile)
