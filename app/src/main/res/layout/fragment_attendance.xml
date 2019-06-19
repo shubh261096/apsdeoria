@@ -27,65 +27,61 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:id="@+id/rlMonth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        app:cardBackgroundColor="@color/colorPrimary_70"
-        app:cardCornerRadius="@dimen/dp_6"
-        app:cardPreventCornerOverlap="false"
-        app:elevation="@dimen/dp_4">
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@drawable/spinner_bg_no_padding"
+        android:orientation="horizontal"
+        tools:ignore="PrivateResource">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/dp_4"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/dp_4"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_5">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:layout_weight="0.7"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textMonth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_16"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textYear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_11"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <ImageView
+            <TextView
+                android:id="@+id/textYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:layout_weight="0.3"
-                android:src="@drawable/ic_angle_arrow_down"
-                android:tint="@color/white"
-                tools:ignore="ContentDescription" />
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_11"
+                android:textStyle="bold" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:src="@drawable/ic_angle_arrow_down"
+            android:tint="@color/white"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:layerType="software"
+        android:src="@drawable/dotted_line"
+        tools:ignore="ContentDescription" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_calendar"
