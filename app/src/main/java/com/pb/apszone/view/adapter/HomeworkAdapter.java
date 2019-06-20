@@ -17,13 +17,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.HomeworViewHolder> {
+public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.HomeworkViewHolder> {
 
     private final List<HomeworkItem> homeworkItemList;
     private Context context;
     private final OnDownloadItemClickListener onDownloadItemClickListener;
 
-    static class HomeworViewHolder extends RecyclerView.ViewHolder {
+    static class HomeworkViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.subject_name)
         TextView subjectName;
         @BindView(R.id.teacher_name)
@@ -33,7 +33,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
         @BindView(R.id.download_homework)
         TextView downloadHomework;
 
-        HomeworViewHolder(final View itemView, final OnDownloadItemClickListener clickListener) {
+        HomeworkViewHolder(final View itemView, final OnDownloadItemClickListener clickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             downloadHomework.setOnClickListener(v -> {
@@ -52,32 +52,32 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
 
     @NonNull
     @Override
-    public HomeworViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                                int viewType) {
+    public HomeworkViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                 int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_homework, parent, false);
-        return new HomeworViewHolder(view, onDownloadItemClickListener);
+        return new HomeworkViewHolder(view, onDownloadItemClickListener);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull HomeworViewHolder homeworViewHolder, final int position) {
+    public void onBindViewHolder(@NonNull HomeworkViewHolder homeworkViewHolder, final int position) {
         HomeworkItem homeworkItem = getItem(position);
         if (!TextUtils.isEmpty(homeworkItem.getSubjectId().getName())) {
-            homeworViewHolder.subjectName.setText(homeworkItem.getSubjectId().getName());
+            homeworkViewHolder.subjectName.setText(homeworkItem.getSubjectId().getName());
         }
         if (!TextUtils.isEmpty(homeworkItem.getTeacherId().getFullname())) {
-            homeworViewHolder.teacherName.setText(homeworkItem.getTeacherId().getFullname());
+            homeworkViewHolder.teacherName.setText(homeworkItem.getTeacherId().getFullname());
         }
         if (!TextUtils.isEmpty(homeworkItem.getRemarks())) {
-            homeworViewHolder.teacherRemarks.setVisibility(View.VISIBLE);
-            homeworViewHolder.teacherRemarks.setText(homeworkItem.getRemarks());
+            homeworkViewHolder.teacherRemarks.setVisibility(View.VISIBLE);
+            homeworkViewHolder.teacherRemarks.setText(homeworkItem.getRemarks());
         } else {
-            homeworViewHolder.teacherRemarks.setVisibility(View.GONE);
+            homeworkViewHolder.teacherRemarks.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(homeworkItem.getData())) {
-            homeworViewHolder.downloadHomework.setVisibility(View.VISIBLE);
+            homeworkViewHolder.downloadHomework.setVisibility(View.VISIBLE);
         } else {
-            homeworViewHolder.downloadHomework.setVisibility(View.GONE);
+            homeworkViewHolder.downloadHomework.setVisibility(View.GONE);
         }
     }
 
@@ -92,6 +92,11 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
 
     public interface OnDownloadItemClickListener {
         void onItemClick(int position, View view);
+    }
+
+    public void clearData() {
+        homeworkItemList.clear();
+        notifyDataSetChanged();
     }
 
 }

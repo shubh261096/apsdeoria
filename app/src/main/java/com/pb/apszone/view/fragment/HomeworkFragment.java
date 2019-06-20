@@ -1,5 +1,6 @@
 package com.pb.apszone.view.fragment;
 
+import android.app.DatePickerDialog;
 import android.app.DownloadManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -26,8 +27,12 @@ import com.pb.apszone.view.adapter.SyllabusAdapter;
 import com.pb.apszone.view.receiver.DownloadBroadcastReceiver;
 import com.pb.apszone.viewModel.HomeworkFragmentViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -156,11 +161,54 @@ public class HomeworkFragment extends Fragment implements SyllabusAdapter.OnDown
             case R.id.previous:
                 today_date = getPreviousDate(today_date);
                 todayDate.setText(today_date);
+                if (homeworkAdapter != null) {
+                    homeworkAdapter.clearData();
+                    subscribe();
+                }
                 break;
             case R.id.next:
                 today_date = getNextDate(today_date);
                 todayDate.setText(today_date);
+                if (homeworkAdapter != null) {
+                    homeworkAdapter.clearData();
+                    subscribe();
+                }
                 break;
         }
+    }
+
+    @OnClick(R.id.today_date)
+    public void onTodayDateClicked() {
+        final Calendar c = Calendar.getInstance();
+        int mYear, mMonth, mDay;
+        String currentDate = todayDate.getText().toString();
+
+        /* Setting the previous date selected in calendar */
+        if (currentDate.length() > 0) {
+            String[] data = currentDate.split("-");
+            mYear = Integer.parseInt(data[0]);
+            mMonth = Integer.parseInt(data[1]);
+            mMonth = mMonth - 1;
+            mDay = Integer.parseInt(data[2]);
+        } else {
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+        }
+        DatePickerDialog datePickerDialog = new DatePickerDialog(Objects.requireNonNull(getContext()),
+                (view1, year, monthOfYear, dayOfMonth) -> {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTimeInMillis(0);
+                    cal.set(year, monthOfYear, dayOfMonth);
+                    Date chosenDate = cal.getTime();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    today_date = dateFormat.format(chosenDate);
+                    todayDate.setText(today_date);
+                    if (homeworkAdapter != null) {
+                        homeworkAdapter.clearData();
+                        subscribe();
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
     }
 }
