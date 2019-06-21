@@ -42,4 +42,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             return $data;
         }
     }
+
+    function getFeesDeatils($fees_id){
+        // get main CodeIgniter object
+        $ci = get_instance();
+        $ci->load->model('CommonModel');
+        $data = $ci->CommonModel->get_feesDetails($fees_id);
+        if($data){
+            return $data;
+        }
+    }
 ?>

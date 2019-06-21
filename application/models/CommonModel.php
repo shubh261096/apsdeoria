@@ -46,6 +46,19 @@ class CommonModel extends CI_model {
             return FALSE;
         }
     }
+
+    /* Query for getting fees details by fees_id */
+    public function get_feesDetails($fees_id) {
+        $query = $this->db->select('*')
+                    ->where(['id'=>$fees_id])
+    			    ->from('fees')	
+                    ->get();
+        if($query->num_rows()){
+            return $query->row();
+        }else{
+            return FALSE;
+        }
+    }
     
 
 }
