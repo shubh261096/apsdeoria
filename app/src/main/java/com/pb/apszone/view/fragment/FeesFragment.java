@@ -35,8 +35,10 @@ import butterknife.Unbinder;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
 import static com.pb.apszone.utils.CommonUtils.capitalize;
+import static com.pb.apszone.utils.CommonUtils.getCurrentMonth;
 import static com.pb.apszone.utils.CommonUtils.getCurrentYear;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
+import static com.pb.apszone.utils.CommonUtils.showLateFeeAlertDialog;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailItemClick {
@@ -99,11 +101,22 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
                     List<FeesItem> feesItems = feesResponseModel.getFees();
                     feesItemList.addAll(feesItems);
                     feesAdapter.notifyDataSetChanged();
+                    checkForLateFee();
                 } else {
                     Toast.makeText(getActivity(), feesResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void checkForLateFee() {
+        boolean found = false;
+        for (int i = 0; i < feesItemList.size(); i++) {
+            found = TextUtils.equals(feesItemList.get(0).getPeriod(), getCurrentMonth());
+        }
+        if (!found){
+            showLateFeeAlertDialog(Objects.requireNonNull(getView()), getContext());
+        }
     }
 
     @Override

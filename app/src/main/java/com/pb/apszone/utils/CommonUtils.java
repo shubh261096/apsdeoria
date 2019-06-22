@@ -6,8 +6,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
+
+import com.pb.apszone.R;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -271,5 +278,26 @@ public class CommonUtils {
 
     public static String capitalize(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+
+    public static void showLateFeeAlertDialog(View view, Context context) {
+        //before inflating the custom alert dialog layout, we will get the current activity viewGroup
+        ViewGroup viewGroup = view.findViewById(android.R.id.content);
+
+        //then we will inflate the custom alert dialog xml that we created
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_fee_remider, viewGroup, false);
+
+        Button buttonOk = dialogView.findViewById(R.id.buttonOk);
+
+        //Now we need an AlertDialog.Builder object
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        //setting the view of the builder to our custom view that we already inflated
+        builder.setView(dialogView);
+
+        //finally creating the alert dialog and displaying it
+        AlertDialog alertDialog = builder.create();
+        buttonOk.setOnClickListener(v -> alertDialog.dismiss());
+        alertDialog.show();
     }
 }
