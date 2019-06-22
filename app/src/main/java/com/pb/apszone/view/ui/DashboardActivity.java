@@ -18,6 +18,7 @@ import com.pb.apszone.utils.AutoFitGridLayoutManager;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.DashboardAdapter;
 import com.pb.apszone.view.fragment.AttendanceFragment;
+import com.pb.apszone.view.fragment.FeesFragment;
 import com.pb.apszone.view.fragment.HomeworkFragment;
 import com.pb.apszone.view.fragment.ProfileFragment;
 import com.pb.apszone.view.fragment.StudentTimetableFragment;
@@ -36,6 +37,7 @@ import butterknife.OnClick;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_ATTENDANCE;
+import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_FEES;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_HOMEWORK;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_SYLLABUS;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_TIMETABLE;
@@ -134,6 +136,10 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
             }
             if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_HOMEWORK)) {
                 Fragment fragment = HomeworkFragment.newInstance();
+                replaceFragment(fragment);
+            }
+            if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_FEES)) {
+                Fragment fragment = FeesFragment.newInstance();
                 replaceFragment(fragment);
             }
         }

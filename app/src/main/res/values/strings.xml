@@ -32,6 +32,10 @@
     <string name="download_homework">Download Homework</string>
     <string name="previous_date"><![CDATA[<]]></string>
     <string name="next_date"><![CDATA[>]]></string>
+    <string name="toolbar_fees">Fees</string>
+    <string name="due_amount">Due Amount :</string>
+    <string name="paid_amount">Paid Amount :</string>
+    <string name="monthly_fee">Monthly Fee :</string>
 
     <string-array name="day">
         <item>Monday</item>

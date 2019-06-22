@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
+import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
@@ -16,6 +17,7 @@ import com.pb.apszone.service.model.TimetableResponseModel;
 import com.pb.apszone.service.rest.ApiClient;
 import com.pb.apszone.service.rest.ApiInterface;
 import com.pb.apszone.service.rest.AttendanceRequestModel;
+import com.pb.apszone.service.rest.FeesRequestModel;
 import com.pb.apszone.service.rest.HomeworkRequestModel;
 import com.pb.apszone.service.rest.LoginRequestModel;
 import com.pb.apszone.service.rest.ProfileRequestModel;
@@ -242,6 +244,36 @@ public class Repository {
 
                     @Override
                     public void onFailure(@NonNull Call<HomeworkResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        data.postValue(null);
+                    }
+                });
+        return data;
+    }
+
+    /* Fees Request */
+    public MutableLiveData<FeesResponseModel> getFees(FeesRequestModel feesRequestModel) {
+        final MutableLiveData<FeesResponseModel> data = new MutableLiveData<>();
+        Map<String, String> params = new HashMap<>();
+        params.put("class_id", feesRequestModel.getClassId());
+        params.put("year", feesRequestModel.getYear());
+        params.put("student_id", feesRequestModel.getStudentId());
+
+        apiService.getFees(params)
+                .enqueue(new Callback<FeesResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<FeesResponseModel> call, @Nullable Response<FeesResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                data.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<FeesResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
                         data.postValue(null);
                     }
