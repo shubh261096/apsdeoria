@@ -112,7 +112,7 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
     private void checkForLateFee() {
         boolean found = false;
         for (int i = 0; i < feesItemList.size(); i++) {
-            found = TextUtils.equals(feesItemList.get(0).getPeriod(), getCurrentMonth());
+            found = TextUtils.equals(feesItemList.get(i).getPeriod(), getCurrentMonth());
         }
         if (!found){
             showLateFeeAlertDialog(Objects.requireNonNull(getView()), getContext());
