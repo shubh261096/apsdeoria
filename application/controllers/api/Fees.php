@@ -36,9 +36,6 @@ class Fees extends REST_Controller {
                 if ($field->fees_id) {
                     $data[$key]->fees_id = getFeesDeatils($field->fees_id); // getting fee details and adding it into data array
                 }
-                if ($field->class_id) {
-                    $data[$key]->class_id = getClassDetails($class_id); // getting class details and adding it into data array
-                } 
             } 
             
             $response['error'] = false;
