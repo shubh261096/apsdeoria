@@ -33,9 +33,15 @@
     <string name="previous_date"><![CDATA[<]]></string>
     <string name="next_date"><![CDATA[>]]></string>
     <string name="toolbar_fees">Fees</string>
-    <string name="due_amount">Due Amount :</string>
-    <string name="paid_amount">Paid Amount :</string>
-    <string name="monthly_fee">Monthly Fee :</string>
+    <string name="due_amount">Due Amount</string>
+    <string name="paid_amount">Paid Amount</string>
+    <string name="monthly_fee">Monthly Fee</string>
+    <string name="fee_details">Fee Details</string>
+    <string name="date_paid">Date Paid</string>
+    <string name="rupee_symbol">\u20B9</string>
+    <string name="month">Month</string>
+    <string name="status">Status</string>
+    <string name="more_info"><u>More Info</u></string>
 
     <string-array name="day">
         <item>Monday</item>

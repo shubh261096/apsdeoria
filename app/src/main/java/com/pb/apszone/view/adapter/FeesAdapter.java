@@ -21,6 +21,7 @@ public class FeesAdapter extends RecyclerView.Adapter<FeesAdapter.FeesViewHolder
 
     private final List<FeesItem> feesItemList;
     private Context context;
+    private final OnFeeDetailItemClick feeDetailItemClick;
 
     static class FeesViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.period)
@@ -31,16 +32,24 @@ public class FeesAdapter extends RecyclerView.Adapter<FeesAdapter.FeesViewHolder
         TextView dueAmount;
         @BindView(R.id.total_amount)
         TextView totalAmount;
+        @BindView(R.id.fees_detail)
+        TextView feesDetail;
 
-        FeesViewHolder(final View itemView) {
+        FeesViewHolder(final View itemView, final OnFeeDetailItemClick feeDetailItemClick) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            feesDetail.setOnClickListener(v -> {
+                if (feeDetailItemClick != null) {
+                    feeDetailItemClick.onItemClick(getAdapterPosition(), v);
+                }
+            });
         }
     }
 
-    public FeesAdapter(List<FeesItem> feesItemList, Context context) {
+    public FeesAdapter(List<FeesItem> feesItemList, Context context, OnFeeDetailItemClick feeDetailItemClick) {
         this.feesItemList = feesItemList;
         this.context = context;
+        this.feeDetailItemClick = feeDetailItemClick;
     }
 
     @NonNull
@@ -48,7 +57,7 @@ public class FeesAdapter extends RecyclerView.Adapter<FeesAdapter.FeesViewHolder
     public FeesViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                              int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_fees, parent, false);
-        return new FeesViewHolder(view);
+        return new FeesViewHolder(view, feeDetailItemClick);
     }
 
 
@@ -59,10 +68,10 @@ public class FeesAdapter extends RecyclerView.Adapter<FeesAdapter.FeesViewHolder
             feesViewHolder.period.setText(feesItem.getPeriod());
         }
         if (!TextUtils.isEmpty(feesItem.getFeesId().getTotalAmount())) {
-            feesViewHolder.totalAmount.setText(feesItem.getFeesId().getTotalAmount());
+            feesViewHolder.totalAmount.setText(String.format("%s %s", context.getString(R.string.rupee_symbol), feesItem.getFeesId().getTotalAmount()));
         }
         if (!TextUtils.isEmpty(feesItem.getDueAmount())) {
-            feesViewHolder.dueAmount.setText(feesItem.getDueAmount());
+            feesViewHolder.dueAmount.setText(String.format("%s %s", context.getString(R.string.rupee_symbol), feesItem.getDueAmount()));
             if (TextUtils.equals(feesItem.getDueAmount(), "0")) {
                 feesViewHolder.dueAmount.setTextColor(context.getResources().getColor(R.color.green));
             } else {
@@ -73,7 +82,7 @@ public class FeesAdapter extends RecyclerView.Adapter<FeesAdapter.FeesViewHolder
             feesViewHolder.dueAmount.setText("-");
         }
         if (!TextUtils.isEmpty(feesItem.getFeesPaid())) {
-            feesViewHolder.feesPaid.setText(feesItem.getFeesPaid());
+            feesViewHolder.feesPaid.setText(String.format("%s %s", context.getString(R.string.rupee_symbol), feesItem.getFeesPaid()));
         } else {
             feesViewHolder.feesPaid.setTextColor(context.getResources().getColor(R.color.red));
             feesViewHolder.feesPaid.setText("-");
@@ -89,4 +98,7 @@ public class FeesAdapter extends RecyclerView.Adapter<FeesAdapter.FeesViewHolder
         return feesItemList.size();
     }
 
+    public interface OnFeeDetailItemClick {
+        void onItemClick(int position, View view);
+    }
 }
