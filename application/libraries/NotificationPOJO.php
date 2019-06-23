@@ -1,5 +1,5 @@
 <?php
-class NotificationModel
+class NotificationPOJO
 {
 	private $title;
 	private $message;
@@ -52,4 +52,3 @@ class NotificationModel
 		return $notification;
 	}
 }
-?>
