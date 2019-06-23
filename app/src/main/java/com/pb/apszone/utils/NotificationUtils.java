@@ -115,6 +115,8 @@ public class NotificationUtils {
                         .setStyle(inboxStyle)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(Html.fromHtml(message).toString()))
                         .setContentText(message)
                         .build();
 
