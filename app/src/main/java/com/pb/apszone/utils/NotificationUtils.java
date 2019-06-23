@@ -113,7 +113,7 @@ public class NotificationUtils {
                         .setContentTitle(title)
                         .setContentIntent(resultPendingIntent)
                         .setStyle(inboxStyle)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(icon)
                         .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(Html.fromHtml(message).toString()))
@@ -131,7 +131,7 @@ public class NotificationUtils {
                         .setContentTitle(title)
                         .setContentIntent(resultPendingIntent)
                         .setStyle(bigPictureStyle)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(icon)
                         .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                         .setContentText(message)
                         .build();
