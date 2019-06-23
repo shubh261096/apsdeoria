@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.pb.apszone.R;
 import com.pb.apszone.utils.KeyStorePref;
 
@@ -23,6 +24,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
+        FirebaseMessaging.getInstance().subscribeToTopic("global"); // This is done to subscribe all app user for topic
 
         keyStorePref = KeyStorePref.getInstance(this);
 
