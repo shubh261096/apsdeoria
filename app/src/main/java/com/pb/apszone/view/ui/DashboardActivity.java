@@ -116,6 +116,11 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         dashboardViewModel.getDashboardUIElements().observe(this, dashboardUIResponseModel -> {
             if (dashboardUIResponseModel != null) {
                 hideProgress();
+
+                /* Clearing data since activity is always active */
+                if (dashboardAdapter != null) {
+                    dashboardAdapter.clearData();
+                }
                 if (!dashboardUIResponseModel.isError()) {
                     List<DashboardItem> dashboardItems = dashboardUIResponseModel.getDashboard();
                     dashboardItemList.addAll(dashboardItems);
