@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
@@ -329,5 +331,14 @@ public class CommonUtils {
             j.printStackTrace();
         }
         return null;
+    }
+
+    public static Boolean getConnectivityStatus(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = null;
+        if (cm != null) {
+            activeNetwork = cm.getActiveNetworkInfo();
+        }
+        return activeNetwork != null;
     }
 }

@@ -21,15 +21,17 @@ public class DashboardViewModel extends AndroidViewModel {
 
     private MutableLiveData<DashboardUIResponseModel> dashboardUIResponseModelMutableLiveData;
     private KeyStorePref keyStorePref;
+    private Repository repository;
 
     public DashboardViewModel(@NonNull Application application) {
         super(application);
-        Repository repository = Repository.getInstance();
+        dashboardUIResponseModelMutableLiveData = new MutableLiveData<>();
+        repository = Repository.getInstance();
         keyStorePref = KeyStorePref.getInstance(application.getApplicationContext());
-        dashboardUIResponseModelMutableLiveData = repository.getDashboardUIElements();
     }
 
     public LiveData<DashboardUIResponseModel> getDashboardUIElements() {
+        dashboardUIResponseModelMutableLiveData = repository.getDashboardUIElements();
         return dashboardUIResponseModelMutableLiveData;
     }
 

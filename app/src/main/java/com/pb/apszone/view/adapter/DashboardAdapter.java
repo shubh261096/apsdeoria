@@ -98,4 +98,8 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         return dashboardItemList.size();
     }
 
+    public void clearData() {
+        dashboardItemList.clear();
+        notifyDataSetChanged();
+    }
 }

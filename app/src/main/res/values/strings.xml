@@ -47,6 +47,8 @@
     <string name="alert">Alert</string>
     <string name="alert_late_fees">You have not submitted the fees for this month. Please pay the fees before 10th, post this date \u20B9 50 will be fined daily for late fee.</string>
     <string name="toolbar_inbox">Inbox</string>
+    <string name="no_internet">Looks like your internet is not working. Please connect to the internet.</string>
+    <string name="oh_snap">Oh Snap!</string>
 
     <string-array name="day">
         <item>Monday</item>

@@ -1,6 +1,8 @@
 package com.pb.apszone.view.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.DashboardItem;
@@ -24,7 +27,9 @@ import com.pb.apszone.view.fragment.InboxFragment;
 import com.pb.apszone.view.fragment.ProfileFragment;
 import com.pb.apszone.view.fragment.StudentTimetableFragment;
 import com.pb.apszone.view.fragment.SyllabusFragment;
+import com.pb.apszone.view.listener.NetworkChangeListener;
 import com.pb.apszone.view.listener.OnDashboardItemClickListener;
+import com.pb.apszone.view.receiver.NetworkChangeReceiver;
 import com.pb.apszone.viewModel.DashboardViewModel;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
 
@@ -48,7 +53,7 @@ import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
-public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener, ProfileFragment.OnFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener, ProfileFragment.OnFragmentInteractionListener, NetworkChangeListener {
 
     @BindView(R.id.rvDashboardUI)
     RecyclerView rvDashboardUI;
@@ -58,6 +63,8 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     TextView moreInfo;
     @BindView(R.id.user_dp)
     ImageView userDp;
+    @BindView(R.id.includeNetworkLayout)
+    View includeNetworkLayout;
     DashboardViewModel dashboardViewModel;
     ProfileFragmentViewModel profileFragmentViewModel;
     DashboardAdapter dashboardAdapter;
@@ -65,6 +72,14 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     private OnDashboardItemClickListener onDashboardItemClickListener;
     KeyStorePref keyStorePref;
     private String user_type, user_id;
+    NetworkChangeReceiver changeReceiver;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        changeReceiver = new NetworkChangeReceiver(this);
+        registerReceiver(changeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +94,10 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         user_type = keyStorePref.getString(KEY_USER_TYPE);
         user_id = keyStorePref.getString(KEY_USER_ID);
         setUpGridView();
-        showProgress(this, "Please wait...");
-        subscribe();
-
-        profileFragmentViewModel.sendRequest(user_id, user_type);
-        subscribeProfile();
     }
 
     private void subscribeProfile() {
+        profileFragmentViewModel.sendRequest(user_id, user_type);
         profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
             if (profileResponseModel != null) {
                 hideProgress();
@@ -101,11 +112,18 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     }
 
     private void subscribe() {
+        showProgress(this, "Please wait...");
         dashboardViewModel.getDashboardUIElements().observe(this, dashboardUIResponseModel -> {
             if (dashboardUIResponseModel != null) {
-                List<DashboardItem> dashboardItems = dashboardUIResponseModel.getDashboard();
-                dashboardItemList.addAll(dashboardItems);
-                dashboardAdapter.notifyDataSetChanged();
+                hideProgress();
+                if (!dashboardUIResponseModel.isError()) {
+                    List<DashboardItem> dashboardItems = dashboardUIResponseModel.getDashboard();
+                    dashboardItemList.addAll(dashboardItems);
+                    dashboardAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(this, dashboardUIResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -184,5 +202,26 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         fragmentTransaction.replace(R.id.dynamic_fragment_frame_layout, destFragment).addToBackStack(destFragment.getClass().getSimpleName());
         // Commit the Fragment replace action.
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void getNetworkData(boolean connected) {
+        hideProgress();
+        if (!connected) {
+            includeNetworkLayout.setVisibility(View.VISIBLE);
+        } else {
+            if (dashboardAdapter != null) {
+                dashboardAdapter.clearData();
+            }
+            subscribe();
+            subscribeProfile();
+            includeNetworkLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(changeReceiver);
     }
 }
