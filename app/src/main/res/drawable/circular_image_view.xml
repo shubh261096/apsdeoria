@@ -1,0 +1,15 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/shape_status">
+        <shape android:shape="oval">
+            <solid android:color="@color/lightPrimary" />
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="@color/light_gray" />
+            <padding
+                android:bottom="@dimen/dp_2"
+                android:left="@dimen/dp_2"
+                android:right="@dimen/dp_2"
+                android:top="@dimen/dp_2" />
+        </shape>
+    </item>
+</layer-list>

@@ -10,6 +10,7 @@ import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
+import com.pb.apszone.service.model.InboxResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.service.model.SyllabusResponseModel;
@@ -274,6 +275,32 @@ public class Repository {
 
                     @Override
                     public void onFailure(@NonNull Call<FeesResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        data.postValue(null);
+                    }
+                });
+        return data;
+    }
+
+    /* Inbox Request */
+    public MutableLiveData<InboxResponseModel> getInbox() {
+        final MutableLiveData<InboxResponseModel> data = new MutableLiveData<>();
+        apiService.getInbox()
+                .enqueue(new Callback<InboxResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<InboxResponseModel> call, @Nullable Response<InboxResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                data.postValue(response.body());
+                                Log.i("Response ", response.message());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<InboxResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
                         data.postValue(null);
                     }

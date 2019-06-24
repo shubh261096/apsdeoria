@@ -4,6 +4,7 @@ import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
+import com.pb.apszone.service.model.InboxResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.service.model.SyllabusResponseModel;
@@ -48,4 +49,7 @@ public interface ApiInterface {
     @POST("Fees")
     @FormUrlEncoded
     Call<FeesResponseModel> getFees(@FieldMap Map<String, String> params);
+
+    @GET("Inbox")
+    Call<InboxResponseModel> getInbox();
 }

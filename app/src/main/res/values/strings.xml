@@ -46,6 +46,7 @@
     <string name="ok">Ok</string>
     <string name="alert">Alert</string>
     <string name="alert_late_fees">You have not submitted the fees for this month. Please pay the fees before 10th, post this date \u20B9 50 will be fined daily for late fee.</string>
+    <string name="toolbar_inbox">Inbox</string>
 
     <string-array name="day">
         <item>Monday</item>

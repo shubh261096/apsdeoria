@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
@@ -299,5 +300,34 @@ public class CommonUtils {
         AlertDialog alertDialog = builder.create();
         buttonOk.setOnClickListener(v -> alertDialog.dismiss());
         alertDialog.show();
+    }
+
+    public static String getTime(String time) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            Date past = format.parse(time);
+            Date now = new Date();
+            long seconds = TimeUnit.MILLISECONDS.toSeconds(now.getTime() - past.getTime());
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime());
+            long hours = TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime());
+            long days = TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime());
+
+            if (seconds < 60) {
+                return seconds + " sec ago";
+            } else if (minutes < 60) {
+                return minutes + " min ago";
+            } else if (hours < 24) {
+                return hours + " hour ago";
+            } else if (days <= 2) {
+                return days + " day ago";
+            } else {
+                Date dt = format.parse(time);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                return dateFormat.format(dt);
+            }
+        } catch (Exception j) {
+            j.printStackTrace();
+        }
+        return null;
     }
 }
