@@ -28,14 +28,12 @@ public class DashboardViewModel extends AndroidViewModel {
     private MutableLiveData<DashboardUIResponseModel> dashboardUIResponseModelMutableLiveData;
     private KeyStorePref keyStorePref;
     private Repository repository;
-    private List<DashboardItem> dashboardItemList;
 
     public DashboardViewModel(@NonNull Application application) {
         super(application);
         dashboardUIResponseModelMutableLiveData = new MutableLiveData<>();
         repository = Repository.getInstance();
         keyStorePref = KeyStorePref.getInstance(application.getApplicationContext());
-        dashboardItemList = new ArrayList<>();
     }
 
     public LiveData<DashboardUIResponseModel> getDashboardUIElements() {
@@ -55,6 +53,7 @@ public class DashboardViewModel extends AndroidViewModel {
     }
 
     public List<DashboardItem> addListData(List<DashboardItem> dashboardItems, String user_type) {
+        List<DashboardItem> dashboardItemList = new ArrayList<>();
         for (int i = 0; i < dashboardItems.size(); i++) {
             if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
                 if (TextUtils.equals(dashboardItems.get(i).getParent(), KEY_ENABLED)) {
