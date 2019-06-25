@@ -27,11 +27,11 @@ import com.pb.apszone.view.fragment.InboxFragment;
 import com.pb.apszone.view.fragment.ProfileFragment;
 import com.pb.apszone.view.fragment.StudentTimetableFragment;
 import com.pb.apszone.view.fragment.SyllabusFragment;
-import com.pb.apszone.view.listener.NetworkChangeListener;
 import com.pb.apszone.view.listener.OnDashboardItemClickListener;
 import com.pb.apszone.view.receiver.NetworkChangeReceiver;
 import com.pb.apszone.viewModel.DashboardViewModel;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
+import com.pb.apszone.viewModel.SharedViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
-public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener, ProfileFragment.OnFragmentInteractionListener, NetworkChangeListener {
+public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener, ProfileFragment.OnFragmentInteractionListener {
 
     @BindView(R.id.rvDashboardUI)
     RecyclerView rvDashboardUI;
@@ -67,6 +67,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     View includeNetworkLayout;
     DashboardViewModel dashboardViewModel;
     ProfileFragmentViewModel profileFragmentViewModel;
+    SharedViewModel sharedViewModel;
     DashboardAdapter dashboardAdapter;
     private List<DashboardItem> dashboardItemList;
     private OnDashboardItemClickListener onDashboardItemClickListener;
@@ -77,7 +78,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     @Override
     protected void onStart() {
         super.onStart();
-        changeReceiver = new NetworkChangeReceiver(this);
         registerReceiver(changeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
@@ -86,6 +86,12 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
+
+        /* Starting observer of Internet change*/
+        changeReceiver = new NetworkChangeReceiver(this);
+        sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
+        observeInternetChange();
+
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
         dashboardItemList = new ArrayList<>();
@@ -94,6 +100,24 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         user_type = keyStorePref.getString(KEY_USER_TYPE);
         user_id = keyStorePref.getString(KEY_USER_ID);
         setUpGridView();
+    }
+
+    private void observeInternetChange() {
+        sharedViewModel.getStatus().observe(this, status -> {
+            if (status != null) {
+                if (status) {
+                    if (dashboardAdapter != null) {
+                        dashboardAdapter.clearData();
+                    }
+                    hideProgress();
+                    subscribe();
+                    subscribeProfile();
+                    includeNetworkLayout.setVisibility(View.GONE);
+                } else {
+                    includeNetworkLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void subscribeProfile() {
@@ -211,20 +235,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         fragmentTransaction.commit();
     }
 
-    @Override
-    public void getNetworkData(boolean connected) {
-        hideProgress();
-        if (!connected) {
-            includeNetworkLayout.setVisibility(View.VISIBLE);
-        } else {
-            if (dashboardAdapter != null) {
-                dashboardAdapter.clearData();
-            }
-            subscribe();
-            subscribeProfile();
-            includeNetworkLayout.setVisibility(View.GONE);
-        }
-    }
 
     @Override
     protected void onStop() {

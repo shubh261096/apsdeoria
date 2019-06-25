@@ -23,6 +23,7 @@ import com.pb.apszone.service.model.FeesItem;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.FeesAdapter;
 import com.pb.apszone.viewModel.FeesFragmentViewModel;
+import com.pb.apszone.viewModel.SharedViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +49,11 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
     Toolbar toolbarFees;
     @BindView(R.id.rvFees)
     RecyclerView rvFees;
+    @BindView(R.id.includeNetworkLayout)
+    View includeNetworkLayout;
     private List<FeesItem> feesItemList;
     FeesFragmentViewModel feesFragmentViewModel;
+    SharedViewModel sharedViewModel;
     KeyStorePref keyStorePref;
     FeesAdapter feesAdapter;
 
@@ -65,6 +69,25 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         keyStorePref = KeyStorePref.getInstance(getContext());
+        sharedViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SharedViewModel.class);
+        observeInternetChange();
+    }
+
+    private void observeInternetChange() {
+        sharedViewModel.getStatus().observe(this, status -> {
+            if (status != null) {
+                if (status) {
+                    if (feesAdapter != null) {
+                        feesAdapter.clearData();
+                    }
+                    hideProgress();
+                    subscribe();
+                    includeNetworkLayout.setVisibility(View.GONE);
+                } else {
+                    includeNetworkLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     @Override
@@ -85,7 +108,6 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         feesFragmentViewModel = ViewModelProviders.of(this).get(FeesFragmentViewModel.class);
-        subscribe();
     }
 
     @SuppressLint("SetTextI18n")
@@ -97,6 +119,9 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
         feesFragmentViewModel.getFees().observe(this, feesResponseModel -> {
             if (feesResponseModel != null) {
                 hideProgress();
+                if (feesAdapter != null) {
+                    feesAdapter.clearData();
+                }
                 if (!feesResponseModel.isError()) {
                     List<FeesItem> feesItems = feesResponseModel.getFees();
                     feesItemList.addAll(feesItems);
@@ -140,7 +165,7 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
         showCustomDialog(view, position);
     }
 
-    private void showCustomDialog(View view, int postion) {
+    private void showCustomDialog(View view, int position) {
         //before inflating the custom alert dialog layout, we will get the current activity viewGroup
         ViewGroup viewGroup = view.findViewById(android.R.id.content);
 
@@ -154,23 +179,23 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
         TextView datePaid = dialogView.findViewById(R.id.date_paid);
         TextView status = dialogView.findViewById(R.id.status);
 
-        if (!TextUtils.isEmpty(feesItemList.get(postion).getPeriod())) {
-            period.setText(feesItemList.get(postion).getPeriod());
+        if (!TextUtils.isEmpty(feesItemList.get(position).getPeriod())) {
+            period.setText(feesItemList.get(position).getPeriod());
         }
-        if (!TextUtils.isEmpty(feesItemList.get(postion).getFeesId().getTotalAmount())) {
-            totalAmount.setText(String.format("%s %s", getString(R.string.rupee_symbol), feesItemList.get(postion).getFeesId().getTotalAmount()));
+        if (!TextUtils.isEmpty(feesItemList.get(position).getFeesId().getTotalAmount())) {
+            totalAmount.setText(String.format("%s %s", getString(R.string.rupee_symbol), feesItemList.get(position).getFeesId().getTotalAmount()));
         }
-        if (!TextUtils.isEmpty(feesItemList.get(postion).getDueAmount())) {
-            dueAmount.setText(String.format("%s %s", getString(R.string.rupee_symbol), feesItemList.get(postion).getDueAmount()));
+        if (!TextUtils.isEmpty(feesItemList.get(position).getDueAmount())) {
+            dueAmount.setText(String.format("%s %s", getString(R.string.rupee_symbol), feesItemList.get(position).getDueAmount()));
         }
-        if (!TextUtils.isEmpty(feesItemList.get(postion).getFeesPaid())) {
-            feesPaid.setText(String.format("%s %s", getString(R.string.rupee_symbol), feesItemList.get(postion).getFeesPaid()));
+        if (!TextUtils.isEmpty(feesItemList.get(position).getFeesPaid())) {
+            feesPaid.setText(String.format("%s %s", getString(R.string.rupee_symbol), feesItemList.get(position).getFeesPaid()));
         }
-        if (!TextUtils.isEmpty(feesItemList.get(postion).getDatePaid())) {
-            datePaid.setText(feesItemList.get(postion).getDatePaid());
+        if (!TextUtils.isEmpty(feesItemList.get(position).getDatePaid())) {
+            datePaid.setText(feesItemList.get(position).getDatePaid());
         }
-        if (!TextUtils.isEmpty(feesItemList.get(postion).getStatus())) {
-            status.setText(capitalize(feesItemList.get(postion).getStatus()));
+        if (!TextUtils.isEmpty(feesItemList.get(position).getStatus())) {
+            status.setText(capitalize(feesItemList.get(position).getStatus()));
         }
 
         //Now we need an AlertDialog.Builder object

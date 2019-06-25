@@ -101,4 +101,9 @@ public class FeesAdapter extends RecyclerView.Adapter<FeesAdapter.FeesViewHolder
     public interface OnFeeDetailItemClick {
         void onItemClick(int position, View view);
     }
+
+    public void clearData(){
+        feesItemList.clear();
+        notifyDataSetChanged();
+    }
 }
