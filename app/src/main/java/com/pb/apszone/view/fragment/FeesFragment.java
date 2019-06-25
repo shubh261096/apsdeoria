@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,9 +39,7 @@ import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
 import static com.pb.apszone.utils.CommonUtils.capitalize;
 import static com.pb.apszone.utils.CommonUtils.getCurrentMonth;
 import static com.pb.apszone.utils.CommonUtils.getCurrentYear;
-import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.showLateFeeAlertDialog;
-import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailItemClick {
 
@@ -51,6 +50,10 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
     RecyclerView rvFees;
     @BindView(R.id.includeNetworkLayout)
     View includeNetworkLayout;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.feeDeadlineNotice)
+    TextView feeDeadlineNotice;
     private List<FeesItem> feesItemList;
     FeesFragmentViewModel feesFragmentViewModel;
     SharedViewModel sharedViewModel;
@@ -80,7 +83,6 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
                     if (feesAdapter != null) {
                         feesAdapter.clearData();
                     }
-                    hideProgress();
                     subscribe();
                     includeNetworkLayout.setVisibility(View.GONE);
                 } else {
@@ -115,10 +117,11 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_ID))) {
             feesFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), getCurrentYear(), keyStorePref.getString(KEY_STUDENT_ID));
         }
-        showProgress(getActivity(), "Please wait...");
+        feeDeadlineNotice.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
         feesFragmentViewModel.getFees().observe(this, feesResponseModel -> {
             if (feesResponseModel != null) {
-                hideProgress();
+                progressBar.setVisibility(View.GONE);
                 if (feesAdapter != null) {
                     feesAdapter.clearData();
                 }
@@ -127,6 +130,7 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
                     feesItemList.addAll(feesItems);
                     feesAdapter.notifyDataSetChanged();
                     checkForLateFee();
+                    feeDeadlineNotice.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(getActivity(), feesResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -139,7 +143,7 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
         for (int i = 0; i < feesItemList.size(); i++) {
             found = TextUtils.equals(feesItemList.get(i).getPeriod(), getCurrentMonth());
         }
-        if (!found){
+        if (!found) {
             showLateFeeAlertDialog(Objects.requireNonNull(getView()), getContext());
         }
     }

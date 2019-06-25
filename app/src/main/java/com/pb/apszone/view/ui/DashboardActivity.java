@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,8 +51,6 @@ import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_SYLLABUS;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_TIMETABLE;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
-import static com.pb.apszone.utils.CommonUtils.hideProgress;
-import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener, ProfileFragment.OnFragmentInteractionListener {
 
@@ -69,6 +68,8 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     ProfileFragmentViewModel profileFragmentViewModel;
     SharedViewModel sharedViewModel;
     DashboardAdapter dashboardAdapter;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     private List<DashboardItem> dashboardItemList;
     private OnDashboardItemClickListener onDashboardItemClickListener;
     KeyStorePref keyStorePref;
@@ -109,7 +110,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
                     if (dashboardAdapter != null) {
                         dashboardAdapter.clearData();
                     }
-                    hideProgress();
                     subscribe();
                     subscribeProfile();
                     includeNetworkLayout.setVisibility(View.GONE);
@@ -124,7 +124,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         profileFragmentViewModel.sendRequest(user_id, user_type);
         profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
             if (profileResponseModel != null) {
-                hideProgress();
                 dashboardViewModel.putSharedPrefData(profileResponseModel); // Adding SharedPref in case student/parent
                 if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
                     int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
@@ -136,11 +135,10 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     }
 
     private void subscribe() {
-        showProgress(this, "Please wait...");
+        progressBar.setVisibility(View.VISIBLE);
         dashboardViewModel.getDashboardUIElements().observe(this, dashboardUIResponseModel -> {
             if (dashboardUIResponseModel != null) {
-                hideProgress();
-
+                progressBar.setVisibility(View.GONE);
                 /* Clearing data since activity is always active */
                 if (dashboardAdapter != null) {
                     dashboardAdapter.clearData();
