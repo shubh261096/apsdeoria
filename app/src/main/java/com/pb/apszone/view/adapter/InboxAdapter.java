@@ -92,5 +92,9 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         return inboxItemList.size();
     }
 
+    public void clearData() {
+        inboxItemList.clear();
+        notifyDataSetChanged();
+    }
 
 }

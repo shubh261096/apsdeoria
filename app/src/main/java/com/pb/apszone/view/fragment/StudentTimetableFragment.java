@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ import static com.pb.apszone.utils.CommonUtils.getDayOfWeek;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
-public class StudentTimetableFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class StudentTimetableFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
 
     Unbinder unbinder;
     @BindView(R.id.toolbar_timetable)
@@ -47,6 +48,8 @@ public class StudentTimetableFragment extends Fragment implements AdapterView.On
     RecyclerView rvTimetable;
     @BindView(R.id.spinnerDay)
     Spinner spinnerDay;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     private List<TimetableItem> timetableItemList;
     StudentTimetableFragmentViewModel studentTimetableFragmentViewModel;
     KeyStorePref keyStorePref;
@@ -97,17 +100,31 @@ public class StudentTimetableFragment extends Fragment implements AdapterView.On
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         studentTimetableFragmentViewModel = ViewModelProviders.of(this).get(StudentTimetableFragmentViewModel.class);
-        subscribe();
+    }
+
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            if (studentTimetableAdapter != null) {
+                studentTimetableAdapter.clearData();
+            }
+            subscribe();
+        }
     }
 
     private void subscribe() {
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
             studentTimetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day);
         }
-        showProgress(getActivity(), "Please wait...");
+        progressBar.setVisibility(View.VISIBLE);
         studentTimetableFragmentViewModel.getTimetable(KEY_FILTER_BY_DAY).observe(this, timetableResponseModel -> {
             if (timetableResponseModel != null) {
-                hideProgress();
+                progressBar.setVisibility(View.GONE);
+
+                if (studentTimetableAdapter != null) {
+                    studentTimetableAdapter.clearData();
+                }
+
                 if (!timetableResponseModel.isError()) {
                     List<TimetableItem> timetableItems = timetableResponseModel.getTimetable();
                     timetableItemList.addAll(timetableItems);

@@ -1,241 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
+    <FrameLayout
+        android:id="@+id/dynamic_fragment_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        tools:ignore="MissingConstraints">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_profile"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/toolbar_attendance"
-            app:titleTextColor="@color/colorPrimary" />
-
-    </android.support.design.widget.AppBarLayout>
-
-
-    <LinearLayout
-        android:id="@+id/rlMonth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="@drawable/spinner_bg_no_padding"
-        android:orientation="horizontal"
-        tools:ignore="PrivateResource">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                tools:ignore="MissingConstraints">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/white"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:navigationIcon="@drawable/ic_arrow_back"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:title="@string/toolbar_attendance"
+                    app:titleTextColor="@color/colorPrimary" />
+
+            </android.support.design.widget.AppBarLayout>
+
+
+            <LinearLayout
+                android:id="@+id/rlMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:background="@drawable/spinner_bg_no_padding"
+                android:orientation="horizontal"
+                tools:ignore="PrivateResource">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_5">
+
+                    <TextView
+                        android:id="@+id/textMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_16"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_11"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:src="@drawable/ic_angle_arrow_down"
+                    android:tint="@color/white"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:layerType="software"
+                android:src="@drawable/dotted_line"
+                tools:ignore="ContentDescription" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0.0px"
+                android:elevation="@dimen/dp_4"
+                android:visibility="gone"
+                app:cardPreventCornerOverlap="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="@string/sunday"
+                            android:textColor="@color/colorPrimary_70" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="@string/monday"
+                            android:textColor="@color/colorPrimary_70" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="@string/tuesday"
+                            android:textColor="@color/colorPrimary_70" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="@string/wednesday"
+                            android:textColor="@color/colorPrimary_70" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="@string/thursday"
+                            android:textColor="@color/colorPrimary_70" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="@string/friday"
+                            android:textColor="@color/colorPrimary_70" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="@string/saturday"
+                            android:textColor="@color/colorPrimary_70" />
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvAttendanceUI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_monthly_attendance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/white"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0.0px"
+                android:padding="@dimen/dp_10"
+                android:visibility="gone"
+                app:cardElevation="@dimen/dp_2"
+                app:cardPreventCornerOverlap="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/dp_8"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingTop="@dimen/dp_8"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:text="@string/monthly_attendance"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/text_20" />
+
+                    <TextView
+                        android:id="@+id/num_present"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/green"
+                        android:paddingStart="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/dp_8"
+                        android:paddingEnd="@dimen/activity_vertical_margin"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_18" />
+
+                    <TextView
+                        android:id="@+id/num_absent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_3"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:background="@color/red"
+                        android:paddingStart="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/dp_8"
+                        android:paddingEnd="@dimen/activity_vertical_margin"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_18" />
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_5">
-
-            <TextView
-                android:id="@+id/textMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_16"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textYear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_11"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:src="@drawable/ic_angle_arrow_down"
-            android:tint="@color/white"
-            tools:ignore="ContentDescription" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2"
-        android:layerType="software"
-        android:src="@drawable/dotted_line"
-        tools:ignore="ContentDescription" />
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_calendar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:background="@color/white"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0.0px"
-        android:elevation="@dimen/dp_4"
-        android:visibility="gone"
-        app:cardPreventCornerOverlap="false">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/sunday"
-                    android:textColor="@color/colorPrimary_70" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/monday"
-                    android:textColor="@color/colorPrimary_70" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/tuesday"
-                    android:textColor="@color/colorPrimary_70" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/wednesday"
-                    android:textColor="@color/colorPrimary_70" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/thursday"
-                    android:textColor="@color/colorPrimary_70" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/friday"
-                    android:textColor="@color/colorPrimary_70" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/saturday"
-                    android:textColor="@color/colorPrimary_70" />
-
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvAttendanceUI"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_monthly_attendance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/white"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0.0px"
-        android:padding="@dimen/dp_10"
-        android:visibility="gone"
-        app:cardElevation="@dimen/dp_2"
-        app:cardPreventCornerOverlap="false">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="@dimen/dp_8"
-                android:fontFamily="@font/roboto_regular"
-                android:paddingTop="@dimen/dp_8"
-                android:paddingBottom="@dimen/dp_8"
-                android:text="@string/monthly_attendance"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/text_20" />
-
-            <TextView
-                android:id="@+id/num_present"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/green"
-                android:paddingStart="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/dp_8"
-                android:paddingEnd="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/dp_8"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_18" />
-
-            <TextView
-                android:id="@+id/num_absent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_3"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:background="@color/red"
-                android:paddingStart="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/dp_8"
-                android:paddingEnd="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/dp_8"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_18" />
-        </LinearLayout>
-
-
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+            android:visibility="gone" />
+    </FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -12,14 +12,16 @@ import com.pb.apszone.service.repo.Repository;
 public class InboxFragmentViewModel extends AndroidViewModel {
 
     private MutableLiveData<InboxResponseModel> inboxResponseModelMutableLiveData;
+    private Repository repository;
 
     public InboxFragmentViewModel(@NonNull Application application) {
         super(application);
-        Repository repository = Repository.getInstance();
-        inboxResponseModelMutableLiveData = repository.getInbox();
+        repository = Repository.getInstance();
+        inboxResponseModelMutableLiveData = new MutableLiveData<>();
     }
 
     public LiveData<InboxResponseModel> getInbox() {
+        inboxResponseModelMutableLiveData = repository.getInbox();
         return inboxResponseModelMutableLiveData;
     }
 

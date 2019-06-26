@@ -88,4 +88,9 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
         void onItemClick(int position, View view);
     }
 
+    public void clearData() {
+        syllabusItemList.clear();
+        notifyDataSetChanged();
+    }
+
 }

@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
@@ -25,9 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.pb.apszone.utils.CommonUtils.hideProgress;
-import static com.pb.apszone.utils.CommonUtils.showProgress;
-
 public class InboxFragment extends BaseFragment {
 
     Unbinder unbinder;
@@ -35,6 +33,8 @@ public class InboxFragment extends BaseFragment {
     Toolbar toolbarInbox;
     @BindView(R.id.rvInbox)
     RecyclerView rvInbox;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     private List<InboxItem> inboxItemList;
     InboxFragmentViewModel inboxFragmentViewModel;
     InboxAdapter inboxAdapter;
@@ -70,9 +70,10 @@ public class InboxFragment extends BaseFragment {
     @Override
     public void getNetworkData(boolean status) {
         if (status) {
-            Toast.makeText(getContext(), "Connected", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "Not-Connected", Toast.LENGTH_SHORT).show();
+            if (inboxAdapter != null) {
+                inboxAdapter.clearData();
+            }
+            subscribe();
         }
     }
 
@@ -80,14 +81,17 @@ public class InboxFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         inboxFragmentViewModel = ViewModelProviders.of(this).get(InboxFragmentViewModel.class);
-        subscribe();
     }
 
     private void subscribe() {
-        showProgress(getActivity(), "Please wait...");
+        progressBar.setVisibility(View.VISIBLE);
         inboxFragmentViewModel.getInbox().observe(this, inboxResponseModel -> {
             if (inboxResponseModel != null) {
-                hideProgress();
+                progressBar.setVisibility(View.GONE);
+
+                if (inboxAdapter != null) {
+                    inboxAdapter.clearData();
+                }
                 if (!inboxResponseModel.isError()) {
                     List<InboxItem> inboxItems = inboxResponseModel.getInbox();
                     inboxItemList.addAll(inboxItems);

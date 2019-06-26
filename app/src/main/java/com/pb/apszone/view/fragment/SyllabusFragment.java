@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
@@ -35,16 +35,16 @@ import butterknife.Unbinder;
 import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
 import static com.pb.apszone.utils.CommonUtils.beginDownload;
-import static com.pb.apszone.utils.CommonUtils.hideProgress;
-import static com.pb.apszone.utils.CommonUtils.showProgress;
 
-public class SyllabusFragment extends Fragment implements SyllabusAdapter.OnDownloadItemClickListener {
+public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.OnDownloadItemClickListener {
 
     Unbinder unbinder;
     @BindView(R.id.toolbar_syllabus)
     Toolbar toolbarSyllabus;
     @BindView(R.id.rvSyllabus)
     RecyclerView rvSyllabus;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     private List<SyllabusItem> syllabusItemList;
     SyllabusFragmentViewModel syllabusFragmentViewModel;
     KeyStorePref keyStorePref;
@@ -85,17 +85,31 @@ public class SyllabusFragment extends Fragment implements SyllabusAdapter.OnDown
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         syllabusFragmentViewModel = ViewModelProviders.of(this).get(SyllabusFragmentViewModel.class);
-        subscribe();
+    }
+
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            if (syllabusAdapter != null) {
+                syllabusAdapter.clearData();
+            }
+            subscribe();
+        }
     }
 
     private void subscribe() {
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
             syllabusFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID));
         }
-        showProgress(getActivity(), "Please wait...");
+        progressBar.setVisibility(View.VISIBLE);
         syllabusFragmentViewModel.getSyllabus().observe(this, syllabusResponseModel -> {
             if (syllabusResponseModel != null) {
-                hideProgress();
+                progressBar.setVisibility(View.GONE);
+
+                if (syllabusAdapter != null) {
+                    syllabusAdapter.clearData();
+                }
+
                 if (!syllabusResponseModel.isError()) {
                     List<SyllabusItem> syllabusItems = syllabusResponseModel.getSyllabus();
                     syllabusItemList.addAll(syllabusItems);

@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,10 +36,8 @@ import butterknife.Unbinder;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
 import static com.pb.apszone.utils.CommonUtils.getCurrentMonth;
 import static com.pb.apszone.utils.CommonUtils.getCurrentYear;
-import static com.pb.apszone.utils.CommonUtils.hideProgress;
-import static com.pb.apszone.utils.CommonUtils.showProgress;
 
-public class AttendanceFragment extends Fragment {
+public class AttendanceFragment extends BaseFragment {
 
     Unbinder unbinder;
     @BindView(R.id.rvAttendanceUI)
@@ -66,6 +64,8 @@ public class AttendanceFragment extends Fragment {
     TextView numPresent;
     @BindView(R.id.num_absent)
     TextView numAbsent;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     private int presentCount, absentCount;
 
     public AttendanceFragment() {
@@ -102,16 +102,32 @@ public class AttendanceFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         attendanceFragmentViewModel = ViewModelProviders.of(this).get(AttendanceFragmentViewModel.class);
-        subscribe();
+    }
+
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            if (attendanceAdapter != null) {
+                attendanceAdapter.clearData();
+            }
+            subscribe();
+        }
     }
 
     private void subscribe() {
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_ID))) {
             attendanceFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_ID), currentMonth, currentYear);
-            showProgress(getActivity(), "Please wait...");
+            updateUI(0);
+            progressBar.setVisibility(View.VISIBLE);
             attendanceFragmentViewModel.getAttendance().observe(this, attendanceResponseModel -> {
                 if (attendanceResponseModel != null) {
-                    hideProgress();
+                    progressBar.setVisibility(View.GONE);
+
+                    updateUI(0);
+                    if (attendanceAdapter != null) {
+                        attendanceAdapter.clearData();
+                    }
+
                     if (!attendanceResponseModel.isError()) {
                         updateUI(1);
                         day = attendanceFragmentViewModel.setUpList(currentMonth, currentYear);

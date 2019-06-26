@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,10 +46,8 @@ import static com.pb.apszone.utils.CommonUtils.beginDownload;
 import static com.pb.apszone.utils.CommonUtils.getNextDate;
 import static com.pb.apszone.utils.CommonUtils.getPreviousDate;
 import static com.pb.apszone.utils.CommonUtils.getTodayDate;
-import static com.pb.apszone.utils.CommonUtils.hideProgress;
-import static com.pb.apszone.utils.CommonUtils.showProgress;
 
-public class HomeworkFragment extends Fragment implements SyllabusAdapter.OnDownloadItemClickListener {
+public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.OnDownloadItemClickListener {
 
     Unbinder unbinder;
     @BindView(R.id.toolbar_homework)
@@ -62,6 +60,8 @@ public class HomeworkFragment extends Fragment implements SyllabusAdapter.OnDown
     TextView todayDate;
     @BindView(R.id.next)
     TextView next;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     private List<HomeworkItem> homeworkItemList;
     HomeworkFragmentViewModel homeworkFragmentViewModel;
     KeyStorePref keyStorePref;
@@ -105,17 +105,31 @@ public class HomeworkFragment extends Fragment implements SyllabusAdapter.OnDown
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         homeworkFragmentViewModel = ViewModelProviders.of(this).get(HomeworkFragmentViewModel.class);
-        subscribe();
+    }
+
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            if (homeworkAdapter != null) {
+                homeworkAdapter.clearData();
+            }
+            subscribe();
+        }
     }
 
     private void subscribe() {
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
             homeworkFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), today_date);
         }
-        showProgress(getActivity(), "Please wait...");
+        progressBar.setVisibility(View.VISIBLE);
         homeworkFragmentViewModel.getHomework().observe(this, homeworkResponseModel -> {
             if (homeworkResponseModel != null) {
-                hideProgress();
+                progressBar.setVisibility(View.GONE);
+
+                if (homeworkAdapter != null) {
+                    homeworkAdapter.clearData();
+                }
+
                 if (!homeworkResponseModel.isError()) {
                     List<HomeworkItem> homeworkItems = homeworkResponseModel.getHomework();
                     homeworkItemList.addAll(homeworkItems);

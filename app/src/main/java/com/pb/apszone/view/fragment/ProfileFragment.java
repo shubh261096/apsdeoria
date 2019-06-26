@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pb.apszone.R;
@@ -43,10 +43,8 @@ import static com.pb.apszone.utils.AppConstants.PROFILE_QUALIFICATION;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
-import static com.pb.apszone.utils.CommonUtils.hideProgress;
-import static com.pb.apszone.utils.CommonUtils.showProgress;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends BaseFragment {
 
     @BindView(R.id.userDp)
     ImageView userDp;
@@ -59,6 +57,8 @@ public class ProfileFragment extends Fragment {
     TextView userClass;
     @BindView(R.id.toolbar_profile)
     Toolbar toolbarProfile;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     private OnFragmentInteractionListener mListener;
     ProfileFragmentViewModel profileFragmentViewModel;
     String user_type, user_id;
@@ -104,14 +104,28 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
         profileFragmentViewModel.sendRequest(user_id, user_type);
-        showProgress(getActivity(), "Please wait...");
-        subscribe();
+    }
+
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            if (profileAdapter != null) {
+                profileAdapter.clearData();
+            }
+            subscribe();
+        }
     }
 
     private void subscribe() {
+        progressBar.setVisibility(View.VISIBLE);
         profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
             if (profileResponseModel != null) {
-                hideProgress();
+                progressBar.setVisibility(View.GONE);
+
+                if (profileAdapter != null) {
+                    profileAdapter.clearData();
+                }
+
                 /* Showing profile picture by gender */
                 if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
                     int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;

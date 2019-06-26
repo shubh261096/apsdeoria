@@ -66,4 +66,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         return profileValueHashmap.size();
     }
 
+    public void clearData() {
+        profileValueHashmap.clear();
+        notifyDataSetChanged();
+    }
 }
