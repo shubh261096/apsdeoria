@@ -317,11 +317,23 @@ public class CommonUtils {
             if (seconds < 60) {
                 return seconds + " sec ago";
             } else if (minutes < 60) {
-                return minutes + " min ago";
+                if (minutes == 1) {
+                    return "1 min ago";
+                } else {
+                    return minutes + " mins ago";
+                }
             } else if (hours < 24) {
-                return hours + " hour ago";
+                if (hours == 1) {
+                    return "1 hour ago";
+                } else {
+                    return hours + " hours ago";
+                }
             } else if (days <= 2) {
-                return days + " day ago";
+                if (days == 1) {
+                    return "1 day ago";
+                } else {
+                    return days + " days ago";
+                }
             } else {
                 Date dt = format.parse(time);
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
