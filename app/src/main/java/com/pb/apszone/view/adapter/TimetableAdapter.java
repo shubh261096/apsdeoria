@@ -23,13 +23,13 @@ import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 import static com.pb.apszone.utils.CommonUtils.getFormattedDateTime;
 import static com.pb.apszone.utils.CommonUtils.isTimeBetweenTwoTime;
 
-public class StudentTimetableAdapter extends RecyclerView.Adapter<StudentTimetableAdapter.StudentTimetableViewHolder> {
+public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.TimetableViewHolder> {
 
     private final List<TimetableItem> timetableItemList;
     private Context context;
     private String user_type;
 
-    static class StudentTimetableViewHolder extends RecyclerView.ViewHolder {
+    static class TimetableViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.start_time)
         TextView startTime;
         @BindView(R.id.end_time)
@@ -45,13 +45,13 @@ public class StudentTimetableAdapter extends RecyclerView.Adapter<StudentTimetab
         @BindView(R.id.teachingClass)
         TextView teachingClass;
 
-        StudentTimetableViewHolder(final View itemView) {
+        TimetableViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public StudentTimetableAdapter(List<TimetableItem> timetableItemList, Context context, String user_type) {
+    public TimetableAdapter(List<TimetableItem> timetableItemList, Context context, String user_type) {
         this.timetableItemList = timetableItemList;
         this.context = context;
         this.user_type = user_type;
@@ -59,47 +59,47 @@ public class StudentTimetableAdapter extends RecyclerView.Adapter<StudentTimetab
 
     @NonNull
     @Override
-    public StudentTimetableViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                                         int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_timetable_student, parent, false);
-        return new StudentTimetableViewHolder(view);
+    public TimetableViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                  int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_timetable, parent, false);
+        return new TimetableViewHolder(view);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull StudentTimetableViewHolder studentTimetableViewHolder, final int position) {
+    public void onBindViewHolder(@NonNull TimetableViewHolder timetableViewHolder, final int position) {
         TimetableItem timetableItem = getItem(position);
         int pos = position + 1;
-        studentTimetableViewHolder.listPosition.setText(String.valueOf(pos));
-        studentTimetableViewHolder.startTime.setText(getFormattedDateTime(timetableItem.getStartTime()));
-        studentTimetableViewHolder.endTime.setText(getFormattedDateTime(timetableItem.getEndTime()));
+        timetableViewHolder.listPosition.setText(String.valueOf(pos));
+        timetableViewHolder.startTime.setText(getFormattedDateTime(timetableItem.getStartTime()));
+        timetableViewHolder.endTime.setText(getFormattedDateTime(timetableItem.getEndTime()));
         try {
             if (isTimeBetweenTwoTime(timetableItem.getStartTime(), timetableItem.getEndTime())) {
-                studentTimetableViewHolder.activeClass.setVisibility(View.VISIBLE);
+                timetableViewHolder.activeClass.setVisibility(View.VISIBLE);
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
         if (timetableItem.getSubjectId() == null) {
-            studentTimetableViewHolder.subject.setText(R.string.text_recess);
+            timetableViewHolder.subject.setText(R.string.text_recess);
         } else {
-            studentTimetableViewHolder.subject.setText(timetableItem.getSubjectId().getName());
+            timetableViewHolder.subject.setText(timetableItem.getSubjectId().getName());
         }
 
         /* Checking the user type */
         if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
             if (timetableItem.getTeacherId() == null) {
-                studentTimetableViewHolder.teacher.setVisibility(View.GONE);
+                timetableViewHolder.teacher.setVisibility(View.GONE);
             } else {
-                studentTimetableViewHolder.teacher.setVisibility(View.VISIBLE);
-                studentTimetableViewHolder.teacher.setText(timetableItem.getTeacherId().getFullname());
+                timetableViewHolder.teacher.setVisibility(View.VISIBLE);
+                timetableViewHolder.teacher.setText(timetableItem.getTeacherId().getFullname());
             }
         } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {
             if (timetableItem.getClassId() == null) {
-                studentTimetableViewHolder.teachingClass.setVisibility(View.GONE);
+                timetableViewHolder.teachingClass.setVisibility(View.GONE);
             } else {
-                studentTimetableViewHolder.teachingClass.setVisibility(View.VISIBLE);
-                studentTimetableViewHolder.teachingClass.setText(timetableItem.getClassId().getName());
+                timetableViewHolder.teachingClass.setVisibility(View.VISIBLE);
+                timetableViewHolder.teachingClass.setText(timetableItem.getClassId().getName());
             }
         }
     }

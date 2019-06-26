@@ -10,13 +10,13 @@ import com.pb.apszone.service.model.TimetableResponseModel;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.service.rest.TimetableRequestModel;
 
-public class StudentTimetableFragmentViewModel extends AndroidViewModel {
+public class TimetableFragmentViewModel extends AndroidViewModel {
 
     private MutableLiveData<TimetableResponseModel> timetableResponseModelMutableLiveData;
     private Repository repository;
     private TimetableRequestModel timetableRequestModel;
 
-    public StudentTimetableFragmentViewModel(@NonNull Application application) {
+    public TimetableFragmentViewModel(@NonNull Application application) {
         super(application);
         timetableResponseModelMutableLiveData = new MutableLiveData<>();
         repository = Repository.getInstance();

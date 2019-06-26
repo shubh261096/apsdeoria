@@ -20,8 +20,8 @@ import android.widget.Toast;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.TimetableItem;
 import com.pb.apszone.utils.KeyStorePref;
-import com.pb.apszone.view.adapter.StudentTimetableAdapter;
-import com.pb.apszone.viewModel.StudentTimetableFragmentViewModel;
+import com.pb.apszone.view.adapter.TimetableAdapter;
+import com.pb.apszone.viewModel.TimetableFragmentViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +40,7 @@ import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 import static com.pb.apszone.utils.CommonUtils.getDayOfWeek;
 
-public class StudentTimetableFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
+public class TimetableFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
 
     Unbinder unbinder;
     @BindView(R.id.toolbar_timetable)
@@ -52,19 +52,19 @@ public class StudentTimetableFragment extends BaseFragment implements AdapterVie
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     private List<TimetableItem> timetableItemList;
-    StudentTimetableFragmentViewModel studentTimetableFragmentViewModel;
+    TimetableFragmentViewModel timetableFragmentViewModel;
     KeyStorePref keyStorePref;
-    StudentTimetableAdapter studentTimetableAdapter;
+    TimetableAdapter timetableAdapter;
     private String day;
     private int checkInit = 0;
     private String user_type;
 
-    public StudentTimetableFragment() {
+    public TimetableFragment() {
         // Required empty public constructor
     }
 
-    public static StudentTimetableFragment newInstance() {
-        return new StudentTimetableFragment();
+    public static TimetableFragment newInstance() {
+        return new TimetableFragment();
     }
 
     @Override
@@ -78,12 +78,12 @@ public class StudentTimetableFragment extends BaseFragment implements AdapterVie
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_timetable_student, container, false);
+        View view = inflater.inflate(R.layout.fragment_timetable, container, false);
         unbinder = ButterKnife.bind(this, view);
         timetableItemList = new ArrayList<>();
         rvTimetable.setLayoutManager(new LinearLayoutManager(getActivity()));
-        studentTimetableAdapter = new StudentTimetableAdapter(timetableItemList, getActivity(), user_type);
-        rvTimetable.setAdapter(studentTimetableAdapter);
+        timetableAdapter = new TimetableAdapter(timetableItemList, getActivity(), user_type);
+        rvTimetable.setAdapter(timetableAdapter);
         toolbarTimetable.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         day = getDayOfWeek();
         setUpSpinner();
@@ -102,14 +102,14 @@ public class StudentTimetableFragment extends BaseFragment implements AdapterVie
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        studentTimetableFragmentViewModel = ViewModelProviders.of(this).get(StudentTimetableFragmentViewModel.class);
+        timetableFragmentViewModel = ViewModelProviders.of(this).get(TimetableFragmentViewModel.class);
     }
 
     @Override
     public void getNetworkData(boolean status) {
         if (status) {
-            if (studentTimetableAdapter != null) {
-                studentTimetableAdapter.clearData();
+            if (timetableAdapter != null) {
+                timetableAdapter.clearData();
             }
             subscribe();
         }
@@ -119,26 +119,26 @@ public class StudentTimetableFragment extends BaseFragment implements AdapterVie
         if (!TextUtils.isEmpty(user_type)) {
             if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
                 if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-                    studentTimetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day);
+                    timetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day);
                 }
             } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {
                 if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
-                    studentTimetableFragmentViewModel.sendTeacherRequest(keyStorePref.getString(KEY_TEACHER_ID), day);
+                    timetableFragmentViewModel.sendTeacherRequest(keyStorePref.getString(KEY_TEACHER_ID), day);
                 }
             }
             progressBar.setVisibility(View.VISIBLE);
-            studentTimetableFragmentViewModel.getTimetable(KEY_FILTER_BY_DAY, user_type).observe(this, timetableResponseModel -> {
+            timetableFragmentViewModel.getTimetable(KEY_FILTER_BY_DAY, user_type).observe(this, timetableResponseModel -> {
                 if (timetableResponseModel != null) {
                     progressBar.setVisibility(View.GONE);
 
-                    if (studentTimetableAdapter != null) {
-                        studentTimetableAdapter.clearData();
+                    if (timetableAdapter != null) {
+                        timetableAdapter.clearData();
                     }
 
                     if (!timetableResponseModel.isError()) {
                         List<TimetableItem> timetableItems = timetableResponseModel.getTimetable();
                         timetableItemList.addAll(timetableItems);
-                        studentTimetableAdapter.notifyDataSetChanged();
+                        timetableAdapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(getActivity(), timetableResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -168,8 +168,8 @@ public class StudentTimetableFragment extends BaseFragment implements AdapterVie
         checkInit++;
         if (checkInit > 1) {
             day = parent.getItemAtPosition(position).toString();
-            if (studentTimetableAdapter != null) {
-                studentTimetableAdapter.clearData();
+            if (timetableAdapter != null) {
+                timetableAdapter.clearData();
                 subscribe();
             }
         }

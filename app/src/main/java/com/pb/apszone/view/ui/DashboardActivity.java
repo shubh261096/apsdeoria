@@ -27,7 +27,7 @@ import com.pb.apszone.view.fragment.FeesFragment;
 import com.pb.apszone.view.fragment.HomeworkFragment;
 import com.pb.apszone.view.fragment.InboxFragment;
 import com.pb.apszone.view.fragment.ProfileFragment;
-import com.pb.apszone.view.fragment.StudentTimetableFragment;
+import com.pb.apszone.view.fragment.TimetableFragment;
 import com.pb.apszone.view.fragment.SyllabusFragment;
 import com.pb.apszone.view.listener.OnDashboardItemClickListener;
 import com.pb.apszone.view.receiver.NetworkChangeReceiver;
@@ -190,7 +190,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
             }
         }
         if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_TIMETABLE)) {
-            Fragment fragment = StudentTimetableFragment.newInstance();
+            Fragment fragment = TimetableFragment.newInstance();
             replaceFragment(fragment);
         }
         if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_INBOX)) {
