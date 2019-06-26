@@ -172,10 +172,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     @Override
     public void onItemClick(int position, View view) {
         if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
-            if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_TIMETABLE)) {
-                Fragment fragment = StudentTimetableFragment.newInstance();
-                replaceFragment(fragment);
-            }
             if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_ATTENDANCE)) {
                 Fragment fragment = AttendanceFragment.newInstance();
                 replaceFragment(fragment);
@@ -192,6 +188,10 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
                 Fragment fragment = FeesFragment.newInstance();
                 replaceFragment(fragment);
             }
+        }
+        if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_TIMETABLE)) {
+            Fragment fragment = StudentTimetableFragment.newInstance();
+            replaceFragment(fragment);
         }
         if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_INBOX)) {
             Fragment fragment = InboxFragment.newInstance();

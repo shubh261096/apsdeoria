@@ -3,6 +3,7 @@ package com.pb.apszone.view.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 import static com.pb.apszone.utils.CommonUtils.getFormattedDateTime;
 import static com.pb.apszone.utils.CommonUtils.isTimeBetweenTwoTime;
 
@@ -24,6 +27,7 @@ public class StudentTimetableAdapter extends RecyclerView.Adapter<StudentTimetab
 
     private final List<TimetableItem> timetableItemList;
     private Context context;
+    private String user_type;
 
     static class StudentTimetableViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.start_time)
@@ -38,6 +42,8 @@ public class StudentTimetableAdapter extends RecyclerView.Adapter<StudentTimetab
         TextView listPosition;
         @BindView(R.id.active_class)
         View activeClass;
+        @BindView(R.id.teachingClass)
+        TextView teachingClass;
 
         StudentTimetableViewHolder(final View itemView) {
             super(itemView);
@@ -45,9 +51,10 @@ public class StudentTimetableAdapter extends RecyclerView.Adapter<StudentTimetab
         }
     }
 
-    public StudentTimetableAdapter(List<TimetableItem> timetableItemList, Context context) {
+    public StudentTimetableAdapter(List<TimetableItem> timetableItemList, Context context, String user_type) {
         this.timetableItemList = timetableItemList;
         this.context = context;
+        this.user_type = user_type;
     }
 
     @NonNull
@@ -78,11 +85,22 @@ public class StudentTimetableAdapter extends RecyclerView.Adapter<StudentTimetab
         } else {
             studentTimetableViewHolder.subject.setText(timetableItem.getSubjectId().getName());
         }
-        if (timetableItem.getTeacherId() == null) {
-            studentTimetableViewHolder.teacher.setVisibility(View.GONE);
-        } else {
-            studentTimetableViewHolder.teacher.setVisibility(View.VISIBLE);
-            studentTimetableViewHolder.teacher.setText(timetableItem.getTeacherId().getFullname());
+
+        /* Checking the user type */
+        if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
+            if (timetableItem.getTeacherId() == null) {
+                studentTimetableViewHolder.teacher.setVisibility(View.GONE);
+            } else {
+                studentTimetableViewHolder.teacher.setVisibility(View.VISIBLE);
+                studentTimetableViewHolder.teacher.setText(timetableItem.getTeacherId().getFullname());
+            }
+        } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {
+            if (timetableItem.getClassId() == null) {
+                studentTimetableViewHolder.teachingClass.setVisibility(View.GONE);
+            } else {
+                studentTimetableViewHolder.teachingClass.setVisibility(View.VISIBLE);
+                studentTimetableViewHolder.teachingClass.setText(timetableItem.getClassId().getName());
+            }
         }
     }
 

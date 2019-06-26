@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -35,9 +34,11 @@ import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_DAY;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 import static com.pb.apszone.utils.CommonUtils.getDayOfWeek;
-import static com.pb.apszone.utils.CommonUtils.hideProgress;
-import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class StudentTimetableFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
 
@@ -56,6 +57,7 @@ public class StudentTimetableFragment extends BaseFragment implements AdapterVie
     StudentTimetableAdapter studentTimetableAdapter;
     private String day;
     private int checkInit = 0;
+    private String user_type;
 
     public StudentTimetableFragment() {
         // Required empty public constructor
@@ -69,6 +71,7 @@ public class StudentTimetableFragment extends BaseFragment implements AdapterVie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         keyStorePref = KeyStorePref.getInstance(getContext());
+        user_type = keyStorePref.getString(KEY_USER_TYPE);
     }
 
     @Override
@@ -79,7 +82,7 @@ public class StudentTimetableFragment extends BaseFragment implements AdapterVie
         unbinder = ButterKnife.bind(this, view);
         timetableItemList = new ArrayList<>();
         rvTimetable.setLayoutManager(new LinearLayoutManager(getActivity()));
-        studentTimetableAdapter = new StudentTimetableAdapter(timetableItemList, getActivity());
+        studentTimetableAdapter = new StudentTimetableAdapter(timetableItemList, getActivity(), user_type);
         rvTimetable.setAdapter(studentTimetableAdapter);
         toolbarTimetable.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         day = getDayOfWeek();
@@ -113,27 +116,35 @@ public class StudentTimetableFragment extends BaseFragment implements AdapterVie
     }
 
     private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-            studentTimetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day);
-        }
-        progressBar.setVisibility(View.VISIBLE);
-        studentTimetableFragmentViewModel.getTimetable(KEY_FILTER_BY_DAY).observe(this, timetableResponseModel -> {
-            if (timetableResponseModel != null) {
-                progressBar.setVisibility(View.GONE);
-
-                if (studentTimetableAdapter != null) {
-                    studentTimetableAdapter.clearData();
+        if (!TextUtils.isEmpty(user_type)) {
+            if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
+                if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
+                    studentTimetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day);
                 }
-
-                if (!timetableResponseModel.isError()) {
-                    List<TimetableItem> timetableItems = timetableResponseModel.getTimetable();
-                    timetableItemList.addAll(timetableItems);
-                    studentTimetableAdapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getActivity(), timetableResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {
+                if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
+                    studentTimetableFragmentViewModel.sendTeacherRequest(keyStorePref.getString(KEY_TEACHER_ID), day);
                 }
             }
-        });
+            progressBar.setVisibility(View.VISIBLE);
+            studentTimetableFragmentViewModel.getTimetable(KEY_FILTER_BY_DAY, user_type).observe(this, timetableResponseModel -> {
+                if (timetableResponseModel != null) {
+                    progressBar.setVisibility(View.GONE);
+
+                    if (studentTimetableAdapter != null) {
+                        studentTimetableAdapter.clearData();
+                    }
+
+                    if (!timetableResponseModel.isError()) {
+                        List<TimetableItem> timetableItems = timetableResponseModel.getTimetable();
+                        timetableItemList.addAll(timetableItems);
+                        studentTimetableAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getActivity(), timetableResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 
     @Override

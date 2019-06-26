@@ -10,6 +10,9 @@ public class TimetableRequestModel{
 	@SerializedName("today")
 	private String today;
 
+	@SerializedName("teacher_id")
+	private String teacherId;
+
 	public void setClassId(String classId){
 		this.classId = classId;
 	}
@@ -26,12 +29,21 @@ public class TimetableRequestModel{
 		return today;
 	}
 
+	public void setTeacherId(String teacherId){
+		this.teacherId = teacherId;
+	}
+
+	public String getTeacherId(){
+		return teacherId;
+	}
+
 	@Override
  	public String toString(){
 		return 
 			"TimetableRequestModel{" + 
 			"class_id = '" + classId + '\'' + 
-			",today = '" + today + '\'' + 
+			",today = '" + today + '\'' +
+			",teacher_id = '" + teacherId + '\'' +
 			"}";
 		}
 }

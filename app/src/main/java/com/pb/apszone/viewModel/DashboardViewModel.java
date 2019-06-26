@@ -19,6 +19,7 @@ import java.util.List;
 import static com.pb.apszone.utils.AppConstants.KEY_ENABLED;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
@@ -48,6 +49,10 @@ public class DashboardViewModel extends AndroidViewModel {
             }
             if (!TextUtils.isEmpty(profileResponseModel.getProfile().getId())) {
                 keyStorePref.putString(KEY_STUDENT_ID, profileResponseModel.getProfile().getId());
+            }
+        } else if (TextUtils.equals(keyStorePref.getString(KEY_USER_TYPE), USER_TYPE_TEACHER)) {
+            if (!TextUtils.isEmpty(profileResponseModel.getProfile().getId())) {
+                keyStorePref.putString(KEY_TEACHER_ID, profileResponseModel.getProfile().getId());
             }
         }
     }

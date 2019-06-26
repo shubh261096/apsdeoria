@@ -35,6 +35,8 @@ import retrofit2.Response;
 
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_DAY;
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_WEEK;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 
 public class Repository {
     private static ApiInterface apiService;
@@ -133,14 +135,21 @@ public class Repository {
     }
 
     /* TimeTable Request */
-    public MutableLiveData<TimetableResponseModel> getTimetable(TimetableRequestModel timetableRequestModel, String filter) {
+    public MutableLiveData<TimetableResponseModel> getTimetable(TimetableRequestModel timetableRequestModel, String filter, String user_type) {
         final MutableLiveData<TimetableResponseModel> data = new MutableLiveData<>();
         Map<String, String> params = new HashMap<>();
-        if (TextUtils.equals(filter, KEY_FILTER_BY_DAY)) {
-            params.put("class_id", timetableRequestModel.getClassId());
-            params.put("today", timetableRequestModel.getToday());
-        } else if (TextUtils.equals(filter, KEY_FILTER_BY_WEEK)) {
-            params.put("class_id", timetableRequestModel.getClassId());
+        if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
+            if (TextUtils.equals(filter, KEY_FILTER_BY_DAY)) {
+                params.put("class_id", timetableRequestModel.getClassId());
+                params.put("today", timetableRequestModel.getToday());
+            } else if (TextUtils.equals(filter, KEY_FILTER_BY_WEEK)) {
+                params.put("class_id", timetableRequestModel.getClassId());
+            }
+        } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {
+            if (TextUtils.equals(filter, KEY_FILTER_BY_DAY)) {
+                params.put("teacher_id", timetableRequestModel.getTeacherId());
+                params.put("today", timetableRequestModel.getToday());
+            }
         }
 
         apiService.getTimeTable(params)
