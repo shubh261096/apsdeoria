@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,7 +64,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     @BindView(R.id.user_dp)
     ImageView userDp;
     @BindView(R.id.includeNetworkLayout)
-    View includeNetworkLayout;
+    LinearLayout includeNetworkLayout;
     DashboardViewModel dashboardViewModel;
     ProfileFragmentViewModel profileFragmentViewModel;
     SharedViewModel sharedViewModel;

@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -29,7 +28,7 @@ import butterknife.Unbinder;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
-public class InboxFragment extends Fragment {
+public class InboxFragment extends BaseFragment {
 
     Unbinder unbinder;
     @BindView(R.id.toolbar_inbox)
@@ -66,6 +65,15 @@ public class InboxFragment extends Fragment {
         rvInbox.setAdapter(inboxAdapter);
         toolbarInbox.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         return view;
+    }
+
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            Toast.makeText(getContext(), "Connected", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Not-Connected", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

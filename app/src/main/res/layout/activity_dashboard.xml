@@ -48,11 +48,6 @@
 
         </LinearLayout>
 
-        <include
-            android:id="@+id/includeNetworkLayout"
-            layout="@layout/layout_no_internet"
-            android:visibility="gone" />
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
@@ -60,4 +55,6 @@
             android:layout_gravity="center"
             android:visibility="gone" />
     </FrameLayout>
+
+    <include layout="@layout/layout_no_internet"/>
 </android.support.design.widget.CoordinatorLayout>

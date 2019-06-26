@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +23,6 @@ import com.pb.apszone.service.model.FeesItem;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.FeesAdapter;
 import com.pb.apszone.viewModel.FeesFragmentViewModel;
-import com.pb.apszone.viewModel.SharedViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,22 +39,19 @@ import static com.pb.apszone.utils.CommonUtils.getCurrentMonth;
 import static com.pb.apszone.utils.CommonUtils.getCurrentYear;
 import static com.pb.apszone.utils.CommonUtils.showLateFeeAlertDialog;
 
-public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailItemClick {
+public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetailItemClick {
 
     Unbinder unbinder;
     @BindView(R.id.toolbar_fees)
     Toolbar toolbarFees;
     @BindView(R.id.rvFees)
     RecyclerView rvFees;
-    @BindView(R.id.includeNetworkLayout)
-    View includeNetworkLayout;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.feeDeadlineNotice)
     TextView feeDeadlineNotice;
     private List<FeesItem> feesItemList;
     FeesFragmentViewModel feesFragmentViewModel;
-    SharedViewModel sharedViewModel;
     KeyStorePref keyStorePref;
     FeesAdapter feesAdapter;
 
@@ -72,24 +67,16 @@ public class FeesFragment extends Fragment implements FeesAdapter.OnFeeDetailIte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         keyStorePref = KeyStorePref.getInstance(getContext());
-        sharedViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SharedViewModel.class);
-        observeInternetChange();
     }
 
-    private void observeInternetChange() {
-        sharedViewModel.getStatus().observe(this, status -> {
-            if (status != null) {
-                if (status) {
-                    if (feesAdapter != null) {
-                        feesAdapter.clearData();
-                    }
-                    subscribe();
-                    includeNetworkLayout.setVisibility(View.GONE);
-                } else {
-                    includeNetworkLayout.setVisibility(View.VISIBLE);
-                }
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            if (feesAdapter != null) {
+                feesAdapter.clearData();
             }
-        });
+            subscribe();
+        }
     }
 
     @Override
