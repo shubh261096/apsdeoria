@@ -53,7 +53,7 @@ import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_TIMETABLE;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
 
-public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener, ProfileFragment.OnFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener {
 
     @BindView(R.id.rvDashboardUI)
     RecyclerView rvDashboardUI;
@@ -206,11 +206,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         } else {
             finishAffinity();
         }
-    }
-
-    @Override
-    public void onFragmentInteraction() {
-
     }
 
     @OnClick(R.id.more_info)
