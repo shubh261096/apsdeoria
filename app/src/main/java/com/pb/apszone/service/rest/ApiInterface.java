@@ -1,6 +1,7 @@
 package com.pb.apszone.service.rest;
 
 import com.pb.apszone.service.model.AttendanceResponseModel;
+import com.pb.apszone.service.model.ClassDetailResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
@@ -52,4 +53,9 @@ public interface ApiInterface {
 
     @GET("Inbox")
     Call<InboxResponseModel> getInbox();
+
+    /* Teacher's api end point */
+    @POST("teacher/TimeTable")
+    @FormUrlEncoded
+    Call<ClassDetailResponseModel> getClassDetail(@FieldMap Map<String, String> params);
 }

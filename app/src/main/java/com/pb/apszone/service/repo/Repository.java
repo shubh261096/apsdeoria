@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.pb.apszone.service.model.AttendanceResponseModel;
+import com.pb.apszone.service.model.ClassDetailResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
@@ -18,6 +19,7 @@ import com.pb.apszone.service.model.TimetableResponseModel;
 import com.pb.apszone.service.rest.ApiClient;
 import com.pb.apszone.service.rest.ApiInterface;
 import com.pb.apszone.service.rest.AttendanceRequestModel;
+import com.pb.apszone.service.rest.ClassDetailRequestModel;
 import com.pb.apszone.service.rest.FeesRequestModel;
 import com.pb.apszone.service.rest.HomeworkRequestModel;
 import com.pb.apszone.service.rest.LoginRequestModel;
@@ -310,6 +312,35 @@ public class Repository {
 
                     @Override
                     public void onFailure(@NonNull Call<InboxResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        data.postValue(null);
+                    }
+                });
+        return data;
+    }
+
+    /* Teacher Attendance Class Details Request */
+    public MutableLiveData<ClassDetailResponseModel> getClassDetail(ClassDetailRequestModel classDetailRequestModel) {
+        final MutableLiveData<ClassDetailResponseModel> data = new MutableLiveData<>();
+        Map<String, String> params = new HashMap<>();
+        params.put("teacher_id", classDetailRequestModel.getTeacherId());
+
+        apiService.getClassDetail(params)
+                .enqueue(new Callback<ClassDetailResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ClassDetailResponseModel> call, @Nullable Response<ClassDetailResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                data.postValue(response.body());
+                                Log.i("Response ", response.message());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ClassDetailResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
                         data.postValue(null);
                     }
