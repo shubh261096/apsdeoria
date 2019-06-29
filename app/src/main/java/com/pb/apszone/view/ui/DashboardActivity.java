@@ -23,6 +23,7 @@ import com.pb.apszone.utils.AutoFitGridLayoutManager;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.DashboardAdapter;
 import com.pb.apszone.view.fragment.AttendanceFragment;
+import com.pb.apszone.view.fragment.AttendanceTeacherFragment;
 import com.pb.apszone.view.fragment.FeesFragment;
 import com.pb.apszone.view.fragment.HomeworkFragment;
 import com.pb.apszone.view.fragment.InboxFragment;
@@ -52,6 +53,7 @@ import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_SYLLABUS;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_TIMETABLE;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 
 public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener {
 
@@ -186,6 +188,11 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
             }
             if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_FEES)) {
                 Fragment fragment = FeesFragment.newInstance();
+                replaceFragment(fragment);
+            }
+        } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {
+            if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_ATTENDANCE)) {
+                Fragment fragment = AttendanceTeacherFragment.newInstance();
                 replaceFragment(fragment);
             }
         }

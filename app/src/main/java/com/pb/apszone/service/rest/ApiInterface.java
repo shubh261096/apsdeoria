@@ -55,7 +55,7 @@ public interface ApiInterface {
     Call<InboxResponseModel> getInbox();
 
     /* Teacher's api end point */
-    @POST("teacher/TimeTable")
+    @POST("teacher/Attendance")
     @FormUrlEncoded
     Call<ClassDetailResponseModel> getClassDetail(@FieldMap Map<String, String> params);
 }
