@@ -15,10 +15,11 @@ class Attendance extends REST_Controller
 
   public function index_post()
   {
-    if (isTheseParametersAvailable(array('teacher_id'))) {
+    if (isTheseParametersAvailable(array('teacher_id', 'date'))) {
       $response = array();
       $teacher_id = $this->input->post('teacher_id');
-      $response = $this->get_classByTeacher($teacher_id); // getting classes which a teacher teaches
+      $date = $this->input->post('date');
+      $response = $this->get_classByTeacher($teacher_id, $date); // getting classes which a teacher teaches
       $httpStatus = REST_Controller::HTTP_OK;
     } else {
       $response['error'] = true;
@@ -30,14 +31,23 @@ class Attendance extends REST_Controller
     $this->response($response, $httpStatus);
   }
 
-  private function get_classByTeacher($teacher_id)
+  private function get_classByTeacher($teacher_id, $date)
   {
-    $data = $this->AttendanceModel->get_classByTeacher($teacher_id);
+    $timestamp = strtotime($date);
+    $day = date('l', $timestamp);
+    $data = $this->AttendanceModel->get_classByTeacher($teacher_id, $day);
     if (!$data == false) {
       foreach ($data as $key => $field) {
         if ($field->class_id) {
           $data[$key]->class_id = getClassDetails($field->class_id); // getting class details and adding it into data array
           $data[$key]->class_id->students = $this->AttendanceModel->get_studentByClass($data[$key]->class_id->id); // getting students list and adding it as extra parameter to data->class->students array
+          foreach ($data[$key]->class_id->students as $new_key => $new_field) {
+            if ($new_field->id) {
+              $data[$key]->class_id->students[$new_key]->attendance = $this->AttendanceModel->get_attendanceByStudent($new_field->id, $date);
+            } else {
+              $data[$key]->class_id->students[$new_key]->attendance = null;
+            }
+          }
         }
       }
 
