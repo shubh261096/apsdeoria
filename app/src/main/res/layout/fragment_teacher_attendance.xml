@@ -86,13 +86,47 @@
                 android:src="@drawable/dotted_line"
                 tools:ignore="ContentDescription" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvAttendance"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/dp_10"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:layout_height="match_parent">
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvAttendance"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                <LinearLayout
+                    android:id="@+id/llAttendance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/text_edit_attendance"
+                        android:textColor="@color/black_80"
+                        android:textSize="@dimen/text_16" />
+
+                    <TextView
+                        android:id="@+id/edit_attendance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:gravity="center"
+                        android:text="@string/edit_attendance"
+                        android:textColor="@color/colorPrimary_70"
+                        android:textSize="@dimen/text_14" />
+
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
 
         <ProgressBar

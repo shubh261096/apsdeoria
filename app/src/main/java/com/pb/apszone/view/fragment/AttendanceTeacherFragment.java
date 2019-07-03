@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,10 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     RecyclerView rvAttendance;
     @BindView(R.id.date_filter)
     TextView dateFilter;
+    @BindView(R.id.edit_attendance)
+    TextView editAttendance;
+    @BindView(R.id.llAttendance)
+    LinearLayout llAttendance;
     private List<ClassDetailItem> classDetailItemList = new ArrayList<>();
     private List<StudentsItem> studentsItemList = new ArrayList<>();
     AttendanceTeacherFragmentViewModel attendanceTeacherFragmentViewModel;
@@ -136,6 +141,9 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                                 attendanceItem.setStatus("0");
                                 attendanceItem.setRemarks("Absent");
                                 classDetailItems.get(classPos).getClassId().getStudents().get(i).setAttendance(attendanceItem);
+                            } else {
+                                rvAttendance.setVisibility(View.GONE);
+                                llAttendance.setVisibility(View.VISIBLE);
                             }
                         }
                         studentsItemList.addAll(classDetailItems.get(classPos).getClassId().getStudents());
@@ -221,6 +229,12 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                     subscribe(this.classPos);
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
+    }
+
+    @OnClick(R.id.edit_attendance)
+    public void onEditAttendanceClicked(){
+        llAttendance.setVisibility(View.GONE);
+        rvAttendance.setVisibility(View.VISIBLE);
     }
 
     @Override
