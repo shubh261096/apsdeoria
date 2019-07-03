@@ -37,19 +37,47 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <TextView
-                android:id="@+id/tvClass"
-                style="@style/Widget.AppCompat.Spinner"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:background="@drawable/spinner_bg_no_padding"
-                android:drawableEnd="@drawable/ic_angle_arrow_down"
-                android:drawableTint="@color/white"
-                android:padding="@dimen/dp_8"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_14"
-                tools:ignore="PrivateResource,UnusedAttribute" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvClass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/dropdownListPreferredItemHeight"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:layout_weight="0.8"
+                    android:background="@drawable/spinner_bg"
+                    android:drawableEnd="@drawable/ic_angle_arrow_down"
+                    android:drawableTint="@color/white"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:gravity="start|center_vertical"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_16"
+                    android:visibility="visible"
+                    tools:ignore="PrivateResource,RtlSymmetry,UnusedAttribute" />
+
+
+                <TextView
+                    android:id="@+id/date_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_weight="0.2"
+                    android:background="@drawable/corner_style"
+                    android:drawableStart="@drawable/ic_clock"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/lightPrimary"
+                    android:visibility="visible"
+                    tools:ignore="RtlSymmetry,UnusedAttribute" />
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -57,22 +85,6 @@
                 android:layerType="software"
                 android:src="@drawable/dotted_line"
                 tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/date_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/dp_16"
-                android:background="@drawable/corner_style"
-                android:drawableStart="@drawable/ic_clock"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:gravity="center"
-                android:minWidth="@dimen/dp_120"
-                android:textAllCaps="false"
-                android:textColor="@color/lightPrimary"
-                android:visibility="visible"
-                tools:ignore="RtlSymmetry,UnusedAttribute" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvAttendance"
