@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -59,6 +60,8 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     TextView dateFilter;
     @BindView(R.id.edit_attendance)
     TextView editAttendance;
+    @BindView(R.id.submit_attendance)
+    Button submitAttendance;
     @BindView(R.id.llAttendance)
     LinearLayout llAttendance;
     private List<ClassDetailItem> classDetailItemList = new ArrayList<>();
@@ -141,9 +144,9 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                                 attendanceItem.setStatus("0");
                                 attendanceItem.setRemarks("Absent");
                                 classDetailItems.get(classPos).getClassId().getStudents().get(i).setAttendance(attendanceItem);
+                                updateUI(false, true);
                             } else {
-                                rvAttendance.setVisibility(View.GONE);
-                                llAttendance.setVisibility(View.VISIBLE);
+                                updateUI(true, false);
                             }
                         }
                         studentsItemList.addAll(classDetailItems.get(classPos).getClassId().getStudents());
@@ -232,9 +235,8 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     }
 
     @OnClick(R.id.edit_attendance)
-    public void onEditAttendanceClicked(){
-        llAttendance.setVisibility(View.GONE);
-        rvAttendance.setVisibility(View.VISIBLE);
+    public void onEditAttendanceClicked() {
+        updateUI(false, true);
     }
 
     @Override
@@ -254,11 +256,25 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
 
 
     private void clearData() {
+        updateUI(false, false);
         if (classDetailItemList != null) {
             classDetailItemList.clear();
         }
         if (teacherAttendanceAdapter != null) {
             teacherAttendanceAdapter.clearData();
+        }
+    }
+
+    private void updateUI(boolean llAttendanceVisibility, boolean submitAttendanceVisibility) {
+        if (llAttendanceVisibility) {
+            llAttendance.setVisibility(View.VISIBLE);
+        } else {
+            llAttendance.setVisibility(View.GONE);
+        }
+        if (submitAttendanceVisibility) {
+            submitAttendance.setVisibility(View.VISIBLE);
+        } else {
+            submitAttendance.setVisibility(View.GONE);
         }
     }
 }

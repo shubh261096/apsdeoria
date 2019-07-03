@@ -52,6 +52,7 @@
     <string name="select_class">Select Class</string>
     <string name="text_edit_attendance">You have already added the attendance for the date. Do you want to edit the attendance?</string>
     <string name="edit_attendance"><u>Edit Attendance</u></string>
+    <string name="submit_attendance">Submit Attendance</string>
 
     <string-array name="day">
         <item>Monday</item>
