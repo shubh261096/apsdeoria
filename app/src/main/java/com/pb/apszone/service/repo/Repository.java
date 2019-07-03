@@ -324,6 +324,7 @@ public class Repository {
         final MutableLiveData<ClassDetailResponseModel> data = new MutableLiveData<>();
         Map<String, String> params = new HashMap<>();
         params.put("teacher_id", classDetailRequestModel.getTeacherId());
+        params.put("date", classDetailRequestModel.getDate());
 
         apiService.getClassDetail(params)
                 .enqueue(new Callback<ClassDetailResponseModel>() {

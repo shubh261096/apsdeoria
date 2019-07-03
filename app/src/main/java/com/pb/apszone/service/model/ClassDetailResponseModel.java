@@ -11,26 +11,53 @@ public class ClassDetailResponseModel {
             "message": "Details Fetched successfully",
             "class_detail": [
         {
-            "class_id": {
+            "timetable_id": "1",
+                "class_id": {
             "id": "C101",
                     "name": "Play Group",
                     "students": [
             {
+                "id": "APS101",
+                    "fullname": "Apoorva Pandey",
+                    "attendance": null
+            },
+            {
                 "id": "APS102",
-                    "fullname": "Shubham Agrawal"
+                    "fullname": "Shubham Agrawal",
+                    "attendance": {
+                "date": "2019-05-08",
+                        "id": "6",
+                        "student_id": "APS102",
+                        "status": "1",
+                        "remarks": "Present"
+            }
             },
             {
                 "id": "APS104",
-                    "fullname": "Nitu Sharma"
+                    "fullname": "Nitu Sharma",
+                    "attendance": {
+                "date": "2019-05-08",
+                        "id": "7",
+                        "student_id": "APS104",
+                        "status": "1",
+                        "remarks": "Present"
+            }
             }
                 ]
         }
         },
         {
-            "class_id": {
+            "timetable_id": "13",
+                "class_id": {
             "id": "C107",
                     "name": "Class 3",
-                    "students": null
+                    "students": [
+            {
+                "id": "APS103",
+                    "fullname": "Vishal Agrawal",
+                    "attendance": null
+            }
+                ]
         }
         }
     ]

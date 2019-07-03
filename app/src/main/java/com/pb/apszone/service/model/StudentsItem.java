@@ -10,6 +10,9 @@ public class StudentsItem {
     @SerializedName("fullname")
     private String fullname;
 
+    @SerializedName("attendance")
+    private AttendanceItem attendance;
+
     public void setId(String id) {
         this.id = id;
     }
@@ -26,12 +29,21 @@ public class StudentsItem {
         return fullname;
     }
 
+    public void setAttendance(AttendanceItem attendance) {
+        this.attendance = attendance;
+    }
+
+    public AttendanceItem getAttendance() {
+        return attendance;
+    }
+
     @Override
     public String toString() {
         return
                 "StudentsItem{" +
                         "id = '" + id + '\'' +
                         ",fullname = '" + fullname + '\'' +
+                        ",attendance = '" + attendance + '\'' +
                         "}";
     }
 }

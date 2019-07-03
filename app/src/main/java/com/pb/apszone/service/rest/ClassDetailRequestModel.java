@@ -7,6 +7,17 @@ public class ClassDetailRequestModel {
     @SerializedName("teacher_id")
     private String teacherId;
 
+    @SerializedName("date")
+    private String date;
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
     }
@@ -20,6 +31,7 @@ public class ClassDetailRequestModel {
         return
                 "ClassDetailRequestModel{" +
                         "teacher_id = '" + teacherId + '\'' +
+                        "date = '" + date + '\'' +
                         "}";
     }
 }
