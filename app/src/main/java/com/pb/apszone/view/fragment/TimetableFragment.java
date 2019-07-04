@@ -103,6 +103,27 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         timetableFragmentViewModel = ViewModelProviders.of(this).get(TimetableFragmentViewModel.class);
+        observeTimetable();
+    }
+
+    private void observeTimetable() {
+        timetableFragmentViewModel.getTimetable().observe(this, timetableResponseModel -> {
+            if (timetableResponseModel != null) {
+                progressBar.setVisibility(View.GONE);
+
+                if (timetableAdapter != null) {
+                    timetableAdapter.clearData();
+                }
+
+                if (!timetableResponseModel.isError()) {
+                    List<TimetableItem> timetableItems = timetableResponseModel.getTimetable();
+                    timetableItemList.addAll(timetableItems);
+                    timetableAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getActivity(), timetableResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -119,31 +140,14 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
         if (!TextUtils.isEmpty(user_type)) {
             if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
                 if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-                    timetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day);
+                    timetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day, KEY_FILTER_BY_DAY, user_type);
                 }
             } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {
                 if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
-                    timetableFragmentViewModel.sendTeacherRequest(keyStorePref.getString(KEY_TEACHER_ID), day);
+                    timetableFragmentViewModel.sendTeacherRequest(keyStorePref.getString(KEY_TEACHER_ID), day, KEY_FILTER_BY_DAY, user_type);
                 }
             }
             progressBar.setVisibility(View.VISIBLE);
-            timetableFragmentViewModel.getTimetable(KEY_FILTER_BY_DAY, user_type).observe(this, timetableResponseModel -> {
-                if (timetableResponseModel != null) {
-                    progressBar.setVisibility(View.GONE);
-
-                    if (timetableAdapter != null) {
-                        timetableAdapter.clearData();
-                    }
-
-                    if (!timetableResponseModel.isError()) {
-                        List<TimetableItem> timetableItems = timetableResponseModel.getTimetable();
-                        timetableItemList.addAll(timetableItems);
-                        timetableAdapter.notifyDataSetChanged();
-                    } else {
-                        Toast.makeText(getActivity(), timetableResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
         }
     }
 

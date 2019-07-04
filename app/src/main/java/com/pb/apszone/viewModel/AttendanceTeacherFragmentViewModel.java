@@ -26,10 +26,10 @@ public class AttendanceTeacherFragmentViewModel extends AndroidViewModel {
     public void sendRequest(String teacher_id, String date) {
         classDetailRequestModel.setTeacherId(teacher_id);
         classDetailRequestModel.setDate(date);
+        repository.getClassDetail(classDetailRequestModel, classDetailResponseModelMutableLiveData);
     }
 
     public LiveData<ClassDetailResponseModel> getClassDetail() {
-        classDetailResponseModelMutableLiveData = repository.getClassDetail(classDetailRequestModel);
         return classDetailResponseModelMutableLiveData;
     }
 

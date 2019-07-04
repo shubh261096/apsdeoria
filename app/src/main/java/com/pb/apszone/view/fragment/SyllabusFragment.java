@@ -85,23 +85,6 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         syllabusFragmentViewModel = ViewModelProviders.of(this).get(SyllabusFragmentViewModel.class);
-    }
-
-    @Override
-    public void getNetworkData(boolean status) {
-        if (status) {
-            if (syllabusAdapter != null) {
-                syllabusAdapter.clearData();
-            }
-            subscribe();
-        }
-    }
-
-    private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-            syllabusFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID));
-        }
-        progressBar.setVisibility(View.VISIBLE);
         syllabusFragmentViewModel.getSyllabus().observe(this, syllabusResponseModel -> {
             if (syllabusResponseModel != null) {
                 progressBar.setVisibility(View.GONE);
@@ -119,6 +102,23 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
                 }
             }
         });
+    }
+
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            if (syllabusAdapter != null) {
+                syllabusAdapter.clearData();
+            }
+            subscribe();
+        }
+    }
+
+    private void subscribe() {
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
+            syllabusFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID));
+        }
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override

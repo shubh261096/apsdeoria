@@ -102,21 +102,10 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
-        profileFragmentViewModel.sendRequest(user_id, user_type);
+        observeProfile();
     }
 
-    @Override
-    public void getNetworkData(boolean status) {
-        if (status) {
-            if (profileAdapter != null) {
-                profileAdapter.clearData();
-            }
-            subscribe();
-        }
-    }
-
-    private void subscribe() {
-        progressBar.setVisibility(View.VISIBLE);
+    private void observeProfile() {
         profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
             if (profileResponseModel != null) {
                 progressBar.setVisibility(View.GONE);
@@ -217,6 +206,21 @@ public class ProfileFragment extends BaseFragment {
                 profileAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            if (profileAdapter != null) {
+                profileAdapter.clearData();
+            }
+            subscribe();
+        }
+    }
+
+    private void subscribe() {
+        profileFragmentViewModel.sendRequest(user_id, user_type);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override

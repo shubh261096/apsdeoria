@@ -56,8 +56,7 @@ public class Repository {
     }
 
     /* Login Request */
-    public MutableLiveData<LoginResponseModel> checkLogin(LoginRequestModel loginRequestModel) {
-        final MutableLiveData<LoginResponseModel> data = new MutableLiveData<>();
+    public void checkLogin(LoginRequestModel loginRequestModel, MutableLiveData<LoginResponseModel> loginResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("email", loginRequestModel.getEmail());
         params.put("password", loginRequestModel.getPassword());
@@ -67,7 +66,7 @@ public class Repository {
                     public void onResponse(@NonNull Call<LoginResponseModel> call, @Nullable Response<LoginResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                data.postValue(response.body());
+                                loginResponseModelMutableLiveData.postValue(response.body());
                             } else {
                                 handleResponseCode(response.code());
                             }
@@ -76,15 +75,13 @@ public class Repository {
 
                     @Override
                     public void onFailure(@NonNull Call<LoginResponseModel> call, Throwable t) {
-                        data.postValue(null);
+                        loginResponseModelMutableLiveData.postValue(null);
                     }
                 });
-        return data;
     }
 
     /* Profile Request */
-    public MutableLiveData<ProfileResponseModel> getProfile(ProfileRequestModel profileRequestModel) {
-        final MutableLiveData<ProfileResponseModel> data = new MutableLiveData<>();
+    public void getProfile(ProfileRequestModel profileRequestModel, MutableLiveData<ProfileResponseModel> profileResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("id", profileRequestModel.getId());
         params.put("type", profileRequestModel.getType());
@@ -94,7 +91,7 @@ public class Repository {
                     public void onResponse(@NonNull Call<ProfileResponseModel> call, @Nullable Response<ProfileResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                data.postValue(response.body());
+                                profileResponseModelMutableLiveData.postValue(response.body());
                             } else {
                                 handleResponseCode(response.code());
                             }
@@ -104,22 +101,20 @@ public class Repository {
                     @Override
                     public void onFailure(@NonNull Call<ProfileResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
-                        data.postValue(null);
+                        profileResponseModelMutableLiveData.postValue(null);
                     }
                 });
-        return data;
     }
 
     /* Dashboard UI Element Request */
-    public MutableLiveData<DashboardUIResponseModel> getDashboardUIElements() {
-        final MutableLiveData<DashboardUIResponseModel> data = new MutableLiveData<>();
+    public void getDashboardUIElements(MutableLiveData<DashboardUIResponseModel> dashboardUIResponseModelMutableLiveData) {
         apiService.getDashboardUIElements()
                 .enqueue(new Callback<DashboardUIResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<DashboardUIResponseModel> call, @Nullable Response<DashboardUIResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                data.postValue(response.body());
+                                dashboardUIResponseModelMutableLiveData.postValue(response.body());
                                 Log.i("Response ", response.message());
                             } else {
                                 handleResponseCode(response.code());
@@ -130,15 +125,13 @@ public class Repository {
                     @Override
                     public void onFailure(@NonNull Call<DashboardUIResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
-                        data.postValue(null);
+                        dashboardUIResponseModelMutableLiveData.postValue(null);
                     }
                 });
-        return data;
     }
 
     /* TimeTable Request */
-    public MutableLiveData<TimetableResponseModel> getTimetable(TimetableRequestModel timetableRequestModel, String filter, String user_type) {
-        final MutableLiveData<TimetableResponseModel> data = new MutableLiveData<>();
+    public void getTimetable(TimetableRequestModel timetableRequestModel, String filter, String user_type, MutableLiveData<TimetableResponseModel> timetableResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
             if (TextUtils.equals(filter, KEY_FILTER_BY_DAY)) {
@@ -160,7 +153,7 @@ public class Repository {
                     public void onResponse(@NonNull Call<TimetableResponseModel> call, @Nullable Response<TimetableResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                data.postValue(response.body());
+                                timetableResponseModelMutableLiveData.postValue(response.body());
                             } else {
                                 handleResponseCode(response.code());
                             }
@@ -170,15 +163,13 @@ public class Repository {
                     @Override
                     public void onFailure(@NonNull Call<TimetableResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
-                        data.postValue(null);
+                        timetableResponseModelMutableLiveData.postValue(null);
                     }
                 });
-        return data;
     }
 
     /* Attendance Request */
-    public MutableLiveData<AttendanceResponseModel> getAttendance(AttendanceRequestModel attendanceRequestModel) {
-        final MutableLiveData<AttendanceResponseModel> data = new MutableLiveData<>();
+    public void getAttendance(AttendanceRequestModel attendanceRequestModel, MutableLiveData<AttendanceResponseModel> attendanceResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("student_id", attendanceRequestModel.getStudentId());
         params.put("month", attendanceRequestModel.getMonth());
@@ -190,7 +181,7 @@ public class Repository {
                     public void onResponse(@NonNull Call<AttendanceResponseModel> call, @Nullable Response<AttendanceResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                data.postValue(response.body());
+                                attendanceResponseModelMutableLiveData.postValue(response.body());
                             } else {
                                 handleResponseCode(response.code());
                             }
@@ -200,15 +191,13 @@ public class Repository {
                     @Override
                     public void onFailure(@NonNull Call<AttendanceResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
-                        data.postValue(null);
+                        attendanceResponseModelMutableLiveData.postValue(null);
                     }
                 });
-        return data;
     }
 
     /* Syllabus Request */
-    public MutableLiveData<SyllabusResponseModel> getSyllabus(SyllabusRequestModel syllabusRequestModel) {
-        final MutableLiveData<SyllabusResponseModel> data = new MutableLiveData<>();
+    public void getSyllabus(SyllabusRequestModel syllabusRequestModel, MutableLiveData<SyllabusResponseModel> syllabusResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("class_id", syllabusRequestModel.getClassId());
 
@@ -218,7 +207,7 @@ public class Repository {
                     public void onResponse(@NonNull Call<SyllabusResponseModel> call, @Nullable Response<SyllabusResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                data.postValue(response.body());
+                                syllabusResponseModelMutableLiveData.postValue(response.body());
                             } else {
                                 handleResponseCode(response.code());
                             }
@@ -227,16 +216,14 @@ public class Repository {
 
                     @Override
                     public void onFailure(@NonNull Call<SyllabusResponseModel> call, Throwable t) {
+                        syllabusResponseModelMutableLiveData.postValue(null);
                         handleFailureResponse(t);
-                        data.postValue(null);
                     }
                 });
-        return data;
     }
 
     /* Homework Request */
-    public MutableLiveData<HomeworkResponseModel> getHomework(HomeworkRequestModel homeworkRequestModel) {
-        final MutableLiveData<HomeworkResponseModel> data = new MutableLiveData<>();
+    public void getHomework(HomeworkRequestModel homeworkRequestModel, MutableLiveData<HomeworkResponseModel> homeworkResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("class_id", homeworkRequestModel.getClassId());
         params.put("date", homeworkRequestModel.getDate());
@@ -247,7 +234,7 @@ public class Repository {
                     public void onResponse(@NonNull Call<HomeworkResponseModel> call, @Nullable Response<HomeworkResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                data.postValue(response.body());
+                                homeworkResponseModelMutableLiveData.postValue(response.body());
                             } else {
                                 handleResponseCode(response.code());
                             }
@@ -257,15 +244,13 @@ public class Repository {
                     @Override
                     public void onFailure(@NonNull Call<HomeworkResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
-                        data.postValue(null);
+                        homeworkResponseModelMutableLiveData.postValue(null);
                     }
                 });
-        return data;
     }
 
     /* Fees Request */
-    public MutableLiveData<FeesResponseModel> getFees(FeesRequestModel feesRequestModel) {
-        final MutableLiveData<FeesResponseModel> data = new MutableLiveData<>();
+    public void getFees(FeesRequestModel feesRequestModel, MutableLiveData<FeesResponseModel> feesResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("class_id", feesRequestModel.getClassId());
         params.put("year", feesRequestModel.getYear());
@@ -277,7 +262,7 @@ public class Repository {
                     public void onResponse(@NonNull Call<FeesResponseModel> call, @Nullable Response<FeesResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                data.postValue(response.body());
+                                feesResponseModelMutableLiveData.postValue(response.body());
                             } else {
                                 handleResponseCode(response.code());
                             }
@@ -287,22 +272,20 @@ public class Repository {
                     @Override
                     public void onFailure(@NonNull Call<FeesResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
-                        data.postValue(null);
+                        feesResponseModelMutableLiveData.postValue(null);
                     }
                 });
-        return data;
     }
 
     /* Inbox Request */
-    public MutableLiveData<InboxResponseModel> getInbox() {
-        final MutableLiveData<InboxResponseModel> data = new MutableLiveData<>();
+    public void getInbox(MutableLiveData<InboxResponseModel> inboxResponseModelMutableLiveData) {
         apiService.getInbox()
                 .enqueue(new Callback<InboxResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<InboxResponseModel> call, @Nullable Response<InboxResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                data.postValue(response.body());
+                                inboxResponseModelMutableLiveData.postValue(response.body());
                                 Log.i("Response ", response.message());
                             } else {
                                 handleResponseCode(response.code());
@@ -313,15 +296,13 @@ public class Repository {
                     @Override
                     public void onFailure(@NonNull Call<InboxResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
-                        data.postValue(null);
+                        inboxResponseModelMutableLiveData.postValue(null);
                     }
                 });
-        return data;
     }
 
     /* Teacher Attendance Class Details Request */
-    public MutableLiveData<ClassDetailResponseModel> getClassDetail(ClassDetailRequestModel classDetailRequestModel) {
-        final MutableLiveData<ClassDetailResponseModel> data = new MutableLiveData<>();
+    public void getClassDetail(ClassDetailRequestModel classDetailRequestModel, MutableLiveData<ClassDetailResponseModel> classDetailResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("teacher_id", classDetailRequestModel.getTeacherId());
         params.put("date", classDetailRequestModel.getDate());
@@ -332,7 +313,7 @@ public class Repository {
                     public void onResponse(@NonNull Call<ClassDetailResponseModel> call, @Nullable Response<ClassDetailResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                data.postValue(response.body());
+                                classDetailResponseModelMutableLiveData.postValue(response.body());
                                 Log.i("Response ", response.message());
                             } else {
                                 handleResponseCode(response.code());
@@ -343,10 +324,9 @@ public class Repository {
                     @Override
                     public void onFailure(@NonNull Call<ClassDetailResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
-                        data.postValue(null);
+                        classDetailResponseModelMutableLiveData.postValue(null);
                     }
                 });
-        return data;
     }
 
     private void handleResponseCode(int code) {

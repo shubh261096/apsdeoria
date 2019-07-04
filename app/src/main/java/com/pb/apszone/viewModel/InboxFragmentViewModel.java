@@ -20,8 +20,11 @@ public class InboxFragmentViewModel extends AndroidViewModel {
         inboxResponseModelMutableLiveData = new MutableLiveData<>();
     }
 
+    public void sendRequest(){
+        repository.getInbox(inboxResponseModelMutableLiveData);
+    }
+
     public LiveData<InboxResponseModel> getInbox() {
-        inboxResponseModelMutableLiveData = repository.getInbox();
         return inboxResponseModelMutableLiveData;
     }
 

@@ -37,8 +37,11 @@ public class DashboardViewModel extends AndroidViewModel {
         keyStorePref = KeyStorePref.getInstance(application.getApplicationContext());
     }
 
+    public void sendRequest(){
+        repository.getDashboardUIElements(dashboardUIResponseModelMutableLiveData);
+    }
+
     public LiveData<DashboardUIResponseModel> getDashboardUIElements() {
-        dashboardUIResponseModelMutableLiveData = repository.getDashboardUIElements();
         return dashboardUIResponseModelMutableLiveData;
     }
 

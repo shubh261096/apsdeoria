@@ -25,10 +25,10 @@ public class SyllabusFragmentViewModel extends AndroidViewModel {
 
     public void sendRequest(String class_id) {
         syllabusRequestModel.setClassId(class_id);
+        repository.getSyllabus(syllabusRequestModel, syllabusResponseModelMutableLiveData);
     }
 
     public LiveData<SyllabusResponseModel> getSyllabus() {
-        syllabusResponseModelMutableLiveData = repository.getSyllabus(syllabusRequestModel);
         return syllabusResponseModelMutableLiveData;
     }
 

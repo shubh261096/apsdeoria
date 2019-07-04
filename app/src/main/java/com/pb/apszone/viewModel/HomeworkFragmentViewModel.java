@@ -26,10 +26,10 @@ public class HomeworkFragmentViewModel extends AndroidViewModel {
     public void sendRequest(String class_id, String date) {
         homeworkRequestModel.setClassId(class_id);
         homeworkRequestModel.setDate(date);
+        repository.getHomework(homeworkRequestModel, homeworkResponseModelMutableLiveData);
     }
 
     public LiveData<HomeworkResponseModel> getHomework() {
-        homeworkResponseModelMutableLiveData = repository.getHomework(homeworkRequestModel);
         return homeworkResponseModelMutableLiveData;
     }
 

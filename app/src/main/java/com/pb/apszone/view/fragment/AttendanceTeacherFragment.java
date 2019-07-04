@@ -107,21 +107,10 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         attendanceTeacherFragmentViewModel = ViewModelProviders.of(this).get(AttendanceTeacherFragmentViewModel.class);
+        observeAttendance();
     }
 
-    @Override
-    public void getNetworkData(boolean status) {
-        if (status) {
-            clearData();
-            subscribe(this.classPos);
-        }
-    }
-
-    private void subscribe(int classPos) {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
-            attendanceTeacherFragmentViewModel.sendRequest(keyStorePref.getString(KEY_TEACHER_ID), this.today_date);
-        }
-        progressBar.setVisibility(View.VISIBLE);
+    private void observeAttendance() {
         attendanceTeacherFragmentViewModel.getClassDetail().observe(this, classDetailResponseModel -> {
             if (classDetailResponseModel != null) {
                 progressBar.setVisibility(View.GONE);
@@ -166,7 +155,21 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                 }
             }
         });
+    }
 
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            clearData();
+            subscribe(this.classPos);
+        }
+    }
+
+    private void subscribe(int classPos) {
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
+            attendanceTeacherFragmentViewModel.sendRequest(keyStorePref.getString(KEY_TEACHER_ID), this.today_date);
+        }
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -39,10 +39,10 @@ public class LoginViewModel extends AndroidViewModel {
     public void sendRequest(String email, String password) {
         loginRequestModel.setPassword(password);
         loginRequestModel.setEmail(email);
+        repository.checkLogin(loginRequestModel, loginResponseModelMutableLiveData);
     }
 
     public LiveData<LoginResponseModel> getUser() {
-        loginResponseModelMutableLiveData = repository.checkLogin(loginRequestModel);
         return loginResponseModelMutableLiveData;
     }
 

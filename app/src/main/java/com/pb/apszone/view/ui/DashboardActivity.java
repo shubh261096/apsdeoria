@@ -95,15 +95,51 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         changeReceiver = new NetworkChangeReceiver(this);
         sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
         observeInternetChange();
-
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
+        observeDashboardUIElements();
+        observeProfile();
         dashboardItemList = new ArrayList<>();
         onDashboardItemClickListener = this;
         keyStorePref = KeyStorePref.getInstance(this);
         user_type = keyStorePref.getString(KEY_USER_TYPE);
         user_id = keyStorePref.getString(KEY_USER_ID);
         setUpGridView();
+    }
+
+    private void observeProfile() {
+        profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
+            if (profileResponseModel != null) {
+                dashboardViewModel.putSharedPrefData(profileResponseModel); // Adding SharedPref in case student/parent
+                if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
+                    int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
+                    userDp.setImageResource(drawable);
+                }
+                userName.setText(profileResponseModel.getProfile().getFullname());
+            }
+        });
+    }
+
+    private void observeDashboardUIElements() {
+        dashboardViewModel.getDashboardUIElements().observe(this, dashboardUIResponseModel -> {
+            if (dashboardUIResponseModel != null) {
+                progressBar.setVisibility(View.GONE);
+                /* Clearing data since activity is always active */
+                if (dashboardAdapter != null) {
+                    dashboardAdapter.clearData();
+                }
+                if (!dashboardUIResponseModel.isError()) {
+                    List<DashboardItem> dashboardItems = dashboardUIResponseModel.getDashboard();
+
+                    /* Adding those data to list whose value is enabled */
+                    dashboardItemList.addAll(dashboardViewModel.addListData(dashboardItems, user_type));
+                    dashboardAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(this, dashboardUIResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
     }
 
     private void observeInternetChange() {
@@ -125,39 +161,11 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
 
     private void subscribeProfile() {
         profileFragmentViewModel.sendRequest(user_id, user_type);
-        profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
-            if (profileResponseModel != null) {
-                dashboardViewModel.putSharedPrefData(profileResponseModel); // Adding SharedPref in case student/parent
-                if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
-                    int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
-                    userDp.setImageResource(drawable);
-                }
-                userName.setText(profileResponseModel.getProfile().getFullname());
-            }
-        });
     }
 
     private void subscribe() {
         progressBar.setVisibility(View.VISIBLE);
-        dashboardViewModel.getDashboardUIElements().observe(this, dashboardUIResponseModel -> {
-            if (dashboardUIResponseModel != null) {
-                progressBar.setVisibility(View.GONE);
-                /* Clearing data since activity is always active */
-                if (dashboardAdapter != null) {
-                    dashboardAdapter.clearData();
-                }
-                if (!dashboardUIResponseModel.isError()) {
-                    List<DashboardItem> dashboardItems = dashboardUIResponseModel.getDashboard();
-
-                    /* Adding those data to list whose value is enabled */
-                    dashboardItemList.addAll(dashboardViewModel.addListData(dashboardItems, user_type));
-                    dashboardAdapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(this, dashboardUIResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+        dashboardViewModel.sendRequest();
     }
 
     private void setUpGridView() {

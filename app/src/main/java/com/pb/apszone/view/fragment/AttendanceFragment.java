@@ -102,6 +102,36 @@ public class AttendanceFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         attendanceFragmentViewModel = ViewModelProviders.of(this).get(AttendanceFragmentViewModel.class);
+        observeAttendance();
+    }
+
+    private void observeAttendance() {
+        attendanceFragmentViewModel.getAttendance().observe(this, attendanceResponseModel -> {
+            if (attendanceResponseModel != null) {
+                progressBar.setVisibility(View.GONE);
+
+                updateUI(0);
+                if (attendanceAdapter != null) {
+                    attendanceAdapter.clearData();
+                }
+
+                if (!attendanceResponseModel.isError()) {
+                    updateUI(1);
+                    day = attendanceFragmentViewModel.setUpList(currentMonth, currentYear);
+                    List<AttendanceItem> attendanceItems = attendanceResponseModel.getAttendance();
+                    attendanceItemList.addAll(attendanceItems);
+                    attendanceAdapter = new AttendanceAdapter(getActivity(), day, attendanceItemList);
+                    rvAttendanceUI.setAdapter(attendanceAdapter);
+                    attendanceAdapter.notifyDataSetChanged();
+                    getPresentAbsentCount();
+                    numPresent.setText(String.format(getString(R.string.present), presentCount));
+                    numAbsent.setText(String.format(getString(R.string.absent), absentCount));
+                } else {
+                    updateUI(0);
+                    Toast.makeText(getActivity(), attendanceResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -119,32 +149,6 @@ public class AttendanceFragment extends BaseFragment {
             attendanceFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_ID), currentMonth, currentYear);
             updateUI(0);
             progressBar.setVisibility(View.VISIBLE);
-            attendanceFragmentViewModel.getAttendance().observe(this, attendanceResponseModel -> {
-                if (attendanceResponseModel != null) {
-                    progressBar.setVisibility(View.GONE);
-
-                    updateUI(0);
-                    if (attendanceAdapter != null) {
-                        attendanceAdapter.clearData();
-                    }
-
-                    if (!attendanceResponseModel.isError()) {
-                        updateUI(1);
-                        day = attendanceFragmentViewModel.setUpList(currentMonth, currentYear);
-                        List<AttendanceItem> attendanceItems = attendanceResponseModel.getAttendance();
-                        attendanceItemList.addAll(attendanceItems);
-                        attendanceAdapter = new AttendanceAdapter(getActivity(), day, attendanceItemList);
-                        rvAttendanceUI.setAdapter(attendanceAdapter);
-                        attendanceAdapter.notifyDataSetChanged();
-                        getPresentAbsentCount();
-                        numPresent.setText(String.format(getString(R.string.present), presentCount));
-                        numAbsent.setText(String.format(getString(R.string.absent), absentCount));
-                    } else {
-                        updateUI(0);
-                        Toast.makeText(getActivity(), attendanceResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
         }
 
     }

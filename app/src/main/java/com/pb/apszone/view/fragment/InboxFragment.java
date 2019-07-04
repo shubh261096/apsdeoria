@@ -81,10 +81,10 @@ public class InboxFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         inboxFragmentViewModel = ViewModelProviders.of(this).get(InboxFragmentViewModel.class);
+        observeInbox();
     }
 
-    private void subscribe() {
-        progressBar.setVisibility(View.VISIBLE);
+    private void observeInbox() {
         inboxFragmentViewModel.getInbox().observe(this, inboxResponseModel -> {
             if (inboxResponseModel != null) {
                 progressBar.setVisibility(View.GONE);
@@ -101,6 +101,11 @@ public class InboxFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    private void subscribe() {
+        progressBar.setVisibility(View.VISIBLE);
+        inboxFragmentViewModel.sendRequest();
     }
 
     @Override

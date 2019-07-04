@@ -27,10 +27,10 @@ public class FeesFragmentViewModel extends AndroidViewModel {
         feesRequestModel.setClassId(class_id);
         feesRequestModel.setYear(year);
         feesRequestModel.setStudentId(student_id);
+        repository.getFees(feesRequestModel, feesResponseModelMutableLiveData);
     }
 
     public LiveData<FeesResponseModel> getFees() {
-        feesResponseModelMutableLiveData = repository.getFees(feesRequestModel);
         return feesResponseModelMutableLiveData;
     }
 

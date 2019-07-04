@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         ButterKnife.bind(this);
         setupSnackbar();
+        subscribe();
     }
 
     private void setupSnackbar() {
@@ -78,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
         if (loginViewModel.validateLogin(email, password)) {
             showProgress(this, "Please wait...");
             loginViewModel.sendRequest(email, password);
-            subscribe();
         } else {
             hideProgress();
         }
