@@ -24,6 +24,7 @@ import com.pb.apszone.R;
 import com.pb.apszone.service.model.AttendanceItem;
 import com.pb.apszone.service.model.ClassDetailItem;
 import com.pb.apszone.service.model.StudentsItem;
+import com.pb.apszone.service.rest.SubmitAttendanceRequestModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.TeacherAttendanceAdapter;
 import com.pb.apszone.view.listener.OnCheckBoxCheckedListener;
@@ -73,6 +74,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     private int classPos = 0;
     private static final String TAG = "AttendanceTeacherFragme";
     private String today_date;
+    private boolean isEdit;
 
     public AttendanceTeacherFragment() {
         // Required empty public constructor
@@ -108,6 +110,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         attendanceTeacherFragmentViewModel = ViewModelProviders.of(this).get(AttendanceTeacherFragmentViewModel.class);
         observeAttendance();
+        observeSubmitAttendance();
     }
 
     private void observeAttendance() {
@@ -134,8 +137,10 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                                 attendanceItem.setRemarks("Absent");
                                 classDetailItems.get(this.classPos).getClassId().getStudents().get(i).setAttendance(attendanceItem);
                                 updateUI(false, true);
+                                isEdit = false;
                             } else {
                                 updateUI(true, false);
+                                isEdit = true;
                             }
                         }
                         studentsItemList.addAll(classDetailItems.get(this.classPos).getClassId().getStudents());
@@ -152,6 +157,19 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                     tvClass.setText(class_name[this.classPos]);
                 } else {
                     Toast.makeText(getActivity(), classDetailResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void observeSubmitAttendance() {
+        attendanceTeacherFragmentViewModel.getSubmitResponse().observe(this, submitAttendanceResponseModel -> {
+            if (submitAttendanceResponseModel != null) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), submitAttendanceResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                if (!submitAttendanceResponseModel.isError()) {
+                    clearData();
+                    subscribe();
                 }
             }
         });
@@ -240,6 +258,22 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     @OnClick(R.id.edit_attendance)
     public void onEditAttendanceClicked() {
         updateUI(false, true);
+    }
+
+    @OnClick(R.id.submit_attendance)
+    public void onSubmitAttendanceClicked() {
+        List<AttendanceItem> attendanceItems = new ArrayList<>();
+        for (int i = 0; i < studentsItemList.size(); i++) {
+            attendanceItems.add(i, classDetailItemList.get(classPos).getClassId().getStudents().get(i).getAttendance());
+        }
+        SubmitAttendanceRequestModel submitAttendanceRequestModel = new SubmitAttendanceRequestModel();
+        submitAttendanceRequestModel.setAttendance(attendanceItems);
+        progressBar.setVisibility(View.VISIBLE);
+        if (isEdit) {
+            attendanceTeacherFragmentViewModel.editAttendanceRequest(submitAttendanceRequestModel);
+        } else {
+            attendanceTeacherFragmentViewModel.addAttendanceRequest(submitAttendanceRequestModel);
+        }
     }
 
     @Override

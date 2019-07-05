@@ -14,12 +14,14 @@ import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.service.model.InboxResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
+import com.pb.apszone.service.model.SubmitAttendanceResponseModel;
 import com.pb.apszone.service.model.SyllabusResponseModel;
 import com.pb.apszone.service.model.TimetableResponseModel;
 import com.pb.apszone.service.rest.ApiClient;
 import com.pb.apszone.service.rest.ApiInterface;
 import com.pb.apszone.service.rest.AttendanceRequestModel;
 import com.pb.apszone.service.rest.ClassDetailRequestModel;
+import com.pb.apszone.service.rest.SubmitAttendanceRequestModel;
 import com.pb.apszone.service.rest.FeesRequestModel;
 import com.pb.apszone.service.rest.HomeworkRequestModel;
 import com.pb.apszone.service.rest.LoginRequestModel;
@@ -325,6 +327,52 @@ public class Repository {
                     public void onFailure(@NonNull Call<ClassDetailResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
                         classDetailResponseModelMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
+    /* Edit Attendance Request */
+    public void editAttendance(SubmitAttendanceRequestModel submitAttendanceRequestModel, MutableLiveData<SubmitAttendanceResponseModel> submitAttendanceResponseModelMutableLiveData) {
+        apiService.editAttendance(submitAttendanceRequestModel)
+                .enqueue(new Callback<SubmitAttendanceResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<SubmitAttendanceResponseModel> call, @Nullable Response<SubmitAttendanceResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                submitAttendanceResponseModelMutableLiveData.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<SubmitAttendanceResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        submitAttendanceResponseModelMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
+    /* Edit Attendance Request */
+    public void addAttendance(SubmitAttendanceRequestModel submitAttendanceRequestModel, MutableLiveData<SubmitAttendanceResponseModel> submitAttendanceResponseModelMutableLiveData) {
+        apiService.addAttendance(submitAttendanceRequestModel)
+                .enqueue(new Callback<SubmitAttendanceResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<SubmitAttendanceResponseModel> call, @Nullable Response<SubmitAttendanceResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                submitAttendanceResponseModelMutableLiveData.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<SubmitAttendanceResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        submitAttendanceResponseModelMutableLiveData.postValue(null);
                     }
                 });
     }

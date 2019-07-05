@@ -8,12 +8,14 @@ import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.service.model.InboxResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
+import com.pb.apszone.service.model.SubmitAttendanceResponseModel;
 import com.pb.apszone.service.model.SyllabusResponseModel;
 import com.pb.apszone.service.model.TimetableResponseModel;
 
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -58,4 +60,10 @@ public interface ApiInterface {
     @POST("teacher/Attendance")
     @FormUrlEncoded
     Call<ClassDetailResponseModel> getClassDetail(@FieldMap Map<String, String> params);
+
+    @POST("teacher/Attendance/edit")
+    Call<SubmitAttendanceResponseModel> editAttendance(@Body SubmitAttendanceRequestModel submitAttendanceRequestModel);
+
+    @POST("teacher/Attendance/add")
+    Call<SubmitAttendanceResponseModel> addAttendance(@Body SubmitAttendanceRequestModel submitAttendanceRequestModel);
 }
