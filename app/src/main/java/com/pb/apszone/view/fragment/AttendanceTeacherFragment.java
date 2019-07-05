@@ -121,24 +121,24 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                     List<ClassDetailItem> classDetailItems = classDetailResponseModel.getClassDetail();
                     classDetailItemList.addAll(classDetailItems);
 
-                    if (classDetailItems.get(classPos).getClassId().getStudents() != null) {
+                    if (classDetailItems.get(this.classPos).getClassId().getStudents() != null) {
 
                         // Add attendance item value here if attendance is null
-                        for (int i = 0; i < classDetailItems.get(classPos).getClassId().getStudents().size(); i++) {
-                            if (classDetailItems.get(classPos).getClassId().getStudents().get(i).getAttendance() == null) {
+                        for (int i = 0; i < classDetailItems.get(this.classPos).getClassId().getStudents().size(); i++) {
+                            if (classDetailItems.get(this.classPos).getClassId().getStudents().get(i).getAttendance() == null) {
                                 AttendanceItem attendanceItem = new AttendanceItem();
-                                attendanceItem.setTimetableId(classDetailItems.get(classPos).getTimetableId());
-                                attendanceItem.setStudentId(classDetailItems.get(classPos).getClassId().getStudents().get(i).getId());
+                                attendanceItem.setTimetableId(classDetailItems.get(this.classPos).getTimetableId());
+                                attendanceItem.setStudentId(classDetailItems.get(this.classPos).getClassId().getStudents().get(i).getId());
                                 attendanceItem.setDate(this.today_date);
                                 attendanceItem.setStatus("0");
                                 attendanceItem.setRemarks("Absent");
-                                classDetailItems.get(classPos).getClassId().getStudents().get(i).setAttendance(attendanceItem);
+                                classDetailItems.get(this.classPos).getClassId().getStudents().get(i).setAttendance(attendanceItem);
                                 updateUI(false, true);
                             } else {
                                 updateUI(true, false);
                             }
                         }
-                        studentsItemList.addAll(classDetailItems.get(classPos).getClassId().getStudents());
+                        studentsItemList.addAll(classDetailItems.get(this.classPos).getClassId().getStudents());
                     } else {
                         Toast.makeText(getContext(), "No students found", Toast.LENGTH_SHORT).show();
                     }
@@ -149,7 +149,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                     for (int i = 0; i < classDetailItemList.size(); i++) {
                         class_name[i] = classDetailItemList.get(i).getClassId().getName();
                     }
-                    tvClass.setText(class_name[classPos]);
+                    tvClass.setText(class_name[this.classPos]);
                 } else {
                     Toast.makeText(getActivity(), classDetailResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -161,11 +161,11 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     public void getNetworkData(boolean status) {
         if (status) {
             clearData();
-            subscribe(this.classPos);
+            subscribe();
         }
     }
 
-    private void subscribe(int classPos) {
+    private void subscribe() {
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
             attendanceTeacherFragmentViewModel.sendRequest(keyStorePref.getString(KEY_TEACHER_ID), this.today_date);
         }
@@ -194,10 +194,10 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
         builder.setTitle(getString(R.string.select_class));
         builder.setItems(class_name, (dialog, which) -> {
             tvClass.setText(class_name[which]);
-            classPos = which;
-            Log.i(TAG, "onClassViewClicked: " + classPos);
+            this.classPos = which;
+            Log.i(TAG, "onClassViewClicked: " + this.classPos);
             clearData();
-            subscribe(this.classPos);
+            subscribe();
         });
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -232,7 +232,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                     dateFilter.setText(today_date);
                     clearData();
                     this.classPos = 0;
-                    subscribe(this.classPos);
+                    subscribe();
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
     }
