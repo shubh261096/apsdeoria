@@ -60,4 +60,49 @@ class Attendance extends REST_Controller
     }
     return $response;
   }
+
+  public function add_post()
+  {
+    $jsonArray = json_decode(file_get_contents('php://input'), true);
+    foreach ($jsonArray['attendance'] as $value) {
+      $date = $value['date'];
+      $student_id = $value['student_id'];
+      $status = $value['status'];
+      $remarks = $value['remarks'];
+      $timetable_id = $value['timetable_id'];
+      $response['error'] = $this->AttendanceModel->add_attendance($date, $student_id, $status, $remarks, $timetable_id);
+    }
+    if ($response['error']) {
+      $response['error'] = false;
+      $response['message'] = "Added successfully";
+      $this->response($response, REST_Controller::HTTP_OK);
+    } else {
+      $response['error'] = true;
+      $response['message'] = "Error occured while adding";
+      $this->response($response, REST_Controller::HTTP_OK);
+    }
+  }
+
+  public function edit_post()
+  {
+    $jsonArray = json_decode(file_get_contents('php://input'), true);
+    foreach ($jsonArray['attendance'] as $value) {
+      $id = $value['id'];
+      $date = $value['date'];
+      $student_id = $value['student_id'];
+      $status = $value['status'];
+      $remarks = $value['remarks'];
+      $timetable_id = $value['timetable_id'];
+      $response['error'] = $this->AttendanceModel->edit_attendance($id, $date, $student_id, $status, $remarks, $timetable_id);
+    }
+    if ($response['error']) {
+      $response['error'] = false;
+      $response['message'] = "Edited Attendance successfully";
+      $this->response($response, REST_Controller::HTTP_OK);
+    } else {
+      $response['error'] = true;
+      $response['message'] = "Error occured while editing";
+      $this->response($response, REST_Controller::HTTP_OK);
+    }
+  }
 }

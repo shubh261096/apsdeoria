@@ -43,7 +43,7 @@ class AttendanceModel extends CI_model {
 
     /* Query for getting attendance from attendance table by student_id and date */
     public function get_attendanceByStudent($student_id, $date) {
-        $sql = 'SELECT date, id, student_id, status, remarks FROM attendance WHERE student_id = "'.$student_id.'" AND date = "'.$date.'" GROUP BY date';
+        $sql = 'SELECT date, id, timetable_id, student_id, status, remarks FROM attendance WHERE student_id = "'.$student_id.'" AND date = "'.$date.'" GROUP BY date';
         $query = $this->db->query($sql);
         if($query->num_rows()){
             return $query->row  ();
@@ -51,7 +51,29 @@ class AttendanceModel extends CI_model {
             return NULL;
         }
     }
+
+    /* Query for add attendance */
+    public function add_attendance($date, $student_id, $status, $remarks, $timetable_id) {
+        $data = array(
+            'date'=>$date,
+            'student_id'=>$student_id,
+            'status'=>$status,
+            'remarks'=>$remarks,
+            'timetable_id'=>$timetable_id
+        );
+        return $this->db->insert('attendance',$data);
+    }
+
+     /* Query for add attendance */
+     public function edit_attendance($id, $date, $student_id, $status, $remarks, $timetable_id) {
+        $data = array(
+            'date'=>$date,
+            'student_id'=>$student_id,
+            'status'=>$status,
+            'remarks'=>$remarks,
+            'timetable_id'=>$timetable_id
+        );
+        $this->db->where('id', $id);
+        return $this->db->update('attendance',$data);
+    }
 }
-
-
-?>
