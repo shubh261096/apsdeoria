@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +71,6 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     String[] class_name;
     TeacherAttendanceAdapter teacherAttendanceAdapter;
     private int classPos = 0;
-    private static final String TAG = "AttendanceTeacherFragme";
     private String today_date;
     private boolean isEdit;
 
@@ -208,17 +206,18 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
 
     @OnClick(R.id.tvClass)
     public void onClassViewClicked() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(getString(R.string.select_class));
-        builder.setItems(class_name, (dialog, which) -> {
-            tvClass.setText(class_name[which]);
-            this.classPos = which;
-            Log.i(TAG, "onClassViewClicked: " + this.classPos);
-            clearData();
-            subscribe();
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        if (class_name != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle(getString(R.string.select_class));
+            builder.setItems(class_name, (dialog, which) -> {
+                tvClass.setText(class_name[which]);
+                this.classPos = which;
+                clearData();
+                subscribe();
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
     @OnClick(R.id.date_filter)
@@ -286,7 +285,6 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                 studentsItemList.get(position).getAttendance().setStatus("0");
                 studentsItemList.get(position).getAttendance().setRemarks("Absent");
             }
-            Log.i(TAG, "onItemChecked: " + studentsItemList.toString());
             teacherAttendanceAdapter.notifyDataSetChanged();
         }
     }
