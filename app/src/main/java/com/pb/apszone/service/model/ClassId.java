@@ -1,51 +1,62 @@
 package com.pb.apszone.service.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
-public class ClassId{
+import com.google.gson.annotations.SerializedName;
 
-	@SerializedName("name")
-	private String name;
+public class ClassId {
 
-	@SerializedName("students")
-	private List<StudentsItem> students;
+    @SerializedName("subject_id")
+    private List<SubjectId> subjectId;
 
-	@SerializedName("id")
-	private String id;
+    @SerializedName("name")
+    private String name;
 
-	public void setName(String name){
-		this.name = name;
-	}
+    @SerializedName("students")
+    private List<StudentsItem> students;
 
-	public String getName(){
-		return name;
-	}
+    @SerializedName("id")
+    private String id;
 
-	public void setStudents(List<StudentsItem> students){
-		this.students = students;
-	}
+    public void setSubjectId(List<SubjectId> subjectId) {
+        this.subjectId = subjectId;
+    }
 
-	public List<StudentsItem> getStudents(){
-		return students;
-	}
+    public List<SubjectId> getSubjectId() {
+        return subjectId;
+    }
 
-	public void setId(String id){
-		this.id = id;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getId(){
-		return id;
-	}
+    public String getName() {
+        return name;
+    }
 
-	@Override
- 	public String toString(){
-		return 
-			"ClassId{" + 
-			"name = '" + name + '\'' + 
-			",students = '" + students + '\'' + 
-			",id = '" + id + '\'' + 
-			"}";
-		}
+    public void setStudents(List<StudentsItem> students) {
+        this.students = students;
+    }
+
+    public List<StudentsItem> getStudents() {
+        return students;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "ClassId{" +
+                        "subject_id = '" + subjectId + '\'' +
+                        ",name = '" + name + '\'' +
+                        ",id = '" + id + '\'' +
+                        "}";
+    }
 }

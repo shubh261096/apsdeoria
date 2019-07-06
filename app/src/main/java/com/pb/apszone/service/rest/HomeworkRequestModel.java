@@ -11,6 +11,9 @@ public class HomeworkRequestModel {
     @SerializedName("class_id")
     private String classId;
 
+    @SerializedName("teacher_id")
+    private String teacherId;
+
     public void setDate(String date) {
         this.date = date;
     }
@@ -27,12 +30,20 @@ public class HomeworkRequestModel {
         return classId;
     }
 
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
     @Override
     public String toString() {
         return
                 "HomeworkRequestModel{" +
                         "date = '" + date + '\'' +
                         ",class_id = '" + classId + '\'' +
+                        ",teacher_id = '" + teacherId + '\'' +
                         "}";
     }
 }

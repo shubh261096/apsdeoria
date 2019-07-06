@@ -26,6 +26,7 @@ import com.pb.apszone.view.fragment.AttendanceFragment;
 import com.pb.apszone.view.fragment.AttendanceTeacherFragment;
 import com.pb.apszone.view.fragment.FeesFragment;
 import com.pb.apszone.view.fragment.HomeworkFragment;
+import com.pb.apszone.view.fragment.HomeworkTeacherFragment;
 import com.pb.apszone.view.fragment.InboxFragment;
 import com.pb.apszone.view.fragment.ProfileFragment;
 import com.pb.apszone.view.fragment.TimetableFragment;
@@ -201,6 +202,10 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {
             if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_ATTENDANCE)) {
                 Fragment fragment = AttendanceTeacherFragment.newInstance();
+                replaceFragment(fragment);
+            }
+            if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_HOMEWORK)) {
+                Fragment fragment = HomeworkTeacherFragment.newInstance();
                 replaceFragment(fragment);
             }
         }

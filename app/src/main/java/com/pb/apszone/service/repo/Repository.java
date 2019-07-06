@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.ClassDetailResponseModel;
+import com.pb.apszone.service.model.ClassSubjectResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
@@ -373,6 +374,33 @@ public class Repository {
                     public void onFailure(@NonNull Call<SubmitAttendanceResponseModel> call, Throwable t) {
                         handleFailureResponse(t);
                         submitAttendanceResponseModelMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
+    /* Teacher Homework Class Subject Details Request */
+    public void getClassSubjectDetail(HomeworkRequestModel homeworkRequestModel, MutableLiveData<ClassSubjectResponseModel> classSubjectResponseModelMutableLiveData) {
+        Map<String, String> params = new HashMap<>();
+        params.put("teacher_id", homeworkRequestModel.getTeacherId());
+
+        apiService.getClassSubjectDetail(params)
+                .enqueue(new Callback<ClassSubjectResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ClassSubjectResponseModel> call, @Nullable Response<ClassSubjectResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                classSubjectResponseModelMutableLiveData.postValue(response.body());
+                                Log.i("Response ", response.message());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ClassSubjectResponseModel> call, @NonNull Throwable t) {
+                        handleFailureResponse(t);
+                        classSubjectResponseModelMutableLiveData.postValue(null);
                     }
                 });
     }
