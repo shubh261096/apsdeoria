@@ -105,23 +105,10 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         homeworkFragmentViewModel = ViewModelProviders.of(this).get(HomeworkFragmentViewModel.class);
+        observeHomework();
     }
 
-    @Override
-    public void getNetworkData(boolean status) {
-        if (status) {
-            if (homeworkAdapter != null) {
-                homeworkAdapter.clearData();
-            }
-            subscribe();
-        }
-    }
-
-    private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-            homeworkFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), today_date);
-        }
-        progressBar.setVisibility(View.VISIBLE);
+    private void observeHomework() {
         homeworkFragmentViewModel.getHomework().observe(this, homeworkResponseModel -> {
             if (homeworkResponseModel != null) {
                 progressBar.setVisibility(View.GONE);
@@ -139,6 +126,23 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
                 }
             }
         });
+    }
+
+    @Override
+    public void getNetworkData(boolean status) {
+        if (status) {
+            if (homeworkAdapter != null) {
+                homeworkAdapter.clearData();
+            }
+            subscribe();
+        }
+    }
+
+    private void subscribe() {
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
+            homeworkFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), today_date);
+        }
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
