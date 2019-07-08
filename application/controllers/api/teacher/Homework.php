@@ -53,4 +53,25 @@ class Homework extends REST_Controller
     }
     return $response;
   }
+
+  /* Funtion to generate and save pdf file */
+  public function pdf_post()
+  {
+    $value = json_decode(file_get_contents('php://input'), true);
+    $date = $value['date'];
+    $subject_id = $value['subject_id'];
+    $title = $value['title'];
+    $description = $value['description'];
+    $class_id = $value['class_id'];
+    $remarks = $value['remarks'];
+
+    /* Getting class name  by id */
+    $class = getClassDetails($class_id);
+    $class_name = $class->name;
+    /* Getting subject name  by id */
+    $subject = getSubjectDetails($subject_id);
+    $subject_name = $subject->name;
+    
+    generatePDF($title, $description, 'asset/pdf/homework/', $class_name.'_'.$subject_name.'_'.$date);
+  }
 }

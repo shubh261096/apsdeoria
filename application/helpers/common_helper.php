@@ -1,6 +1,8 @@
 <?php  
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+define('FPDF_FONTPATH', APPPATH .'third_party');
+
     function isTheseParametersAvailable($params){
         if(count($_POST) > sizeof($params)){ // checking here the count of post data and parameter required.
             return false;
@@ -52,4 +54,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             return $data;
         }
     }
-?>
+
+    /* Generate and save PDF file */
+    function generatePDF($title, $message, $path, $filename){
+        // get main CodeIgniter object
+        $ci = get_instance();
+        ob_start();
+        $pdf = new FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',10);
+        $pdf->SetTitle($title);
+        $pdf->MultiCell(190, 5, $message, 0);
+        $pdf->Output($path.$filename.".pdf", 'F');
+        ob_end_flush();
+   }
