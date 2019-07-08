@@ -45,4 +45,10 @@ class HomeworkModel extends CI_model
             return NULL;
         }
     }
+
+    /* Query for adding homwork */
+    public function add_Homework($array)
+    {
+        return $this->db->insert('homework',$array);
+    }
 }
