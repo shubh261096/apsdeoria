@@ -55,7 +55,7 @@ class Homework extends REST_Controller
   }
 
   /* Funtion to generate and save pdf file */
-  public function pdf_post()
+  public function add_post()
   {
     $value = json_decode(file_get_contents('php://input'), true);
     $date = $value['date'];
