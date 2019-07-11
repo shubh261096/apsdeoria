@@ -49,6 +49,23 @@ class HomeworkModel extends CI_model
     /* Query for adding homwork */
     public function add_Homework($array)
     {
-        return $this->db->insert('homework',$array);
+        return $this->db->insert('homework', $array);
+    }
+
+    /* Query for checking if homework is already added */
+    public function is_HomeworkAvailable($array)
+    {
+        $date = $array['date'];
+        $teacher_id = $array['teacher_id'];
+        $subject_id = $array['subject_id'];
+        $class_id = $array['class_id'];
+
+        $sql = 'SELECT * FROM homework WHERE class_id= "' . $class_id . '" AND subject_id= "' . $subject_id . '" AND teacher_id= "' . $teacher_id . '" AND date= "' . $date . '" ';
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 }

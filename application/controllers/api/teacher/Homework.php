@@ -59,12 +59,24 @@ class Homework extends REST_Controller
   {
     $value = json_decode(file_get_contents('php://input'), true);
     $date = $value['date'];
+    $class_id = $value['class_id'];
     $subject_id = $value['subject_id'];
     $teacher_id = $value['teacher_id'];
-    $title = $value['title'];
-    $description = $value['description'];
-    $class_id = $value['class_id'];
-    $remarks = $value['remarks'];
+    if (!empty($value['title'])) {
+      $title = $value['title'];
+    } else {
+      $title = '';
+    }
+    if (!empty($value['description'])) {
+      $description = $value['description'];
+    } else {
+      $description = '';
+    }
+    if (!empty($value['remarks'])) {
+      $remarks = $value['remarks'];
+    } else {
+      $remarks = '';
+    }
 
     /* Getting class name  by id */
     $class = getClassDetails($class_id);
@@ -76,16 +88,24 @@ class Homework extends REST_Controller
 
     $array = array('date' => $date, 'class_id' => $class_id, 'teacher_id' => $teacher_id, 'subject_id' => $subject_id, 'data' => $path, 'remarks' => $remarks);
 
-    if ($this->HomeworkModel->add_Homework($array)) {
-      generatePDF($title, $description, 'asset/pdf/homework/', $class_name . '_' . $subject_name . '_' . $date);
-      $response['error'] = false;
-      $response['message'] = "Added successfully";
-      $httpStatus = REST_Controller::HTTP_OK;
+    if ($this->HomeworkModel->is_HomeworkAvailable($array) == FALSE) {
+      if ($this->HomeworkModel->add_Homework($array)) {
+        generatePDF($title, $description, 'asset/pdf/homework/', $class_name . '_' . $subject_name . '_' . $date);
+        $response['error'] = false;
+        $response['message'] = "Added successfully";
+        $httpStatus = REST_Controller::HTTP_OK;
+      } else {
+        $response['error'] = true;
+        $response['message'] = "An Error occured! Please try again.";
+        $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+      }
     } else {
       $response['error'] = true;
-      $response['message'] = "An Error occured! Please try again.";
-      $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+      $response['message'] = "Homework is already added for the date.";
+      $httpStatus = REST_Controller::HTTP_OK;
     }
+
+
     $this->response($response, $httpStatus);
   }
 }
