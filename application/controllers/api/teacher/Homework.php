@@ -64,18 +64,12 @@ class Homework extends REST_Controller
     $teacher_id = $value['teacher_id'];
     if (!empty($value['title'])) {
       $title = $value['title'];
-    } else {
-      $title = '';
     }
     if (!empty($value['description'])) {
       $description = $value['description'];
-    } else {
-      $description = '';
     }
     if (!empty($value['remarks'])) {
       $remarks = $value['remarks'];
-    } else {
-      $remarks = '';
     }
 
     /* Getting class name  by id */
@@ -86,18 +80,27 @@ class Homework extends REST_Controller
     $subject_name = str_replace(' ', '_', $subject->name);
     $path =  base_url() . 'asset/pdf/homework/' . $class_name . '_' . $subject_name . '_' . $date . '.pdf';
 
-    $array = array('date' => $date, 'class_id' => $class_id, 'teacher_id' => $teacher_id, 'subject_id' => $subject_id, 'data' => $path, 'remarks' => $remarks);
+    $check_array = array('date' => $date, 'class_id' => $class_id, 'teacher_id' => $teacher_id, 'subject_id' => $subject_id);
 
-    if ($this->HomeworkModel->is_HomeworkAvailable($array) == FALSE) {
-      if ($this->HomeworkModel->add_Homework($array)) {
-        generatePDF($title, $description, 'asset/pdf/homework/', $class_name . '_' . $subject_name . '_' . $date);
-        $response['error'] = false;
-        $response['message'] = "Added successfully";
+    if ($this->HomeworkModel->is_HomeworkAvailable($check_array) == FALSE) {
+      if (empty($value['title']) || empty($value['description'])) {
+        $response['error'] = true;
+        $response['message'] = "Title and description cannot be empty";
+        $data = array('params' => null);
+        $response['data'] = $data;
         $httpStatus = REST_Controller::HTTP_OK;
       } else {
-        $response['error'] = true;
-        $response['message'] = "An Error occured! Please try again.";
-        $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+        $add_array = array('date' => $date, 'class_id' => $class_id, 'teacher_id' => $teacher_id, 'subject_id' => $subject_id, 'data' => $path, 'remarks' => $remarks);
+        if ($this->HomeworkModel->add_Homework($add_array)) {
+          generatePDF($title, $description, 'asset/pdf/homework/', $class_name . '_' . $subject_name . '_' . $date);
+          $response['error'] = false;
+          $response['message'] = "Added successfully";
+          $httpStatus = REST_Controller::HTTP_OK;
+        } else {
+          $response['error'] = true;
+          $response['message'] = "An Error occured! Please try again.";
+          $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+        }
       }
     } else {
       $response['error'] = true;
