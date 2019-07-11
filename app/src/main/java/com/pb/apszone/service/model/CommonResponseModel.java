@@ -4,16 +4,22 @@ import com.google.gson.annotations.SerializedName;
 
 public class CommonResponseModel {
 
-    /*{
-        "error": false,
-            "message": "Added successfully"
-    }*/
+    @SerializedName("data")
+    private Data data;
 
     @SerializedName("error")
     private boolean error;
 
     @SerializedName("message")
     private String message;
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public Data getData() {
+        return data;
+    }
 
     public void setError(boolean error) {
         this.error = error;
@@ -35,7 +41,8 @@ public class CommonResponseModel {
     public String toString() {
         return
                 "CommonResponseModel{" +
-                        "error = '" + error + '\'' +
+                        "data = '" + data + '\'' +
+                        ",error = '" + error + '\'' +
                         ",message = '" + message + '\'' +
                         "}";
     }

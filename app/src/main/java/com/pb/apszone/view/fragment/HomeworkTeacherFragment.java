@@ -34,6 +34,7 @@ import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_CLASS_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_SUBJECT_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_SUBJECT_NAME;
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
@@ -194,6 +195,7 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
         bundle.putString(KEY_TEACHER_ID, keyStorePref.getString(KEY_USER_ID));
         bundle.putString(KEY_CLASS_ID, this.classId);
         bundle.putString(KEY_SUBJECT_ID, classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getId());
+        bundle.putString(KEY_SUBJECT_NAME, classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getName());
         nextFrag.setArguments(bundle);
         Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_frame_layout, nextFrag, AddHomeworkFragment.class.getSimpleName())

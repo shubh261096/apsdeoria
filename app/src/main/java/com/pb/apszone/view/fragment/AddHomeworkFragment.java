@@ -35,6 +35,7 @@ import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_CLASS_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_SUBJECT_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_SUBJECT_NAME;
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.CommonUtils.getTodayDate;
 
@@ -59,10 +60,14 @@ public class AddHomeworkFragment extends BaseFragment {
     Button submitHomework;
     @BindView(R.id.ll_homework)
     LinearLayout llHomework;
-    @BindView(R.id.exist_homework)
-    TextView existHomework;
+    @BindView(R.id.ll_exist_homework)
+    LinearLayout llExistHomework;
+    @BindView(R.id.tvSubjectName)
+    TextView tvSubjectName;
+    @BindView(R.id.add_homework)
+    TextView addHomework;
     HomeworkRequestModel homeworkRequestModel;
-    private String teacher_id, subject_id, class_id;
+    private String teacher_id, subject_id, class_id, subject_name;
 
     public AddHomeworkFragment() {
         // Required empty public constructor
@@ -80,6 +85,7 @@ public class AddHomeworkFragment extends BaseFragment {
             teacher_id = getArguments().getString(KEY_TEACHER_ID);
             subject_id = getArguments().getString(KEY_SUBJECT_ID);
             class_id = getArguments().getString(KEY_CLASS_ID);
+            subject_name = getArguments().getString(KEY_SUBJECT_NAME);
         }
     }
 
@@ -89,6 +95,7 @@ public class AddHomeworkFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_homework, container, false);
         unbinder = ButterKnife.bind(this, view);
+        tvSubjectName.setText(subject_name);
         dateFilter.setText(getTodayDate());
         llHomework.setVisibility(View.VISIBLE);
         toolbarAddHomework.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
@@ -123,12 +130,17 @@ public class AddHomeworkFragment extends BaseFragment {
         homeworkTeacherFragmentViewModel.getSubmitResponse().observe(this, commonResponseModel -> {
             if (commonResponseModel != null) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
                 if (!commonResponseModel.isError()) {
+                    Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
                     Objects.requireNonNull(getActivity()).onBackPressed();
                 } else {
-                    llHomework.setVisibility(View.GONE);
-                    existHomework.setVisibility(View.VISIBLE);
+                    if (commonResponseModel.getData() != null) {
+                        llHomework.setVisibility(View.VISIBLE);
+                        llExistHomework.setVisibility(View.GONE);
+                    } else {
+                        llHomework.setVisibility(View.GONE);
+                        llExistHomework.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -144,7 +156,7 @@ public class AddHomeworkFragment extends BaseFragment {
 
     private void subscribe(HomeworkRequestModel homeworkRequestModel) {
         llHomework.setVisibility(View.GONE);
-        existHomework.setVisibility(View.GONE);
+        llExistHomework.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         homeworkTeacherFragmentViewModel.addHomeworkRequest(homeworkRequestModel);
     }
@@ -202,6 +214,12 @@ public class AddHomeworkFragment extends BaseFragment {
             createRequestModel();
             subscribe(this.homeworkRequestModel);
         }
+    }
+
+    @OnClick(R.id.add_homework)
+    public void onAddHomeworkClicked() {
+        llExistHomework.setVisibility(View.GONE);
+        llHomework.setVisibility(View.VISIBLE);
     }
 
     private boolean validate() {

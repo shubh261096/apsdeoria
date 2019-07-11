@@ -59,6 +59,7 @@
     <string name="enter_description">Enter Description</string>
     <string name="submit_homework">Submit Homework</string>
     <string name="toolbar_add_homework">Add Homework</string>
+    <string name="add_homework"><u>Add Homework</u></string>
 
     <string-array name="day">
         <item>Monday</item>
