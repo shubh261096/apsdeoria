@@ -65,7 +65,7 @@
                             android:layout_weight="0.8"
                             android:background="@drawable/spinner_bg"
                             android:foreground="?selectableItemBackgroundBorderless"
-                            android:gravity="start|center_vertical"
+                            android:gravity="center"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_16"
