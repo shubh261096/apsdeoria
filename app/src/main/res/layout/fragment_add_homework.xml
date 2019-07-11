@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/dynamic_fragment_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                tools:ignore="MissingConstraints">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar_add_homework"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/white"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:navigationIcon="@drawable/ic_arrow_back"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:title="@string/toolbar_add_homework"
+                    app:titleTextColor="@color/colorPrimary" />
+
+            </android.support.design.widget.AppBarLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_homework"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/date_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/corner_style"
+                    android:drawableStart="@drawable/ic_clock"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:minWidth="120dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/lightPrimary"
+                    android:visibility="visible"
+                    tools:ignore="RtlSymmetry,UnusedAttribute" />
+
+                <EditText
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/corner_style"
+                    android:hint="@string/enter_title"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailSubject"
+                    android:padding="@dimen/dp_10"
+                    tools:ignore="UnusedAttribute" />
+
+                <EditText
+                    android:id="@+id/remarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/corner_style"
+                    android:hint="@string/enter_remarks"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailSubject"
+                    android:padding="@dimen/dp_10"
+                    tools:ignore="UnusedAttribute" />
+
+                <EditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_weight="3"
+                    android:background="@drawable/corner_style"
+                    android:gravity="start"
+                    android:hint="@string/enter_description"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:padding="@dimen/dp_10"
+                    tools:ignore="LabelFor,UnusedAttribute" />
+
+                <Button
+                    android:id="@+id/submit_homework"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:background="@drawable/corner_style"
+                    android:text="@string/submit_homework"
+                    android:textColor="@color/lightPrimary"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/exist_homework"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:text="@string/text_exist_homework"
+            android:textColor="@color/black_80"
+            android:textSize="@dimen/text_18"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
+</android.support.design.widget.CoordinatorLayout>
+
+
+

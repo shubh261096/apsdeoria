@@ -51,8 +51,14 @@
     <string name="oh_snap">Oh Snap!</string>
     <string name="select_class">Select Class</string>
     <string name="text_edit_attendance">You have already added the attendance for the date. Do you want to edit the attendance?</string>
+    <string name="text_exist_homework">You have already added the homework for the date. Do you want to add for another date?</string>
     <string name="edit_attendance"><u>Edit Attendance</u></string>
     <string name="submit_attendance">Submit Attendance</string>
+    <string name="enter_title">Enter Title</string>
+    <string name="enter_remarks">Enter Remarks</string>
+    <string name="enter_description">Enter Description</string>
+    <string name="submit_homework">Submit Homework</string>
+    <string name="toolbar_add_homework">Add Homework</string>
 
     <string-array name="day">
         <item>Monday</item>

@@ -47,4 +47,8 @@ public class AppConstants {
 
     public static long KEY_DOWNLOAD_ID;
 
+    /* BUNDLE KEY FOR SHARING DATA*/
+    public final static String KEY_CLASS_ID = "key_class_id";
+    public final static String KEY_SUBJECT_ID = "key_subject_id";
+
 }

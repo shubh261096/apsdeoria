@@ -9,6 +9,7 @@ import android.util.Log;
 import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.ClassDetailResponseModel;
 import com.pb.apszone.service.model.ClassSubjectResponseModel;
+import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
@@ -355,7 +356,7 @@ public class Repository {
                 });
     }
 
-    /* Edit Attendance Request */
+    /* Add Attendance Request */
     public void addAttendance(SubmitAttendanceRequestModel submitAttendanceRequestModel, MutableLiveData<SubmitAttendanceResponseModel> submitAttendanceResponseModelMutableLiveData) {
         apiService.addAttendance(submitAttendanceRequestModel)
                 .enqueue(new Callback<SubmitAttendanceResponseModel>() {
@@ -401,6 +402,29 @@ public class Repository {
                     public void onFailure(@NonNull Call<ClassSubjectResponseModel> call, @NonNull Throwable t) {
                         handleFailureResponse(t);
                         classSubjectResponseModelMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
+    /* Add Homework Request */
+    public void addHomework(HomeworkRequestModel homeworkRequestModel, MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData) {
+        apiService.addHomework(homeworkRequestModel)
+                .enqueue(new Callback<CommonResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                commonResponseModelMutableLiveData.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        commonResponseModelMutableLiveData.postValue(null);
                     }
                 });
     }

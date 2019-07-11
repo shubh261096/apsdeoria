@@ -18,19 +18,26 @@ import butterknife.ButterKnife;
 public class TeacherHomeworkAdapter extends RecyclerView.Adapter<TeacherHomeworkAdapter.HomeworkViewHolder> {
 
     private final List<SubjectId> subjectIdList;
+    private final OnSubjectItemClick onSubjectItemClick;
 
     static class HomeworkViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.subject_name)
         TextView subjectName;
 
-        HomeworkViewHolder(final View itemView) {
+        HomeworkViewHolder(final View itemView, final OnSubjectItemClick subjectItemClick) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(v -> {
+                if (subjectItemClick != null) {
+                    subjectItemClick.onItemClick(getAdapterPosition(), v);
+                }
+            });
         }
     }
 
-    public TeacherHomeworkAdapter(List<SubjectId> subjectIdList) {
+    public TeacherHomeworkAdapter(List<SubjectId> subjectIdList, OnSubjectItemClick onSubjectItemClick) {
         this.subjectIdList = subjectIdList;
+        this.onSubjectItemClick = onSubjectItemClick;
     }
 
     @NonNull
@@ -38,7 +45,7 @@ public class TeacherHomeworkAdapter extends RecyclerView.Adapter<TeacherHomework
     public HomeworkViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                                  int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_teacher_homework, parent, false);
-        return new HomeworkViewHolder(view);
+        return new HomeworkViewHolder(view, onSubjectItemClick);
     }
 
 
@@ -62,4 +69,7 @@ public class TeacherHomeworkAdapter extends RecyclerView.Adapter<TeacherHomework
         notifyDataSetChanged();
     }
 
+    public interface OnSubjectItemClick {
+        void onItemClick(int position, View view);
+    }
 }

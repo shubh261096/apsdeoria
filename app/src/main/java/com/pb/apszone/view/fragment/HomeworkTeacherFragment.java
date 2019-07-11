@@ -32,9 +32,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.pb.apszone.utils.AppConstants.KEY_CLASS_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_SUBJECT_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 
-public class HomeworkTeacherFragment extends BaseFragment {
+public class HomeworkTeacherFragment extends BaseFragment implements TeacherHomeworkAdapter.OnSubjectItemClick {
 
     Unbinder unbinder;
     @BindView(R.id.toolbar_homework)
@@ -51,6 +55,8 @@ public class HomeworkTeacherFragment extends BaseFragment {
     KeyStorePref keyStorePref;
     TeacherHomeworkAdapter teacherHomeworkAdapter;
     private String[] class_name;
+    private String[] class_id;
+    private String classId;
     private int classPos = 0;
 
     public HomeworkTeacherFragment() {
@@ -76,7 +82,7 @@ public class HomeworkTeacherFragment extends BaseFragment {
         classSubjectItemList = new ArrayList<>();
         subjectIdList = new ArrayList<>();
         rvSubject.setLayoutManager(new LinearLayoutManager(getActivity()));
-        teacherHomeworkAdapter = new TeacherHomeworkAdapter(subjectIdList);
+        teacherHomeworkAdapter = new TeacherHomeworkAdapter(subjectIdList, this);
         rvSubject.setAdapter(teacherHomeworkAdapter);
         toolbarHomework.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         return view;
@@ -103,9 +109,12 @@ public class HomeworkTeacherFragment extends BaseFragment {
 
                     /* Class name String array is get with size of response class_detail  */
                     class_name = new String[classSubjectItemList.size()];
+                    class_id = new String[classSubjectItemList.size()];
                     for (int i = 0; i < classSubjectItemList.size(); i++) {
                         class_name[i] = classSubjectItemList.get(i).getClassId().getName();
+                        class_id[i] = classSubjectItemList.get(i).getClassId().getId();
                     }
+                    classId = class_id[this.classPos];
                     tvClass.setText(class_name[this.classPos]);
                     teacherHomeworkAdapter.notifyDataSetChanged();
                 } else {
@@ -154,6 +163,7 @@ public class HomeworkTeacherFragment extends BaseFragment {
             builder.setItems(class_name, (dialog, which) -> {
                 tvClass.setText(class_name[which]);
                 this.classPos = which;
+                this.classId = class_id[this.classPos];
 
                 /* Since all the data is fetch at start so just adding the data and notifying the adapter of selected position */
                 if (teacherHomeworkAdapter != null) {
@@ -177,4 +187,17 @@ public class HomeworkTeacherFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onItemClick(int position, View view) {
+        AddHomeworkFragment nextFrag = new AddHomeworkFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_TEACHER_ID, keyStorePref.getString(KEY_USER_ID));
+        bundle.putString(KEY_CLASS_ID, this.classId);
+        bundle.putString(KEY_SUBJECT_ID, classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getId());
+        nextFrag.setArguments(bundle);
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_frame_layout, nextFrag, AddHomeworkFragment.class.getSimpleName())
+                .addToBackStack(null)
+                .commit();
+    }
 }
