@@ -429,6 +429,32 @@ public class Repository {
                 });
     }
 
+    /* Check Syllabus Request */
+    public void checkSyllabus(SyllabusRequestModel syllabusRequestModel, MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData) {
+        Map<String, String> params = new HashMap<>();
+        params.put("subject_id", syllabusRequestModel.getSubjectId());
+
+        apiService.checkSyllabus(params)
+                .enqueue(new Callback<CommonResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                commonResponseModelMutableLiveData.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        commonResponseModelMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
     private void handleResponseCode(int code) {
         if (code > 200)
             Log.i("Error Response Code ", code + ": Unauthorised");

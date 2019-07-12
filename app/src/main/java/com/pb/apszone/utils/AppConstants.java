@@ -51,5 +51,6 @@ public class AppConstants {
     public final static String KEY_CLASS_ID = "key_class_id";
     public final static String KEY_SUBJECT_ID = "key_subject_id";
     public final static String KEY_SUBJECT_NAME = "key_subject_name";
+    public final static String KEY_DASHBOARD_ELEMENT_NAME = "key_dashboard_element_name";
 
 }

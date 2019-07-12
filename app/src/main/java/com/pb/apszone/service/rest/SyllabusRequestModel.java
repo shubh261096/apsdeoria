@@ -2,24 +2,36 @@ package com.pb.apszone.service.rest;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SyllabusRequestModel{
+public class SyllabusRequestModel {
 
-	@SerializedName("class_id")
-	private String classId;
+    @SerializedName("class_id")
+    private String classId;
 
-	public void setClassId(String classId){
-		this.classId = classId;
-	}
+    @SerializedName("subject_id")
+    private String subjectId;
 
-	public String getClassId(){
-		return classId;
-	}
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
 
-	@Override
- 	public String toString(){
-		return 
-			"SyllabusRequestModel{" + 
-			"class_id = '" + classId + '\'' + 
-			"}";
-		}
+    public String getClassId() {
+        return classId;
+    }
+
+    public String getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(String subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "SyllabusRequestModel{" +
+                        "class_id = '" + classId + '\'' +
+                        ",subject_id = '" + subjectId + '\'' +
+                        "}";
+    }
 }

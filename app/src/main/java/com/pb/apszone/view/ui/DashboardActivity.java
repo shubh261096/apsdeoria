@@ -44,6 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.pb.apszone.utils.AppConstants.KEY_DASHBOARD_ELEMENT_NAME;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_ATTENDANCE;
@@ -206,6 +207,16 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
             }
             if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_HOMEWORK)) {
                 Fragment fragment = HomeworkTeacherFragment.newInstance();
+                Bundle bundle = new Bundle();
+                bundle.putString(KEY_DASHBOARD_ELEMENT_NAME, UI_ELEMENT_HOMEWORK);
+                fragment.setArguments(bundle);
+                replaceFragment(fragment);
+            }
+            if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_SYLLABUS)) {
+                Fragment fragment = HomeworkTeacherFragment.newInstance();
+                Bundle bundle = new Bundle();
+                bundle.putString(KEY_DASHBOARD_ELEMENT_NAME, UI_ELEMENT_SYLLABUS);
+                fragment.setArguments(bundle);
                 replaceFragment(fragment);
             }
         }

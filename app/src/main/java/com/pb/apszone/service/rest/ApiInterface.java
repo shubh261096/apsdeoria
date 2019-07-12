@@ -21,6 +21,7 @@ import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 
 public interface ApiInterface {
@@ -75,4 +76,8 @@ public interface ApiInterface {
 
     @POST("teacher/Homework/add")
     Call<CommonResponseModel> addHomework(@Body HomeworkRequestModel homeworkRequestModel);
+
+    @POST("teacher/Syllabus")
+    @FormUrlEncoded
+    Call<CommonResponseModel> checkSyllabus(@FieldMap Map<String, String> params);
 }

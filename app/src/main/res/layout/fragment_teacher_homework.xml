@@ -32,7 +32,6 @@
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:navigationIcon="@drawable/ic_arrow_back"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:title="@string/toolbar_homework"
                     app:titleTextColor="@color/colorPrimary" />
 
             </android.support.design.widget.AppBarLayout>
