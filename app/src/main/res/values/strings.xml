@@ -60,6 +60,7 @@
     <string name="submit_homework">Submit Homework</string>
     <string name="toolbar_add_homework">Add Homework</string>
     <string name="add_homework"><u>Add Homework</u></string>
+    <string name="app_storage_permission_warning_msg">You\'ve previously denied Storage permission.\nTo enable this, click App Settings below and activate Storage under the Permissions menu</string>
 
     <string-array name="day">
         <item>Monday</item>

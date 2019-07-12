@@ -16,6 +16,7 @@ import com.pb.apszone.service.model.TimetableResponseModel;
 
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
@@ -23,6 +24,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiInterface {
     @POST("Login")
@@ -80,4 +82,9 @@ public interface ApiInterface {
     @POST("teacher/Syllabus")
     @FormUrlEncoded
     Call<CommonResponseModel> checkSyllabus(@FieldMap Map<String, String> params);
+
+    @Multipart
+    @POST("teacher/Syllabus/update")
+    Call<CommonResponseModel> updateSyllabus(@Part MultipartBody.Part file, @Part("subject_id") String subject_id);
+
 }

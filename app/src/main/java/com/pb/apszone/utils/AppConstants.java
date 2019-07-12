@@ -53,4 +53,8 @@ public class AppConstants {
     public final static String KEY_SUBJECT_NAME = "key_subject_name";
     public final static String KEY_DASHBOARD_ELEMENT_NAME = "key_dashboard_element_name";
 
+    /* KEY CONSTANT VALUES */
+    public final static int READ_EXTERNAL_STORAGE_CODE = 101 ;
+    public final static  int PDF_REQ_CODE = 901;
+
 }

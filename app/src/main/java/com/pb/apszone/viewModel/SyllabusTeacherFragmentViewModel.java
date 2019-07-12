@@ -10,6 +10,12 @@ import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.service.rest.SyllabusRequestModel;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class SyllabusTeacherFragmentViewModel extends AndroidViewModel {
 
     private MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData;
@@ -28,7 +34,13 @@ public class SyllabusTeacherFragmentViewModel extends AndroidViewModel {
         repository.checkSyllabus(syllabusRequestModel, commonResponseModelMutableLiveData);
     }
 
-    public LiveData<CommonResponseModel> getSubmitResponse() {
+    public void updateRequest(File file, String teacher_id) {
+        RequestBody fileReqBody = RequestBody.create(MediaType.parse("pdf/*"), file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("pdfData", file.getName(), fileReqBody);
+        repository.updateSyllabus(part, teacher_id, commonResponseModelMutableLiveData);
+    }
+
+    public LiveData<CommonResponseModel> checkResponse() {
         return commonResponseModelMutableLiveData;
     }
 }

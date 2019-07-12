@@ -1,13 +1,19 @@
 package com.pb.apszone.utils;
 
+import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +22,7 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 
+import com.pb.apszone.BuildConfig;
 import com.pb.apszone.R;
 
 import java.io.File;
@@ -352,5 +359,33 @@ public class CommonUtils {
             activeNetwork = cm.getActiveNetworkInfo();
         }
         return activeNetwork != null;
+    }
+
+    public static boolean isReadStoragePermissionGranted(Context context) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+
+    public static void showPermissionDeniedDialog(final Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(activity.getResources().getString(R.string.app_storage_permission_warning_msg))
+                .setCancelable(false)
+                .setNegativeButton("Cancel", ((dialog, which) -> dialog.dismiss()))
+                .setPositiveButton("Settings", (dialog, id) -> {
+                    dialog.dismiss();
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            Uri.fromParts("package", BuildConfig.APPLICATION_ID, null));
+                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                    activity.startActivity(intent);
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

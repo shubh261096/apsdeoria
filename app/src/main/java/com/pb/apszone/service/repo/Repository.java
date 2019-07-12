@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -435,6 +436,29 @@ public class Repository {
         params.put("subject_id", syllabusRequestModel.getSubjectId());
 
         apiService.checkSyllabus(params)
+                .enqueue(new Callback<CommonResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                commonResponseModelMutableLiveData.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, Throwable t) {
+                        handleFailureResponse(t);
+                        commonResponseModelMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
+    /* Update Syllabus Request */
+    public void updateSyllabus(MultipartBody.Part file, String teacher_id, MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData) {
+        apiService.updateSyllabus(file, teacher_id)
                 .enqueue(new Callback<CommonResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {

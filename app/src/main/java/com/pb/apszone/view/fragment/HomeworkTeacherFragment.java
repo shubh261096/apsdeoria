@@ -1,14 +1,20 @@
 package com.pb.apszone.view.fragment;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +25,7 @@ import android.widget.Toast;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.ClassSubjectItem;
 import com.pb.apszone.service.model.SubjectId;
+import com.pb.apszone.utils.CommonUtils;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.TeacherHomeworkAdapter;
 import com.pb.apszone.viewModel.HomeworkTeacherFragmentViewModel;
@@ -33,18 +40,22 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static android.app.Activity.RESULT_OK;
 import static com.pb.apszone.utils.AppConstants.KEY_CLASS_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_DASHBOARD_ELEMENT_NAME;
 import static com.pb.apszone.utils.AppConstants.KEY_SUBJECT_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_SUBJECT_NAME;
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
-import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
+import static com.pb.apszone.utils.AppConstants.READ_EXTERNAL_STORAGE_CODE;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_HOMEWORK;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_SYLLABUS;
+import static com.pb.apszone.utils.CommonUtils.isReadStoragePermissionGranted;
 
 public class HomeworkTeacherFragment extends BaseFragment implements TeacherHomeworkAdapter.OnSubjectItemClick {
 
+    private static final int PDF_REQ_CODE = 901;
+    private static final String TAG = "HomeworkTeacherFragment";
     Unbinder unbinder;
     @BindView(R.id.toolbar_homework)
     Toolbar toolbarHomework;
@@ -62,7 +73,7 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
     TeacherHomeworkAdapter teacherHomeworkAdapter;
     private String[] class_name;
     private String[] class_id;
-    private String classId;
+    private String classId, subjectId;
     private int classPos = 0;
     private String dashboard_element_name;
 
@@ -115,12 +126,13 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
     }
 
     private void observeSyllabus() {
-        syllabusTeacherFragmentViewModel.getSubmitResponse().observe(this, commonResponseModel -> {
+        syllabusTeacherFragmentViewModel.checkResponse().observe(this, commonResponseModel -> {
             if (commonResponseModel != null) {
                 if (commonResponseModel.isError()) {
                     Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
                 } else {
                     // TODO call #sendPDF api here
+                    openPDFIntent();
                 }
             }
         });
@@ -237,7 +249,46 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
                     .addToBackStack(null)
                     .commit();
         } else if (TextUtils.equals(dashboard_element_name, UI_ELEMENT_SYLLABUS)) {
-            subscribeSyllabus(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getId());
+            this.subjectId = classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getId();
+            if (isReadStoragePermissionGranted(getContext())) {
+                subscribeSyllabus(this.subjectId);
+            } else {
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_EXTERNAL_STORAGE_CODE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == READ_EXTERNAL_STORAGE_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "onRequestPermissionsResult: Permission Granted");
+                subscribeSyllabus(this.subjectId);
+            } else if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                Log.i(TAG, "onRequestPermissionsResult: Permission Denied");
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    CommonUtils.showPermissionDeniedDialog(getActivity());
+                }
+            }
+        }
+    }
+
+    private void openPDFIntent() {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQ_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PDF_REQ_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
+            Log.i(TAG, "onActivityResult: " + uri.toString());
+            // TODO Data is here now sendPDFRequest here
         }
     }
 }
