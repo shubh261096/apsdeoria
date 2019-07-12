@@ -29,8 +29,8 @@ class Syllabus extends REST_Controller
     }
   }
 
-  /* Add syllabus */
-  public function add_post()
+  /* Update syllabus */
+  public function update_post()
   {
     $subject_id = $this->input->post('subject_id');
     $config = [
@@ -44,7 +44,7 @@ class Syllabus extends REST_Controller
       $data = $this->upload->data();
       $path = base_url($config['upload_path'] . $data['raw_name'] . $data['file_ext']);
       if (!empty($path)) {
-        if ($this->SyllabusModel->add_Syllabus($subject_id, $path)) {
+        if ($this->SyllabusModel->update_Syllabus($subject_id, $path)) {
           $response['error'] = false;
           $response['message'] = "Added Successfully";
           $this->response($response, REST_Controller::HTTP_OK);
