@@ -31,6 +31,7 @@ import com.pb.apszone.view.adapter.TeacherHomeworkAdapter;
 import com.pb.apszone.viewModel.HomeworkTeacherFragmentViewModel;
 import com.pb.apszone.viewModel.SyllabusTeacherFragmentViewModel;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -50,6 +51,7 @@ import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.READ_EXTERNAL_STORAGE_CODE;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_HOMEWORK;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_SYLLABUS;
+import static com.pb.apszone.utils.CommonUtils.getUriRealPath;
 import static com.pb.apszone.utils.CommonUtils.isReadStoragePermissionGranted;
 
 public class HomeworkTeacherFragment extends BaseFragment implements TeacherHomeworkAdapter.OnSubjectItemClick {
@@ -76,6 +78,7 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
     private String classId, subjectId;
     private int classPos = 0;
     private String dashboard_element_name;
+    private boolean isPDFSelected;
 
     public HomeworkTeacherFragment() {
         // Required empty public constructor
@@ -131,8 +134,13 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
                 if (commonResponseModel.isError()) {
                     Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
                 } else {
-                    // TODO call #sendPDF api here
-                    openPDFIntent();
+                    // TODO handling is required
+                    if (isPDFSelected) {
+                        isPDFSelected = false;
+                        Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
+                    } else {
+                        openPDFIntent();
+                    }
                 }
             }
         });
@@ -169,7 +177,7 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
 
     @Override
     public void getNetworkData(boolean status) {
-        if (status) {
+        if (status && !isPDFSelected) {
             clearData();
             subscribe();
         }
@@ -184,6 +192,10 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
 
     private void subscribeSyllabus(String subject_id) {
         syllabusTeacherFragmentViewModel.sendRequest(subject_id);
+    }
+
+    private void subscribeUpdateSyllabus(File file, String subject_id) {
+        syllabusTeacherFragmentViewModel.updateRequest(file, subject_id);
     }
 
     @Override
@@ -275,6 +287,7 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
     }
 
     private void openPDFIntent() {
+        isPDFSelected = true;
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -287,8 +300,10 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PDF_REQ_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
-            Log.i(TAG, "onActivityResult: " + uri.toString());
-            // TODO Data is here now sendPDFRequest here
+            Log.i(TAG, "onActivityResult: Before" + uri.getPath());
+            Log.i(TAG, "onActivityResult: After : " + getUriRealPath(getActivity(), uri));
+            File file = new File(getUriRealPath(getActivity(), uri)); // TODO Check Cursor Exception here
+            subscribeUpdateSyllabus(file, this.subjectId);
         }
     }
 }

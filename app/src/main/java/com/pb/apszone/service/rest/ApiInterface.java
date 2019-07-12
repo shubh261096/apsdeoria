@@ -17,6 +17,7 @@ import com.pb.apszone.service.model.TimetableResponseModel;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
@@ -85,6 +86,6 @@ public interface ApiInterface {
 
     @Multipart
     @POST("teacher/Syllabus/update")
-    Call<CommonResponseModel> updateSyllabus(@Part MultipartBody.Part file, @Part("subject_id") String subject_id);
+    Call<CommonResponseModel> updateSyllabus(@Part MultipartBody.Part file, @Part("subject_id") RequestBody subject_id);
 
 }
