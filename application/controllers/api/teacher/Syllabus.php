@@ -18,7 +18,7 @@ class Syllabus extends REST_Controller
   {
     $subject_id = $this->input->post('subject_id');
     $data = $this->SyllabusModel->isSyllabusAvailable($subject_id);
-    if (empty($data->syllabus)) {
+    if (empty(trim($data->syllabus))) {
       $response['error'] = false;
       $response['message'] = "You can add syllabus";
       $this->response($response, REST_Controller::HTTP_OK);
