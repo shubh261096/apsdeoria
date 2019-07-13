@@ -126,6 +126,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
           <li><a href="<?php echo base_url('admin/teacher/all_teacher'); ?>"><i class="fa fa-user"></i> <span>Teachers</span></a></li>
           <li><a href="<?php echo base_url('admin/student/all_student'); ?>"><i class="fa fa-user"></i> <span>Students</span></a></li>
           <li><a href="<?php echo base_url('admin/classes/all_class'); ?>"><i class="fa fa-percent"></i> <span>Classes</span></a></li>
+          <li><a href="<?php echo base_url('admin/subject'); ?>"><i class="fa fa-percent"></i> <span>Subject</span></a></li>
 
       </section>
       <!-- /.sidebar -->
