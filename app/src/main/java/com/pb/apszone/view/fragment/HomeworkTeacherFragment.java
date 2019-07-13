@@ -52,7 +52,10 @@ import static com.pb.apszone.utils.AppConstants.READ_EXTERNAL_STORAGE_CODE;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_HOMEWORK;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_SYLLABUS;
 import static com.pb.apszone.utils.CommonUtils.getUriRealPath;
+import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.isReadStoragePermissionGranted;
+import static com.pb.apszone.utils.CommonUtils.isValidFileType;
+import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class HomeworkTeacherFragment extends BaseFragment implements TeacherHomeworkAdapter.OnSubjectItemClick {
 
@@ -134,9 +137,11 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
                 if (commonResponseModel.isError()) {
                     Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
                 } else {
-                    // TODO handling is required
                     if (isPDFSelected) {
                         isPDFSelected = false;
+                        clearData();
+                        subscribe();
+                        hideProgress();
                         Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
                     } else {
                         openPDFIntent();
@@ -287,7 +292,6 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
     }
 
     private void openPDFIntent() {
-        isPDFSelected = true;
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -300,10 +304,16 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PDF_REQ_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
-            Log.i(TAG, "onActivityResult: Before" + uri.getPath());
-            Log.i(TAG, "onActivityResult: After : " + getUriRealPath(getActivity(), uri));
-            File file = new File(getUriRealPath(getActivity(), uri)); // TODO Check Cursor Exception here
-            subscribeUpdateSyllabus(file, this.subjectId);
+            if (uri != null) {
+                if (isValidFileType(Objects.requireNonNull(uri.getPath()))) {
+                    showProgress(getContext(), "Please wait while we upload the syllabus.");
+                    isPDFSelected = true;
+                    File file = new File(Objects.requireNonNull(getUriRealPath(getActivity(), uri)));
+                    subscribeUpdateSyllabus(file, this.subjectId);
+                } else {
+                    Toast.makeText(getContext(), "Please select a valid pdf file", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 }
