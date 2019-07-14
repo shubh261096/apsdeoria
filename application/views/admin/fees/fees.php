@@ -48,7 +48,7 @@
                   foreach ($FEES as $fee) { ?>
                     <tr>
                       <td><?= $fee->id; ?></td>
-                      <td><?= $fee->student_id->fullname . " - " . $fee->student_id->id ; ?></td>
+                      <td><?= $fee->student_id->fullname . " - " . $fee->student_id->id; ?></td>
                       <td><?= $fee->fees_id->total_amount; ?></td>
                       <td><?= $fee->due_amount; ?></td>
                       <td><?= $fee->fees_paid; ?></td>
@@ -57,7 +57,7 @@
                       <td><?= $fee->status; ?></td>
                       <td>
                         <a href="<?php echo base_url("admin/fees/edit_fees/$fee->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
-                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/fees/delete_fees/' . $fee->id; ?>');" deleteConfirm href="#"></a>
+                        <!-- <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/fees/delete_fees/' . $fee->id; ?>');" deleteConfirm href="#"></a> -->
                       </td>
                     </tr>
                   <?php }

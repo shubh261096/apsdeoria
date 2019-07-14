@@ -60,26 +60,28 @@ class FeesModel extends CI_Model
 		return $this->db->insert('fee_receipt', $array);
 	}
 
-	public function editStudent($student_id)
+	/** function to get fee detail by fee_id */
+	public function editFees($fees_id)
 	{
 		$q = $this->db->select("*")
-			->where('id', $student_id)
-			->get('student');
+			->where('id', $fees_id)
+			->get('fee_receipt');
 		return $q->row();
 	}
 
-	public function updateStudent($student_id, array $student)
+	/** function to update fee detail by fee_id and array */
+	public function updateFees($fees_id, array $fees)
 	{
 		return $this->db
-			->where('id', $student_id)
-			->update('student', $student);
+			->where('id', $fees_id)
+			->update('fee_receipt', $fees);
 	}
 
 
-	public function deleteStudent($student_id)
+	public function deleteStudent($fees_id)
 	{
 		return $this->db
-			->where('id', $student_id)
-			->delete('student');
+			->where('id', $fees_id)
+			->delete('fee_receipt');
 	}
 }
