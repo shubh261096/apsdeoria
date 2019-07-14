@@ -26,7 +26,7 @@ class Admin extends CI_Controller
 			$this->session->set_userdata('user_id', $login_id);
 			return redirect('admin/dashboard');
 		} else {
-			$this->session->set_flashdata('login_failed', 'Invalid Username or Password');
+			$this->session->set_flashdata('login_failed', 'Invalid Username or Password Or You are not an admin');
 			return redirect('admin/admin');
 		}
 	}
