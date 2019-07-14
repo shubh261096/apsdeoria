@@ -2,7 +2,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
 
-    <h1> Edit Techer Details </h1>
+    <h1> Edit Subject Details </h1>
 
   </section>
 
@@ -12,53 +12,38 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Edit Teacher</h3>
+            <h3 class="box-title">Edit Subject</h3>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
 
-          <?php echo form_open("admin/student/update_student/$student->id", ['role' => 'form']); ?>
+          <?php echo form_open_multipart("admin/subject/update_subject/$subject->id", ['role' => 'form']); ?>
 
           <div class="box-body">
-            <div class="box-body">
             <div class="form-group ">
-              <label for="InputName">Student ID</label>
-              <?php echo form_input(['id' => 'id', 'name' => 'id', 'class' => 'form-control', 'placeholder' => 'Enter Student Id', 'type' => 'text', 'value' => set_value('id', $student->id)]); ?>
+              <label for="InputName">Subject ID</label>
+              <?php echo form_input(['id' => 'id', 'name' => 'id', 'class' => 'form-control', 'placeholder' => 'Enter Subject Id', 'type' => 'text', 'value' => set_value('id', $subject->id)]); ?>
               <?php echo form_error('id');   ?>
             </div>
             <div class="form-group ">
-              <label for="InputName">Full Name</label>
-              <?php echo form_input(['id' => 'fullname', 'name' => 'fullname', 'class' => 'form-control', 'placeholder' => 'Enter Fullname', 'type' => 'text', 'value' => set_value('fullname', $student->fullname)]); ?>
-              <?php echo form_error('fullname');   ?>
+              <label for="InputName">Subject Name</label>
+              <?php echo form_input(['id' => 'name', 'name' => 'name', 'class' => 'form-control', 'placeholder' => 'Enter Subject Name', 'type' => 'text', 'value' => set_value('name', $subject->name)]); ?>
+              <?php echo form_error('name');   ?>
+            </div>
+            <div class="form-group">
+              <label for="InputName">Subject Description</label>
+              <?php echo form_input(['id' => 'description', 'name' => 'description', 'class' => 'form-control', 'placeholder' => 'Enter Subject Description', 'type' => 'text', 'value' => set_value('description', $subject->description)]); ?>
+              <?php echo form_error('description');   ?>
             </div>
             <div class="form-group">
               <label for="class_id">Select Class</label>
-              <?php echo form_dropdown('class_id', $classes, $student->class_id, 'class="form-control"'); ?>
+              <?php echo form_dropdown('class_id', $classes, $subject->class_id, 'class="form-control"'); ?>
             </div>
             <div class="form-group">
-              <label for="InputPhone">Phone Number</label>
-              <?php echo form_input(['id' => 'phone', 'name' => 'phone', 'class' => 'form-control', 'placeholder' => 'Enter Phone Number', 'type' => 'phone', 'value' => set_value('phone', $student->phone)]); ?>
-              <?php echo form_error('phone');   ?>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <?php echo form_input(['id' => 'email', 'name' => 'email', 'class' => 'form-control', 'placeholder' => 'Enter email', 'value' => set_value('email', $student->email)]); ?>
-              <?php echo form_error('email');   ?>
-            </div>
-            <div class="form-group ">
-              <label for="Inputdate">Date of birth</label>
-              <?php echo form_input(['id' => 'dob', 'name' => 'dob', 'class' => 'form-control', 'placeholder' => 'Enter DOB (YYYY-MM-DD)', 'type' => 'text', 'value' => set_value('dob', $student->dob)]); ?>
-              <?php echo form_error('dob');   ?>
-            </div>
-            <div class="form-group ">
-              <label for="InputName">Gender</label>
-              <?php echo form_input(['id' => 'gender', 'name' => 'gender', 'class' => 'form-control', 'placeholder' => 'Enter Gender', 'type' => 'text', 'value' => set_value('gender', $student->gender)]); ?>
-              <?php echo form_error('gender');   ?>
-            </div>
-            <div class="form-group ">
-              <label for="InputName">Date Of Join</label>
-              <?php echo form_input(['id' => 'date_of_join', 'name' => 'dob', 'class' => 'form-control', 'placeholder' => 'Enter Date of Join (YYYY-MM-DD)', 'type' => 'text', 'value' => set_value('date_of_join', $student->date_of_join)]); ?>
-              <?php echo form_error('date_of_join');   ?>
+              <label for="InputDoc">Choose PDF</label><br>
+              <?php if(!empty($subject->syllabus)) { echo basename($subject->syllabus); } ?>
+              <?php echo form_upload(['name' => 'syllabus']); ?>
+              <?php if (isset($upload_error)) echo $upload_error  ?>
             </div>
 
           </div>
