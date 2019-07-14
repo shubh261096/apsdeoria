@@ -77,6 +77,25 @@ $config = [
 			'label' => 'Gender',
 			'rules' => 'trim|required'
 		]
+	],
+
+	'add_subject_rules' => [
+		[
+			'field' => 'id',
+			'label' => 'Subject ID',
+			'rules' => 'trim|required'
+
+		],
+		[
+			'field' => 'name',
+			'label' => 'Subject Name',
+			'rules' => 'trim|required'
+		],
+		[
+			'field' => 'description',
+			'label' => 'Subject Description',
+			'rules' => 'trim|required'
+		]
 	]
 
 ];

@@ -46,7 +46,6 @@ class SubjectModel extends CI_Model
 		if ($query->num_rows() > 0) {
 			return FALSE;
 		} else {
-			$array['status'] = 1;
 			return $this->db->insert('subject', $array);
 		}
 	}
