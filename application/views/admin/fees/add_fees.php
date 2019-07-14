@@ -1,9 +1,6 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-
-    <h1> Add Student </h1>
-
   </section>
 
   <section class="content">
@@ -12,53 +9,31 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Add Student</h3>
+            <h3 class="box-title">Add Fees</h3>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <?php echo form_open('admin/student/insert_student', ['role' => 'form']); ?>
+          <?php echo form_open('admin/fees/insert_fees', ['role' => 'form']); ?>
 
           <div class="box-body">
-            <div class="form-group ">
-              <label for="InputName">Student ID</label>
-              <?php echo form_input(['id' => 'id', 'name' => 'id', 'class' => 'form-control', 'placeholder' => 'Enter Student Id', 'type' => 'text', 'value' => set_value('id')]); ?>
-              <?php echo form_error('id');   ?>
-            </div>
-            <div class="form-group ">
-              <label for="InputName">Full Name</label>
-              <?php echo form_input(['id' => 'fullname', 'name' => 'fullname', 'class' => 'form-control', 'placeholder' => 'Enter Fullname', 'type' => 'text', 'value' => set_value('fullname')]); ?>
-              <?php echo form_error('fullname');   ?>
+            <div class="form-group">
+              <label for="student_id">Select Student</label>
+              <?php echo form_dropdown('student_id', $students, '', 'class="form-control"'); ?>
             </div>
             <div class="form-group">
-              <label for="class_id">Select Class</label>
-              <?php echo form_dropdown('class_id', $classes, '', 'class="form-control"'); ?>
+              <label for="period">Select Month</label>
+              <?php echo form_dropdown('period', $months, '', 'class="form-control"'); ?>
             </div>
             <div class="form-group">
-              <label for="InputPhone">Phone Number</label>
-              <?php echo form_input(['id' => 'phone', 'name' => 'phone', 'class' => 'form-control', 'placeholder' => 'Enter Phone Number', 'type' => 'phone', 'value' => set_value('phone')]); ?>
-              <?php echo form_error('phone');   ?>
+              <label for="InputPhone">Due Amount</label>
+              <?php echo form_input(['id' => 'due_amount', 'name' => 'due_amount', 'class' => 'form-control', 'placeholder' => 'Enter Due Amount (If any)', 'type' => 'phone', 'value' => set_value('due_amount')]); ?>
+              <?php echo form_error('due_amount');   ?>
             </div>
             <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <?php echo form_input(['id' => 'email', 'name' => 'email', 'class' => 'form-control', 'placeholder' => 'Enter email', 'value' => set_value('email')]); ?>
-              <?php echo form_error('email');   ?>
+              <label for="InputPhone">Paying Amount</label>
+              <?php echo form_input(['id' => 'fees_paid', 'name' => 'fees_paid', 'class' => 'form-control', 'placeholder' => 'Enter the fee amount to be paid', 'type' => 'phone', 'value' => set_value('fees_paid')]); ?>
+              <?php echo form_error('fees_paid');   ?>
             </div>
-            <div class="form-group ">
-              <label for="Inputdate">Date of birth</label>
-              <?php echo form_input(['id' => 'dob', 'name' => 'dob', 'class' => 'form-control', 'placeholder' => 'Enter DOB (YYYY-MM-DD)', 'type' => 'text', 'value' => set_value('dob')]); ?>
-              <?php echo form_error('dob');   ?>
-            </div>
-            <div class="form-group ">
-              <label for="InputName">Gender</label>
-              <?php echo form_input(['id' => 'gender', 'name' => 'gender', 'class' => 'form-control', 'placeholder' => 'Enter Gender', 'type' => 'text', 'value' => set_value('gender')]); ?>
-              <?php echo form_error('gender');   ?>
-            </div>
-            <div class="form-group ">
-              <label for="InputName">Date Of Join</label>
-              <?php echo form_input(['id' => 'date_of_join', 'name' => 'dob', 'class' => 'form-control', 'placeholder' => 'Enter Date of Join (YYYY-MM-DD)', 'type' => 'text', 'value' => set_value('date_of_join')]); ?>
-              <?php echo form_error('date_of_join');   ?>
-            </div>
-
           </div>
           <!-- /.box-body -->
           <div class="box-footer">

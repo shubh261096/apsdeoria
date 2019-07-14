@@ -19,26 +19,45 @@ class FeesModel extends CI_Model
 		}
 	}
 
-	public function getClass()
+	/** Getting Student Detail to show while adding or updating fees */
+	public function getStudents()
 	{
-		$result = $this->db->select('id, name')->get('class')->result_array();
-		$classes = array();
+		$result = $this->db->select('id, fullname')->get('student')->result_array();
+		$student = array();
 		foreach ($result as $r) {
-			$classes[$r['id']] = $r['name'];
+			$student[$r['id']] = $r['fullname'] . " - " . $r['id'];
 		}
-		return $classes;
+		return $student;
 	}
 
-	public function addStudent($array)
+	/** Getting Student Class Id  from student_id*/
+	public function getClassId($student_id)
 	{
-		$sql = 'SELECT id FROM student WHERE id = "' . $array['id'] . '"';
-		$query = $this->db->query($sql);
-		if ($query->num_rows() > 0) {
-			return FALSE;
-		} else {
-			$array['status'] = 1;
-			return $this->db->insert('student', $array);
+		$query = $this->db->select("class_id")
+			->where('id', $student_id)
+			->get('student');
+		if ($query->num_rows()) {
+			return $query->row();
 		}
+	}
+
+	/** Getting Fees Id from class_id */
+	public function getFeesId($class_id)
+	{
+		$query = $this->db->select("id")
+			->where('class_id', $class_id)
+			->get('fees');
+		if ($query->num_rows()) {
+			return $query->row();
+		}
+	}
+
+	/** function to insert fees receipt */
+	public function addFees($array)
+	{
+		$array['status'] = 'paid';
+		$array['date_paid'] = date("Y-m-d");
+		return $this->db->insert('fee_receipt', $array);
 	}
 
 	public function editStudent($student_id)

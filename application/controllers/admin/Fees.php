@@ -33,29 +33,36 @@ class Fees extends CI_Controller
     $this->load->view('admin/fees/fees', $data);
   }
 
-  public function add_student()
+  public function add_fees()
   {
-    $data['classes'] = $this->StudentModel->getClass();
-    $this->load->view('admin/student/add_student', $data);
+    $data['students'] = $this->FeesModel->getStudents();
+    $data['months'] = array('January'=>'January', 'February'=>'February', 'March'=>'March', 'April'=>'April', 'May'=>'May', 'June'=>'June', 'July'=>'July',
+                            'August'=>'August', 'September'=>'September', 'October'=>'October', 'November'=>'November', 'December'=>'December');
+    $this->load->view('admin/fees/add_fees', $data);
   }
 
-  public function insert_student()
+  public function insert_fees()
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
-    if ($this->form_validation->run('add_student_rules') == FALSE) {
-      $data['classes'] = $this->StudentModel->getClass();
-      $this->load->view('admin/student/add_student', $data);
+    if ($this->form_validation->run('add_fees_rules') == FALSE) {
+      $data['students'] = $this->FeesModel->getStudents();
+      $data['months'] = array('January'=>'January', 'February'=>'February', 'March'=>'March', 'April'=>'April', 'May'=>'May', 'June'=>'June', 'July'=>'July',
+                            'August'=>'August', 'September'=>'September', 'October'=>'October', 'November'=>'November', 'December'=>'December');
+      $this->load->view('admin/fees/add_fees', $data);
     } else {
       $post = $this->input->post();
       unset($post['submit']);
-      if ($this->StudentModel->addStudent($post)) {
+      $class = $this->FeesModel->getClassId($post['student_id']);
+      $fees = $this->FeesModel->getFeesId($class->class_id);
+      $post['fees_id'] = $fees->id;
+      if ($this->FeesModel->addFees($post)) {
         $this->session->set_flashdata('feedback', 'Added Succefully');
         $this->session->set_flashdata('feedback_class', 'alert-success');
       } else {
-        $this->session->set_flashdata('feedback', 'Student id already exists. Please try with different student id.');
+        $this->session->set_flashdata('feedback', 'Not Added');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/student/all_student');
+      return redirect('admin/fees');
     }
   }
 

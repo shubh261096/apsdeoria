@@ -96,6 +96,15 @@ $config = [
 			'label' => 'Subject Description',
 			'rules' => 'trim|required'
 		]
-	]
+	],
 
+	'add_fees_rules' => [
+		[
+			'field' => 'fees_paid',
+			'label' => 'Paying amount',
+			'rules' => 'trim|required'
+
+		]
+	]
+	
 ];
