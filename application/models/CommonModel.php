@@ -59,6 +59,19 @@ class CommonModel extends CI_model {
             return FALSE;
         }
     }
+
+    /* Query for getting student details by student_id */
+    public function get_studentDetails($student_id) {
+        $query = $this->db->select('*')
+                    ->where(['id'=>$student_id])
+    			    ->from('student')	
+                    ->get();
+        if($query->num_rows()){
+            return $query->row();
+        }else{
+            return FALSE;
+        }
+    }
     
 
 }

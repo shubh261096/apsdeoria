@@ -68,3 +68,13 @@ define('FPDF_FONTPATH', APPPATH .'third_party');
         $pdf->Output($path.$filename.".pdf", 'F');
         ob_end_flush();
    }
+
+   function getStudentDetails($student_id) {
+    // get main CodeIgniter object
+    $ci = get_instance();
+    $ci->load->model('CommonModel');
+    $data = $ci->CommonModel->get_studentDetails($student_id);
+        if($data){
+            return $data;
+        }
+    }
