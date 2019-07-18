@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Apszone</string>
     <string name="hint_email">Email</string>
+    <string name="hint_id">School ID</string>
     <string name="hint_password">Password</string>
     <string name="need_help">Need Help?</string>
     <string name="login">Login</string>
     <string name="error_email_required">Email Required</string>
+    <string name="error_id_required">School ID Required</string>
     <string name="error_valid_email">Enter Valid E-mail</string>
     <string name="error_password_required">Password Required</string>
     <string name="toolbar_dashboard">Dashboard</string>

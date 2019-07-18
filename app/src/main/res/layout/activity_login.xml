@@ -43,7 +43,7 @@
                     android:textSize="@dimen/text_32" />
 
                 <EditText
-                    android:id="@+id/edt_email"
+                    android:id="@+id/edt_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_16"
@@ -54,8 +54,8 @@
                     android:drawableStart="@drawable/ic_person"
                     android:drawablePadding="@dimen/dp_16"
                     android:drawableTint="@color/hint_gray"
-                    android:hint="@string/hint_email"
-                    android:inputType="textEmailAddress"
+                    android:hint="@string/hint_id"
+                    android:inputType="textCapWords"
                     android:maxLines="1"
                     android:padding="@dimen/dp_14"
                     android:textColor="@color/black_80"

@@ -10,9 +10,6 @@ public class User{
 	@SerializedName("type")
 	private String type;
 
-	@SerializedName("email")
-	private String email;
-
 	public void setId(String id){
 		this.id = id;
 	}
@@ -29,21 +26,12 @@ public class User{
 		return type;
 	}
 
-	public void setEmail(String email){
-		this.email = email;
-	}
-
-	public String getEmail(){
-		return email;
-	}
-
 	@Override
  	public String toString(){
 		return 
 			"User{" + 
 			"id = '" + id + '\'' + 
-			",type = '" + type + '\'' + 
-			",email = '" + email + '\'' + 
+			",type = '" + type + '\'' +
 			"}";
 		}
 }

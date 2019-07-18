@@ -9,12 +9,11 @@ import android.text.TextUtils;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.LoginResponseModel;
-import com.pb.apszone.service.rest.LoginRequestModel;
 import com.pb.apszone.service.repo.Repository;
+import com.pb.apszone.service.rest.LoginRequestModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.utils.SnackbarMessage;
 
-import static com.pb.apszone.utils.AppConstants.KEY_USER_EMAIL;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_LOGIN_STATUS;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
@@ -36,9 +35,9 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
 
-    public void sendRequest(String email, String password) {
+    public void sendRequest(String id, String password) {
         loginRequestModel.setPassword(password);
-        loginRequestModel.setEmail(email);
+        loginRequestModel.setId(id);
         repository.checkLogin(loginRequestModel, loginResponseModelMutableLiveData);
     }
 
@@ -46,9 +45,9 @@ public class LoginViewModel extends AndroidViewModel {
         return loginResponseModelMutableLiveData;
     }
 
-    public boolean validateLogin(String email, String password) {
-        if (TextUtils.isEmpty(email)) {
-            snackbarMessage.setValue(R.string.error_email_required);
+    public boolean validateLogin(String id, String password) {
+        if (TextUtils.isEmpty(id)) {
+            snackbarMessage.setValue(R.string.error_id_required);
             return false;
         }
         if (TextUtils.isEmpty(password)) {
@@ -66,9 +65,6 @@ public class LoginViewModel extends AndroidViewModel {
         keyStorePref.putBoolean(KEY_USER_LOGIN_STATUS, true);
         if (loginResponseModel.getUser().getId() != null) {
             keyStorePref.putString(KEY_USER_ID, loginResponseModel.getUser().getId());
-        }
-        if (loginResponseModel.getUser().getEmail() != null) {
-            keyStorePref.putString(KEY_USER_EMAIL, loginResponseModel.getUser().getEmail());
         }
         if (loginResponseModel.getUser().getType() != null) {
             keyStorePref.putString(KEY_USER_TYPE, loginResponseModel.getUser().getType());

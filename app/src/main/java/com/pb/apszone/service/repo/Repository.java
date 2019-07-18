@@ -65,7 +65,7 @@ public class Repository {
     /* Login Request */
     public void checkLogin(LoginRequestModel loginRequestModel, MutableLiveData<LoginResponseModel> loginResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
-        params.put("email", loginRequestModel.getEmail());
+        params.put("id", loginRequestModel.getId());
         params.put("password", loginRequestModel.getPassword());
         apiService.checkLogin(params)
                 .enqueue(new Callback<LoginResponseModel>() {

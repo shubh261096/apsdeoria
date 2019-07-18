@@ -5,15 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
+import com.pb.apszone.utils.SnackbarMessage;
 import com.pb.apszone.utils.SnackbarUtils;
 import com.pb.apszone.viewModel.LoginViewModel;
-import com.pb.apszone.utils.SnackbarMessage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,8 +26,8 @@ import static com.pb.apszone.utils.CommonUtils.showProgress;
 public class LoginActivity extends AppCompatActivity {
 
     LoginViewModel loginViewModel;
-    @BindView(R.id.edt_email)
-    EditText edtEmail;
+    @BindView(R.id.edt_id)
+    EditText edtID;
     @BindView(R.id.edt_password)
     EditText edtPassword;
     @BindView(R.id.btn_login)
@@ -70,25 +69,17 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_login)
     public void onLoginButtonClicked() {
-        String email = edtEmail.getText().toString().trim();
+        String id = edtID.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
-        validateLogin(email, password);
+        validateLogin(id, password);
     }
 
-    private void validateLogin(String email, String password) {
-        if (loginViewModel.validateLogin(email, password)) {
+    private void validateLogin(String id, String password) {
+        if (loginViewModel.validateLogin(id, password)) {
             showProgress(this, "Please wait...");
-            loginViewModel.sendRequest(email, password);
+            loginViewModel.sendRequest(id, password);
         } else {
             hideProgress();
-        }
-    }
-
-
-    @OnTextChanged(value = R.id.edt_email, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onEmailTextChanged(CharSequence text) {
-        if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
-            edtEmail.setError(getString(R.string.error_valid_email));
         }
     }
 

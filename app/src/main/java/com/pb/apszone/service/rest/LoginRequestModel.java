@@ -7,8 +7,8 @@ public class LoginRequestModel{
 	@SerializedName("password")
 	private String password;
 
-	@SerializedName("email")
-	private String email;
+	@SerializedName("id")
+	private String id;
 
 	public void setPassword(String password){
 		this.password = password;
@@ -18,12 +18,12 @@ public class LoginRequestModel{
 		return password;
 	}
 
-	public void setEmail(String email){
-		this.email = email;
+	public void setId(String id){
+		this.id = id;
 	}
 
-	public String getEmail(){
-		return email;
+	public String getId(){
+		return id;
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class LoginRequestModel{
 		return 
 			"LoginRequestModel{" + 
 			"password = '" + password + '\'' + 
-			",email = '" + email + '\'' + 
+			",id = '" + id + '\'' +
 			"}";
 		}
 }
