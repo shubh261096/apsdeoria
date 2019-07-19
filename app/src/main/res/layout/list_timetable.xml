@@ -81,9 +81,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
-                android:gravity="end"
+                android:gravity="start"
                 android:textColor="@color/black_80"
-                android:textSize="@dimen/text_20"
+                android:textSize="@dimen/text_19"
                 android:textStyle="bold" />
 
             <TextView
