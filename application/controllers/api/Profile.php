@@ -18,7 +18,7 @@ class Profile extends REST_Controller {
       $type = $this->input->post('type'); 
       $data = $this->ProfileModel->get_profile($id, $type); // getting Profile Info
       if(!$data==false) {
-        if (strcasecmp($type, PARENTS) == 0) {
+        if (strcasecmp($type, STUDENT) == 0) {
           $data->parent = $this->ProfileModel->get_parentInfo($data->id); // Adding new key value in profile object for parent
           $data->class_id = getClassDetails($data->class_id); // Changed class_id key with its details in the same data array.
         }

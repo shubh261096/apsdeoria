@@ -26,9 +26,6 @@ class LoginModel extends CI_model
 	/* Query for return true if status is 1 */
 	public function get_userStatus($id, $type)
 	{
-		if ($type == 'parent') {
-			$type = 'student'; // TODO remove this login type in future 
-		}
 		$sql = 'SELECT status FROM ' . $type . ' WHERE id="' . $id . '"';
 		$query = $this->db->query($sql);
 		if ($query->num_rows()) {

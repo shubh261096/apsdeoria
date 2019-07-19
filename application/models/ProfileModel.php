@@ -12,15 +12,8 @@ class ProfileModel extends CI_model {
     public function get_profile($id,$type) {
         if(strcasecmp($type, TEACHER) == 0) {
             $sql = 'SELECT * FROM teacher WHERE id="'.$id.'" AND status=1';
-        } elseif(strcasecmp($type, PARENTS) == 0) {
-            $raw_query = 'SELECT student_id FROM parent WHERE id= "'.$id.'"';
-            $q = $this->db->query($raw_query);
-            if($q->num_rows()){
-                $student_id =  $q->row()->student_id;
-                $sql = 'SELECT * FROM student WHERE id="'.$student_id.'" AND status=1';
-            }else{
-                return FALSE;
-           }
+        } elseif(strcasecmp($type, STUDENT) == 0) {
+            $sql = 'SELECT * FROM student WHERE id="'.$id.'" AND status=1';
         }    	
 		$query = $this->db->query($sql);
     	if($query->num_rows()){
