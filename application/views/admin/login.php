@@ -69,8 +69,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
           <?php echo form_open('admin/Admin/login', ['role' => 'form', 'class' => 'form-signin']); ?>
-          <?php echo form_input(['id' => 'email', 'name' => 'email', 'class' => 'form-control', 'placeholder' => 'Email', 'value' => set_value('email')]); ?>
-          <?php echo form_error('email');   ?>
+          <?php echo form_input(['id' => 'id', 'name' => 'id', 'class' => 'form-control', 'placeholder' => 'ID', 'value' => set_value('id')]); ?>
+          <?php echo form_error('id');   ?>
 
           <?php echo form_password(['id' => 'password', 'name' => 'password', 'class' => 'form-control', 'placeholder' => 'Password', 'type' => 'password']); ?>
           <?php echo form_error('password'); ?>

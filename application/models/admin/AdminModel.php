@@ -9,9 +9,9 @@ class AdminModel extends CI_model
 		$this->load->database();
 	}
 
-	public function validate_login($email, $password)
+	public function validate_login($id, $password)
 	{
-		$q = $this->db->where(['email' => $email, 'password' => $password, 'type' => 'admin'])
+		$q = $this->db->where(['id' => $id, 'password' => $password, 'type' => 'admin'])
 			->from('login')
 			->get();
 		if ($q->num_rows()) {

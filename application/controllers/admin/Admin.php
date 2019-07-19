@@ -19,9 +19,9 @@ class Admin extends CI_Controller
 
 	public function login()
 	{
-		$email = $this->input->post('email');
+		$id = $this->input->post('id');
 		$password = $this->input->post('password');
-		$login_id = $this->AdminModel->validate_login($email, $password);
+		$login_id = $this->AdminModel->validate_login($id, $password);
 		if ($login_id) {
 			$this->session->set_userdata('user_id', $login_id);
 			return redirect('admin/dashboard');
