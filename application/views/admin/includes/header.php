@@ -31,6 +31,8 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/jvectormap/jquery-jvectormap-1.2.2.css">
   <!-- Date Picker -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/datepicker/datepicker3.css">
+  <!-- Time picker -->
+  <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/timepicker/bootstrap-timepicker.min.css">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
@@ -128,6 +130,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
           <li><a href="<?php echo base_url('admin/classes/all_class'); ?>"><i class="fa fa-percent"></i> <span>Classes</span></a></li>
           <li><a href="<?php echo base_url('admin/subject'); ?>"><i class="fa fa-percent"></i> <span>Subject</span></a></li>
           <li><a href="<?php echo base_url('admin/fees'); ?>"><i class="fa fa-percent"></i> <span>Fees</span></a></li>
+          <li><a href="<?php echo base_url('admin/timetable'); ?>"><i class="fa fa-percent"></i> <span>Timetable</span></a></li>
 
       </section>
       <!-- /.sidebar -->
