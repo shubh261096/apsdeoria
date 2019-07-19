@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class DashboardItem{
 
-	@SerializedName("parent")
-	private String parent;
+	@SerializedName("student")
+	private String student;
 
 	@SerializedName("teacher")
 	private String teacher;
@@ -22,12 +22,12 @@ public class DashboardItem{
 	@SerializedName("id")
 	private String id;
 
-	public void setParent(String parent){
-		this.parent = parent;
+	public void setStudent(String student){
+		this.student = student;
 	}
 
-	public String getParent(){
-		return parent;
+	public String getStudent(){
+		return student;
 	}
 
 	public void setTeacher(String teacher){
@@ -74,7 +74,7 @@ public class DashboardItem{
  	public String toString(){
 		return 
 			"DashboardItem{" + 
-			"parent = '" + parent + '\'' + 
+			"student = '" + student + '\'' +
 			",teacher = '" + teacher + '\'' + 
 			",image_url = '" + imageUrl + '\'' + 
 			",name = '" + name + '\'' + 

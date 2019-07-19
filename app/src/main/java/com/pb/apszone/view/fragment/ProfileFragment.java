@@ -41,7 +41,7 @@ import static com.pb.apszone.utils.AppConstants.PROFILE_MOTHER_NAMW;
 import static com.pb.apszone.utils.AppConstants.PROFILE_PHONE;
 import static com.pb.apszone.utils.AppConstants.PROFILE_QUALIFICATION;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
-import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 
 public class ProfileFragment extends BaseFragment {
@@ -129,7 +129,7 @@ public class ProfileFragment extends BaseFragment {
                 }
 
                 /* Checking is uer type is parent */
-                if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
+                if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
                     /* If user type is parent then user class is visible */
                     if (!TextUtils.isEmpty(profileResponseModel.getProfile().getClassId().getName())) {
                         userClass.setVisibility(View.VISIBLE);

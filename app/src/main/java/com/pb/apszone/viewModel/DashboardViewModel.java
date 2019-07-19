@@ -21,7 +21,7 @@ import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
-import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 
 public class DashboardViewModel extends AndroidViewModel {
@@ -46,7 +46,7 @@ public class DashboardViewModel extends AndroidViewModel {
     }
 
     public void putSharedPrefData(ProfileResponseModel profileResponseModel) {
-        if (TextUtils.equals(keyStorePref.getString(KEY_USER_TYPE), USER_TYPE_PARENT)) {
+        if (TextUtils.equals(keyStorePref.getString(KEY_USER_TYPE), USER_TYPE_STUDENT)) {
             if (!TextUtils.isEmpty(profileResponseModel.getProfile().getClassId().getId())) {
                 keyStorePref.putString(KEY_STUDENT_CLASS_ID, profileResponseModel.getProfile().getClassId().getId());
             }
@@ -63,8 +63,8 @@ public class DashboardViewModel extends AndroidViewModel {
     public List<DashboardItem> addListData(List<DashboardItem> dashboardItems, String user_type) {
         List<DashboardItem> dashboardItemList = new ArrayList<>();
         for (int i = 0; i < dashboardItems.size(); i++) {
-            if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
-                if (TextUtils.equals(dashboardItems.get(i).getParent(), KEY_ENABLED)) {
+            if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
+                if (TextUtils.equals(dashboardItems.get(i).getStudent(), KEY_ENABLED)) {
                     dashboardItemList.add(dashboardItems.get(i));
                 }
             } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {

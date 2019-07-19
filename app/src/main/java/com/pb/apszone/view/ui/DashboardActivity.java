@@ -54,7 +54,7 @@ import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_INBOX;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_SYLLABUS;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_TIMETABLE;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
-import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 
 public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener {
@@ -183,7 +183,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
 
     @Override
     public void onItemClick(int position, View view) {
-        if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
+        if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
             if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_ATTENDANCE)) {
                 Fragment fragment = AttendanceFragment.newInstance();
                 replaceFragment(fragment);

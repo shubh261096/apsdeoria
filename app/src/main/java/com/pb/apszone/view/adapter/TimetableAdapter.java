@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 import static com.pb.apszone.utils.CommonUtils.getFormattedDateTime;
 import static com.pb.apszone.utils.CommonUtils.isTimeBetweenTwoTime;
@@ -87,7 +87,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.Time
         }
 
         /* Checking the user type */
-        if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
+        if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
             if (timetableItem.getTeacherId() == null) {
                 timetableViewHolder.teacher.setVisibility(View.GONE);
             } else {

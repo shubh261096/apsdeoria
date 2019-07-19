@@ -12,6 +12,7 @@ public class AppConstants {
 
     /* USER TYPE */
     public final static String USER_TYPE_PARENT = "parent";
+    public final static String USER_TYPE_STUDENT = "student";
     public final static String USER_TYPE_TEACHER = "teacher";
     public final static String USER_TYPE_ADMIN = "admin";
 

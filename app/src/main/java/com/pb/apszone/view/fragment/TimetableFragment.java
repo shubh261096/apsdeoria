@@ -36,7 +36,7 @@ import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_DAY;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
-import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 import static com.pb.apszone.utils.CommonUtils.getDayOfWeek;
 
@@ -138,7 +138,7 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
 
     private void subscribe() {
         if (!TextUtils.isEmpty(user_type)) {
-            if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
+            if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
                 if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
                     timetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day, KEY_FILTER_BY_DAY, user_type);
                 }

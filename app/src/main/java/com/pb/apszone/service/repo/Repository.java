@@ -44,7 +44,7 @@ import retrofit2.Response;
 
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_DAY;
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_WEEK;
-import static com.pb.apszone.utils.AppConstants.USER_TYPE_PARENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 
 public class Repository {
@@ -140,7 +140,7 @@ public class Repository {
     /* TimeTable Request */
     public void getTimetable(TimetableRequestModel timetableRequestModel, String filter, String user_type, MutableLiveData<TimetableResponseModel> timetableResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
-        if (TextUtils.equals(user_type, USER_TYPE_PARENT)) {
+        if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
             if (TextUtils.equals(filter, KEY_FILTER_BY_DAY)) {
                 params.put("class_id", timetableRequestModel.getClassId());
                 params.put("today", timetableRequestModel.getToday());
