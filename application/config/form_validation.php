@@ -20,8 +20,8 @@ $config = [
 			'rules' => 'trim|required|valid_email'
 		],
 		[
-			'field' => 'id',
-			'label' => 'Teacher Id',
+			'field' => 'dob',
+			'label' => 'Date of birth',
 			'rules' => 'trim|required'
 		],
 		[

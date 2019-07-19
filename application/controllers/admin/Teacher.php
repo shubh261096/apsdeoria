@@ -41,9 +41,18 @@ class Teacher extends CI_Controller
     if ($this->form_validation->run('add_teacher_rules') == FALSE) {
       $this->load->view('admin/teacher/add_teacher');
     } else {
+      $teacher_id = 'APST' . rand(100, 999); //Generating random teacher_id
       $post = $this->input->post();
       unset($post['submit']);
-      if ($this->TeacherModel->addTeacher($post)) {
+      if ($this->TeacherModel->addTeacher($post, $teacher_id)) {
+
+        /** Getting first four char of email and dob month & date and adding to login */
+        $pass1 = substr($post['fullname'], 0, 4);
+        $pass2 = explode('-', $post['dob']);
+        $login = array('id' => $teacher_id, 'password' => strtolower($pass1) . $pass2[2] . $pass2[1], 'type' => 'teacher');
+        $this->TeacherModel->addLogin($login);
+        /** end login */
+
         $this->session->set_flashdata('feedback', 'Added Succefully');
         $this->session->set_flashdata('feedback_class', 'alert-success');
       } else {
@@ -84,7 +93,7 @@ class Teacher extends CI_Controller
 
   public function delete_teacher($teacher_id)
   {
-    if ($this->TeacherModel->deleteTeacher($teacher_id)) {
+    if ($this->TeacherModel->deleteTeacher($teacher_id) && $this->TeacherModel->deleteLogin($teacher_id)) {
       $this->session->set_flashdata('feedback', 'Deleted Succefully');
       $this->session->set_flashdata('feedback_class', 'alert-success');
     } else {

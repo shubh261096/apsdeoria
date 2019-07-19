@@ -18,14 +18,15 @@ class TeacherModel extends CI_Model
 		}
 	}
 
-	public function addTeacher($array)
+	public function addTeacher($array, $teacher_id)
 	{
-		$sql = 'SELECT id FROM teacher WHERE id = "' . $array['id'] . '"';
+		$sql = 'SELECT id FROM teacher WHERE id = "' . $teacher_id . '"';
 		$query = $this->db->query($sql);
 		if ($query->num_rows() > 0) {
 			return FALSE;
 		} else {
 			$array['status'] = 1;
+			$array['id'] = $teacher_id;
 			return $this->db->insert('teacher', $array);
 		}
 	}
@@ -51,5 +52,17 @@ class TeacherModel extends CI_Model
 		return $this->db
 			->where('id', $teacher_id)
 			->delete('teacher');
+	}
+
+	public function addLogin($array)
+	{
+		return $this->db->insert('login', $array);
+	}
+
+	public function deleteLogin($teacher_id)
+	{
+		return $this->db
+			->where('id', $teacher_id)
+			->delete('login');
 	}
 }

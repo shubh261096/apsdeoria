@@ -20,11 +20,6 @@
 
           <div class="box-body">
             <div class="form-group ">
-              <label for="InputName">Teacher ID</label>
-              <?php echo form_input(['id' => 'id', 'name' => 'id', 'class' => 'form-control', 'placeholder' => 'Enter Teacher Id', 'type' => 'text', 'value' => set_value('id')]); ?>
-              <?php echo form_error('id');   ?>
-            </div>
-            <div class="form-group ">
               <label for="InputName">Full Name</label>
               <?php echo form_input(['id' => 'fullname', 'name' => 'fullname', 'class' => 'form-control', 'placeholder' => 'Enter Fullname', 'type' => 'text', 'value' => set_value('fullname')]); ?>
               <?php echo form_error('fullname');   ?>

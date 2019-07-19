@@ -22,7 +22,7 @@
           <div class="box-body">
             <div class="form-group ">
               <label for="InputName">Teacher ID</label>
-              <?php echo form_input(['id' => 'id', 'name' => 'id', 'class' => 'form-control', 'placeholder' => 'Enter Teacher Id', 'type' => 'text', 'value' => set_value('id', $teacher->id)]); ?>
+              <?php echo form_input(['id' => 'id', 'name' => 'id', 'readonly' => 'true', 'class' => 'form-control', 'placeholder' => 'Enter Teacher Id', 'type' => 'text', 'value' => set_value('id', $teacher->id)]); ?>
               <?php echo form_error('id');   ?>
             </div>
             <div class="form-group ">
