@@ -12,7 +12,6 @@ $config = [
 			'field' => 'phone',
 			'label' => 'Phone Number',
 			'rules' => 'trim|required|numeric|max_length[10]|regex_match[/^[0-9]{10}$/]'
-
 		],
 		[
 			'field' => 'email',
@@ -99,6 +98,24 @@ $config = [
 			'rules' => 'trim|required'
 
 		]
-	]
+	],
+
+	'add_parent_rules' => [
+		[
+			'field' => 'fullname',
+			'label' => 'Full Name',
+			'rules' => 'trim|required'
+		],
+		[
+			'field' => 'phone',
+			'label' => 'Phone Number',
+			'rules' => 'trim|required|numeric|max_length[10]|regex_match[/^[0-9]{10}$/]'
+		],
+		[
+			'field' => 'address',
+			'label' => 'Address',
+			'rules' => 'trim|required'
+		]
+	],
 	
 ];
