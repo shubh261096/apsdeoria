@@ -23,7 +23,7 @@
             <div class="box-body">
             <div class="form-group ">
               <label for="InputName">Student ID</label>
-              <?php echo form_input(['id' => 'id', 'name' => 'id', 'class' => 'form-control', 'placeholder' => 'Enter Student Id', 'type' => 'text', 'value' => set_value('id', $student->id)]); ?>
+              <?php echo form_input(['id' => 'id', 'name' => 'id', 'readonly' => 'true', 'class' => 'form-control', 'placeholder' => 'Enter Student Id', 'type' => 'text', 'value' => set_value('id', $student->id)]); ?>
               <?php echo form_error('id');   ?>
             </div>
             <div class="form-group ">
@@ -57,7 +57,7 @@
             </div>
             <div class="form-group ">
               <label for="InputName">Date Of Join</label>
-              <?php echo form_input(['id' => 'date_of_join', 'name' => 'dob', 'class' => 'form-control', 'placeholder' => 'Enter Date of Join (YYYY-MM-DD)', 'type' => 'text', 'value' => set_value('date_of_join', $student->date_of_join)]); ?>
+              <?php echo form_input(['id' => 'date_of_join', 'name' => 'date_of_join', 'class' => 'form-control', 'placeholder' => 'Enter Date of Join (YYYY-MM-DD)', 'type' => 'text', 'value' => set_value('date_of_join', $student->date_of_join)]); ?>
               <?php echo form_error('date_of_join');   ?>
             </div>
 

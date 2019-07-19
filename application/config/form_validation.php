@@ -57,12 +57,6 @@ $config = [
 
 	'add_student_rules' => [
 		[
-			'field' => 'id',
-			'label' => 'Student Id',
-			'rules' => 'trim|required'
-
-		],
-		[
 			'field' => 'fullname',
 			'label' => 'Full Name',
 			'rules' => 'trim|required'

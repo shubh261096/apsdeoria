@@ -28,14 +28,15 @@ class StudentModel extends CI_Model
 		return $classes;
 	}
 
-	public function addStudent($array)
+	public function addStudent($array, $student_id)
 	{
-		$sql = 'SELECT id FROM student WHERE id = "' . $array['id'] . '"';
+		$sql = 'SELECT id FROM student WHERE id = "' . $student_id . '"';
 		$query = $this->db->query($sql);
 		if ($query->num_rows() > 0) {
 			return FALSE;
 		} else {
 			$array['status'] = 1;
+			$array['id'] = $student_id;
 			return $this->db->insert('student', $array);
 		}
 	}
@@ -61,5 +62,17 @@ class StudentModel extends CI_Model
 		return $this->db
 			->where('id', $student_id)
 			->delete('student');
+	}
+
+	public function addLogin($array)
+	{
+		return $this->db->insert('login', $array);
+	}
+
+	public function deleteLogin($student_id)
+	{
+		return $this->db
+			->where('id', $student_id)
+			->delete('login');
 	}
 }

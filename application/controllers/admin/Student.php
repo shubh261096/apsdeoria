@@ -58,9 +58,18 @@ class Student extends CI_Controller
       $data['classes'] = $this->StudentModel->getClass();
       $this->load->view('admin/student/add_student', $data);
     } else {
+      $student_id = 'APS' . rand(100, 999); //Generating random student_id
       $post = $this->input->post();
       unset($post['submit']);
-      if ($this->StudentModel->addStudent($post)) {
+      if ($this->StudentModel->addStudent($post, $student_id)) {
+
+        /** Getting first four char of fullname and dob month & date and adding to login */
+        $pass1 = substr($post['fullname'], 0, 4);
+        $pass2 = explode('-', $post['dob']);
+        $login = array('id' => $student_id, 'password' => strtolower($pass1) . $pass2[2] . $pass2[1], 'type' => 'student');
+        $this->StudentModel->addLogin($login);
+        /** end login */
+
         $this->session->set_flashdata('feedback', 'Added Succefully');
         $this->session->set_flashdata('feedback_class', 'alert-success');
       } else {
@@ -102,7 +111,7 @@ class Student extends CI_Controller
 
   public function delete_student($student_id)
   {
-    if ($this->StudentModel->deleteStudent($student_id)) {
+    if ($this->StudentModel->deleteStudent($student_id) && $this->StudentModel->deleteLogin($student_id)) {
       $this->session->set_flashdata('feedback', 'Deleted Succefully');
       $this->session->set_flashdata('feedback_class', 'alert-success');
     } else {
