@@ -9,7 +9,7 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-          <h3 class="box-title">Add Teacher</h3>
+            <h3 class="box-title">Add Teacher</h3>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
@@ -56,10 +56,15 @@
               <?php echo form_input(['id' => 'qualification', 'name' => 'qualification', 'class' => 'form-control', 'placeholder' => 'Enter Qualification', 'type' => 'text', 'value' => set_value('qualification')]); ?>
               <?php echo form_error('qualification');   ?>
             </div>
-            <div class="form-group ">
-              <label for="InputName">Date Of Birth</label>
-              <?php echo form_input(['id' => 'dob', 'name' => 'dob', 'class' => 'form-control', 'placeholder' => 'Enter DOB (YYYY-MM-DD)', 'type' => 'text', 'value' => set_value('dob')]); ?>
-              <?php echo form_error('dob');   ?>
+            <div class="form-group">
+              <label>Date of birth</label>
+              <div class="input-group date">
+                <?php echo form_input(['id' => 'dob', 'name' => 'dob', 'class' => 'form-control pull-left', 'placeholder' => 'Enter DOB (YYYY-MM-DD) ', 'type' => 'text', 'value' => set_value('dob')]); ?>
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <?php echo form_error('dob');?>
+              </div>
             </div>
             <div class="form-group ">
               <label for="InputName">Address</label>
@@ -153,6 +158,13 @@
 <script src="<?php echo base_url(); ?>dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url(); ?>dist/js/demo.js"></script>
+<script type="text/javascript">
+  //Date picker
+  $('#dob').datepicker({
+    autoclose: true,
+    format: 'yyyy-mm-dd'
+  })
+</script>
 </body>
 
 </html>

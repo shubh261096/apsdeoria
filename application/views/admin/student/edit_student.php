@@ -42,20 +42,30 @@
               <?php echo form_input(['id' => 'email', 'name' => 'email', 'class' => 'form-control', 'placeholder' => 'Enter email', 'value' => set_value('email', $student->email)]); ?>
               <?php echo form_error('email');   ?>
             </div>
-            <div class="form-group ">
-              <label for="Inputdate">Date of birth</label>
-              <?php echo form_input(['id' => 'dob', 'name' => 'dob', 'class' => 'form-control', 'placeholder' => 'Enter DOB (YYYY-MM-DD)', 'type' => 'text', 'value' => set_value('dob', $student->dob)]); ?>
-              <?php echo form_error('dob');   ?>
+            <div class="form-group">
+              <label>Date of birth</label>
+              <div class="input-group date">
+                <?php echo form_input(['id' => 'dob', 'name' => 'dob', 'class' => 'form-control pull-left', 'placeholder' => 'Enter DOB (YYYY-MM-DD) ', 'type' => 'text', 'value' => set_value('dob',  $student->dob)]); ?>
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <?php echo form_error('dob'); ?>
+              </div>
             </div>
             <div class="form-group ">
               <label for="InputName">Gender</label>
               <?php echo form_input(['id' => 'gender', 'name' => 'gender', 'class' => 'form-control', 'placeholder' => 'Enter Gender', 'type' => 'text', 'value' => set_value('gender', $student->gender)]); ?>
               <?php echo form_error('gender');   ?>
             </div>
-            <div class="form-group ">
-              <label for="InputName">Date Of Join</label>
-              <?php echo form_input(['id' => 'date_of_join', 'name' => 'date_of_join', 'class' => 'form-control', 'placeholder' => 'Enter Date of Join (YYYY-MM-DD)', 'type' => 'text', 'value' => set_value('date_of_join', $student->date_of_join)]); ?>
-              <?php echo form_error('date_of_join');   ?>
+            <div class="form-group">
+              <label>Date of Joining</label>
+              <div class="input-group date">
+                <?php echo form_input(['id' => 'date_of_join', 'name' => 'date_of_join', 'class' => 'form-control pull-left', 'placeholder' => 'Enter Date of birth (YYYY-MM-DD) ', 'type' => 'text', 'value' => set_value('date_of_join',  $student->date_of_join)]); ?>
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <?php echo form_error('date_of_join'); ?>
+              </div>
             </div>
 
           </div>
@@ -141,6 +151,18 @@
 <script src="<?php echo base_url(); ?>dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url(); ?>dist/js/demo.js"></script>
+<script type="text/javascript">
+  //Date picker
+  $('#dob').datepicker({
+    autoclose: true,
+    format: 'yyyy-mm-dd'
+  })
+  //Date picker
+  $('#date_of_join').datepicker({
+    autoclose: true,
+    format: 'yyyy-mm-dd'
+  })
+</script>
 </body>
 
 </html>
