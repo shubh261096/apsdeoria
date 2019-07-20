@@ -49,8 +49,8 @@
                     <tr>
                       <td><?= $timetable->id; ?></td>
                       <td><?= $timetable->class_id->name; ?></td>
-                      <td><?= $timetable->subject_id->name . " - " . $timetable->subject_id->id; ?></td>
-                      <td><?= $timetable->teacher_id->fullname; ?></td>
+                      <td><?php if(!empty($timetable->subject_id)){ echo $timetable->subject_id->name . " - " . $timetable->subject_id->id; } else { echo 'RECESS'; }?></td>
+                      <td><?php if(!empty($timetable->teacher_id)){ echo $timetable->teacher_id->fullname; } else { echo 'RECESS'; } ?></td>
                       <td><?= $timetable->day; ?></td>
                       <td><?= $timetable->start_time; ?></td>
                       <td><?= $timetable->end_time; ?></td>
