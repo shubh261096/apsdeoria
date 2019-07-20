@@ -45,10 +45,9 @@
                 <?php echo form_error('dob'); ?>
               </div>
             </div>
-            <div class="form-group ">
-              <label for="InputName">Gender</label>
-              <?php echo form_input(['id' => 'gender', 'name' => 'gender', 'class' => 'form-control', 'placeholder' => 'Enter Gender', 'type' => 'text', 'value' => set_value('gender')]); ?>
-              <?php echo form_error('gender');   ?>
+            <div class="form-group">
+              <label for="gender">Select Gender</label>
+              <?php echo form_dropdown('gender', $gender, '', 'class="form-control"'); ?>
             </div>
             <div class="form-group">
               <label>Date of Joining</label>

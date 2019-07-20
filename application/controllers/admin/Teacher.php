@@ -29,7 +29,10 @@ class Teacher extends CI_Controller
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_teacher_rules') == FALSE) {
-      $this->load->view('admin/teacher/add_teacher');
+      $data['gender'] = array(
+        'Male' => 'Male', 'Female' => 'Female'
+      );
+      $this->load->view('admin/teacher/add_teacher', $data);
     } else {
       $teacher_id = 'APST' . rand(100, 999); //Generating random teacher_id
       $post = $this->input->post();
@@ -55,17 +58,22 @@ class Teacher extends CI_Controller
 
   public function edit($teacher_id)
   {
-
-    $teacher = $this->TeacherModel->editTeacher($teacher_id);
-    $this->load->view('admin/teacher/edit_teacher', ['teacher' => $teacher]);
+    $data['teacher'] = $this->TeacherModel->editTeacher($teacher_id);
+    $data['gender'] = array(
+      'Male' => 'Male', 'Female' => 'Female'
+    );
+    $this->load->view('admin/teacher/edit_teacher', $data);
   }
 
   public function update($teacher_id)
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_teacher_rules') == FALSE) {
-      $teacher = $this->TeacherModel->editTeacher($teacher_id);
-      $this->load->view('admin/teacher/edit_teacher', ['teacher' => $teacher]);
+      $data['teacher'] = $this->TeacherModel->editTeacher($teacher_id);
+      $data['gender'] = array(
+        'Male' => 'Male', 'Female' => 'Female'
+      );
+      $this->load->view('admin/teacher/edit_teacher', $data);
     } else {
       $post = $this->input->post();
       unset($post['submit']);

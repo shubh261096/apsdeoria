@@ -33,6 +33,9 @@ class Student extends CI_Controller
   public function add()
   {
     $data['classes'] = $this->StudentModel->getClass();
+    $data['gender'] = array(
+      'Male' => 'Male', 'Female' => 'Female'
+    );
     $this->load->view('admin/student/add_student', $data);
   }
 
@@ -41,6 +44,9 @@ class Student extends CI_Controller
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_student_rules') == FALSE) {
       $data['classes'] = $this->StudentModel->getClass();
+      $data['gender'] = array(
+        'Male' => 'Male', 'Female' => 'Female'
+      );
       $this->load->view('admin/student/add_student', $data);
     } else {
       $student_id = 'APS' . rand(100, 999); //Generating random student_id
@@ -69,7 +75,10 @@ class Student extends CI_Controller
   {
     $student = $this->StudentModel->editStudent($student_id);
     $data = $this->StudentModel->getClass();
-    $this->load->view('admin/student/edit_student', ['student' => $student, 'classes' => $data]);
+    $gender = array(
+      'Male' => 'Male', 'Female' => 'Female'
+    );
+    $this->load->view('admin/student/edit_student', ['student' => $student, 'classes' => $data, 'gender' => $gender]);
   }
 
   public function update($student_id)
@@ -78,7 +87,10 @@ class Student extends CI_Controller
     if ($this->form_validation->run('add_student_rules') == FALSE) {
       $student = $this->StudentModel->editStudent($student_id);
       $data = $this->StudentModel->getClass();
-      $this->load->view('admin/student/edit_student', ['student' => $student, 'classes' => $data]);
+      $gender = array(
+        'Male' => 'Male', 'Female' => 'Female'
+      );
+      $this->load->view('admin/student/edit_student', ['student' => $student, 'classes' => $data, 'gender' => $gender]);
     } else {
       $post = $this->input->post();
       unset($post['submit']);
