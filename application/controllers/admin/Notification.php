@@ -8,6 +8,11 @@ class Notification extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->view('admin/includes/header');
+        $this->load->view('admin/includes/footer');
+        if (!$this->session->userdata('user_id'))
+            return redirect('admin/admin');
+            
         $this->load->model('NotificationModel');
     }
 
@@ -15,7 +20,7 @@ class Notification extends CI_Controller
     {
         $data['result'] = NULL;
         $data['fields'] = NULL;
-        $this->load->view('notification', $data);
+        $this->load->view('admin/notification', $data);
     }
 
     public function notify()
@@ -99,7 +104,6 @@ class Notification extends CI_Controller
 
         // Close connection
         curl_close($ch);
-
-        $this->load->view('notification', $data);
+        $this->load->view('admin/notification', $data);
     }
 }
