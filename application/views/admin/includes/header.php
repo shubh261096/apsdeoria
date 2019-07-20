@@ -125,9 +125,9 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
           <li class="header">MAIN NAVIGATION</li>
 
           <li><a href="<?php echo base_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-          <li><a href="<?php echo base_url('admin/teacher/all_teacher'); ?>"><i class="fa fa-user"></i> <span>Teachers</span></a></li>
-          <li><a href="<?php echo base_url('admin/student/all_student'); ?>"><i class="fa fa-user"></i> <span>Students</span></a></li>
-          <li><a href="<?php echo base_url('admin/classes/all_class'); ?>"><i class="fa fa-percent"></i> <span>Classes</span></a></li>
+          <li><a href="<?php echo base_url('admin/teacher'); ?>"><i class="fa fa-user"></i> <span>Teachers</span></a></li>
+          <li><a href="<?php echo base_url('admin/student'); ?>"><i class="fa fa-user"></i> <span>Students</span></a></li>
+          <li><a href="<?php echo base_url('admin/classes'); ?>"><i class="fa fa-percent"></i> <span>Classes</span></a></li>
           <li><a href="<?php echo base_url('admin/subject'); ?>"><i class="fa fa-percent"></i> <span>Subject</span></a></li>
           <li><a href="<?php echo base_url('admin/fees'); ?>"><i class="fa fa-percent"></i> <span>Fees</span></a></li>
           <li><a href="<?php echo base_url('admin/timetable'); ?>"><i class="fa fa-percent"></i> <span>Timetable</span></a></li>

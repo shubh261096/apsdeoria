@@ -22,17 +22,7 @@ class Classes extends CI_Controller
     if ($query) {
       $data['CLASSES'] =  $query;
     }
-    $this->load->view('admin/class/all_class', $data);
-  }
-
-  public function all_class()
-  {
-    $query = $this->ClassModel->getClass();
-    $data['CLASSES'] = null;
-    if ($query) {
-      $data['CLASSES'] =  $query;
-    }
-    $this->load->view('admin/class/all_class', $data);
+    $this->load->view('admin/class/class', $data);
   }
 
   public function add_class()
@@ -50,7 +40,7 @@ class Classes extends CI_Controller
         $this->session->set_flashdata('feedback', 'Class ID already exists. Please try with different class id.');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/classes/all_class');
+      return redirect('admin/classes');
     }
   }
 
@@ -77,7 +67,7 @@ class Classes extends CI_Controller
         $this->session->set_flashdata('feedback', 'Not Updated');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/classes/all_class');
+      return redirect('admin/classes');
     }
   }
 
@@ -91,6 +81,6 @@ class Classes extends CI_Controller
       $this->session->set_flashdata('feedback', 'Not deleted');
       $this->session->set_flashdata('feedback_class', 'alert-danger');
     }
-    return redirect('admin/classes/all_class');
+    return redirect('admin/classes');
   }
 }

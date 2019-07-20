@@ -25,16 +25,6 @@ class Teacher extends CI_Controller
     $this->load->view('admin/teacher/teacher', $data);
   }
 
-  public function all_teacher()
-  {
-    $query = $this->TeacherModel->getTeacher();
-    $data['TEACHERS'] = null;
-    if ($query) {
-      $data['TEACHERS'] =  $query;
-    }
-    $this->load->view('admin/teacher/teacher', $data);
-  }
-
   public function add_teacher()
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
@@ -59,7 +49,7 @@ class Teacher extends CI_Controller
         $this->session->set_flashdata('feedback', 'Teacher ID Already Exists. Please try with different teacher id.');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/teacher/all_teacher');
+      return redirect('admin/teacher');
     }
   }
 
@@ -86,7 +76,7 @@ class Teacher extends CI_Controller
         $this->session->set_flashdata('feedback', 'Not Updated');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/teacher/all_teacher');
+      return redirect('admin/teacher');
     }
   }
 
@@ -100,6 +90,6 @@ class Teacher extends CI_Controller
       $this->session->set_flashdata('feedback', 'Not deleted');
       $this->session->set_flashdata('feedback_class', 'alert-danger');
     }
-    return redirect('admin/teacher/all_teacher');
+    return redirect('admin/teacher');
   }
 }
