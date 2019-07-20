@@ -56,7 +56,13 @@
                       <td><?= $student->gender; ?></td>
                       <td><?= $student->email; ?></td>
                       <td><?= $student->date_of_join; ?></td>
-                      <td><?= $student->status; ?></td>
+                      <td>
+                        <?php if ($student->status == 1) { ?>
+                          <span class="label label-success">active</span>
+                        <?php } else { ?>
+                          <span class="label label-danger">inactive</span>
+                        <?php } ?>
+                      </td>
                       <td>
                         <a href="<?php echo base_url("student/edit/$student->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
                         <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'student/delete/' . $student->id; ?>');" deleteConfirm href="#"></a>

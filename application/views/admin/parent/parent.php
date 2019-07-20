@@ -56,7 +56,13 @@
                       <td><?= $parent->phone; ?></td>
                       <td><?= $parent->dob; ?></td>
                       <td><?= $parent->address; ?></td>
-                      <td><?= $parent->status; ?></td>
+                      <td>
+                        <?php if ($parent->status == 1) { ?>
+                          <span class="label label-success">active</span>
+                        <?php } else { ?>
+                          <span class="label label-danger">inactive</span>
+                        <?php } ?>
+                      </td>
                       <td>
                         <a href="<?php echo base_url("parents/edit/$parent->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
                         <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'parents/delete/' . $parent->id; ?>');" deleteConfirm href="#"></a>

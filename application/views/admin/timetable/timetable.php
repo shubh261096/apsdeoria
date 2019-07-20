@@ -54,7 +54,13 @@
                       <td><?= $timetable->day; ?></td>
                       <td><?= $timetable->start_time; ?></td>
                       <td><?= $timetable->end_time; ?></td>
-                      <td><?= $timetable->status; ?></td>
+                      <td>
+                        <?php if ($timetable->status == 1) { ?>
+                          <span class="label label-success">active</span>
+                        <?php } else { ?>
+                          <span class="label label-danger">inactive</span>
+                        <?php } ?>
+                      </td>
                       <td>
                         <a href="<?php echo base_url("timetable/edit/$timetable->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
                         <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'timetable/delete/' . $timetable->id; ?>');" deleteConfirm href="#"></a>

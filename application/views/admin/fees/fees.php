@@ -54,7 +54,13 @@
                       <td><?= $fee->fees_paid; ?></td>
                       <td><?= $fee->period; ?></td>
                       <td><?= $fee->date_paid; ?></td>
-                      <td><?= $fee->status; ?></td>
+                      <td>
+                        <?php if ($fee->status == 'paid') { ?>
+                          <span class="label label-success">paid</span>
+                        <?php } else { ?>
+                          <span class="label label-danger">unpaid</span>
+                        <?php } ?>
+                      </td>
                       <td>
                         <a href="<?php echo base_url("fees/edit/$fee->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
                         <!-- <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'fees/delete/' . $fee->id; ?>');" deleteConfirm href="#"></a> -->

@@ -50,7 +50,13 @@
                       <td><?= $class->section; ?></td>
                       <td><?= $class->year; ?></td>
                       <td><?= $class->remarks; ?></td>
-                      <td><?= $class->status; ?></td>
+                      <td>
+                        <?php if ($class->status == 1) { ?>
+                          <span class="label label-success">active</span>
+                        <?php } else { ?>
+                          <span class="label label-danger">inactive</span>
+                        <?php } ?>
+                      </td>
                       <td>
                         <a href="<?php echo base_url("classes/edit/$class->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
                         <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'classes/delete/' . $class->id; ?>');" deleteConfirm href="#"></a>

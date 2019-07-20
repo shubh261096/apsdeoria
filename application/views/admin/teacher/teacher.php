@@ -62,7 +62,13 @@
                       <td><?= $teacher->qualification; ?></td>
                       <td><?= $teacher->dob; ?></td>
                       <td><?= $teacher->address; ?></td>
-                      <td><?= $teacher->status; ?></td>
+                      <td>
+                        <?php if ($teacher->status == 1) { ?>
+                          <span class="label label-success">active</span>
+                        <?php } else { ?>
+                          <span class="label label-danger">inactive</span>
+                        <?php } ?>
+                      </td>
                       <td>
                         <a href="<?php echo base_url("teacher/edit/$teacher->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
                         <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'teacher/delete/' . $teacher->id; ?>');" deleteConfirm href="#"></a>
