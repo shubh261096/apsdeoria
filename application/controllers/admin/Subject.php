@@ -40,13 +40,13 @@ class Subject extends CI_Controller
     force_download($nme, $pth);
   }
 
-  public function add_subject()
+  public function add()
   {
     $data['classes'] = $this->SubjectModel->getClass();
     $this->load->view('admin/subject/add_subject', $data);
   }
 
-  public function insert_subject()
+  public function insert()
   {
     $config = [
       'upload_path' => 'asset/pdf/syllabus/',
@@ -79,14 +79,14 @@ class Subject extends CI_Controller
     }
   }
 
-  public function edit_subject($subject_id)
+  public function edit($subject_id)
   {
     $subject = $this->SubjectModel->editSubject($subject_id);
     $data = $this->SubjectModel->getClass();
     $this->load->view('admin/subject/edit_subject', ['subject' => $subject, 'classes' => $data]);
   }
 
-  public function update_subject($subject_id)
+  public function update($subject_id)
   {
     $config = [
       'upload_path' => 'asset/pdf/syllabus/',
@@ -141,7 +141,7 @@ class Subject extends CI_Controller
   }
 
 
-  public function delete_subject($subject_id)
+  public function delete($subject_id)
   {
     if ($this->SubjectModel->deleteSubject($subject_id)) {
       $this->session->set_flashdata('feedback', 'Deleted Succefully');

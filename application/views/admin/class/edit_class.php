@@ -1,9 +1,6 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-
-    <h1> Edit Class Details </h1>
-
   </section>
 
   <section class="content">
@@ -17,7 +14,7 @@
           <!-- /.box-header -->
           <!-- form start -->
 
-          <?php echo form_open("admin/classes/update_class/$classes->id", ['role' => 'form']); ?>
+          <?php echo form_open("admin/classes/update/$classes->id", ['role' => 'form']); ?>
 
           <div class="box-body">
             <div class="form-group ">

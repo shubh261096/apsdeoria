@@ -33,7 +33,7 @@ class Fees extends CI_Controller
     $this->load->view('admin/fees/fees', $data);
   }
 
-  public function add_fees()
+  public function add()
   {
     $data['students'] = $this->FeesModel->getStudents();
     $data['months'] = array(
@@ -43,7 +43,7 @@ class Fees extends CI_Controller
     $this->load->view('admin/fees/add_fees', $data);
   }
 
-  public function insert_fees()
+  public function insert()
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_fees_rules') == FALSE) {
@@ -70,7 +70,7 @@ class Fees extends CI_Controller
     }
   }
 
-  public function edit_fees($fees_id)
+  public function edit($fees_id)
   {
     $fees = $this->FeesModel->editFees($fees_id);
     $student = getStudentDetails($fees->student_id);
@@ -81,7 +81,7 @@ class Fees extends CI_Controller
     $this->load->view('admin/fees/edit_fees', ['fees' => $fees, 'student' => $student, 'months' => $months]);
   }
 
-  public function update_fees($fees_id)
+  public function update($fees_id)
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_fees_rules') == FALSE) {
@@ -112,7 +112,7 @@ class Fees extends CI_Controller
   }
 
 
-  public function delete_student($fees_id)
+  public function delete($fees_id)
   {
     if ($this->FeesModel->deleteFees($fees_id)) {
       $this->session->set_flashdata('feedback', 'Deleted Succefully');

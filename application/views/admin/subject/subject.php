@@ -1,9 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-
-    <h1> Subject </h1>
-    <a href="<?php echo base_url('admin/subject/add_subject'); ?>" class="btn btn-primary btn-s">Add Subject</a>
+    <a href="<?php echo base_url('admin/subject/add'); ?>" class="btn btn-primary btn-s">Add Subject</a>
   </section>
 
   <?php if ($feedback = $this->session->flashdata('feedback')) :
@@ -56,8 +54,8 @@
                         <?php } ?>
                       </td>
                       <td>
-                        <a href="<?php echo base_url("admin/subject/edit_subject/$subject->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
-                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/subject/delete_subject/' . $subject->id; ?>');" deleteConfirm href="#"></a>
+                        <a href="<?php echo base_url("admin/subject/edit/$subject->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
+                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/subject/delete/' . $subject->id; ?>');" deleteConfirm href="#"></a>
                       </td>
                     </tr>
                   <?php }

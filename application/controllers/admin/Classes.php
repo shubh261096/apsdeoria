@@ -25,7 +25,7 @@ class Classes extends CI_Controller
     $this->load->view('admin/class/class', $data);
   }
 
-  public function add_class()
+  public function add()
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_class_rules') == FALSE) {
@@ -44,14 +44,14 @@ class Classes extends CI_Controller
     }
   }
 
-  public function edit_class($class_id)
+  public function edit($class_id)
   {
 
     $classes = $this->ClassModel->editClass($class_id);
     $this->load->view('admin/class/edit_class', ['classes' => $classes]);
   }
 
-  public function update_class($class_id)
+  public function update($class_id)
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_class_rules') == FALSE) {
@@ -72,7 +72,7 @@ class Classes extends CI_Controller
   }
 
 
-  public function delete_class($class_id)
+  public function delete($class_id)
   {
     if ($this->ClassModel->deleteClass($class_id)) {
       $this->session->set_flashdata('feedback', 'Deleted Succefully');

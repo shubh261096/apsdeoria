@@ -36,7 +36,7 @@ class Timetable extends CI_Controller
     $this->load->view('admin/timetable/timetable', $data);
   }
 
-  public function add_timetable()
+  public function add()
   {
     $data['classes'] = $this->TimetableModel->getClass();
     $data['subjects'] = $this->TimetableModel->getSubject();
@@ -48,7 +48,7 @@ class Timetable extends CI_Controller
     $this->load->view('admin/timetable/add_timetable', $data);
   }
 
-  public function insert_timetable()
+  public function insert()
   {
     $post = $this->input->post();
     unset($post['submit']);
@@ -62,7 +62,7 @@ class Timetable extends CI_Controller
     return redirect('admin/timetable');
   }
 
-  public function edit_timetable($timetable_id)
+  public function edit($timetable_id)
   {
     $data['timetable'] = $this->TimetableModel->editTimetable($timetable_id);
     $data['classes'] = $this->TimetableModel->getClass();
@@ -75,7 +75,7 @@ class Timetable extends CI_Controller
     $this->load->view('admin/timetable/edit_timetable', $data);
   }
 
-  public function update_timetable($timetable_id)
+  public function update($timetable_id)
   {
     $post = $this->input->post();
     unset($post['submit']);
@@ -91,7 +91,7 @@ class Timetable extends CI_Controller
   }
 
 
-  public function delete_timetable($timetable_id)
+  public function delete($timetable_id)
   {
     if ($this->TimetableModel->deleteTimetable($timetable_id)) {
       $this->session->set_flashdata('feedback', 'Deleted Succefully');

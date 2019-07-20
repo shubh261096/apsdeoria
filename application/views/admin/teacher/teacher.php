@@ -1,9 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-
-    <h1> Teacher </h1>
-    <a href="<?php echo base_url('admin/teacher/add_teacher'); ?>" class="btn btn-primary btn-s">Add Teacher</a>
+    <a href="<?php echo base_url('admin/teacher/add'); ?>" class="btn btn-primary btn-s">Add Teacher</a>
   </section>
 
   <?php if ($feedback = $this->session->flashdata('feedback')) :
@@ -66,8 +64,8 @@
                       <td><?= $teacher->address; ?></td>
                       <td><?= $teacher->status; ?></td>
                       <td>
-                        <a href="<?php echo base_url("admin/teacher/edit_teacher/$teacher->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
-                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/teacher/delete_teacher/' . $teacher->id; ?>');" deleteConfirm href="#"></a>
+                        <a href="<?php echo base_url("admin/teacher/edit/$teacher->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
+                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/teacher/delete/' . $teacher->id; ?>');" deleteConfirm href="#"></a>
                       </td>
                     </tr>
                   <?php }

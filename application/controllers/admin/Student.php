@@ -30,13 +30,13 @@ class Student extends CI_Controller
     $this->load->view('admin/student/student', $data);
   }
 
-  public function add_student()
+  public function add()
   {
     $data['classes'] = $this->StudentModel->getClass();
     $this->load->view('admin/student/add_student', $data);
   }
 
-  public function insert_student()
+  public function insert()
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_student_rules') == FALSE) {
@@ -65,14 +65,14 @@ class Student extends CI_Controller
     }
   }
 
-  public function edit_student($student_id)
+  public function edit($student_id)
   {
     $student = $this->StudentModel->editStudent($student_id);
     $data = $this->StudentModel->getClass();
     $this->load->view('admin/student/edit_student', ['student' => $student, 'classes' => $data]);
   }
 
-  public function update_student($student_id)
+  public function update($student_id)
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_student_rules') == FALSE) {
@@ -94,7 +94,7 @@ class Student extends CI_Controller
   }
 
 
-  public function delete_student($student_id)
+  public function delete($student_id)
   {
     if ($this->StudentModel->deleteStudent($student_id) && $this->StudentModel->deleteLogin($student_id)) {
       $this->session->set_flashdata('feedback', 'Deleted Succefully');

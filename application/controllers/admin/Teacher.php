@@ -25,7 +25,7 @@ class Teacher extends CI_Controller
     $this->load->view('admin/teacher/teacher', $data);
   }
 
-  public function add_teacher()
+  public function add()
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_teacher_rules') == FALSE) {
@@ -53,14 +53,14 @@ class Teacher extends CI_Controller
     }
   }
 
-  public function edit_teacher($teacher_id)
+  public function edit($teacher_id)
   {
 
     $teacher = $this->TeacherModel->editTeacher($teacher_id);
     $this->load->view('admin/teacher/edit_teacher', ['teacher' => $teacher]);
   }
 
-  public function update_teacher($teacher_id)
+  public function update($teacher_id)
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_teacher_rules') == FALSE) {
@@ -81,7 +81,7 @@ class Teacher extends CI_Controller
   }
 
 
-  public function delete_teacher($teacher_id)
+  public function delete($teacher_id)
   {
     if ($this->TeacherModel->deleteTeacher($teacher_id) && $this->TeacherModel->deleteLogin($teacher_id)) {
       $this->session->set_flashdata('feedback', 'Deleted Succefully');

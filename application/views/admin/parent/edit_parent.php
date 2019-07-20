@@ -1,9 +1,6 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-
-    <h1> Edit Parent Details </h1>
-
   </section>
 
   <section class="content">
@@ -12,6 +9,7 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
+          <h3 class="box-title">Edit Parent</h3>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
