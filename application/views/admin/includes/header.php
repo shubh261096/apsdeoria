@@ -127,14 +127,14 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
           <li><a href="<?php echo base_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
           <li><a href="<?php echo base_url('admin/teacher'); ?>"><i class="fa fa-user"></i> <span>Teachers</span></a></li>
           <li><a href="<?php echo base_url('admin/student'); ?>"><i class="fa fa-user"></i> <span>Students</span></a></li>
-          <li><a href="<?php echo base_url('admin/classes'); ?>"><i class="fa fa-percent"></i> <span>Classes</span></a></li>
-          <li><a href="<?php echo base_url('admin/subject'); ?>"><i class="fa fa-percent"></i> <span>Subject</span></a></li>
-          <li><a href="<?php echo base_url('admin/fees'); ?>"><i class="fa fa-percent"></i> <span>Fees</span></a></li>
-          <li><a href="<?php echo base_url('admin/timetable'); ?>"><i class="fa fa-percent"></i> <span>Timetable</span></a></li>
-          <li><a href="<?php echo base_url('admin/login'); ?>"><i class="fa fa-percent"></i> <span>Login Credentials</span></a></li>
-          <li><a href="<?php echo base_url('admin/parents'); ?>"><i class="fa fa-percent"></i> <span>Parents</span></a></li>
-          <li><a href="<?php echo base_url('admin/homework'); ?>"><i class="fa fa-percent"></i> <span>Homework</span></a></li>
-          <li><a href="<?php echo base_url('admin/notification'); ?>"><i class="fa fa-percent"></i> <span>Notification</span></a></li>
+          <li><a href="<?php echo base_url('admin/classes'); ?>"><i class="fa fa-users"></i> <span>Classes</span></a></li>
+          <li><a href="<?php echo base_url('admin/subject'); ?>"><i class="fa fa-book"></i> <span>Subject</span></a></li>
+          <li><a href="<?php echo base_url('admin/fees'); ?>"><i class="fa fa-credit-card"></i> <span>Fees</span></a></li>
+          <li><a href="<?php echo base_url('admin/timetable'); ?>"><i class="fa fa-calendar"></i> <span>Timetable</span></a></li>
+          <li><a href="<?php echo base_url('admin/login'); ?>"><i class="fa fa-sign-in"></i> <span>Login Credentials</span></a></li>
+          <li><a href="<?php echo base_url('admin/parents'); ?>"><i class="fa fa-users"></i> <span>Parents</span></a></li>
+          <li><a href="<?php echo base_url('admin/homework'); ?>"><i class="fa fa-book"></i> <span>Homework</span></a></li>
+          <li><a href="<?php echo base_url('admin/notification'); ?>"><i class="fa fa-bell"></i> <span>Notification</span></a></li>
 
         </section>
       <!-- /.sidebar -->
