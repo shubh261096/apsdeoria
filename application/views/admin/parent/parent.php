@@ -1,7 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <a href="<?php echo base_url('admin/parents/add'); ?>" class="btn btn-primary btn-s">Add Parent</a>
+    <a href="<?php echo base_url('parents/add'); ?>" class="btn btn-primary btn-s">Add Parent</a>
   </section>
 
   <?php if ($feedback = $this->session->flashdata('feedback')) :
@@ -58,8 +58,8 @@
                       <td><?= $parent->address; ?></td>
                       <td><?= $parent->status; ?></td>
                       <td>
-                        <a href="<?php echo base_url("admin/parents/edit/$parent->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
-                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/parents/delete/' . $parent->id; ?>');" deleteConfirm href="#"></a>
+                        <a href="<?php echo base_url("parents/edit/$parent->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
+                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'parents/delete/' . $parent->id; ?>');" deleteConfirm href="#"></a>
                       </td>
                     </tr>
                   <?php }

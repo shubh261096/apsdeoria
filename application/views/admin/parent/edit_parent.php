@@ -14,7 +14,7 @@
           <!-- /.box-header -->
           <!-- form start -->
 
-          <?php echo form_open("admin/parents/update/$parent->id", ['role' => 'form']); ?>
+          <?php echo form_open("parents/update/$parent->id", ['role' => 'form']); ?>
 
           <div class="box-body">
             <div class="form-group">
@@ -47,8 +47,8 @@
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <?php echo form_error('dob'); ?>
               </div>
+              <?php echo form_error('dob'); ?>
             </div>
             <div class="form-group ">
               <label for="InputName">Address</label>

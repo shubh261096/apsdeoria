@@ -14,7 +14,7 @@
           <!-- /.box-header -->
           <!-- form start -->
 
-          <?php echo form_open("admin/fees/update/$fees->id", ['role' => 'form']); ?>
+          <?php echo form_open("fees/update/$fees->id", ['role' => 'form']); ?>
 
           <div class="box-body">
             <div class="form-group ">

@@ -13,7 +13,7 @@
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <?php echo form_open('admin/classes/add', ['role' => 'form']); ?>
+          <?php echo form_open('classes/add', ['role' => 'form']); ?>
 
           <div class="box-body">
             <div class="form-group ">

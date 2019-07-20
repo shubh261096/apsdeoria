@@ -1,7 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <a href="<?php echo base_url('admin/student/add'); ?>" class="btn btn-primary btn-s">Add Student</a>
+    <a href="<?php echo base_url('student/add'); ?>" class="btn btn-primary btn-s">Add Student</a>
   </section>
 
   <?php if ($feedback = $this->session->flashdata('feedback')) :
@@ -58,8 +58,8 @@
                       <td><?= $student->date_of_join; ?></td>
                       <td><?= $student->status; ?></td>
                       <td>
-                        <a href="<?php echo base_url("admin/student/edit/$student->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
-                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/student/delete/' . $student->id; ?>');" deleteConfirm href="#"></a>
+                        <a href="<?php echo base_url("student/edit/$student->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
+                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'student/delete/' . $student->id; ?>');" deleteConfirm href="#"></a>
                       </td>
                     </tr>
                   <?php }

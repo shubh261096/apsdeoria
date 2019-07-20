@@ -1,7 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <a href="<?php echo base_url('admin/subject/add'); ?>" class="btn btn-primary btn-s">Add Subject</a>
+    <a href="<?php echo base_url('subject/add'); ?>" class="btn btn-primary btn-s">Add Subject</a>
   </section>
 
   <?php if ($feedback = $this->session->flashdata('feedback')) :
@@ -50,12 +50,12 @@
                       <td><?= $subject->class_id->name; ?></td>
                       <td>
                         <?php if(!empty($subject->syllabus)) { ?>
-                          <a href="<?php echo base_url("admin/subject/download/$subject->id"); ?>" class="fa fa-download" aria-hidden="true"></a>
+                          <a href="<?php echo base_url("subject/download/$subject->id"); ?>" class="fa fa-download" aria-hidden="true"></a>
                         <?php } ?>
                       </td>
                       <td>
-                        <a href="<?php echo base_url("admin/subject/edit/$subject->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
-                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/subject/delete/' . $subject->id; ?>');" deleteConfirm href="#"></a>
+                        <a href="<?php echo base_url("subject/edit/$subject->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
+                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'subject/delete/' . $subject->id; ?>');" deleteConfirm href="#"></a>
                       </td>
                     </tr>
                   <?php }

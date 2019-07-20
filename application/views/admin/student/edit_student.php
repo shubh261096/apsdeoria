@@ -14,7 +14,7 @@
           <!-- /.box-header -->
           <!-- form start -->
 
-          <?php echo form_open("admin/student/update/$student->id", ['role' => 'form']); ?>
+          <?php echo form_open("student/update/$student->id", ['role' => 'form']); ?>
 
           <div class="box-body">
             <div class="box-body">
@@ -49,8 +49,8 @@
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <?php echo form_error('dob'); ?>
               </div>
+              <?php echo form_error('dob'); ?>
             </div>
             <div class="form-group">
               <label for="gender">Select Gender</label>
@@ -63,8 +63,8 @@
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <?php echo form_error('date_of_join'); ?>
               </div>
+              <?php echo form_error('date_of_join'); ?>
             </div>
 
           </div>

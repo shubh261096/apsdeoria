@@ -14,7 +14,7 @@
           <!-- /.box-header -->
           <!-- form start -->
 
-          <?php echo form_open_multipart("admin/subject/update/$subject->id", ['role' => 'form']); ?>
+          <?php echo form_open_multipart("subject/update/$subject->id", ['role' => 'form']); ?>
 
           <div class="box-body">
             <div class="form-group ">

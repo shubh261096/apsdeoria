@@ -13,7 +13,7 @@
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <?php echo form_open_multipart('admin/homework/insert', ['role' => 'form']); ?>
+          <?php echo form_open_multipart('homework/insert', ['role' => 'form']); ?>
 
           <div class="box-body">
             <div class="form-group">

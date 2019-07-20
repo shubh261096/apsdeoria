@@ -1,7 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <a href="<?php echo base_url('admin/homework/add'); ?>" class="btn btn-primary btn-s">Add Homework</a>
+    <a href="<?php echo base_url('homework/add'); ?>" class="btn btn-primary btn-s">Add Homework</a>
   </section>
 
   <?php if ($feedback = $this->session->flashdata('feedback')) :
@@ -52,14 +52,14 @@
                       <td><?= $homework->subject_id->name . " - " . $homework->subject_id->id; ?></td>
                       <td>
                         <?php if (!empty($homework->data)) { ?>
-                          <a href="<?php echo base_url("admin/homework/download/$homework->id"); ?>" class="fa fa-download" aria-hidden="true"></a>
+                          <a href="<?php echo base_url("homework/download/$homework->id"); ?>" class="fa fa-download" aria-hidden="true"></a>
                         <?php } ?>
                       </td>
                       <td><?= $homework->date; ?></td>
                       <td><?= $homework->remarks; ?></td>
                       <td>
-                        <a href="<?php echo base_url("admin/homework/edit/$homework->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
-                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/homework/delete/' . $homework->id; ?>');" deleteConfirm href="#"></a>
+                        <a href="<?php echo base_url("homework/edit/$homework->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
+                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'homework/delete/' . $homework->id; ?>');" deleteConfirm href="#"></a>
                       </td>
                     </tr>
                   <?php }

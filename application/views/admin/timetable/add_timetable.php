@@ -13,7 +13,7 @@
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <?php echo form_open('admin/timetable/insert', ['role' => 'form']); ?>
+          <?php echo form_open('timetable/insert', ['role' => 'form']); ?>
 
           <div class="box-body">
 

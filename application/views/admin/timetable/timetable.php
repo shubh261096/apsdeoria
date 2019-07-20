@@ -1,7 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <a href="<?php echo base_url('admin/timetable/add'); ?>" class="btn btn-primary btn-s">Add Timetable</a>
+    <a href="<?php echo base_url('timetable/add'); ?>" class="btn btn-primary btn-s">Add Timetable</a>
   </section>
 
   <?php if ($feedback = $this->session->flashdata('feedback')) :
@@ -56,8 +56,8 @@
                       <td><?= $timetable->end_time; ?></td>
                       <td><?= $timetable->status; ?></td>
                       <td>
-                        <a href="<?php echo base_url("admin/timetable/edit/$timetable->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
-                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/timetable/delete/' . $timetable->id; ?>');" deleteConfirm href="#"></a>
+                        <a href="<?php echo base_url("timetable/edit/$timetable->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
+                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'timetable/delete/' . $timetable->id; ?>');" deleteConfirm href="#"></a>
                       </td>
                     </tr>
                   <?php }

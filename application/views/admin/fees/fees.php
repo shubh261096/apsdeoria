@@ -1,7 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <a href="<?php echo base_url('admin/fees/add'); ?>" class="btn btn-primary btn-s">Add Fee</a>
+    <a href="<?php echo base_url('fees/add'); ?>" class="btn btn-primary btn-s">Add Fee</a>
   </section>
 
   <?php if ($feedback = $this->session->flashdata('feedback')) :
@@ -56,8 +56,8 @@
                       <td><?= $fee->date_paid; ?></td>
                       <td><?= $fee->status; ?></td>
                       <td>
-                        <a href="<?php echo base_url("admin/fees/edit/$fee->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
-                        <!-- <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'admin/fees/delete/' . $fee->id; ?>');" deleteConfirm href="#"></a> -->
+                        <a href="<?php echo base_url("fees/edit/$fee->id"); ?>" class="fa fa-pencil" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;
+                        <!-- <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'fees/delete/' . $fee->id; ?>');" deleteConfirm href="#"></a> -->
                       </td>
                     </tr>
                   <?php }
