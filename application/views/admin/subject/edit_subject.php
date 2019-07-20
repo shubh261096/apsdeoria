@@ -9,7 +9,7 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-          <h3 class="box-title">Edit Subject</h3>
+            <h3 class="box-title">Edit Subject</h3>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
@@ -37,10 +37,17 @@
               <?php echo form_dropdown('class_id', $classes, $subject->class_id, 'class="form-control"'); ?>
             </div>
             <div class="form-group">
-              <label for="InputDoc">Choose PDF</label><br>
-              <?php if(!empty($subject->syllabus)) { echo basename($subject->syllabus); } ?>
-              <?php echo form_upload(['name' => 'syllabus']); ?>
-              <?php if (isset($upload_error)) echo $upload_error  ?>
+              <label for="InputDoc">Upload Syllabus</label>
+              <div class="input-group">
+                <input type="text" id="file_path" value=<?php if (!empty($subject->syllabus)) {
+                                                          echo basename($subject->syllabus);
+                                                        } ?> readonly="true" class="form-control" placeholder="Browse...">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" type="button" id="file_browser">Browse</button>
+                </span>
+                <?php if (isset($upload_error)) echo $upload_error  ?>
+              </div>
+              <?php echo form_upload(['name' => 'syllabus', 'class' => 'hidden', 'id' => 'syllabus']); ?>
             </div>
 
           </div>
@@ -126,6 +133,20 @@
 <script src="<?php echo base_url(); ?>dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url(); ?>dist/js/demo.js"></script>
+<script type="text/javascript">
+  $('#file_browser').click(function(e) {
+    e.preventDefault();
+    $('#syllabus').click();
+  });
+
+  $('#syllabus').change(function() {
+    $('#file_path').val($(this).val());
+  });
+
+  $('#file_path').click(function() {
+    $('#file_browser').click();
+  });
+</script>
 </body>
 
 </html>
