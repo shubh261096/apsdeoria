@@ -8,26 +8,14 @@ class DashboardModel extends CI_model{
         $this->load->database();
     }
 
-    public function getTotalUser()
+    public function getTotalStudent()
     {
-        return $this->db->count_all('user'); 
+        return $this->db->count_all('student'); 
     }
 
-    public function getTotalRestaurant()
+    public function getTotalTeacher()
     {
-        return $this->db->count_all('restraunts'); 
+        return $this->db->count_all('teacher'); 
     }
 
-    public function getTotalOrder()
-    {
-        return $this->db->count_all('orders'); 
-    }
-
-    public function getTotalOffer()
-    {
-        return $this->db->count_all('offers'); 
-    }
 }
-
-
-?>

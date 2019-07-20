@@ -14,14 +14,13 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
           <div class="inner">
-            <!-- <h3><?php echo $order_count; ?></h3> -->
-
-            <p>Total Orders</p>
+            <h3><?php echo $student_count; ?></h3>
+            <p>Total Students</p>
           </div>
           <div class="icon">
-            <i class="ion ion-bag"></i>
+            <i class="ion ion-person-add"></i>
           </div>
-          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="<?php echo base_url('student') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
@@ -29,47 +28,15 @@
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
-            <!-- <h3><?php echo $restaurant_count; ?></h3> -->
-
-            <p>Total Shops</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-stats-bars"></i>
-          </div>
-          <a href="<?php echo base_url('Restaurants/all_restaurants'); ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-yellow">
-          <div class="inner">
-            <!-- <h3><?php echo $user_count; ?></h3> -->
-
-            <p>Total Users</p>
+            <h3><?php echo $teacher_count; ?></h3>
+            <p>Total Teachers</p>
           </div>
           <div class="icon">
             <i class="ion ion-person-add"></i>
           </div>
-          <a href="<?php echo base_url('User_Management/all_users'); ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="<?php echo base_url('teacher') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-red">
-          <div class="inner">
-            <!-- <h3><?php echo $offer_count; ?></h3> -->
-
-            <p>Total Offers</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-pie-graph"></i>
-          </div>
-          <a href="<?php echo base_url('Offers/alloffers'); ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
     </div>
     <!-- /.row -->
 
