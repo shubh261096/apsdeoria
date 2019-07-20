@@ -17,16 +17,6 @@ class ParentModel extends CI_Model
 		}
 	}
 
-	public function getStudent()
-	{
-		$result = $this->db->select('id, fullname')->get('student')->result_array();
-		$students = array();
-		foreach ($result as $r) {
-			$students[$r['id']] = $r['fullname'] . " - " . $r['id'];
-		}
-		return $students;
-	}
-
 	public function addParent($array, $parent_id)
 	{
 		$sql = 'SELECT id FROM parent WHERE id = "' . $parent_id . '"';

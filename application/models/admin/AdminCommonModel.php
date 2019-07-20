@@ -9,6 +9,7 @@ class AdminCommonModel extends CI_model
 		$this->load->database();
 	}
 
+	/** Getting Class Detail */
 	public function getClassList()
 	{
 		$result = $this->db->select('id, name')->get('class')->result_array();
@@ -19,6 +20,7 @@ class AdminCommonModel extends CI_model
 		return $classes;
 	}
 
+	/** Getting Subject Detail */
 	public function getSubjectList()
 	{
 		$result = $this->db->select('id, name')->get('subject')->result_array();
@@ -29,6 +31,7 @@ class AdminCommonModel extends CI_model
 		return $subjects;
 	}
 
+	/** Getting Teacher Detail */
 	public function getTeacherList()
 	{
 		$result = $this->db->select('id, fullname')->get('teacher')->result_array();
@@ -37,5 +40,16 @@ class AdminCommonModel extends CI_model
 			$teachers[$r['id']] = $r['fullname'];
 		}
 		return $teachers;
+	}
+
+	/** Getting Student Detail */
+	public function getStudentList()
+	{
+		$result = $this->db->select('id, fullname')->get('student')->result_array();
+		$student = array();
+		foreach ($result as $r) {
+			$student[$r['id']] = $r['fullname'] . " - " . $r['id'];
+		}
+		return $student;
 	}
 }

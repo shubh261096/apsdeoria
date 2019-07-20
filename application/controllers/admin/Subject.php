@@ -42,7 +42,7 @@ class Subject extends CI_Controller
 
   public function add()
   {
-    $data['classes'] = $this->SubjectModel->getClass();
+    $data['classes'] = $this->AdminCommonModel->getClassList();
     $this->load->view('admin/subject/add_subject', $data);
   }
 
@@ -73,7 +73,7 @@ class Subject extends CI_Controller
       }
       return redirect('admin/subject');
     } else {
-      $data['classes'] = $this->SubjectModel->getClass();
+      $data['classes'] = $this->AdminCommonModel->getClassList();
       $data['upload_error'] = $this->upload->display_errors();
       $this->load->view('admin/subject/add_subject', $data);
     }
@@ -82,7 +82,7 @@ class Subject extends CI_Controller
   public function edit($subject_id)
   {
     $subject = $this->SubjectModel->editSubject($subject_id);
-    $data = $this->SubjectModel->getClass();
+    $data['classes'] = $this->AdminCommonModel->getClassList();
     $this->load->view('admin/subject/edit_subject', ['subject' => $subject, 'classes' => $data]);
   }
 
@@ -128,14 +128,14 @@ class Subject extends CI_Controller
           return redirect('admin/subject');
         } else {
           $data['subject'] = $this->SubjectModel->editSubject($subject_id);
-          $data['classes'] = $this->SubjectModel->getClass();
+          $data['classes'] = $this->AdminCommonModel->getClassList();
           $data['upload_error'] = $this->upload->display_errors();
           $this->load->view('admin/subject/edit_subject', $data);
         }
       }
     } else {
       $subject = $this->SubjectModel->editSubject($subject_id);
-      $data = $this->SubjectModel->getClass();
+      $data['classes'] = $this->AdminCommonModel->getClassList();
       $this->load->view('admin/subject/edit_subject', ['subject' => $subject, 'classes' => $data]);
     }
   }

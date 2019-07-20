@@ -38,9 +38,9 @@ class Timetable extends CI_Controller
 
   public function add()
   {
-    $data['classes'] = $this->TimetableModel->getClass();
-    $data['subjects'] = $this->TimetableModel->getSubject();
-    $data['teachers'] = $this->TimetableModel->getTeacher();
+    $data['classes'] = $this->AdminCommonModel->getClassList();
+    $data['subjects'] = $this->AdminCommonModel->getSubjectList();
+    $data['teachers'] = $this->AdminCommonModel->getTeacherList();
     $data['days'] = array(
       'Monday' => 'Monday', 'Tuesday' => 'Tuesday', 'Wednesday' => 'Wednesday',
       'Thursday' => 'Thursday', 'Friday' => 'Friday', 'Saturday' => 'Saturday'
@@ -65,9 +65,9 @@ class Timetable extends CI_Controller
   public function edit($timetable_id)
   {
     $data['timetable'] = $this->TimetableModel->editTimetable($timetable_id);
-    $data['classes'] = $this->TimetableModel->getClass();
-    $data['subjects'] = $this->TimetableModel->getSubject();
-    $data['teachers'] = $this->TimetableModel->getTeacher();
+    $data['classes'] = $this->AdminCommonModel->getClassList();
+    $data['subjects'] = $this->AdminCommonModel->getSubjectList();
+    $data['teachers'] = $this->AdminCommonModel->getTeacherList();
     $data['days'] = array(
       'Monday' => 'Monday', 'Tuesday' => 'Tuesday', 'Wednesday' => 'Wednesday',
       'Thursday' => 'Thursday', 'Friday' => 'Friday', 'Saturday' => 'Saturday'

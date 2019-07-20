@@ -32,7 +32,7 @@ class Student extends CI_Controller
 
   public function add()
   {
-    $data['classes'] = $this->StudentModel->getClass();
+    $data['classes'] = $this->AdminCommonModel->getClassList();
     $data['gender'] = array(
       'Male' => 'Male', 'Female' => 'Female'
     );
@@ -43,7 +43,7 @@ class Student extends CI_Controller
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_student_rules') == FALSE) {
-      $data['classes'] = $this->StudentModel->getClass();
+      $data['classes'] = $this->AdminCommonModel->getClassList();
       $data['gender'] = array(
         'Male' => 'Male', 'Female' => 'Female'
       );
@@ -74,7 +74,7 @@ class Student extends CI_Controller
   public function edit($student_id)
   {
     $student = $this->StudentModel->editStudent($student_id);
-    $data = $this->StudentModel->getClass();
+    $data['classes'] = $this->AdminCommonModel->getClassList();
     $gender = array(
       'Male' => 'Male', 'Female' => 'Female'
     );
@@ -86,7 +86,7 @@ class Student extends CI_Controller
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_student_rules') == FALSE) {
       $student = $this->StudentModel->editStudent($student_id);
-      $data = $this->StudentModel->getClass();
+      $data['classes'] = $this->AdminCommonModel->getClassList();
       $gender = array(
         'Male' => 'Male', 'Female' => 'Female'
       );

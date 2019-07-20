@@ -29,16 +29,6 @@ class SubjectModel extends CI_Model
 		}
 	}
 
-	public function getClass()
-	{
-		$result = $this->db->select('id, name')->get('class')->result_array();
-		$classes = array();
-		foreach ($result as $r) {
-			$classes[$r['id']] = $r['name'];
-		}
-		return $classes;
-	}
-
 	public function addSubject($array)
 	{
 		$sql = 'SELECT id FROM subject WHERE id = "' . $array['id'] . '"';

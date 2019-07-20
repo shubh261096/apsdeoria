@@ -19,17 +19,6 @@ class FeesModel extends CI_Model
 		}
 	}
 
-	/** Getting Student Detail to show while adding or updating fees */
-	public function getStudents()
-	{
-		$result = $this->db->select('id, fullname')->get('student')->result_array();
-		$student = array();
-		foreach ($result as $r) {
-			$student[$r['id']] = $r['fullname'] . " - " . $r['id'];
-		}
-		return $student;
-	}
-
 	/** Getting Student Class Id  from student_id*/
 	public function getClassId($student_id)
 	{

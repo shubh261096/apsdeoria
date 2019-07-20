@@ -35,7 +35,7 @@ class Fees extends CI_Controller
 
   public function add()
   {
-    $data['students'] = $this->FeesModel->getStudents();
+    $data['students'] = $this->AdminCommonModel->getStudentList();
     $data['months'] = array(
       'January' => 'January', 'February' => 'February', 'March' => 'March', 'April' => 'April', 'May' => 'May', 'June' => 'June', 'July' => 'July',
       'August' => 'August', 'September' => 'September', 'October' => 'October', 'November' => 'November', 'December' => 'December'
@@ -47,7 +47,7 @@ class Fees extends CI_Controller
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_fees_rules') == FALSE) {
-      $data['students'] = $this->FeesModel->getStudents();
+      $data['students'] = $this->AdminCommonModel->getStudentList();
       $data['months'] = array(
         'January' => 'January', 'February' => 'February', 'March' => 'March', 'April' => 'April', 'May' => 'May', 'June' => 'June', 'July' => 'July',
         'August' => 'August', 'September' => 'September', 'October' => 'October', 'November' => 'November', 'December' => 'December'

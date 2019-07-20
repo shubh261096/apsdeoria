@@ -31,7 +31,7 @@ class Parents extends CI_Controller
 
   public function add()
   {
-    $data['students'] = $this->ParentModel->getStudent();
+    $data['students'] = $this->AdminCommonModel->getStudentList();
     $data['types'] = array(
       'Father' => 'Father', 'Mother' => 'Mother', 'Guardian' => 'Guardian'
     );
@@ -42,7 +42,7 @@ class Parents extends CI_Controller
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_parent_rules') == FALSE) {
-      $data['students'] = $this->ParentModel->getStudent();
+      $data['students'] = $this->AdminCommonModel->getStudentList();
       $data['types'] = array(
         'Father' => 'Father', 'Mother' => 'Mother', 'Guardian' => 'Guardian'
       );
@@ -65,7 +65,7 @@ class Parents extends CI_Controller
   public function edit($parent_id)
   {
     $data['parent'] = $this->ParentModel->editParent($parent_id);
-    $data['students'] = $this->ParentModel->getStudent();
+    $data['students'] = $this->AdminCommonModel->getStudentList();
     $data['types'] = array(
       'Father' => 'Father', 'Mother' => 'Mother', 'Guardian' => 'Guardian'
     );
@@ -77,7 +77,7 @@ class Parents extends CI_Controller
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_parent_rules') == FALSE) {
       $data['parent'] = $this->ParentModel->editParent($parent_id);
-      $data['students'] = $this->ParentModel->getStudent();
+      $data['students'] = $this->AdminCommonModel->getStudentList();
       $data['types'] = array(
         'Father' => 'Father', 'Mother' => 'Mother', 'Guardian' => 'Guardian'
       );
