@@ -13,7 +13,7 @@ class Admin extends CI_Controller
 	public function index()
 	{
 		if ($this->session->userdata('user_id'))
-			return redirect('admin/dashboard');
+			return redirect('dashboard');
 		$this->load->view('admin/login');
 	}
 
@@ -24,16 +24,16 @@ class Admin extends CI_Controller
 		$login_id = $this->AdminModel->validate_login($id, $password);
 		if ($login_id) {
 			$this->session->set_userdata('user_id', $login_id);
-			return redirect('admin/dashboard');
+			return redirect('dashboard');
 		} else {
 			$this->session->set_flashdata('login_failed', 'Invalid Username or Password Or You are not an admin');
-			return redirect('admin/admin');
+			return redirect('admin');
 		}
 	}
 
 	public function logout()
 	{
 		$this->session->unset_userdata('user_id');
-		return redirect('admin/admin');
+		return redirect('admin');
 	}
 }

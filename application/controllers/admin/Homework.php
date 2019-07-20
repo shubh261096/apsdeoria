@@ -9,7 +9,7 @@ class Homework extends CI_Controller
     $this->load->view('admin/includes/header');
     $this->load->view('admin/includes/footer');
     if (!$this->session->userdata('user_id'))
-      return redirect('admin/admin');
+      return redirect('admin');
 
     $this->load->model('admin/HomeworkModel', 'HomeworkModel');
   }
@@ -78,7 +78,7 @@ class Homework extends CI_Controller
         $this->session->set_flashdata('feedback', 'An Error Occured');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/homework');
+      return redirect('homework');
     } else {
       $data['classes'] = $this->AdminCommonModel->getClassList();
       $data['subjects'] = $this->AdminCommonModel->getSubjectList();
@@ -120,7 +120,7 @@ class Homework extends CI_Controller
         $this->session->set_flashdata('feedback', 'Not Updated');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/homework');
+      return redirect('homework');
     } else {
       if ($this->upload->do_upload('data')) {
         $data = $this->upload->data();
@@ -133,7 +133,7 @@ class Homework extends CI_Controller
           $this->session->set_flashdata('feedback', 'Not Updated');
           $this->session->set_flashdata('feedback_class', 'alert-danger');
         }
-        return redirect('admin/homework');
+        return redirect('homework');
       } else {
         $data['homework'] = $this->HomeworkModel->editHomework($homework_id);
         $data['classes'] = $this->AdminCommonModel->getClassList();
@@ -154,6 +154,6 @@ class Homework extends CI_Controller
       $this->session->set_flashdata('feedback', 'Not deleted');
       $this->session->set_flashdata('feedback_class', 'alert-danger');
     }
-    return redirect('admin/homework');
+    return redirect('homework');
   }
 }

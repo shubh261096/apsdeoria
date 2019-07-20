@@ -9,7 +9,7 @@ class Parents extends CI_Controller
     $this->load->view('admin/includes/header');
     $this->load->view('admin/includes/footer');
     if (!$this->session->userdata('user_id'))
-      return redirect('admin/admin');
+      return redirect('admin');
 
     $this->load->model('admin/ParentModel', 'ParentModel');
   }
@@ -58,7 +58,7 @@ class Parents extends CI_Controller
         $this->session->set_flashdata('feedback', 'Parent id already exists. Please try with different Parent id.');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/parents');
+      return redirect('parents');
     }
   }
 
@@ -93,7 +93,7 @@ class Parents extends CI_Controller
         $this->session->set_flashdata('feedback', 'Not Updated');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/parents');
+      return redirect('parents');
     }
   }
 
@@ -106,6 +106,6 @@ class Parents extends CI_Controller
       $this->session->set_flashdata('feedback', 'Not deleted');
       $this->session->set_flashdata('feedback_class', 'alert-danger');
     }
-    return redirect('admin/parents');
+    return redirect('parents');
   }
 }

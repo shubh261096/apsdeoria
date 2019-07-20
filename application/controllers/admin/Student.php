@@ -10,7 +10,7 @@ class Student extends CI_Controller
     $this->load->view('admin/includes/header');
     $this->load->view('admin/includes/footer');
     if (!$this->session->userdata('user_id'))
-      return redirect('admin/admin');
+      return redirect('admin');
 
     $this->load->model('admin/StudentModel', 'StudentModel');
   }
@@ -67,7 +67,7 @@ class Student extends CI_Controller
         $this->session->set_flashdata('feedback', 'Student id already exists. Please try with different student id.');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/student');
+      return redirect('student');
     }
   }
 
@@ -101,7 +101,7 @@ class Student extends CI_Controller
         $this->session->set_flashdata('feedback', 'Not Updated');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/student');
+      return redirect('student');
     }
   }
 
@@ -115,6 +115,6 @@ class Student extends CI_Controller
       $this->session->set_flashdata('feedback', 'Not deleted');
       $this->session->set_flashdata('feedback_class', 'alert-danger');
     }
-    return redirect('admin/student');
+    return redirect('student');
   }
 }

@@ -10,7 +10,7 @@ class Classes extends CI_Controller
     $this->load->view('admin/includes/header');
     $this->load->view('admin/includes/footer');
     if (!$this->session->userdata('user_id'))
-      return redirect('admin/admin');
+      return redirect('admin');
 
     $this->load->model('admin/ClassModel', 'ClassModel');
   }
@@ -40,7 +40,7 @@ class Classes extends CI_Controller
         $this->session->set_flashdata('feedback', 'Class ID already exists. Please try with different class id.');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/classes');
+      return redirect('classes');
     }
   }
 
@@ -67,7 +67,7 @@ class Classes extends CI_Controller
         $this->session->set_flashdata('feedback', 'Not Updated');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/classes');
+      return redirect('classes');
     }
   }
 
@@ -81,6 +81,6 @@ class Classes extends CI_Controller
       $this->session->set_flashdata('feedback', 'Not deleted');
       $this->session->set_flashdata('feedback_class', 'alert-danger');
     }
-    return redirect('admin/classes');
+    return redirect('classes');
   }
 }

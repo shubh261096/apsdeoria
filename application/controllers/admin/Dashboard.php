@@ -9,7 +9,7 @@ class Dashboard extends CI_Controller
     $this->load->view('admin/includes/header');
     $this->load->view('admin/includes/footer');
     if (!$this->session->userdata('user_id'))
-      return redirect('admin/admin');
+      return redirect('admin');
 
     $this->load->model('admin/DashboardModel');
   }

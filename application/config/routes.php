@@ -71,7 +71,7 @@ $route['teacher/update/(:any)'] = "admin/teacher/update/$1"; // teacher controll
 $route['teacher/delete/(:any)'] = "admin/teacher/delete/$1"; // teacher controller delete mthod
 
 $route['student/add'] = "admin/student/add"; // student controller add method
-$route['student/insert/(:any)'] = "admin/student/insert/$1"; // student controller insert method
+$route['student/insert'] = "admin/student/insert"; // student controller insert method
 $route['student/edit/(:any)'] = "admin/student/edit/$1"; // student controller edit method
 $route['student/update/(:any)'] = "admin/student/update/$1"; // student controller update method
 $route['student/delete/(:any)'] = "admin/student/delete/$1"; // student controller delete method
@@ -82,36 +82,39 @@ $route['classes/update/(:any)'] = "admin/classes/update/$1"; // classes controll
 $route['classes/delete/(:any)'] = "admin/classes/delete/$1"; // classes controller delete method
 
 $route['subject/add'] = "admin/subject/add"; // subject controller add method
-$route['subject/insert/(:any)'] = "admin/subject/insert/$1"; // subject controller insert method
+$route['subject/insert'] = "admin/subject/insert"; // subject controller insert method
 $route['subject/edit/(:any)'] = "admin/subject/edit/$1"; // subject controller edit method
 $route['subject/update/(:any)'] = "admin/subject/update/$1"; // subject controller update method
 $route['subject/delete/(:any)'] = "admin/subject/delete/$1"; // subject controller delete method
 $route['subject/download/(:any)'] = "admin/subject/download/$1"; // subject controller download method
 
 $route['fees/add'] = "admin/fees/add"; // fees controller add method
-$route['fees/insert/(:any)'] = "admin/fees/insert/$1"; // fees controller insert method
+$route['fees/insert'] = "admin/fees/insert"; // fees controller insert method
 $route['fees/edit/(:any)'] = "admin/fees/edit/$1"; // fees controller edit method
 $route['fees/update/(:any)'] = "admin/fees/update/$1"; // fees controller update method
 $route['fees/delete/(:any)'] = "admin/fees/delete/$1"; // fees controller delete method
 
 $route['timetable/add'] = "admin/timetable/add"; // timetabale controller add method
-$route['timetable/insert/(:any)'] = "admin/timetable/insert/$1"; // timetabale controller insert method
+$route['timetable/insert'] = "admin/timetable/insert"; // timetabale controller insert method
 $route['timetable/edit/(:any)'] = "admin/timetable/edit/$1"; // timetabale controller edit method
 $route['timetable/update/(:any)'] = "admin/timetable/update/$1"; // timetabale controller update method
 $route['timetable/delete/(:any)'] = "admin/timetable/delete/$1"; // timetabale controller delete method
 
 $route['parents/add'] = "admin/parents/add"; // parents controller add method
-$route['parents/insert/(:any)'] = "admin/parents/insert/$1"; // parents controller insert method
+$route['parents/insert'] = "admin/parents/insert"; // parents controller insert method
 $route['parents/edit/(:any)'] = "admin/parents/edit/$1"; // parents controller
 $route['parents/update/(:any)'] = "admin/parents/update/$1"; // parents controller
 $route['parents/delete/(:any)'] = "admin/parents/delete/$1"; // parents controller
 
 $route['homework/add'] = "admin/homework/add"; // homework controller add method
-$route['homework/insert/(:any)'] = "admin/homework/insert/$1"; // homework controller adinsertd method
+$route['homework/insert'] = "admin/homework/insert"; // homework controller adinsertd method
 $route['homework/edit/(:any)'] = "admin/homework/edit/$1"; // homework controller edit method
 $route['homework/update/(:any)'] = "admin/homework/update/$1"; // homework controller  update method
 $route['homework/delete/(:any)'] = "admin/homework/delete/$1"; // homework controller delete method
 $route['homework/download/(:any)'] = "admin/homework/download/$1"; // homework controller download method
+
+$route['admin/logout'] = "admin/admin/logout"; // admin controller logout method
+$route['admin'] = "admin/admin"; // admin controller logout method
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

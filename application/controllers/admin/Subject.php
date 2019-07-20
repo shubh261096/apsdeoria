@@ -10,7 +10,7 @@ class Subject extends CI_Controller
     $this->load->view('admin/includes/header');
     $this->load->view('admin/includes/footer');
     if (!$this->session->userdata('user_id'))
-      return redirect('admin/admin');
+      return redirect('admin');
 
     $this->load->model('admin/SubjectModel', 'SubjectModel');
   }
@@ -71,7 +71,7 @@ class Subject extends CI_Controller
         $this->session->set_flashdata('feedback', 'Subject id already exists. Please try with different subject id.');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/subject');
+      return redirect('subject');
     } else {
       $data['classes'] = $this->AdminCommonModel->getClassList();
       $data['upload_error'] = $this->upload->display_errors();
@@ -112,7 +112,7 @@ class Subject extends CI_Controller
           $this->session->set_flashdata('feedback', 'Not Updated');
           $this->session->set_flashdata('feedback_class', 'alert-danger');
         }
-        return redirect('admin/subject');
+        return redirect('subject');
       } else {
         if ($this->upload->do_upload('syllabus')) {
           $data = $this->upload->data();
@@ -125,7 +125,7 @@ class Subject extends CI_Controller
             $this->session->set_flashdata('feedback', 'Not Updated');
             $this->session->set_flashdata('feedback_class', 'alert-danger');
           }
-          return redirect('admin/subject');
+          return redirect('subject');
         } else {
           $data['subject'] = $this->SubjectModel->editSubject($subject_id);
           $data['classes'] = $this->AdminCommonModel->getClassList();
@@ -150,6 +150,6 @@ class Subject extends CI_Controller
       $this->session->set_flashdata('feedback', 'Not deleted');
       $this->session->set_flashdata('feedback_class', 'alert-danger');
     }
-    return redirect('admin/subject');
+    return redirect('subject');
   }
 }

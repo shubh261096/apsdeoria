@@ -10,7 +10,7 @@ class Fees extends CI_Controller
     $this->load->view('admin/includes/header');
     $this->load->view('admin/includes/footer');
     if (!$this->session->userdata('user_id'))
-      return redirect('admin/admin');
+      return redirect('admin');
 
     $this->load->model('admin/FeesModel', 'FeesModel');
   }
@@ -66,7 +66,7 @@ class Fees extends CI_Controller
         $this->session->set_flashdata('feedback', 'Not Added');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/fees');
+      return redirect('fees');
     }
   }
 
@@ -107,7 +107,7 @@ class Fees extends CI_Controller
         $this->session->set_flashdata('feedback', 'Not Updated');
         $this->session->set_flashdata('feedback_class', 'alert-danger');
       }
-      return redirect('admin/fees');
+      return redirect('fees');
     }
   }
 
@@ -121,6 +121,6 @@ class Fees extends CI_Controller
       $this->session->set_flashdata('feedback', 'Not deleted');
       $this->session->set_flashdata('feedback_class', 'alert-danger');
     }
-    return redirect('admin/fees');
+    return redirect('fees');
   }
 }
