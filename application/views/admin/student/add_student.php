@@ -52,7 +52,7 @@
             <div class="form-group">
               <label>Date of Joining</label>
               <div class="input-group date">
-                <?php echo form_input(['id' => 'date_of_join', 'name' => 'dob', 'class' => 'form-control pull-left', 'placeholder' => 'Enter Date of Join (YYYY-MM-DD) ', 'type' => 'text', 'value' => set_value('date_of_join')]); ?>
+                <?php echo form_input(['id' => 'date_of_join', 'name' => 'date_of_join', 'class' => 'form-control pull-left', 'placeholder' => 'Enter Date of Join (YYYY-MM-DD) ', 'type' => 'text', 'value' => set_value('date_of_join')]); ?>
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
