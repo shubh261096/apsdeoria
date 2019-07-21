@@ -21,12 +21,15 @@
               <label for="class_id">Select Class</label>
               <?php echo form_dropdown('class_id', $classes, '', 'class="form-control"'); ?>
             </div>
-            <div class="form-group">
+            <div class="checkbox">
+              <label> <?php echo form_input(['id' => 'recess', 'name' => 'recess', 'type' => 'checkbox']); ?> Is it a recess? </label>
+            </div>
+            <div id="subject" class="form-group">
               <label for="subject_id">Select Subject</label>
               <?php echo form_dropdown('subject_id', $subjects, '', 'class="form-control"'); ?>
             </div>
-            <div class="form-group">
-              <label for="teacher_id">Select Teaher</label>
+            <div id="teacher" class="form-group">
+              <label for="teacher_id">Select Teacher</label>
               <?php echo form_dropdown('teacher_id', $teachers, '', 'class="form-control"'); ?>
             </div>
             <div class="form-group">
@@ -145,6 +148,19 @@
     showInputs: false,
     showMeridian: false
   })
+</script>
+<script>
+  $("#recess").on("click", function() {
+    if ($(this).is(':checked')) {
+      $('#teacher').hide();
+      $('#subject').hide();
+      $('#recess').val('true');
+    } else {
+      $('#teacher').show();
+      $('#subject').show();
+      $('#recess').val('false');
+    }
+  });
 </script>
 </body>
 

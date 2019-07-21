@@ -20,14 +20,31 @@
               <label for="class_id">Select Class</label>
               <?php echo form_dropdown('class_id', $classes, $timetable->class_id, 'class="form-control"'); ?>
             </div>
-            <div class="form-group">
-              <label for="subject_id">Select Subject</label>
-              <?php echo form_dropdown('subject_id', $subjects, $timetable->subject_id, 'class="form-control"'); ?>
-            </div>
-            <div class="form-group">
-              <label for="teacher_id">Select Teaher</label>
-              <?php echo form_dropdown('teacher_id', $teachers, $timetable->teacher_id, 'class="form-control"'); ?>
-            </div>
+            <?php if ($timetable->subject_id == NULL && $timetable->teacher_id == NULL) { ?>
+              <div class="checkbox">
+                <label> <?php echo form_input(['id' => 'recess', 'checked' => 'checked', 'value' => 'true', 'name' => 'recess', 'type' => 'checkbox']); ?> Is it a recess? </label>
+              </div>
+              <div style="display:none" id="subject" class="form-group">
+                <label for="subject_id">Select Subject</label>
+                <?php echo form_dropdown('subject_id', $subjects, $timetable->subject_id, 'class="form-control"'); ?>
+              </div>
+              <div style="display:none" id="teacher" class="form-group">
+                <label for="teacher_id">Select Teacher</label>
+                <?php echo form_dropdown('teacher_id', $teachers, $timetable->teacher_id, 'class="form-control"'); ?>
+              </div>
+            <?php } else { ?>
+              <div class="checkbox">
+                <label> <?php echo form_input(['id' => 'recess', 'name' => 'recess', 'type' => 'checkbox']); ?> Is it a recess? </label>
+              </div>
+              <div id="subject" class="form-group">
+                <label for="subject_id">Select Subject</label>
+                <?php echo form_dropdown('subject_id', $subjects, $timetable->subject_id, 'class="form-control"'); ?>
+              </div>
+              <div id="teacher" class="form-group">
+                <label for="teacher_id">Select Teacher</label>
+                <?php echo form_dropdown('teacher_id', $teachers, $timetable->teacher_id, 'class="form-control"'); ?>
+              </div>
+            <?php } ?>
             <div class="form-group">
               <label for="day">Select Day</label>
               <?php echo form_dropdown('day', $days, $timetable->day, 'class="form-control"'); ?>
@@ -141,6 +158,19 @@
     showInputs: false,
     showMeridian: false
   })
+</script>
+<script>
+  $("#recess").on("click", function() {
+    if ($(this).is(':checked')) {
+      $('#teacher').hide();
+      $('#subject').hide();
+      $('#recess').val('true');
+    } else {
+      $('#teacher').show();
+      $('#subject').show();
+      $('#recess').val('false');
+    }
+  });
 </script>
 </body>
 

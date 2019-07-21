@@ -51,6 +51,11 @@ class Timetable extends CI_Controller
   public function insert()
   {
     $post = $this->input->post();
+    if ($post['recess'] == 'true') {
+      $post['subject_id'] = NULL;
+      $post['teacher_id'] = NULL;
+    }
+    unset($post['recess']);
     unset($post['submit']);
     if ($this->TimetableModel->addTimetable($post)) {
       $this->session->set_flashdata('feedback', 'Added Succefully');
@@ -78,6 +83,11 @@ class Timetable extends CI_Controller
   public function update($timetable_id)
   {
     $post = $this->input->post();
+    if ($post['recess'] == 'true') {
+      $post['subject_id'] = NULL;
+      $post['teacher_id'] = NULL;
+    }
+    unset($post['recess']);
     unset($post['submit']);
     $post['id'] = $timetable_id;
     if ($this->TimetableModel->updateTimetable($timetable_id, $post)) {
