@@ -18,15 +18,15 @@
                         <div class="form-group">
                             <label for="send_to">Send To:</label>
                             <select name="send_to" id="send_to" class="form-control">
-                                <option value="topic">Topic</option>
                                 <option value="sngle">Single Device</option>
+                                <option value="topic">Topic</option>
                             </select>
                         </div>
-                        <div class="form-group" style="display: none" id="firebase_token_group">
+                        <div class="form-group" id="firebase_token_group">
                             <label for="firebase_token">Firebase Token:</label>
                             <input type="text" required="" class="form-control" id="firebase_token" placeholder="Enter Firebase Token" name="firebase_token">
                         </div>
-                        <div class="form-group" id="topic_group">
+                        <div class="form-group" style="display: none" id="topic_group">
                             <label for="topic">Choose Topic:</label>
                             <select name="topic" id="topic" class="form-control">
                                 <option value="global">Global</option>
