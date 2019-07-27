@@ -33,7 +33,7 @@ public class AttendanceFragmentViewModel extends AndroidViewModel {
     }
 
     public void sendRequest(String student_id, String month, String year) {
-        attendanceRequestModel.setStudentId("APS101"); // TODO student_id needs to be replaced.
+        attendanceRequestModel.setStudentId(student_id);
         attendanceRequestModel.setMonth(getStringMonthNumber(month));
         attendanceRequestModel.setYear(year);
         repository.getAttendance(attendanceRequestModel, attendanceResponseModelMutableLiveData);

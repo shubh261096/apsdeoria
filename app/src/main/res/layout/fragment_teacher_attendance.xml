@@ -94,19 +94,9 @@
                     android:id="@+id/rvAttendance"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_70"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-                <Button
-                    android:id="@+id/submit_attendance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:background="@drawable/corner_style"
-                    android:text="@string/submit_attendance"
-                    android:textColor="@color/lightPrimary"
-                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/llAttendance"
@@ -141,6 +131,17 @@
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/submit_attendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:background="@drawable/corner_style"
+            android:text="@string/submit_attendance"
+            android:textColor="@color/lightPrimary"
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/progressBar"
