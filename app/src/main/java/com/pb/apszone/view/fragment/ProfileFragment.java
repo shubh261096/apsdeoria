@@ -139,34 +139,34 @@ public class ProfileFragment extends BaseFragment {
                     /* Checking if student email is empty then show father's email here which is at position 0 */
                     if (!TextUtils.isEmpty(profileResponseModel.getProfile().getEmail())) {
                         profileValueHashmap.put(PROFILE_EMAIL, profileResponseModel.getProfile().getEmail());
-                    } else if (!TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getEmail())) {
+                    } else if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getEmail())) {
                         profileValueHashmap.put(PROFILE_EMAIL, profileResponseModel.getProfile().getParent().get(0).getEmail());
                     }
 
                     /* Checking if student phone is empty then show father's phone here which is at position 0 */
                     if (!TextUtils.isEmpty(profileResponseModel.getProfile().getPhone())) {
                         profileValueHashmap.put(PROFILE_PHONE, profileResponseModel.getProfile().getPhone());
-                    } else if (!TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getPhone())) {
+                    } else if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getPhone())) {
                         profileValueHashmap.put(PROFILE_PHONE, profileResponseModel.getProfile().getParent().get(0).getPhone());
                     }
 
                     /* Showing father's address which is at position 0 of parent */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getAddress())) {
+                    if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getAddress())) {
                         profileValueHashmap.put(PROFILE_ADDRESS, profileResponseModel.getProfile().getParent().get(0).getAddress());
                     }
 
                     /* Showing father's name which is at position 0 of parent */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getFullname())) {
+                    if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getFullname())) {
                         profileValueHashmap.put(PROFILE_FATHER_NAME, profileResponseModel.getProfile().getParent().get(0).getFullname());
                     }
 
                     /* Showing mother's name which is at position 1 of parent */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(1).getFullname())) {
+                    if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(1).getFullname())) {
                         profileValueHashmap.put(PROFILE_MOTHER_NAMW, profileResponseModel.getProfile().getParent().get(1).getFullname());
                     }
 
                     /* Showing guardian's name which is at position 2 of parent */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(2).getFullname())) {
+                    if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(2).getFullname())) {
                         profileValueHashmap.put(PROFILE_GUARDIAN_NAME, profileResponseModel.getProfile().getParent().get(2).getFullname());
                     }
                 } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) { /* Checking if user type is teacher */
