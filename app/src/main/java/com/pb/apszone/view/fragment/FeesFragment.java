@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.FeesItem;
@@ -50,6 +49,8 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
     ProgressBar progressBar;
     @BindView(R.id.feeDeadlineNotice)
     TextView feeDeadlineNotice;
+    @BindView(R.id.no_data)
+    TextView tvNoData;
     private List<FeesItem> feesItemList;
     FeesFragmentViewModel feesFragmentViewModel;
     KeyStorePref keyStorePref;
@@ -104,6 +105,7 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_ID))) {
             feesFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), getCurrentYear(), keyStorePref.getString(KEY_STUDENT_ID));
         }
+        tvNoData.setVisibility(View.GONE);
         feeDeadlineNotice.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         feesFragmentViewModel.getFees().observe(this, feesResponseModel -> {
@@ -119,7 +121,7 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
                     checkForLateFee();
                     feeDeadlineNotice.setVisibility(View.VISIBLE);
                 } else {
-                    Toast.makeText(getActivity(), feesResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    tvNoData.setVisibility(View.VISIBLE);
                 }
             }
         });

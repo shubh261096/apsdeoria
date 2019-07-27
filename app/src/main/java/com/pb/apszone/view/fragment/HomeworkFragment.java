@@ -62,6 +62,8 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
     TextView next;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    @BindView(R.id.no_data)
+    TextView tvNoData;
     private List<HomeworkItem> homeworkItemList;
     HomeworkFragmentViewModel homeworkFragmentViewModel;
     KeyStorePref keyStorePref;
@@ -122,7 +124,7 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
                     homeworkItemList.addAll(homeworkItems);
                     homeworkAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(getActivity(), homeworkResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    tvNoData.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -142,6 +144,7 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
             homeworkFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), today_date);
         }
+        tvNoData.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
     }
 

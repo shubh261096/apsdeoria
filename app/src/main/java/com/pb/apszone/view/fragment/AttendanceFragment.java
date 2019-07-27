@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.AttendanceItem;
@@ -66,6 +65,8 @@ public class AttendanceFragment extends BaseFragment {
     TextView numAbsent;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    @BindView(R.id.no_data)
+    TextView tvNoData;
     private int presentCount, absentCount;
 
     public AttendanceFragment() {
@@ -128,7 +129,7 @@ public class AttendanceFragment extends BaseFragment {
                     numAbsent.setText(String.format(getString(R.string.absent), absentCount));
                 } else {
                     updateUI(0);
-                    Toast.makeText(getActivity(), attendanceResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    tvNoData.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -148,6 +149,7 @@ public class AttendanceFragment extends BaseFragment {
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_ID))) {
             attendanceFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_ID), currentMonth, currentYear);
             updateUI(0);
+            tvNoData.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
         }
 
