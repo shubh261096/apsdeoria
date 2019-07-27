@@ -64,6 +64,8 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     Button submitAttendance;
     @BindView(R.id.llAttendance)
     LinearLayout llAttendance;
+    @BindView(R.id.no_data)
+    TextView tvNoData;
     private List<ClassDetailItem> classDetailItemList = new ArrayList<>();
     private List<StudentsItem> studentsItemList = new ArrayList<>();
     AttendanceTeacherFragmentViewModel attendanceTeacherFragmentViewModel;
@@ -154,7 +156,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                     }
                     tvClass.setText(class_name[this.classPos]);
                 } else {
-                    Toast.makeText(getActivity(), classDetailResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    tvNoData.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -185,6 +187,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
         if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
             attendanceTeacherFragmentViewModel.sendRequest(keyStorePref.getString(KEY_TEACHER_ID), this.today_date);
         }
+        tvNoData.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
     }
 

@@ -15,7 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.TimetableItem;
@@ -51,6 +51,8 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
     Spinner spinnerDay;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    @BindView(R.id.no_data)
+    TextView tvNoData;
     private List<TimetableItem> timetableItemList;
     TimetableFragmentViewModel timetableFragmentViewModel;
     KeyStorePref keyStorePref;
@@ -120,7 +122,7 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
                     timetableItemList.addAll(timetableItems);
                     timetableAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(getActivity(), timetableResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    tvNoData.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -147,6 +149,7 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
                     timetableFragmentViewModel.sendTeacherRequest(keyStorePref.getString(KEY_TEACHER_ID), day, KEY_FILTER_BY_DAY, user_type);
                 }
             }
+            tvNoData.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
         }
     }
