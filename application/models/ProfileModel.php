@@ -32,7 +32,7 @@ class ProfileModel extends CI_model {
         if($query->num_rows()){
             return $query->result();
         }else{
-            return FALSE;
+            return NULL;
         }
     }
 
