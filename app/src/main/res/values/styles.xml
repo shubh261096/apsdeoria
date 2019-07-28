@@ -10,6 +10,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/lightPrimary_40</item>
     </style>
 
     <style name="Normal_Margin_Style" parent="MyMaterialTheme">
