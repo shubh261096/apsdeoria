@@ -9,7 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +33,7 @@ import com.pb.apszone.view.fragment.HomeworkFragment;
 import com.pb.apszone.view.fragment.HomeworkTeacherFragment;
 import com.pb.apszone.view.fragment.InboxFragment;
 import com.pb.apszone.view.fragment.ProfileFragment;
+import com.pb.apszone.view.fragment.SettingsFragment;
 import com.pb.apszone.view.fragment.TimetableFragment;
 import com.pb.apszone.view.fragment.SyllabusFragment;
 import com.pb.apszone.view.listener.OnDashboardItemClickListener;
@@ -75,6 +80,8 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     DashboardAdapter dashboardAdapter;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    @BindView(R.id.toolbar_dashboard)
+    Toolbar toolbarDashboard;
     private List<DashboardItem> dashboardItemList;
     private OnDashboardItemClickListener onDashboardItemClickListener;
     KeyStorePref keyStorePref;
@@ -92,7 +99,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
-
+        setSupportActionBar(toolbarDashboard);
         /* Starting observer of Internet change*/
         changeReceiver = new NetworkChangeReceiver(this);
         sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
@@ -265,5 +272,22 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     protected void onStop() {
         super.onStop();
         unregisterReceiver(changeReceiver);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.settings_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.settings) {
+            Fragment fragment = SettingsFragment.newInstance();
+            replaceFragment(fragment);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
