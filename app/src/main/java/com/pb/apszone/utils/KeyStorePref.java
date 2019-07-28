@@ -40,4 +40,8 @@ public class KeyStorePref {
         return SP.getString(key, "");
     }
 
+    public void clearAllPref() {
+        SP.edit().clear().apply();
+    }
+
 }

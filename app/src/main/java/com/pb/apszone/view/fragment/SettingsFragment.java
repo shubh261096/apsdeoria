@@ -1,19 +1,25 @@
 package com.pb.apszone.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.pb.apszone.R;
+import com.pb.apszone.utils.KeyStorePref;
+import com.pb.apszone.view.ui.LoginActivity;
 
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class SettingsFragment extends BaseFragment {
@@ -21,7 +27,13 @@ public class SettingsFragment extends BaseFragment {
     Unbinder unbinder;
     @BindView(R.id.toolbar_setting)
     Toolbar toolbarSettings;
-
+    @BindView(R.id.app_version)
+    TextView appVersion;
+    @BindView(R.id.ll_about)
+    LinearLayout llAbout;
+    @BindView(R.id.ll_logout)
+    LinearLayout llLogout;
+    KeyStorePref keyStorePref;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -34,6 +46,7 @@ public class SettingsFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        keyStorePref = KeyStorePref.getInstance(getContext());
     }
 
     @Override
@@ -49,6 +62,7 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        toolbarSettings.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
     }
 
     @Override
@@ -74,4 +88,15 @@ public class SettingsFragment extends BaseFragment {
         unbinder.unbind();
     }
 
+    @OnClick({R.id.ll_about, R.id.ll_logout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_about:
+                break;
+            case R.id.ll_logout:
+                keyStorePref.clearAllPref();
+                startActivity(new Intent(getActivity(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                break;
+        }
+    }
 }
