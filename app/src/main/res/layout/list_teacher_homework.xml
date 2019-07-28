@@ -8,6 +8,9 @@
     android:layout_marginTop="@dimen/dp_8"
     android:layout_marginEnd="@dimen/activity_horizontal_margin"
     android:layout_marginBottom="@dimen/dp_8"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
     app:cardElevation="@dimen/dp_2"
     app:contentPadding="@dimen/dp_10">
 

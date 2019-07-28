@@ -147,9 +147,11 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom|center_horizontal"
                             android:background="@drawable/corner_style"
+                            android:foreground="?attr/selectableItemBackgroundBorderless"
                             android:text="@string/submit_homework"
                             android:textColor="@color/lightPrimary"
-                            android:visibility="visible" />
+                            android:visibility="visible"
+                            tools:ignore="UnusedAttribute" />
 
                     </LinearLayout>
                 </LinearLayout>
