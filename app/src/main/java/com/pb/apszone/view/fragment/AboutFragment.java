@@ -161,7 +161,7 @@ public class AboutFragment extends BaseFragment {
     }
 
     public void openTwitterApp() {
-        Intent intent = null;
+        Intent intent;
         try {
             // get the Twitter app if possible
             Objects.requireNonNull(getContext()).getPackageManager().getPackageInfo("com.twitter.android", 0);

@@ -52,7 +52,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:padding="@dimen/dp_2"
+                android:background="@drawable/circular_image_view"
                 android:src="@drawable/ic_phone"
                 tools:ignore="ContentDescription" />
 
@@ -103,7 +103,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:padding="@dimen/dp_2"
+                android:background="@drawable/circular_image_view"
                 android:src="@drawable/ic_email"
                 tools:ignore="ContentDescription" />
 
