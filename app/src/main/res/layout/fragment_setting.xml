@@ -69,8 +69,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
-                    android:padding="@dimen/dp_2"
-                    android:src="@drawable/ic_mail"
+                    android:src="@drawable/ic_contact"
                     tools:ignore="ContentDescription" />
 
                 <LinearLayout
