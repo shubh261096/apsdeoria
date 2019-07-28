@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.pb.apszone.BuildConfig;
 import com.pb.apszone.R;
 
 import java.util.Objects;
@@ -24,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.pb.apszone.BuildConfig.*;
+import static com.pb.apszone.BuildConfig.VERSION_NAME;
 import static com.pb.apszone.utils.AppConstants.PRIVACY_POLICY_URL;
 import static com.pb.apszone.utils.AppConstants.WEBSITE_URL;
 
