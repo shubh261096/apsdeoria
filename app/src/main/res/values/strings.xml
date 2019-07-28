@@ -71,6 +71,10 @@
     <string name="general">General</string>
     <string name="logout">Logout</string>
     <string name="about_us">About</string>
+    <string name="toolbar_contact">Contact</string>
+    <string name="phone">Phone</string>
+    <string name="phone_description">Give us a call</string>
+    <string name="email_description">Shoot an e-mail</string>
 
     <string-array name="day">
         <item>Monday</item>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,8 @@ public class SettingsFragment extends BaseFragment {
     LinearLayout llAbout;
     @BindView(R.id.ll_logout)
     LinearLayout llLogout;
+    @BindView(R.id.ll_contact)
+    LinearLayout llContact;
     KeyStorePref keyStorePref;
 
     public SettingsFragment() {
@@ -62,7 +66,6 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        toolbarSettings.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
     }
 
     @Override
@@ -88,7 +91,7 @@ public class SettingsFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.ll_about, R.id.ll_logout})
+    @OnClick({R.id.ll_about, R.id.ll_logout, R.id.ll_contact})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_about:
@@ -97,6 +100,17 @@ public class SettingsFragment extends BaseFragment {
                 keyStorePref.clearAllPref();
                 startActivity(new Intent(getActivity(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
+            case R.id.ll_contact:
+                Fragment fragment = ContactFragment.newInstance();
+                replaceFragment(fragment);
+                break;
         }
+    }
+
+    public void replaceFragment(Fragment someFragment) {
+        FragmentTransaction transaction = Objects.requireNonNull(getFragmentManager()).beginTransaction();
+        transaction.replace(R.id.dynamic_settings_frame, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
