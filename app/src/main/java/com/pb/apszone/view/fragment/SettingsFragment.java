@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.pb.apszone.BuildConfig;
 import com.pb.apszone.R;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.ui.LoginActivity;
@@ -66,13 +67,11 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        appVersion.setText(BuildConfig.VERSION_NAME);
     }
 
     @Override
     public void getNetworkData(boolean status) {
-        if (status) {
-
-        }
     }
 
     @Override
@@ -95,14 +94,16 @@ public class SettingsFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_about:
+                Fragment aboutFragment = AboutFragment.newInstance();
+                replaceFragment(aboutFragment);
                 break;
             case R.id.ll_logout:
                 keyStorePref.clearAllPref();
                 startActivity(new Intent(getActivity(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
             case R.id.ll_contact:
-                Fragment fragment = ContactFragment.newInstance();
-                replaceFragment(fragment);
+                Fragment contactFragment = ContactFragment.newInstance();
+                replaceFragment(contactFragment);
                 break;
         }
     }

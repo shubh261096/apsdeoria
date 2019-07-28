@@ -58,4 +58,7 @@ public class AppConstants {
     public final static int READ_EXTERNAL_STORAGE_CODE = 101 ;
     public final static  int PDF_REQ_CODE = 901;
 
+    /* CONSTANT APP URL AND INFO */
+    public final static String PRIVACY_POLICY_URL = "http://www.apsdeoria.com/privacy-policy.html";
+    public final static String WEBSITE_URL = "http://www.apsdeoria.com/";
 }
