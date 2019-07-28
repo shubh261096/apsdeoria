@@ -55,7 +55,7 @@
                     android:drawablePadding="@dimen/dp_16"
                     android:drawableTint="@color/hint_gray"
                     android:hint="@string/hint_id"
-                    android:inputType="textCapWords"
+                    android:inputType="textCapCharacters"
                     android:maxLines="1"
                     android:padding="@dimen/dp_14"
                     android:textColor="@color/black_80"
