@@ -51,7 +51,7 @@ class Timetable extends CI_Controller
   public function insert()
   {
     $post = $this->input->post();
-    if ($post['recess'] == 'true') {
+    if (!empty($post['recess']) && $post['recess'] == 'true') {
       $post['subject_id'] = NULL;
       $post['teacher_id'] = NULL;
     }
@@ -83,7 +83,7 @@ class Timetable extends CI_Controller
   public function update($timetable_id)
   {
     $post = $this->input->post();
-    if ($post['recess'] == 'true') {
+    if (!empty($post['recess']) && $post['recess'] == 'true') {
       $post['subject_id'] = NULL;
       $post['teacher_id'] = NULL;
     }
