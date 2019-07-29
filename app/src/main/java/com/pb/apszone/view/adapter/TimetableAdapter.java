@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
+import static com.pb.apszone.utils.CommonUtils.getDayOfWeek;
 import static com.pb.apszone.utils.CommonUtils.getFormattedDateTime;
 import static com.pb.apszone.utils.CommonUtils.isTimeBetweenTwoTime;
 
@@ -75,7 +76,13 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.Time
         timetableViewHolder.endTime.setText(getFormattedDateTime(timetableItem.getEndTime()));
         try {
             if (isTimeBetweenTwoTime(timetableItem.getStartTime(), timetableItem.getEndTime())) {
-                timetableViewHolder.activeClass.setVisibility(View.VISIBLE);
+                if (TextUtils.equals(timetableItem.getDay(), getDayOfWeek())) {
+                    timetableViewHolder.activeClass.setVisibility(View.VISIBLE);
+                } else {
+                    timetableViewHolder.activeClass.setVisibility(View.GONE);
+                }
+            } else {
+                timetableViewHolder.activeClass.setVisibility(View.GONE);
             }
         } catch (ParseException e) {
             e.printStackTrace();
