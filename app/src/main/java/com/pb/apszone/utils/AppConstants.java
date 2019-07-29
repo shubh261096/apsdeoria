@@ -17,8 +17,8 @@ public class AppConstants {
     public final static String USER_TYPE_ADMIN = "admin";
 
     /* USER GENDER */
-    public final static String USER_GENDER_MALE = "male";
-    public final static String USER_GENDER_FEMALE = "female";
+    public final static String USER_GENDER_MALE = "Male";
+    public final static String USER_GENDER_FEMALE = "Female";
 
     public final static String KEY_ENABLED = "enabled";
 
