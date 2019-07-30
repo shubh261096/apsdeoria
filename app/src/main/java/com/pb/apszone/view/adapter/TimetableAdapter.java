@@ -79,10 +79,10 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.Time
                 if (TextUtils.equals(timetableItem.getDay(), getDayOfWeek())) {
                     timetableViewHolder.activeClass.setVisibility(View.VISIBLE);
                 } else {
-                    timetableViewHolder.activeClass.setVisibility(View.GONE);
+                    timetableViewHolder.activeClass.setVisibility(View.INVISIBLE);
                 }
             } else {
-                timetableViewHolder.activeClass.setVisibility(View.GONE);
+                timetableViewHolder.activeClass.setVisibility(View.INVISIBLE);
             }
         } catch (ParseException e) {
             e.printStackTrace();
