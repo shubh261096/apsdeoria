@@ -49,4 +49,50 @@ class Login extends REST_Controller
 
     $this->response($response, $httpStatus);
   }
+
+  public function validate_post()
+  {
+    if (isTheseParametersAvailable(array('id', 'dob'))) {
+      $response = array();
+      $id = $this->input->post('id');
+      $dob = $this->input->post('dob');
+      if ($this->LoginModel->validate_user($id, $dob)) {
+        $response['error'] = false;
+        $response['message'] = "Reset your password now";
+        $httpStatus = REST_Controller::HTTP_OK;
+      } else {
+        $response['error'] = true;
+        $response['message'] = "School ID or DOB is incorrect. Please try again.";
+        $httpStatus = REST_Controller::HTTP_OK;
+      }
+    } else {
+      $response['error'] = true;
+      $response['message'] = "Parameters not found";
+      $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+    }
+    $this->response($response, $httpStatus);
+  }
+
+  public function reset_post()
+  {
+    if (isTheseParametersAvailable(array('id', 'password'))) {
+      $response = array();
+      $id = $this->input->post('id');
+      $password = $this->input->post('password');
+      if ($this->LoginModel->reset_password($id, $password)) {
+        $response['error'] = false;
+        $response['message'] = "Password Reset succesfully.";
+        $httpStatus = REST_Controller::HTTP_OK;
+      } else {
+        $response['error'] = true;
+        $response['message'] = "Some Error Occured. Please try again.";
+        $httpStatus = REST_Controller::HTTP_OK;
+      }
+    } else {
+      $response['error'] = true;
+      $response['message'] = "Parameters not found";
+      $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+    }
+    $this->response($response, $httpStatus);
+  }
 }

@@ -38,4 +38,25 @@ class LoginModel extends CI_model
 			return FALSE;
 		}
 	}
+
+	/** Query to validate user by id and DOB */
+	public function validate_user($id, $dob)
+	{
+		$sql = 'SELECT id FROM `student` WHERE id="' . $id . '" AND  ="' . $dob . '" AND status=1';
+		$query = $this->db->query($sql);
+		if ($query->num_rows()) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	/** Query to reset password */
+	public function reset_password($id, $password)
+	{
+		$this->db->set('password', $password);
+		$this->db->where('id', $id);
+		$this->db->update('login');
+		return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+	}
 }
