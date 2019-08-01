@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
 
@@ -11,6 +11,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/lightPrimary_40</item>
+        <item name="colorControlActivated">@color/lightPrimary</item>
     </style>
 
     <style name="Normal_Margin_Style" parent="MyMaterialTheme">
@@ -26,6 +27,11 @@
 
     <style name="Font_family_regular" parent="MyMaterialTheme">
         <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="Widget.MaterialComponents.TextInputEditText.OutlinedBox" parent="Base.Widget.MaterialComponents.TextInputEditText" tools:override="true">
+        <item name="android:paddingTop">@dimen/dp_10</item>
+        <item name="android:paddingBottom">@dimen/dp_10</item>
     </style>
 
 </resources>

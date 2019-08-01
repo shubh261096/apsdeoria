@@ -3,15 +3,21 @@ package com.pb.apszone.view.ui;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.utils.SnackbarMessage;
 import com.pb.apszone.utils.SnackbarUtils;
+import com.pb.apszone.view.fragment.ResetPasswordFragment;
 import com.pb.apszone.viewModel.LoginViewModel;
 
 import butterknife.BindView;
@@ -32,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText edtPassword;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    @BindView(R.id.forgot_password)
+    TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (!loginResponseModel.isError()) {
                     loginViewModel.putSharedPrefData(loginResponseModel);
                     startDashboardActivity();
+                } else {
+                    forgotPassword.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -92,6 +102,27 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finishAffinity();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            finish();
+        } else {
+            finishAffinity();
+        }
+    }
+
+    @OnClick(R.id.forgot_password)
+    public void onForgotPasswordClicked() {
+        Fragment resetPassFragment = ResetPasswordFragment.newInstance();
+        replaceFragment(resetPassFragment);
+    }
+
+    public void replaceFragment(Fragment destFragment) {
+        // First get FragmentManager object.
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        // Begin Fragment transaction.
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // Replace the layout holder with the required Fragment object.
+        fragmentTransaction.replace(R.id.login_frame_layout, destFragment).addToBackStack(destFragment.getClass().getSimpleName());
+        // Commit the Fragment replace action.
+        fragmentTransaction.commit();
     }
 }

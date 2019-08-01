@@ -81,6 +81,14 @@
     <string name="instagram">Instagram</string>
     <string name="facebook">Facebook</string>
     <string name="twitter">Twitter</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="toolbar_reset_password">Reset Password</string>
+    <string name="dob">Date of Birth</string>
+    <string name="enter_dob">Enter student date of birth (YYYY-MM-DD) </string>
+    <string name="school_id">Enter Student School ID</string>
+    <string name="submit">Submit</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
 
     <string-array name="day">
         <item>Monday</item>
