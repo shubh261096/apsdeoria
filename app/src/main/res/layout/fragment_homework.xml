@@ -42,27 +42,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
+                android:background="@drawable/spinner_bg_no_padding"
                 android:orientation="horizontal">
 
-                <TextView
+                <ImageView
                     android:id="@+id/previous"
                     android:layout_width="0dp"
                     android:layout_height="?attr/dropdownListPreferredItemHeight"
-                    android:layout_marginEnd="@dimen/dp_10"
                     android:layout_weight="0.3"
-                    android:background="@drawable/spinner_bg_no_padding"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:gravity="center"
-                    android:text="@string/previous_date"
-                    android:textColor="@android:color/white"
-                    tools:ignore="PrivateResource,UnusedAttribute" />
+                    android:scaleType="center"
+                    android:src="@drawable/ic_arrow_point_to_left"
+                    android:tint="@color/white"
+                    tools:ignore="ContentDescription,PrivateResource,UnusedAttribute" />
 
                 <TextView
                     android:id="@+id/today_date"
                     android:layout_width="0dp"
                     android:layout_height="?attr/dropdownListPreferredItemHeight"
                     android:layout_weight="1.6"
-                    android:background="@drawable/spinner_bg_no_padding"
                     android:fontFamily="@font/roboto_regular"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center"
@@ -71,18 +69,16 @@
                     android:textStyle="bold"
                     tools:ignore="PrivateResource,UnusedAttribute" />
 
-                <TextView
+                <ImageView
                     android:id="@+id/next"
                     android:layout_width="0dp"
                     android:layout_height="?attr/dropdownListPreferredItemHeight"
-                    android:layout_marginStart="@dimen/dp_10"
                     android:layout_weight="0.3"
-                    android:background="@drawable/spinner_bg_no_padding"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:gravity="center"
-                    android:text="@string/next_date"
-                    android:textColor="@android:color/white"
-                    tools:ignore="PrivateResource,UnusedAttribute" />
+                    android:scaleType="center"
+                    android:src="@drawable/ic_arrow_point_to_right"
+                    android:tint="@color/white"
+                    tools:ignore="ContentDescription,PrivateResource,UnusedAttribute" />
 
             </LinearLayout>
 

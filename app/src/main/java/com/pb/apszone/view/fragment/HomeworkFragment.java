@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,11 +56,11 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
     @BindView(R.id.rvHomework)
     RecyclerView rvHomework;
     @BindView(R.id.previous)
-    TextView previous;
+    ImageView previous;
     @BindView(R.id.today_date)
     TextView todayDate;
     @BindView(R.id.next)
-    TextView next;
+    ImageView next;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.no_data)
