@@ -91,6 +91,12 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="hint_new_password">Enter new password</string>
     <string name="hint_confirm_password">Confirm password should be same as new password</string>
+    <string name="hint_title">Title</string>
+    <string name="helper_title">Homework Title</string>
+    <string name="hint_remarks">Remarks</string>
+    <string name="helper_remarks">Homework remarks if any</string>
+    <string name="hint_description">Description</string>
+    <string name="helper_description">Homework Description</string>
 
     <string-array name="day">
         <item>Monday</item>

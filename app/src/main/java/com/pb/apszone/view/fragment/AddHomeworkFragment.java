@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_CLASS_ID;
@@ -67,6 +69,12 @@ public class AddHomeworkFragment extends BaseFragment {
     @BindView(R.id.add_homework)
     TextView addHomework;
     HomeworkRequestModel homeworkRequestModel;
+    @BindView(R.id.til_title)
+    TextInputLayout tilTitle;
+    @BindView(R.id.til_description)
+    TextInputLayout tilDescription;
+    @BindView(R.id.til_remarks)
+    TextInputLayout tilRemarks;
     private String teacher_id, subject_id, class_id, subject_name;
 
     public AddHomeworkFragment() {
@@ -108,14 +116,14 @@ public class AddHomeworkFragment extends BaseFragment {
         homeworkRequestModel.setClassId(this.class_id);
         homeworkRequestModel.setSubjectId(this.subject_id);
         homeworkRequestModel.setTeacherId(this.teacher_id);
-        if (!TextUtils.isEmpty(title.getText().toString())) {
-            homeworkRequestModel.setDescription(title.getText().toString().trim());
+        if (!TextUtils.isEmpty(Objects.requireNonNull(tilTitle.getEditText()).getText().toString())) {
+            homeworkRequestModel.setDescription(tilTitle.getEditText().getText().toString().trim());
         }
-        if (!TextUtils.isEmpty(description.getText().toString())) {
-            homeworkRequestModel.setTitle(description.getText().toString().trim());
+        if (!TextUtils.isEmpty(Objects.requireNonNull(tilDescription.getEditText()).getText().toString())) {
+            homeworkRequestModel.setTitle(tilDescription.getEditText().getText().toString().trim());
         }
-        if (!TextUtils.isEmpty(remarks.getText().toString())) {
-            homeworkRequestModel.setRemarks(remarks.getText().toString().trim());
+        if (!TextUtils.isEmpty(Objects.requireNonNull(tilRemarks.getEditText()).getText().toString())) {
+            homeworkRequestModel.setRemarks(tilRemarks.getEditText().getText().toString().trim());
         }
     }
 
@@ -223,14 +231,43 @@ public class AddHomeworkFragment extends BaseFragment {
     }
 
     private boolean validate() {
-        if (TextUtils.isEmpty(title.getText().toString().trim())) {
-            Toast.makeText(getContext(), "Title cannot be empty", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(Objects.requireNonNull(tilTitle.getEditText()).getText().toString().trim())) {
+            tilTitle.setError("Title is required");
             return false;
         }
-        if (TextUtils.isEmpty(description.getText().toString().trim())) {
-            Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(Objects.requireNonNull(tilDescription.getEditText()).getText().toString().trim())) {
+            tilDescription.setError("Description is required");
             return false;
         }
         return true;
+    }
+
+    @OnTextChanged(value = R.id.title, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onTitleTextChanged(CharSequence text) {
+        if (!TextUtils.isEmpty(text)) {
+            if (tilTitle.isErrorEnabled()) {
+                tilTitle.setErrorEnabled(false);
+                tilTitle.setHelperTextEnabled(true);
+            } else {
+                tilTitle.setHelperTextEnabled(true);
+            }
+        } else {
+            tilTitle.setErrorEnabled(true);
+            tilTitle.setError("Title is required");
+        }
+    }
+
+    @OnTextChanged(value = R.id.description, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onDescriptionTextChanged(CharSequence text) {
+        if (!TextUtils.isEmpty(text)) {
+            if (tilDescription.isErrorEnabled()) {
+                tilDescription.setErrorEnabled(false);
+                tilDescription.setHelperTextEnabled(true);
+            } else {
+                tilDescription.setHelperTextEnabled(true);
+            }
+        } else {
+            tilDescription.setError("Description is required");
+        }
     }
 }

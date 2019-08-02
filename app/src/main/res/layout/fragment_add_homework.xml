@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <FrameLayout
         android:id="@+id/dynamic_fragment_frame_layout"
@@ -45,9 +46,10 @@
                 <LinearLayout
                     android:id="@+id/ll_homework"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="visible"
+                    tools:ignore="ScrollViewSize">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -102,50 +104,81 @@
                         android:layout_margin="@dimen/activity_horizontal_margin"
                         android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/title"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/til_title"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                            android:background="@drawable/corner_style"
-                            android:hint="@string/enter_title"
-                            android:importantForAutofill="no"
-                            android:inputType="textEmailSubject"
-                            android:padding="@dimen/dp_10"
-                            tools:ignore="UnusedAttribute" />
+                            android:layout_marginBottom="@dimen/dp_8"
+                            android:clipToPadding="false"
+                            android:hint="@string/hint_title"
+                            app:boxStrokeColor="@color/lightPrimary"
+                            app:errorEnabled="true"
+                            app:helperText="@string/helper_title">
 
-                        <EditText
-                            android:id="@+id/remarks"
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:inputType="textCapWords" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/til_remarks"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                            android:background="@drawable/corner_style"
-                            android:hint="@string/enter_remarks"
-                            android:importantForAutofill="no"
-                            android:inputType="textEmailSubject"
-                            android:padding="@dimen/dp_10"
-                            tools:ignore="UnusedAttribute" />
+                            android:layout_marginBottom="@dimen/dp_8"
+                            android:clipToPadding="false"
+                            android:hint="@string/hint_remarks"
+                            app:boxStrokeColor="@color/lightPrimary"
+                            app:errorEnabled="true"
+                            app:helperText="@string/helper_remarks">
 
-                        <EditText
-                            android:id="@+id/description"
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/remarks"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:inputType="textCapWords" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/til_description"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                            android:layout_weight="3"
-                            android:background="@drawable/corner_style"
-                            android:gravity="start"
-                            android:hint="@string/enter_description"
-                            android:importantForAutofill="no"
-                            android:inputType="textMultiLine"
-                            android:minHeight="@dimen/dp_120"
-                            android:padding="@dimen/dp_10"
-                            tools:ignore="LabelFor,UnusedAttribute" />
+                            android:layout_marginBottom="@dimen/dp_8"
+                            android:layout_weight="2"
+                            android:clipToPadding="false"
+                            android:hint="@string/hint_description"
+                            android:overScrollMode="always"
+                            android:scrollbarStyle="insideInset"
+                            android:scrollbars="vertical"
+                            app:boxStrokeColor="@color/lightPrimary"
+                            app:errorEnabled="true"
+                            app:helperText="@string/helper_description">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:gravity="start"
+                                android:inputType="textMultiLine"
+                                android:maxHeight="@dimen/dp_200"
+                                android:minHeight="@dimen/dp_120"
+                                android:overScrollMode="always"
+                                android:scrollbarStyle="insideInset"
+                                android:scrollbars="vertical" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <Button
                             android:id="@+id/submit_homework"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom|center_horizontal"
                             android:background="@drawable/corner_style"
                             android:foreground="?attr/selectableItemBackgroundBorderless"
                             android:text="@string/submit_homework"
