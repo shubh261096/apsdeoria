@@ -18,6 +18,7 @@
         <activity android:name=".view.ui.DashboardActivity" />
         <activity
             android:name=".view.ui.LoginActivity"
+            android:windowSoftInputMode="adjustResize"
             android:configChanges="keyboardHidden|orientation" />
         <activity android:name=".view.ui.SplashActivity">
             <intent-filter>

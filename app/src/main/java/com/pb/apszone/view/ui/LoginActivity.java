@@ -26,6 +26,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
+import static com.pb.apszone.utils.CommonUtils.hideSoftKeyboard;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 
@@ -86,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void validateLogin(String id, String password) {
         if (loginViewModel.validateLogin(id, password)) {
+            hideSoftKeyboard(this);
             showProgress(this, "Please wait...");
             loginViewModel.sendRequest(id, password);
         } else {
@@ -100,10 +102,24 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @OnTextChanged(value = R.id.edt_id, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onIdTextChanged(CharSequence text) {
+        if (TextUtils.isEmpty(text)) {
+            edtID.setError(getString(R.string.error_id_required));
+        }
+    }
+
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
+            /* clean resource */
+            edtID.setText(null);
+            edtPassword.setText(null);
+            edtID.setError(null);
+            edtPassword.setError(null);
+            edtID.requestFocus();
+            forgotPassword.setVisibility(View.GONE);
         } else {
             finishAffinity();
         }

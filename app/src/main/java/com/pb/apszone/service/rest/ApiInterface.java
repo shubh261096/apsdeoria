@@ -88,4 +88,11 @@ public interface ApiInterface {
     @POST("teacher/Syllabus/update")
     Call<CommonResponseModel> updateSyllabus(@Part MultipartBody.Part file, @Part("subject_id") RequestBody subject_id);
 
+    @POST("Login/validate")
+    @FormUrlEncoded
+    Call<CommonResponseModel> validateResetPassword(@FieldMap Map<String, String> params);
+
+    @POST("Login/reset")
+    @FormUrlEncoded
+    Call<CommonResponseModel> resetPassword(@FieldMap Map<String, String> params);
 }

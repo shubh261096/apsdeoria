@@ -481,6 +481,56 @@ public class Repository {
                 });
     }
 
+    /* Validate Reset Password Request */
+    public void validateResetPassword(LoginRequestModel loginRequestModel, MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData) {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", loginRequestModel.getId());
+        params.put("dob", loginRequestModel.getDob());
+        apiService.validateResetPassword(params)
+                .enqueue(new Callback<CommonResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                commonResponseModelMutableLiveData.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, Throwable t) {
+                        commonResponseModelMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
+    /* Reset Password Request */
+    public void resetPassword(LoginRequestModel loginRequestModel, MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData) {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", loginRequestModel.getId());
+        params.put("password", loginRequestModel.getPassword());
+        apiService.resetPassword(params)
+                .enqueue(new Callback<CommonResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                commonResponseModelMutableLiveData.postValue(response.body());
+                            } else {
+                                handleResponseCode(response.code());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, Throwable t) {
+                        commonResponseModelMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
     private void handleResponseCode(int code) {
         if (code > 200)
             Log.i("Error Response Code ", code + ": Unauthorised");

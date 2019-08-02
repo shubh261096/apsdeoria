@@ -10,6 +10,9 @@ public class LoginRequestModel{
 	@SerializedName("id")
 	private String id;
 
+	@SerializedName("dob")
+	private String dob;
+
 	public void setPassword(String password){
 		this.password = password;
 	}
@@ -26,12 +29,21 @@ public class LoginRequestModel{
 		return id;
 	}
 
+	public String getDob() {
+		return dob;
+	}
+
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+
 	@Override
  	public String toString(){
 		return 
 			"LoginRequestModel{" + 
 			"password = '" + password + '\'' + 
 			",id = '" + id + '\'' +
+			",dob = '" + dob + '\'' +
 			"}";
 		}
 }

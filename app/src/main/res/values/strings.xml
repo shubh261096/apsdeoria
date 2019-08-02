@@ -89,6 +89,8 @@
     <string name="submit">Submit</string>
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="hint_new_password">Enter new password</string>
+    <string name="hint_confirm_password">Confirm password should be same as new password</string>
 
     <string-array name="day">
         <item>Monday</item>
