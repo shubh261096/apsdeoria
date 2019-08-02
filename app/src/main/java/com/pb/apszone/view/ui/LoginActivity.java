@@ -8,7 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.pb.apszone.viewModel.LoginViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
@@ -107,6 +110,16 @@ public class LoginActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(text)) {
             edtID.setError(getString(R.string.error_id_required));
         }
+    }
+
+    @OnEditorAction(R.id.edt_password)
+    boolean onPasswordEditorAction(KeyEvent key, int actionId) {
+        boolean handled = false;
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            validateLogin(edtID.getText().toString().trim(), edtPassword.getText().toString().trim());
+            handled = true;
+        }
+        return handled;
     }
 
     @Override

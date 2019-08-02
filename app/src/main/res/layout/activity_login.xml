@@ -80,6 +80,7 @@
                         android:drawablePadding="@dimen/dp_16"
                         android:drawableTint="@color/hint_gray"
                         android:hint="@string/hint_password"
+                        android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:padding="@dimen/dp_14"
