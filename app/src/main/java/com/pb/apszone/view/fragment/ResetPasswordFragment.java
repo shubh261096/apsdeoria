@@ -42,7 +42,7 @@ public class ResetPasswordFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_reset_password, container, false);
         unbinder = ButterKnife.bind(this, view);
-        toolbarResetPassword.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).finish());
+        toolbarResetPassword.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         return view;
     }
 

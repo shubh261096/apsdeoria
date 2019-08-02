@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            finish();
+            getSupportFragmentManager().popBackStack();
         } else {
             finishAffinity();
         }
