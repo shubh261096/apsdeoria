@@ -42,7 +42,7 @@ class LoginModel extends CI_model
 	/** Query to validate user by id and DOB */
 	public function validate_user($id, $dob)
 	{
-		$sql = 'SELECT id FROM `student` WHERE id="' . $id . '" AND  ="' . $dob . '" AND status=1';
+		$sql = 'SELECT id FROM `student` WHERE id="' . $id . '" AND  dob="' . $dob . '" AND status=1';
 		$query = $this->db->query($sql);
 		if ($query->num_rows()) {
 			return TRUE;
