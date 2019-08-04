@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.InboxItem;
@@ -35,6 +35,8 @@ public class InboxFragment extends BaseFragment {
     RecyclerView rvInbox;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    @BindView(R.id.no_data)
+    TextView tvNoData;
     private List<InboxItem> inboxItemList;
     InboxFragmentViewModel inboxFragmentViewModel;
     InboxAdapter inboxAdapter;
@@ -97,13 +99,14 @@ public class InboxFragment extends BaseFragment {
                     inboxItemList.addAll(inboxItems);
                     inboxAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(getActivity(), inboxResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    tvNoData.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
     private void subscribe() {
+        tvNoData.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         inboxFragmentViewModel.sendRequest();
     }

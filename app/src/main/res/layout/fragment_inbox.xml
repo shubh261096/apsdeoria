@@ -45,6 +45,18 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="@string/no_data_found"
+            android:textColor="@color/black_80"
+            android:textSize="@dimen/text_20"
+            android:visibility="gone" />
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
