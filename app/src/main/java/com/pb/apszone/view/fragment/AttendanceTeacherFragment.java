@@ -156,6 +156,8 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                     }
                     tvClass.setText(class_name[this.classPos]);
                 } else {
+                    tvClass.setText(null);
+                    class_name = null;
                     tvNoData.setVisibility(View.VISIBLE);
                 }
             }
