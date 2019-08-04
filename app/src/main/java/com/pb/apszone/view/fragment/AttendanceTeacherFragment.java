@@ -254,6 +254,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                     this.classPos = 0;
                     subscribe();
                 }, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
 
