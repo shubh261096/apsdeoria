@@ -131,7 +131,6 @@ public class LoginActivity extends AppCompatActivity {
             edtPassword.setText(null);
             edtID.setError(null);
             edtPassword.setError(null);
-            edtID.requestFocus();
             forgotPassword.setVisibility(View.GONE);
         } else {
             finishAffinity();
