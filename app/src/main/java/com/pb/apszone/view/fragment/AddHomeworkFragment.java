@@ -117,10 +117,10 @@ public class AddHomeworkFragment extends BaseFragment {
         homeworkRequestModel.setSubjectId(this.subject_id);
         homeworkRequestModel.setTeacherId(this.teacher_id);
         if (!TextUtils.isEmpty(Objects.requireNonNull(tilTitle.getEditText()).getText().toString())) {
-            homeworkRequestModel.setDescription(tilTitle.getEditText().getText().toString().trim());
+            homeworkRequestModel.setTitle(tilTitle.getEditText().getText().toString().trim());
         }
         if (!TextUtils.isEmpty(Objects.requireNonNull(tilDescription.getEditText()).getText().toString())) {
-            homeworkRequestModel.setTitle(tilDescription.getEditText().getText().toString().trim());
+            homeworkRequestModel.setDescription(tilDescription.getEditText().getText().toString().trim());
         }
         if (!TextUtils.isEmpty(Objects.requireNonNull(tilRemarks.getEditText()).getText().toString())) {
             homeworkRequestModel.setRemarks(tilRemarks.getEditText().getText().toString().trim());
@@ -131,6 +131,8 @@ public class AddHomeworkFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         homeworkTeacherFragmentViewModel = ViewModelProviders.of(this).get(HomeworkTeacherFragmentViewModel.class);
+        createRequestModel();
+        subscribe(this.homeworkRequestModel);
         observeResponse();
     }
 
@@ -156,10 +158,6 @@ public class AddHomeworkFragment extends BaseFragment {
 
     @Override
     public void getNetworkData(boolean status) {
-        if (status) {
-            createRequestModel();
-            subscribe(this.homeworkRequestModel);
-        }
     }
 
     private void subscribe(HomeworkRequestModel homeworkRequestModel) {
