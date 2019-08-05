@@ -8,9 +8,11 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
@@ -233,6 +236,26 @@ public class ResetPasswordFragment extends BaseFragment {
         } else {
             tilConfirmPassword.setError("Confirm password is required");
         }
+    }
+
+    @OnEditorAction(R.id.edt_dob)
+    boolean onDobEditorAction(KeyEvent key, int actionId) {
+        boolean handled = false;
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            btnValidate.performClick();
+            handled = true;
+        }
+        return handled;
+    }
+
+    @OnEditorAction(R.id.edt_confirm_password)
+    boolean onConfirmPasswordEditorAction(KeyEvent key, int actionId) {
+        boolean handled = false;
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            btnReset.performClick();
+            handled = true;
+        }
+        return handled;
     }
 
 }

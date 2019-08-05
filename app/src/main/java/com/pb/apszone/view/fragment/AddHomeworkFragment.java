@@ -8,9 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,6 +34,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
@@ -267,5 +270,15 @@ public class AddHomeworkFragment extends BaseFragment {
         } else {
             tilDescription.setError("Description is required");
         }
+    }
+
+    @OnEditorAction(R.id.description)
+    boolean onDescriptionEditorAction(KeyEvent key, int actionId) {
+        boolean handled = false;
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            submitHomework.performClick();
+            handled = true;
+        }
+        return handled;
     }
 }

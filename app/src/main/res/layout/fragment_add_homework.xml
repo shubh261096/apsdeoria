@@ -121,7 +121,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
-                                android:inputType="textCapWords" />
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:nextFocusDown="@+id/til_remarks" />
 
                         </android.support.design.widget.TextInputLayout>
 
@@ -142,7 +144,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
-                                android:inputType="textCapWords" />
+                                android:imeOptions="actionNext"
+                                android:inputType="textEmailSubject"
+                                android:nextFocusDown="@+id/til_description" />
                         </android.support.design.widget.TextInputLayout>
 
                         <android.support.design.widget.TextInputLayout
@@ -167,6 +171,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:gravity="start"
+                                android:imeOptions="actionDone"
                                 android:inputType="textMultiLine"
                                 android:maxHeight="@dimen/dp_200"
                                 android:minHeight="@dimen/dp_120"
