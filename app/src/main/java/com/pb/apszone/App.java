@@ -6,6 +6,9 @@ import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.pb.apszone.BuildConfig.BUILD_TYPE;
+
+@SuppressWarnings("ConstantConditions")
 public class App extends Application {
     private static App instance;
 
@@ -17,7 +20,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        Fabric.with(this, new Crashlytics());
+        if (BUILD_TYPE.equals("release")) {
+            Fabric.with(this, new Crashlytics());
+        }
     }
 
 }
