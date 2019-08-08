@@ -71,7 +71,7 @@ public class Repository {
     }
 
     /* Login Request */
-    public void checkLogin(LoginRequestModel loginRequestModel, MutableLiveData<LoginResponseModel> loginResponseModelMutableLiveData) {
+    public void checkLogin(LoginRequestModel loginRequestModel, MutableLiveData<Events.LoginResponseEvent> loginResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("id", loginRequestModel.getId());
         params.put("password", loginRequestModel.getPassword());
@@ -81,22 +81,35 @@ public class Repository {
                     public void onResponse(@NonNull Call<LoginResponseModel> call, @Nullable Response<LoginResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                loginResponseModelMutableLiveData.postValue(response.body());
+                                loginResponseModelMutableLiveData.
+                                        postValue(new Events.LoginResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    loginResponseModelMutableLiveData.
+                                            postValue(new Events.LoginResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    loginResponseModelMutableLiveData.
+                                            postValue(new Events.LoginResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<LoginResponseModel> call, Throwable t) {
-                        loginResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<LoginResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        loginResponseModelMutableLiveData.
+                                postValue(new Events.LoginResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Profile Request */
-    public void getProfile(ProfileRequestModel profileRequestModel, MutableLiveData<Events.ProfileFragmentResponseEvent> profileResponseModelMutableLiveData) {
+    public void getProfile(ProfileRequestModel profileRequestModel, MutableLiveData<Events.ProfileResponseEvent> profileResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("id", profileRequestModel.getId());
         params.put("type", profileRequestModel.getType());
@@ -107,16 +120,16 @@ public class Repository {
                         if (response != null) {
                             if (response.isSuccessful()) {
                                 profileResponseModelMutableLiveData.
-                                        postValue(new Events.ProfileFragmentResponseEvent(null, true, response.body()));
+                                        postValue(new Events.ProfileResponseEvent(null, true, response.body()));
                             } else {
                                 if (response.errorBody() != null) {
                                     profileResponseModelMutableLiveData.
-                                            postValue(new Events.ProfileFragmentResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                            postValue(new Events.ProfileResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
                                 } else {
                                     ErrorModel errorModel = new ErrorModel();
                                     errorModel.setMessage(UNKNOWN_ERROR);
                                     profileResponseModelMutableLiveData.
-                                            postValue(new Events.ProfileFragmentResponseEvent(errorModel, false, null));
+                                            postValue(new Events.ProfileResponseEvent(errorModel, false, null));
                                 }
                             }
                         }
@@ -128,37 +141,48 @@ public class Repository {
                         ErrorModel errorModel = new ErrorModel();
                         errorModel.setMessage(errorMsg);
                         profileResponseModelMutableLiveData.
-                                postValue(new Events.ProfileFragmentResponseEvent(errorModel, false, null));
+                                postValue(new Events.ProfileResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Dashboard UI Element Request */
-    public void getDashboardUIElements(MutableLiveData<DashboardUIResponseModel> dashboardUIResponseModelMutableLiveData) {
+    public void getDashboardUIElements(MutableLiveData<Events.DashboardUIResponseEvent> dashboardUIResponseModelMutableLiveData) {
         apiService.getDashboardUIElements()
                 .enqueue(new Callback<DashboardUIResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<DashboardUIResponseModel> call, @Nullable Response<DashboardUIResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                dashboardUIResponseModelMutableLiveData.postValue(response.body());
-                                Log.i("Response ", response.message());
+                                dashboardUIResponseModelMutableLiveData.
+                                        postValue(new Events.DashboardUIResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    dashboardUIResponseModelMutableLiveData.
+                                            postValue(new Events.DashboardUIResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    dashboardUIResponseModelMutableLiveData.
+                                            postValue(new Events.DashboardUIResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<DashboardUIResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        dashboardUIResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<DashboardUIResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        dashboardUIResponseModelMutableLiveData.
+                                postValue(new Events.DashboardUIResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* TimeTable Request */
-    public void getTimetable(TimetableRequestModel timetableRequestModel, String filter, String user_type, MutableLiveData<TimetableResponseModel> timetableResponseModelMutableLiveData) {
+    public void getTimetable(TimetableRequestModel timetableRequestModel, String filter, String user_type, MutableLiveData<Events.TimetableResponseEvent> timetableResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
             if (TextUtils.equals(filter, KEY_FILTER_BY_DAY)) {
@@ -180,23 +204,35 @@ public class Repository {
                     public void onResponse(@NonNull Call<TimetableResponseModel> call, @Nullable Response<TimetableResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                timetableResponseModelMutableLiveData.postValue(response.body());
+                                timetableResponseModelMutableLiveData.
+                                        postValue(new Events.TimetableResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    timetableResponseModelMutableLiveData.
+                                            postValue(new Events.TimetableResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    timetableResponseModelMutableLiveData.
+                                            postValue(new Events.TimetableResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<TimetableResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        timetableResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<TimetableResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        timetableResponseModelMutableLiveData.
+                                postValue(new Events.TimetableResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Attendance Request */
-    public void getAttendance(AttendanceRequestModel attendanceRequestModel, MutableLiveData<AttendanceResponseModel> attendanceResponseModelMutableLiveData) {
+    public void getAttendance(AttendanceRequestModel attendanceRequestModel, MutableLiveData<Events.AttendanceResponseEvent> attendanceResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("student_id", attendanceRequestModel.getStudentId());
         params.put("month", attendanceRequestModel.getMonth());
@@ -208,23 +244,35 @@ public class Repository {
                     public void onResponse(@NonNull Call<AttendanceResponseModel> call, @Nullable Response<AttendanceResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                attendanceResponseModelMutableLiveData.postValue(response.body());
+                                attendanceResponseModelMutableLiveData.
+                                        postValue(new Events.AttendanceResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    attendanceResponseModelMutableLiveData.
+                                            postValue(new Events.AttendanceResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    attendanceResponseModelMutableLiveData.
+                                            postValue(new Events.AttendanceResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<AttendanceResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        attendanceResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<AttendanceResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        attendanceResponseModelMutableLiveData.
+                                postValue(new Events.AttendanceResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Syllabus Request */
-    public void getSyllabus(SyllabusRequestModel syllabusRequestModel, MutableLiveData<SyllabusResponseModel> syllabusResponseModelMutableLiveData) {
+    public void getSyllabus(SyllabusRequestModel syllabusRequestModel, MutableLiveData<Events.SyllabusResponseEvent> syllabusResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("class_id", syllabusRequestModel.getClassId());
 
@@ -234,23 +282,35 @@ public class Repository {
                     public void onResponse(@NonNull Call<SyllabusResponseModel> call, @Nullable Response<SyllabusResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                syllabusResponseModelMutableLiveData.postValue(response.body());
+                                syllabusResponseModelMutableLiveData.
+                                        postValue(new Events.SyllabusResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    syllabusResponseModelMutableLiveData.
+                                            postValue(new Events.SyllabusResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    syllabusResponseModelMutableLiveData.
+                                            postValue(new Events.SyllabusResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<SyllabusResponseModel> call, Throwable t) {
-                        syllabusResponseModelMutableLiveData.postValue(null);
-                        handleFailureResponse(t);
+                    public void onFailure(@NonNull Call<SyllabusResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        syllabusResponseModelMutableLiveData.
+                                postValue(new Events.SyllabusResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Homework Request */
-    public void getHomework(HomeworkRequestModel homeworkRequestModel, MutableLiveData<HomeworkResponseModel> homeworkResponseModelMutableLiveData) {
+    public void getHomework(HomeworkRequestModel homeworkRequestModel, MutableLiveData<Events.HomeworkResponseEvent> homeworkResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("class_id", homeworkRequestModel.getClassId());
         params.put("date", homeworkRequestModel.getDate());
@@ -261,23 +321,35 @@ public class Repository {
                     public void onResponse(@NonNull Call<HomeworkResponseModel> call, @Nullable Response<HomeworkResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                homeworkResponseModelMutableLiveData.postValue(response.body());
+                                homeworkResponseModelMutableLiveData.
+                                        postValue(new Events.HomeworkResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    homeworkResponseModelMutableLiveData.
+                                            postValue(new Events.HomeworkResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    homeworkResponseModelMutableLiveData.
+                                            postValue(new Events.HomeworkResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<HomeworkResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        homeworkResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<HomeworkResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        homeworkResponseModelMutableLiveData.
+                                postValue(new Events.HomeworkResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Fees Request */
-    public void getFees(FeesRequestModel feesRequestModel, MutableLiveData<FeesResponseModel> feesResponseModelMutableLiveData) {
+    public void getFees(FeesRequestModel feesRequestModel, MutableLiveData<Events.FeesResponseEvent> feesResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("class_id", feesRequestModel.getClassId());
         params.put("year", feesRequestModel.getYear());
@@ -289,47 +361,70 @@ public class Repository {
                     public void onResponse(@NonNull Call<FeesResponseModel> call, @Nullable Response<FeesResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                feesResponseModelMutableLiveData.postValue(response.body());
+                                feesResponseModelMutableLiveData.
+                                        postValue(new Events.FeesResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    feesResponseModelMutableLiveData.
+                                            postValue(new Events.FeesResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    feesResponseModelMutableLiveData.
+                                            postValue(new Events.FeesResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<FeesResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        feesResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<FeesResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        feesResponseModelMutableLiveData.
+                                postValue(new Events.FeesResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Inbox Request */
-    public void getInbox(MutableLiveData<InboxResponseModel> inboxResponseModelMutableLiveData) {
+    public void getInbox(MutableLiveData<Events.InboxResponseEvent> inboxResponseModelMutableLiveData) {
         apiService.getInbox()
                 .enqueue(new Callback<InboxResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<InboxResponseModel> call, @Nullable Response<InboxResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                inboxResponseModelMutableLiveData.postValue(response.body());
-                                Log.i("Response ", response.message());
+                                inboxResponseModelMutableLiveData.
+                                        postValue(new Events.InboxResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    inboxResponseModelMutableLiveData.
+                                            postValue(new Events.InboxResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    inboxResponseModelMutableLiveData.
+                                            postValue(new Events.InboxResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<InboxResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        inboxResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<InboxResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        inboxResponseModelMutableLiveData.
+                                postValue(new Events.InboxResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Teacher Attendance Class Details Request */
-    public void getClassDetail(ClassDetailRequestModel classDetailRequestModel, MutableLiveData<ClassDetailResponseModel> classDetailResponseModelMutableLiveData) {
+    public void getClassDetail(ClassDetailRequestModel classDetailRequestModel, MutableLiveData<Events.ClassDetailResponseEvent> classDetailResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("teacher_id", classDetailRequestModel.getTeacherId());
         params.put("date", classDetailRequestModel.getDate());
@@ -340,70 +435,105 @@ public class Repository {
                     public void onResponse(@NonNull Call<ClassDetailResponseModel> call, @Nullable Response<ClassDetailResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                classDetailResponseModelMutableLiveData.postValue(response.body());
-                                Log.i("Response ", response.message());
+                                classDetailResponseModelMutableLiveData.
+                                        postValue(new Events.ClassDetailResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    classDetailResponseModelMutableLiveData.
+                                            postValue(new Events.ClassDetailResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    classDetailResponseModelMutableLiveData.
+                                            postValue(new Events.ClassDetailResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<ClassDetailResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        classDetailResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<ClassDetailResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        classDetailResponseModelMutableLiveData.
+                                postValue(new Events.ClassDetailResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Edit Attendance Request */
-    public void editAttendance(SubmitAttendanceRequestModel submitAttendanceRequestModel, MutableLiveData<SubmitAttendanceResponseModel> submitAttendanceResponseModelMutableLiveData) {
+    public void editAttendance(SubmitAttendanceRequestModel submitAttendanceRequestModel, MutableLiveData<Events.SubmitAttendanceResponseEvent> submitAttendanceResponseModelMutableLiveData) {
         apiService.editAttendance(submitAttendanceRequestModel)
                 .enqueue(new Callback<SubmitAttendanceResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<SubmitAttendanceResponseModel> call, @Nullable Response<SubmitAttendanceResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                submitAttendanceResponseModelMutableLiveData.postValue(response.body());
+                                submitAttendanceResponseModelMutableLiveData.
+                                        postValue(new Events.SubmitAttendanceResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    submitAttendanceResponseModelMutableLiveData.
+                                            postValue(new Events.SubmitAttendanceResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    submitAttendanceResponseModelMutableLiveData.
+                                            postValue(new Events.SubmitAttendanceResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<SubmitAttendanceResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        submitAttendanceResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<SubmitAttendanceResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        submitAttendanceResponseModelMutableLiveData.
+                                postValue(new Events.SubmitAttendanceResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Add Attendance Request */
-    public void addAttendance(SubmitAttendanceRequestModel submitAttendanceRequestModel, MutableLiveData<SubmitAttendanceResponseModel> submitAttendanceResponseModelMutableLiveData) {
+    public void addAttendance(SubmitAttendanceRequestModel submitAttendanceRequestModel, MutableLiveData<Events.SubmitAttendanceResponseEvent> submitAttendanceResponseModelMutableLiveData) {
         apiService.addAttendance(submitAttendanceRequestModel)
                 .enqueue(new Callback<SubmitAttendanceResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<SubmitAttendanceResponseModel> call, @Nullable Response<SubmitAttendanceResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                submitAttendanceResponseModelMutableLiveData.postValue(response.body());
+                                submitAttendanceResponseModelMutableLiveData.
+                                        postValue(new Events.SubmitAttendanceResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    submitAttendanceResponseModelMutableLiveData.
+                                            postValue(new Events.SubmitAttendanceResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    submitAttendanceResponseModelMutableLiveData.
+                                            postValue(new Events.SubmitAttendanceResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<SubmitAttendanceResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        submitAttendanceResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<SubmitAttendanceResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        submitAttendanceResponseModelMutableLiveData.
+                                postValue(new Events.SubmitAttendanceResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Teacher Homework Class Subject Details Request */
-    public void getClassSubjectDetail(HomeworkRequestModel homeworkRequestModel, MutableLiveData<ClassSubjectResponseModel> classSubjectResponseModelMutableLiveData) {
+    public void getClassSubjectDetail(HomeworkRequestModel homeworkRequestModel, MutableLiveData<Events.ClassSubjectResponseEvent> classSubjectResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("teacher_id", homeworkRequestModel.getTeacherId());
 
@@ -413,47 +543,70 @@ public class Repository {
                     public void onResponse(@NonNull Call<ClassSubjectResponseModel> call, @Nullable Response<ClassSubjectResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                classSubjectResponseModelMutableLiveData.postValue(response.body());
-                                Log.i("Response ", response.message());
+                                classSubjectResponseModelMutableLiveData.
+                                        postValue(new Events.ClassSubjectResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    classSubjectResponseModelMutableLiveData.
+                                            postValue(new Events.ClassSubjectResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    classSubjectResponseModelMutableLiveData.
+                                            postValue(new Events.ClassSubjectResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<ClassSubjectResponseModel> call, @NonNull Throwable t) {
-                        handleFailureResponse(t);
-                        classSubjectResponseModelMutableLiveData.postValue(null);
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        classSubjectResponseModelMutableLiveData.
+                                postValue(new Events.ClassSubjectResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Add Homework Request */
-    public void addHomework(HomeworkRequestModel homeworkRequestModel, MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData) {
+    public void addHomework(HomeworkRequestModel homeworkRequestModel, MutableLiveData<Events.CommonResponseEvent> commonResponseModelMutableLiveData) {
         apiService.addHomework(homeworkRequestModel)
                 .enqueue(new Callback<CommonResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                commonResponseModelMutableLiveData.postValue(response.body());
+                                commonResponseModelMutableLiveData.
+                                        postValue(new Events.CommonResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<CommonResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        commonResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        commonResponseModelMutableLiveData.
+                                postValue(new Events.CommonResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Check Syllabus Request */
-    public void checkSyllabus(SyllabusRequestModel syllabusRequestModel, MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData) {
+    public void checkSyllabus(SyllabusRequestModel syllabusRequestModel, MutableLiveData<Events.CommonResponseEvent> commonResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("subject_id", syllabusRequestModel.getSubjectId());
 
@@ -463,46 +616,70 @@ public class Repository {
                     public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                commonResponseModelMutableLiveData.postValue(response.body());
+                                commonResponseModelMutableLiveData.
+                                        postValue(new Events.CommonResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<CommonResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        commonResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        commonResponseModelMutableLiveData.
+                                postValue(new Events.CommonResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Update Syllabus Request */
-    public void updateSyllabus(MultipartBody.Part file, RequestBody subject_id, MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData) {
+    public void updateSyllabus(MultipartBody.Part file, RequestBody subject_id, MutableLiveData<Events.CommonResponseEvent> commonResponseModelMutableLiveData) {
         apiService.updateSyllabus(file, subject_id)
                 .enqueue(new Callback<CommonResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                commonResponseModelMutableLiveData.postValue(response.body());
+                                commonResponseModelMutableLiveData.
+                                        postValue(new Events.CommonResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<CommonResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        commonResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        commonResponseModelMutableLiveData.
+                                postValue(new Events.CommonResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Validate Reset Password Request */
-    public void validateResetPassword(LoginRequestModel loginRequestModel, MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData) {
+    public void validateResetPassword(LoginRequestModel loginRequestModel, MutableLiveData<Events.CommonResponseEvent> commonResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("id", loginRequestModel.getId());
         params.put("dob", loginRequestModel.getDob());
@@ -512,22 +689,35 @@ public class Repository {
                     public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                commonResponseModelMutableLiveData.postValue(response.body());
+                                commonResponseModelMutableLiveData.
+                                        postValue(new Events.CommonResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<CommonResponseModel> call, Throwable t) {
-                        commonResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        commonResponseModelMutableLiveData.
+                                postValue(new Events.CommonResponseEvent(errorModel, false, null));
                     }
                 });
     }
 
     /* Reset Password Request */
-    public void resetPassword(LoginRequestModel loginRequestModel, MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData) {
+    public void resetPassword(LoginRequestModel loginRequestModel, MutableLiveData<Events.CommonResponseEvent> commonResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("id", loginRequestModel.getId());
         params.put("password", loginRequestModel.getPassword());
@@ -537,23 +727,31 @@ public class Repository {
                     public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                commonResponseModelMutableLiveData.postValue(response.body());
+                                commonResponseModelMutableLiveData.
+                                        postValue(new Events.CommonResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<CommonResponseModel> call, Throwable t) {
-                        commonResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        commonResponseModelMutableLiveData.
+                                postValue(new Events.CommonResponseEvent(errorModel, false, null));
                     }
                 });
-    }
-
-    private void handleResponseCode(int code) {
-        if (code > 200)
-            Log.i("Error Response Code ", code + ": Unauthorised");
     }
 
     /* Handle Retrofit Response Failure */

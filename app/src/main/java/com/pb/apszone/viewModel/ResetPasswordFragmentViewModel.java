@@ -6,14 +6,14 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import com.pb.apszone.service.model.CommonResponseModel;
+import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.service.rest.LoginRequestModel;
 
 public class ResetPasswordFragmentViewModel extends AndroidViewModel {
 
-    private MutableLiveData<CommonResponseModel> validateCommonResponseModelMutableLiveData;
-    private MutableLiveData<CommonResponseModel> resetCommonResponseModelMutableLiveData;
+    private MutableLiveData<Events.CommonResponseEvent> validateCommonResponseModelMutableLiveData;
+    private MutableLiveData<Events.CommonResponseEvent> resetCommonResponseModelMutableLiveData;
     private Repository repository;
     private LoginRequestModel loginRequestModel;
 
@@ -37,11 +37,11 @@ public class ResetPasswordFragmentViewModel extends AndroidViewModel {
         repository.resetPassword(loginRequestModel, resetCommonResponseModelMutableLiveData);
     }
 
-    public LiveData<CommonResponseModel> validateResetPasswordResponse() {
+    public LiveData<Events.CommonResponseEvent> validateResetPasswordResponse() {
         return validateCommonResponseModelMutableLiveData;
     }
 
-    public LiveData<CommonResponseModel> resetPassword() {
+    public LiveData<Events.CommonResponseEvent> resetPassword() {
         return resetCommonResponseModelMutableLiveData;
     }
 

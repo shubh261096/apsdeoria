@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.SyllabusItem;
+import com.pb.apszone.service.model.SyllabusResponseModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.SyllabusAdapter;
 import com.pb.apszone.view.receiver.DownloadBroadcastReceiver;
@@ -35,6 +36,7 @@ import butterknife.Unbinder;
 import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
 import static com.pb.apszone.utils.CommonUtils.beginDownload;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.OnDownloadItemClickListener {
 
@@ -85,20 +87,25 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         syllabusFragmentViewModel = ViewModelProviders.of(this).get(SyllabusFragmentViewModel.class);
-        syllabusFragmentViewModel.getSyllabus().observe(this, syllabusResponseModel -> {
-            if (syllabusResponseModel != null) {
+        syllabusFragmentViewModel.getSyllabus().observe(this, responseEvent -> {
+            if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
                 if (syllabusAdapter != null) {
                     syllabusAdapter.clearData();
                 }
 
-                if (!syllabusResponseModel.isError()) {
-                    List<SyllabusItem> syllabusItems = syllabusResponseModel.getSyllabus();
-                    syllabusItemList.addAll(syllabusItems);
-                    syllabusAdapter.notifyDataSetChanged();
+                if (responseEvent.isSuccess()) {
+                    SyllabusResponseModel syllabusResponseModel = responseEvent.getSyllabusResponseModel();
+                    if (!syllabusResponseModel.isError()) {
+                        List<SyllabusItem> syllabusItems = syllabusResponseModel.getSyllabus();
+                        syllabusItemList.addAll(syllabusItems);
+                        syllabusAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getActivity(), syllabusResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getActivity(), syllabusResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });

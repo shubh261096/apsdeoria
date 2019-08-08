@@ -8,6 +8,7 @@ import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -537,5 +538,16 @@ public class CommonUtils {
             }
         } catch (Exception ignore) {
         }
+    }
+
+    public static void showInformativeDialog(Context context, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(context.getString(R.string.ok), (dialog, id) -> {
+                    dialog.dismiss();
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

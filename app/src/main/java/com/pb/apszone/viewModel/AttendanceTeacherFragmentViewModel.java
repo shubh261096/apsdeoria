@@ -6,16 +6,15 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import com.pb.apszone.service.model.ClassDetailResponseModel;
-import com.pb.apszone.service.model.SubmitAttendanceResponseModel;
+import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.service.rest.ClassDetailRequestModel;
 import com.pb.apszone.service.rest.SubmitAttendanceRequestModel;
 
 public class AttendanceTeacherFragmentViewModel extends AndroidViewModel {
 
-    private MutableLiveData<ClassDetailResponseModel> classDetailResponseModelMutableLiveData;
-    private MutableLiveData<SubmitAttendanceResponseModel> submitAttendanceResponseModelMutableLiveData;
+    private MutableLiveData<Events.ClassDetailResponseEvent> classDetailResponseModelMutableLiveData;
+    private MutableLiveData<Events.SubmitAttendanceResponseEvent> submitAttendanceResponseModelMutableLiveData;
     private Repository repository;
     private ClassDetailRequestModel classDetailRequestModel;
 
@@ -41,11 +40,11 @@ public class AttendanceTeacherFragmentViewModel extends AndroidViewModel {
         repository.addAttendance(submitAttendanceRequestModel, submitAttendanceResponseModelMutableLiveData);
     }
 
-    public LiveData<ClassDetailResponseModel> getClassDetail() {
+    public LiveData<Events.ClassDetailResponseEvent> getClassDetail() {
         return classDetailResponseModelMutableLiveData;
     }
 
-    public LiveData<SubmitAttendanceResponseModel> getSubmitResponse() {
+    public LiveData<Events.SubmitAttendanceResponseEvent> getSubmitResponse() {
         return submitAttendanceResponseModelMutableLiveData;
     }
 

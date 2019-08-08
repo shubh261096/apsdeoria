@@ -6,13 +6,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import com.pb.apszone.service.model.FeesResponseModel;
+import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.service.rest.FeesRequestModel;
 
 public class FeesFragmentViewModel extends AndroidViewModel {
 
-    private MutableLiveData<FeesResponseModel> feesResponseModelMutableLiveData;
+    private MutableLiveData<Events.FeesResponseEvent> feesResponseModelMutableLiveData;
     private Repository repository;
     private FeesRequestModel feesRequestModel;
 
@@ -30,7 +30,7 @@ public class FeesFragmentViewModel extends AndroidViewModel {
         repository.getFees(feesRequestModel, feesResponseModelMutableLiveData);
     }
 
-    public LiveData<FeesResponseModel> getFees() {
+    public LiveData<Events.FeesResponseEvent> getFees() {
         return feesResponseModelMutableLiveData;
     }
 

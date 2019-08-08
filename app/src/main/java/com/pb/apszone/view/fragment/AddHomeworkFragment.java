@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
+import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.rest.HomeworkRequestModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.viewModel.HomeworkTeacherFragmentViewModel;
@@ -43,6 +44,7 @@ import static com.pb.apszone.utils.AppConstants.KEY_SUBJECT_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_SUBJECT_NAME;
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.CommonUtils.getTodayDate;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class AddHomeworkFragment extends BaseFragment {
 
@@ -140,20 +142,26 @@ public class AddHomeworkFragment extends BaseFragment {
     }
 
     private void observeResponse() {
-        homeworkTeacherFragmentViewModel.getSubmitResponse().observe(this, commonResponseModel -> {
-            if (commonResponseModel != null) {
+        homeworkTeacherFragmentViewModel.getSubmitResponse().observe(this, responseEvent -> {
+            if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
-                if (!commonResponseModel.isError()) {
-                    Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
-                    Objects.requireNonNull(getActivity()).onBackPressed();
-                } else {
-                    if (commonResponseModel.getData() != null) {
-                        llHomework.setVisibility(View.VISIBLE);
-                        llExistHomework.setVisibility(View.GONE);
+
+                if (responseEvent.isSuccess()) {
+                    CommonResponseModel commonResponseModel = responseEvent.getCommonResponseModel();
+                    if (!commonResponseModel.isError()) {
+                        Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                        Objects.requireNonNull(getActivity()).onBackPressed();
                     } else {
-                        llHomework.setVisibility(View.GONE);
-                        llExistHomework.setVisibility(View.VISIBLE);
+                        if (commonResponseModel.getData() != null) {
+                            llHomework.setVisibility(View.VISIBLE);
+                            llExistHomework.setVisibility(View.GONE);
+                        } else {
+                            llHomework.setVisibility(View.GONE);
+                            llExistHomework.setVisibility(View.VISIBLE);
+                        }
                     }
+                } else {
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });

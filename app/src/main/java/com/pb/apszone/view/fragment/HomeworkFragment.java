@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.HomeworkItem;
+import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.HomeworkAdapter;
 import com.pb.apszone.view.adapter.SyllabusAdapter;
@@ -47,6 +48,7 @@ import static com.pb.apszone.utils.CommonUtils.beginDownload;
 import static com.pb.apszone.utils.CommonUtils.getNextDate;
 import static com.pb.apszone.utils.CommonUtils.getPreviousDate;
 import static com.pb.apszone.utils.CommonUtils.getTodayDate;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.OnDownloadItemClickListener {
 
@@ -112,20 +114,25 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
     }
 
     private void observeHomework() {
-        homeworkFragmentViewModel.getHomework().observe(this, homeworkResponseModel -> {
-            if (homeworkResponseModel != null) {
+        homeworkFragmentViewModel.getHomework().observe(this, responseEvent -> {
+            if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
                 if (homeworkAdapter != null) {
                     homeworkAdapter.clearData();
                 }
 
-                if (!homeworkResponseModel.isError()) {
-                    List<HomeworkItem> homeworkItems = homeworkResponseModel.getHomework();
-                    homeworkItemList.addAll(homeworkItems);
-                    homeworkAdapter.notifyDataSetChanged();
+                if (responseEvent.isSuccess()) {
+                    HomeworkResponseModel homeworkResponseModel = responseEvent.getHomeworkResponseModel();
+                    if (!homeworkResponseModel.isError()) {
+                        List<HomeworkItem> homeworkItems = homeworkResponseModel.getHomework();
+                        homeworkItemList.addAll(homeworkItems);
+                        homeworkAdapter.notifyDataSetChanged();
+                    } else {
+                        tvNoData.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    tvNoData.setVisibility(View.VISIBLE);
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });

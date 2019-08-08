@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.TimetableItem;
+import com.pb.apszone.service.model.TimetableResponseModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.TimetableAdapter;
 import com.pb.apszone.viewModel.TimetableFragmentViewModel;
@@ -39,6 +40,7 @@ import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 import static com.pb.apszone.utils.CommonUtils.getDayOfWeek;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class TimetableFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
 
@@ -109,20 +111,24 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
     }
 
     private void observeTimetable() {
-        timetableFragmentViewModel.getTimetable().observe(this, timetableResponseModel -> {
-            if (timetableResponseModel != null) {
+        timetableFragmentViewModel.getTimetable().observe(this, responseEvent -> {
+            if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
                 if (timetableAdapter != null) {
                     timetableAdapter.clearData();
                 }
-
-                if (!timetableResponseModel.isError()) {
-                    List<TimetableItem> timetableItems = timetableResponseModel.getTimetable();
-                    timetableItemList.addAll(timetableItems);
-                    timetableAdapter.notifyDataSetChanged();
+                if (responseEvent.isSuccess()) {
+                    TimetableResponseModel timetableResponseModel = responseEvent.getTimetableResponseModel();
+                    if (!timetableResponseModel.isError()) {
+                        List<TimetableItem> timetableItems = timetableResponseModel.getTimetable();
+                        timetableItemList.addAll(timetableItems);
+                        timetableAdapter.notifyDataSetChanged();
+                    } else {
+                        tvNoData.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    tvNoData.setVisibility(View.VISIBLE);
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });

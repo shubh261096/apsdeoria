@@ -45,7 +45,7 @@
     <string name="status">Status</string>
     <string name="more_info"><u>More Info</u></string>
     <string name="late_fee_notice">*Last date for fee submission is 10th of every month, post this date \u20B9 50 will be fined daily for late fee.</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="alert">Alert</string>
     <string name="alert_late_fees">You have not submitted the fees for this month. Please pay the fees before 10th, post this date \u20B9 50 will be fined daily for late fee.</string>
     <string name="toolbar_inbox">Inbox</string>

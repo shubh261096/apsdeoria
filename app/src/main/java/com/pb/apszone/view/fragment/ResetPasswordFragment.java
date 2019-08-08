@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
+import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.viewModel.ResetPasswordFragmentViewModel;
 
 import java.util.Objects;
@@ -31,6 +32,7 @@ import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.hideSoftKeyboard;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class ResetPasswordFragment extends BaseFragment {
@@ -103,29 +105,40 @@ public class ResetPasswordFragment extends BaseFragment {
     }
 
     private void observeValidateResetPassword() {
-        resetPasswordFragmentViewModel.validateResetPasswordResponse().observe(this, commonResponseModel -> {
+        resetPasswordFragmentViewModel.validateResetPasswordResponse().observe(this, responseEvent -> {
             hideProgress();
-            if (commonResponseModel != null) {
-                if (!commonResponseModel.isError()) {
-                    llValidate.setVisibility(View.GONE);
-                    llReset.setVisibility(View.VISIBLE);
-                    Toast.makeText(getActivity(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+            if (responseEvent != null) {
+
+                if (responseEvent.isSuccess()) {
+                    CommonResponseModel commonResponseModel = responseEvent.getCommonResponseModel();
+                    if (!commonResponseModel.isError()) {
+                        llValidate.setVisibility(View.GONE);
+                        llReset.setVisibility(View.VISIBLE);
+                        Toast.makeText(getActivity(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getActivity(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });
     }
 
     private void observeResetPassword() {
-        resetPasswordFragmentViewModel.resetPassword().observe(this, commonResponseModel -> {
+        resetPasswordFragmentViewModel.resetPassword().observe(this, responseEvent -> {
             hideProgress();
-            if (commonResponseModel != null) {
-                if (!commonResponseModel.isError()) {
-                    Toast.makeText(getActivity(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
-                    Objects.requireNonNull(getActivity()).onBackPressed();
+            if (responseEvent != null) {
+                if (responseEvent.isSuccess()) {
+                    CommonResponseModel commonResponseModel = responseEvent.getCommonResponseModel();
+                    if (!commonResponseModel.isError()) {
+                        Toast.makeText(getActivity(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                        Objects.requireNonNull(getActivity()).onBackPressed();
+                    } else {
+                        Toast.makeText(getActivity(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getActivity(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });

@@ -12,7 +12,7 @@ import com.pb.apszone.service.rest.ProfileRequestModel;
 
 public class ProfileFragmentViewModel extends AndroidViewModel {
 
-    private MutableLiveData<Events.ProfileFragmentResponseEvent> profileResponseModelMutableLiveData;
+    private MutableLiveData<Events.ProfileResponseEvent> profileResponseModelMutableLiveData;
     private Repository repository;
     private ProfileRequestModel profileRequestModel;
 
@@ -29,7 +29,7 @@ public class ProfileFragmentViewModel extends AndroidViewModel {
         repository.getProfile(profileRequestModel, profileResponseModelMutableLiveData);
     }
 
-    public LiveData<Events.ProfileFragmentResponseEvent> getProfile() {
+    public LiveData<Events.ProfileResponseEvent> getProfile() {
         return profileResponseModelMutableLiveData;
     }
 

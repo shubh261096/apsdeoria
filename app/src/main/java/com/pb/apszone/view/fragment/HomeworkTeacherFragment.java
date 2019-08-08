@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.ClassSubjectItem;
+import com.pb.apszone.service.model.ClassSubjectResponseModel;
+import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.model.SubjectId;
 import com.pb.apszone.utils.CommonUtils;
 import com.pb.apszone.utils.KeyStorePref;
@@ -55,6 +57,7 @@ import static com.pb.apszone.utils.CommonUtils.getUriRealPath;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.isReadStoragePermissionGranted;
 import static com.pb.apszone.utils.CommonUtils.isValidFileType;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class HomeworkTeacherFragment extends BaseFragment implements TeacherHomeworkAdapter.OnSubjectItemClick {
@@ -132,50 +135,60 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
     }
 
     private void observeSyllabus() {
-        syllabusTeacherFragmentViewModel.checkResponse().observe(this, commonResponseModel -> {
-            if (commonResponseModel != null) {
-                if (commonResponseModel.isError()) {
-                    Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
-                } else {
-                    if (isPDFSelected) {
-                        isPDFSelected = false;
-                        clearData();
-                        subscribe();
-                        hideProgress();
+        syllabusTeacherFragmentViewModel.checkResponse().observe(this, responseEvent -> {
+            if (responseEvent != null) {
+                if (responseEvent.isSuccess()) {
+                    CommonResponseModel commonResponseModel = responseEvent.getCommonResponseModel();
+                    if (commonResponseModel.isError()) {
                         Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
                     } else {
-                        openPDFIntent();
+                        if (isPDFSelected) {
+                            isPDFSelected = false;
+                            clearData();
+                            subscribe();
+                            hideProgress();
+                            Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+                            openPDFIntent();
+                        }
                     }
+                } else {
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });
     }
 
     private void observeHomework() {
-        homeworkTeacherFragmentViewModel.getClassSubjectDetail().observe(this, classSubjectResponseModel -> {
-            if (classSubjectResponseModel != null) {
+        homeworkTeacherFragmentViewModel.getClassSubjectDetail().observe(this, responseEvent -> {
+            if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
                 clearData();
+                if (responseEvent.isSuccess()) {
+                    ClassSubjectResponseModel classSubjectResponseModel = responseEvent.getClassSubjectResponseModel();
+                    if (!classSubjectResponseModel.isError()) {
+                        List<ClassSubjectItem> classSubjectItems = classSubjectResponseModel.getClassSubject();
+                        classSubjectItemList.addAll(classSubjectItems);
+                        subjectIdList.addAll(classSubjectItems.get(this.classPos).getClassId().getSubjectId());
 
-                if (!classSubjectResponseModel.isError()) {
-                    List<ClassSubjectItem> classSubjectItems = classSubjectResponseModel.getClassSubject();
-                    classSubjectItemList.addAll(classSubjectItems);
-                    subjectIdList.addAll(classSubjectItems.get(this.classPos).getClassId().getSubjectId());
-
-                    /* Class name String array is get with size of response class_detail  */
-                    class_name = new String[classSubjectItemList.size()];
-                    class_id = new String[classSubjectItemList.size()];
-                    for (int i = 0; i < classSubjectItemList.size(); i++) {
-                        class_name[i] = classSubjectItemList.get(i).getClassId().getName();
-                        class_id[i] = classSubjectItemList.get(i).getClassId().getId();
+                        /* Class name String array is get with size of response class_detail  */
+                        class_name = new String[classSubjectItemList.size()];
+                        class_id = new String[classSubjectItemList.size()];
+                        for (int i = 0; i < classSubjectItemList.size(); i++) {
+                            class_name[i] = classSubjectItemList.get(i).getClassId().getName();
+                            class_id[i] = classSubjectItemList.get(i).getClassId().getId();
+                        }
+                        classId = class_id[this.classPos];
+                        tvClass.setText(class_name[this.classPos]);
+                        teacherHomeworkAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getActivity(), classSubjectResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                    classId = class_id[this.classPos];
-                    tvClass.setText(class_name[this.classPos]);
-                    teacherHomeworkAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(getActivity(), classSubjectResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
+
             }
         });
     }

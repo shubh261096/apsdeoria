@@ -6,13 +6,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import com.pb.apszone.service.model.SyllabusResponseModel;
+import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.service.rest.SyllabusRequestModel;
 
 public class SyllabusFragmentViewModel extends AndroidViewModel {
 
-    private MutableLiveData<SyllabusResponseModel> syllabusResponseModelMutableLiveData;
+    private MutableLiveData<Events.SyllabusResponseEvent> syllabusResponseModelMutableLiveData;
     private Repository repository;
     private SyllabusRequestModel syllabusRequestModel;
 
@@ -28,7 +28,7 @@ public class SyllabusFragmentViewModel extends AndroidViewModel {
         repository.getSyllabus(syllabusRequestModel, syllabusResponseModelMutableLiveData);
     }
 
-    public LiveData<SyllabusResponseModel> getSyllabus() {
+    public LiveData<Events.SyllabusResponseEvent> getSyllabus() {
         return syllabusResponseModelMutableLiveData;
     }
 

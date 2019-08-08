@@ -44,6 +44,7 @@ import static com.pb.apszone.utils.AppConstants.PROFILE_QUALIFICATION;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class ProfileFragment extends BaseFragment {
 
@@ -109,103 +110,107 @@ public class ProfileFragment extends BaseFragment {
     private void observeProfile() {
         profileFragmentViewModel.getProfile().observe(this, responseEvent -> {
             if (responseEvent != null) {
-                ProfileResponseModel profileResponseModel = responseEvent.getProfileResponseModel();
                 progressBar.setVisibility(View.GONE);
 
                 if (profileAdapter != null) {
                     profileAdapter.clearData();
                 }
 
-                /* Showing profile picture by gender */
-                if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
-                    int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
-                    userDp.setImageResource(drawable);
+                if (responseEvent.isSuccess()) {
+                    ProfileResponseModel profileResponseModel = responseEvent.getProfileResponseModel();
+                    /* Showing profile picture by gender */
+                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
+                        int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
+                        userDp.setImageResource(drawable);
+                    }
+                    /* Showing name */
+                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getFullname())) {
+                        userName.setText(profileResponseModel.getProfile().getFullname());
+                    }
+                    /* Showing Id*/
+                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getId())) {
+                        profileValueHashmap.put(PROFILE_ID, profileResponseModel.getProfile().getId());
+                    }
+
+                    /* Checking is uer type is parent */
+                    if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
+                        /* If user type is parent then user class is visible */
+                        if (!TextUtils.isEmpty(profileResponseModel.getProfile().getClassId().getName())) {
+                            userClass.setVisibility(View.VISIBLE);
+                            userClass.setText(profileResponseModel.getProfile().getClassId().getName());
+                        }
+
+                        /* Checking if student email is empty then show father's email here which is at position 0 */
+                        if (!TextUtils.isEmpty(profileResponseModel.getProfile().getEmail())) {
+                            profileValueHashmap.put(PROFILE_EMAIL, profileResponseModel.getProfile().getEmail());
+                        } else if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getEmail())) {
+                            profileValueHashmap.put(PROFILE_EMAIL, profileResponseModel.getProfile().getParent().get(0).getEmail());
+                        }
+
+                        /* Checking if student phone is empty then show father's phone here which is at position 0 */
+                        if (!TextUtils.isEmpty(profileResponseModel.getProfile().getPhone())) {
+                            profileValueHashmap.put(PROFILE_PHONE, profileResponseModel.getProfile().getPhone());
+                        } else if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getPhone())) {
+                            profileValueHashmap.put(PROFILE_PHONE, profileResponseModel.getProfile().getParent().get(0).getPhone());
+                        }
+
+                        /* Showing father's address which is at position 0 of parent */
+                        if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getAddress())) {
+                            profileValueHashmap.put(PROFILE_ADDRESS, profileResponseModel.getProfile().getParent().get(0).getAddress());
+                        }
+
+                        /* Showing father's name which is at position 0 of parent */
+                        if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getFullname())) {
+                            profileValueHashmap.put(PROFILE_FATHER_NAME, profileResponseModel.getProfile().getParent().get(0).getFullname());
+                        }
+
+                        /* Showing mother's name which is at position 1 of parent */
+                        if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(1).getFullname())) {
+                            profileValueHashmap.put(PROFILE_MOTHER_NAMW, profileResponseModel.getProfile().getParent().get(1).getFullname());
+                        }
+
+                        /* Showing guardian's name which is at position 2 of parent */
+                        if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(2).getFullname())) {
+                            profileValueHashmap.put(PROFILE_GUARDIAN_NAME, profileResponseModel.getProfile().getParent().get(2).getFullname());
+                        }
+                    } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) { /* Checking if user type is teacher */
+                        /* Showing teacher's email */
+                        if (!TextUtils.isEmpty(profileResponseModel.getProfile().getEmail())) {
+                            profileValueHashmap.put(PROFILE_EMAIL, profileResponseModel.getProfile().getEmail());
+                        }
+                        /* Showing teacher's phone */
+                        if (!TextUtils.isEmpty(profileResponseModel.getProfile().getPhone())) {
+                            profileValueHashmap.put(PROFILE_PHONE, profileResponseModel.getProfile().getPhone());
+                        }
+                        /* Showing teacher's address */
+                        if (!TextUtils.isEmpty(profileResponseModel.getProfile().getAddress())) {
+                            profileValueHashmap.put(PROFILE_ADDRESS, profileResponseModel.getProfile().getAddress());
+                        }
+                        /* Showing teacher's qualification */
+                        if (!TextUtils.isEmpty(profileResponseModel.getProfile().getQualification())) {
+                            profileValueHashmap.put(PROFILE_QUALIFICATION, profileResponseModel.getProfile().getQualification());
+                        }
+                        /* Showing teacher's father name */
+                        if (!TextUtils.isEmpty(profileResponseModel.getProfile().getFatherName())) {
+                            profileValueHashmap.put(PROFILE_FATHER_NAME, profileResponseModel.getProfile().getFatherName());
+                        }
+                        /* Showing teacher's mother name */
+                        if (!TextUtils.isEmpty(profileResponseModel.getProfile().getMotherName())) {
+                            profileValueHashmap.put(PROFILE_MOTHER_NAMW, profileResponseModel.getProfile().getMotherName());
+                        }
+                        /* Showing teacher's husband name */
+                        if (!TextUtils.isEmpty(profileResponseModel.getProfile().getHusbandName())) {
+                            profileValueHashmap.put(PROFILE_HUSBAND_NAME, profileResponseModel.getProfile().getHusbandName());
+                        }
+                    }
+                    /* Showing Date of birth */
+                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getDob())) {
+                        profileValueHashmap.put(PROFILE_DOB, profileResponseModel.getProfile().getDob());
+                    }
+                    profileAdapter.notifyDataSetChanged();
+                } else {
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
-                /* Showing name */
-                if (!TextUtils.isEmpty(profileResponseModel.getProfile().getFullname())) {
-                    userName.setText(profileResponseModel.getProfile().getFullname());
-                }
-                /* Showing Id*/
-                if (!TextUtils.isEmpty(profileResponseModel.getProfile().getId())) {
-                    profileValueHashmap.put(PROFILE_ID, profileResponseModel.getProfile().getId());
-                }
-
-                /* Checking is uer type is parent */
-                if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
-                    /* If user type is parent then user class is visible */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getClassId().getName())) {
-                        userClass.setVisibility(View.VISIBLE);
-                        userClass.setText(profileResponseModel.getProfile().getClassId().getName());
-                    }
-
-                    /* Checking if student email is empty then show father's email here which is at position 0 */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getEmail())) {
-                        profileValueHashmap.put(PROFILE_EMAIL, profileResponseModel.getProfile().getEmail());
-                    } else if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getEmail())) {
-                        profileValueHashmap.put(PROFILE_EMAIL, profileResponseModel.getProfile().getParent().get(0).getEmail());
-                    }
-
-                    /* Checking if student phone is empty then show father's phone here which is at position 0 */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getPhone())) {
-                        profileValueHashmap.put(PROFILE_PHONE, profileResponseModel.getProfile().getPhone());
-                    } else if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getPhone())) {
-                        profileValueHashmap.put(PROFILE_PHONE, profileResponseModel.getProfile().getParent().get(0).getPhone());
-                    }
-
-                    /* Showing father's address which is at position 0 of parent */
-                    if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getAddress())) {
-                        profileValueHashmap.put(PROFILE_ADDRESS, profileResponseModel.getProfile().getParent().get(0).getAddress());
-                    }
-
-                    /* Showing father's name which is at position 0 of parent */
-                    if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getFullname())) {
-                        profileValueHashmap.put(PROFILE_FATHER_NAME, profileResponseModel.getProfile().getParent().get(0).getFullname());
-                    }
-
-                    /* Showing mother's name which is at position 1 of parent */
-                    if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(1).getFullname())) {
-                        profileValueHashmap.put(PROFILE_MOTHER_NAMW, profileResponseModel.getProfile().getParent().get(1).getFullname());
-                    }
-
-                    /* Showing guardian's name which is at position 2 of parent */
-                    if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(2).getFullname())) {
-                        profileValueHashmap.put(PROFILE_GUARDIAN_NAME, profileResponseModel.getProfile().getParent().get(2).getFullname());
-                    }
-                } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) { /* Checking if user type is teacher */
-                    /* Showing teacher's email */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getEmail())) {
-                        profileValueHashmap.put(PROFILE_EMAIL, profileResponseModel.getProfile().getEmail());
-                    }
-                    /* Showing teacher's phone */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getPhone())) {
-                        profileValueHashmap.put(PROFILE_PHONE, profileResponseModel.getProfile().getPhone());
-                    }
-                    /* Showing teacher's address */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getAddress())) {
-                        profileValueHashmap.put(PROFILE_ADDRESS, profileResponseModel.getProfile().getAddress());
-                    }
-                    /* Showing teacher's qualification */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getQualification())) {
-                        profileValueHashmap.put(PROFILE_QUALIFICATION, profileResponseModel.getProfile().getQualification());
-                    }
-                    /* Showing teacher's father name */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getFatherName())) {
-                        profileValueHashmap.put(PROFILE_FATHER_NAME, profileResponseModel.getProfile().getFatherName());
-                    }
-                    /* Showing teacher's mother name */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getMotherName())) {
-                        profileValueHashmap.put(PROFILE_MOTHER_NAMW, profileResponseModel.getProfile().getMotherName());
-                    }
-                    /* Showing teacher's husband name */
-                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getHusbandName())) {
-                        profileValueHashmap.put(PROFILE_HUSBAND_NAME, profileResponseModel.getProfile().getHusbandName());
-                    }
-                }
-                /* Showing Date of birth */
-                if (!TextUtils.isEmpty(profileResponseModel.getProfile().getDob())) {
-                    profileValueHashmap.put(PROFILE_DOB, profileResponseModel.getProfile().getDob());
-                }
-                profileAdapter.notifyDataSetChanged();
             }
         });
     }

@@ -22,7 +22,9 @@ import android.widget.Toast;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.AttendanceItem;
 import com.pb.apszone.service.model.ClassDetailItem;
+import com.pb.apszone.service.model.ClassDetailResponseModel;
 import com.pb.apszone.service.model.StudentsItem;
+import com.pb.apszone.service.model.SubmitAttendanceResponseModel;
 import com.pb.apszone.service.rest.SubmitAttendanceRequestModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.TeacherAttendanceAdapter;
@@ -44,6 +46,7 @@ import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.CommonUtils.getTodayDate;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBoxCheckedListener {
 
@@ -114,64 +117,76 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     }
 
     private void observeAttendance() {
-        attendanceTeacherFragmentViewModel.getClassDetail().observe(this, classDetailResponseModel -> {
-            if (classDetailResponseModel != null) {
+        attendanceTeacherFragmentViewModel.getClassDetail().observe(this, responseEvent -> {
+            if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
                 clearData();
 
-                if (!classDetailResponseModel.isError()) {
-                    List<ClassDetailItem> classDetailItems = classDetailResponseModel.getClassDetail();
-                    classDetailItemList.addAll(classDetailItems);
+                if (responseEvent.isSuccess()) {
+                    ClassDetailResponseModel classDetailResponseModel = responseEvent.getClassDetailResponseModel();
+                    if (!classDetailResponseModel.isError()) {
+                        List<ClassDetailItem> classDetailItems = classDetailResponseModel.getClassDetail();
+                        classDetailItemList.addAll(classDetailItems);
 
-                    if (classDetailItems.get(this.classPos).getClassId().getStudents() != null) {
+                        if (classDetailItems.get(this.classPos).getClassId().getStudents() != null) {
 
-                        // Add attendance item value here if attendance is null
-                        for (int i = 0; i < classDetailItems.get(this.classPos).getClassId().getStudents().size(); i++) {
-                            if (classDetailItems.get(this.classPos).getClassId().getStudents().get(i).getAttendance() == null) {
-                                AttendanceItem attendanceItem = new AttendanceItem();
-                                attendanceItem.setTimetableId(classDetailItems.get(this.classPos).getTimetableId());
-                                attendanceItem.setStudentId(classDetailItems.get(this.classPos).getClassId().getStudents().get(i).getId());
-                                attendanceItem.setDate(this.today_date);
-                                attendanceItem.setStatus("0");
-                                attendanceItem.setRemarks("Absent");
-                                classDetailItems.get(this.classPos).getClassId().getStudents().get(i).setAttendance(attendanceItem);
-                                updateUI(false, true);
-                                isEdit = false;
-                            } else {
-                                updateUI(true, false);
-                                isEdit = true;
+                            // Add attendance item value here if attendance is null
+                            for (int i = 0; i < classDetailItems.get(this.classPos).getClassId().getStudents().size(); i++) {
+                                if (classDetailItems.get(this.classPos).getClassId().getStudents().get(i).getAttendance() == null) {
+                                    AttendanceItem attendanceItem = new AttendanceItem();
+                                    attendanceItem.setTimetableId(classDetailItems.get(this.classPos).getTimetableId());
+                                    attendanceItem.setStudentId(classDetailItems.get(this.classPos).getClassId().getStudents().get(i).getId());
+                                    attendanceItem.setDate(this.today_date);
+                                    attendanceItem.setStatus("0");
+                                    attendanceItem.setRemarks("Absent");
+                                    classDetailItems.get(this.classPos).getClassId().getStudents().get(i).setAttendance(attendanceItem);
+                                    updateUI(false, true);
+                                    isEdit = false;
+                                } else {
+                                    updateUI(true, false);
+                                    isEdit = true;
+                                }
                             }
+                            studentsItemList.addAll(classDetailItems.get(this.classPos).getClassId().getStudents());
+                        } else {
+                            Toast.makeText(getContext(), "No students found", Toast.LENGTH_SHORT).show();
                         }
-                        studentsItemList.addAll(classDetailItems.get(this.classPos).getClassId().getStudents());
-                    } else {
-                        Toast.makeText(getContext(), "No students found", Toast.LENGTH_SHORT).show();
-                    }
-                    teacherAttendanceAdapter.notifyDataSetChanged();
+                        teacherAttendanceAdapter.notifyDataSetChanged();
 
-                    /* Class name String array is get with size of response class_detail  */
-                    class_name = new String[classDetailItemList.size()];
-                    for (int i = 0; i < classDetailItemList.size(); i++) {
-                        class_name[i] = classDetailItemList.get(i).getClassId().getName();
+                        /* Class name String array is get with size of response class_detail  */
+                        class_name = new String[classDetailItemList.size()];
+                        for (int i = 0; i < classDetailItemList.size(); i++) {
+                            class_name[i] = classDetailItemList.get(i).getClassId().getName();
+                        }
+                        tvClass.setText(class_name[this.classPos]);
+                    } else {
+                        tvClass.setText(null);
+                        class_name = null;
+                        tvNoData.setVisibility(View.VISIBLE);
                     }
-                    tvClass.setText(class_name[this.classPos]);
                 } else {
-                    tvClass.setText(null);
-                    class_name = null;
-                    tvNoData.setVisibility(View.VISIBLE);
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });
     }
 
     private void observeSubmitAttendance() {
-        attendanceTeacherFragmentViewModel.getSubmitResponse().observe(this, submitAttendanceResponseModel -> {
-            if (submitAttendanceResponseModel != null) {
+        attendanceTeacherFragmentViewModel.getSubmitResponse().observe(this, responseEvent -> {
+            if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), submitAttendanceResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
-                if (!submitAttendanceResponseModel.isError()) {
-                    clearData();
-                    subscribe();
+
+                clearData();
+
+                if (responseEvent.isSuccess()) {
+                    SubmitAttendanceResponseModel submitAttendanceResponseModel = responseEvent.getSubmitAttendanceResponseModel();
+                    Toast.makeText(getContext(), submitAttendanceResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (!submitAttendanceResponseModel.isError()) {
+                        subscribe();
+                    }
+                } else {
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });

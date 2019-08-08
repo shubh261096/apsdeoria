@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.FeesItem;
+import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.FeesAdapter;
 import com.pb.apszone.viewModel.FeesFragmentViewModel;
@@ -36,6 +37,7 @@ import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
 import static com.pb.apszone.utils.CommonUtils.capitalize;
 import static com.pb.apszone.utils.CommonUtils.getCurrentMonth;
 import static com.pb.apszone.utils.CommonUtils.getCurrentYear;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 import static com.pb.apszone.utils.CommonUtils.showLateFeeAlertDialog;
 
 public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetailItemClick {
@@ -108,20 +110,26 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
         tvNoData.setVisibility(View.GONE);
         feeDeadlineNotice.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-        feesFragmentViewModel.getFees().observe(this, feesResponseModel -> {
-            if (feesResponseModel != null) {
+        feesFragmentViewModel.getFees().observe(this, responseEvent -> {
+            if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
                 if (feesAdapter != null) {
                     feesAdapter.clearData();
                 }
-                if (!feesResponseModel.isError()) {
-                    List<FeesItem> feesItems = feesResponseModel.getFees();
-                    feesItemList.addAll(feesItems);
-                    feesAdapter.notifyDataSetChanged();
-                    checkForLateFee();
-                    feeDeadlineNotice.setVisibility(View.VISIBLE);
+
+                if (responseEvent.isSuccess()) {
+                    FeesResponseModel feesResponseModel = responseEvent.getFeesResponseModel();
+                    if (!feesResponseModel.isError()) {
+                        List<FeesItem> feesItems = feesResponseModel.getFees();
+                        feesItemList.addAll(feesItems);
+                        feesAdapter.notifyDataSetChanged();
+                        checkForLateFee();
+                        feeDeadlineNotice.setVisibility(View.VISIBLE);
+                    } else {
+                        tvNoData.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    tvNoData.setVisibility(View.VISIBLE);
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });

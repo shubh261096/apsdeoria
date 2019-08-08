@@ -6,13 +6,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import com.pb.apszone.service.model.TimetableResponseModel;
+import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.service.rest.TimetableRequestModel;
 
 public class TimetableFragmentViewModel extends AndroidViewModel {
 
-    private MutableLiveData<TimetableResponseModel> timetableResponseModelMutableLiveData;
+    private MutableLiveData<Events.TimetableResponseEvent> timetableResponseModelMutableLiveData;
     private Repository repository;
     private TimetableRequestModel timetableRequestModel;
 
@@ -35,7 +35,7 @@ public class TimetableFragmentViewModel extends AndroidViewModel {
         repository.getTimetable(timetableRequestModel, filter, user_type, timetableResponseModelMutableLiveData);
     }
 
-    public LiveData<TimetableResponseModel> getTimetable() {
+    public LiveData<Events.TimetableResponseEvent> getTimetable() {
         return timetableResponseModelMutableLiveData;
     }
 

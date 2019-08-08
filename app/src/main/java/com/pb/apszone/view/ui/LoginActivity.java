@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
+import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.utils.SnackbarMessage;
 import com.pb.apszone.utils.SnackbarUtils;
 import com.pb.apszone.view.fragment.ResetPasswordFragment;
@@ -30,6 +31,7 @@ import butterknife.OnTextChanged;
 
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.hideSoftKeyboard;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 
@@ -62,15 +64,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void subscribe() {
-        loginViewModel.getUser().observe(this, loginResponseModel -> {
+        loginViewModel.getUser().observe(this, responseEvent -> {
             hideProgress();
-            if (loginResponseModel != null) {
-                Toast.makeText(LoginActivity.this, loginResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
-                if (!loginResponseModel.isError()) {
-                    loginViewModel.putSharedPrefData(loginResponseModel);
-                    startDashboardActivity();
+            if (responseEvent != null) {
+                if (responseEvent.isSuccess()) {
+                    LoginResponseModel loginResponseModel = responseEvent.getLoginResponseModel();
+                    Toast.makeText(LoginActivity.this, loginResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (!loginResponseModel.isError()) {
+                        loginViewModel.putSharedPrefData(loginResponseModel);
+                        startDashboardActivity();
+                    } else {
+                        forgotPassword.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    forgotPassword.setVisibility(View.VISIBLE);
+                    showInformativeDialog(this, responseEvent.getErrorModel().getMessage());
                 }
             }
         });

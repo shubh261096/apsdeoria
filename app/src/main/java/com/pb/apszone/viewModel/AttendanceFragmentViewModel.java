@@ -6,7 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import com.pb.apszone.service.model.AttendanceResponseModel;
+import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.service.rest.AttendanceRequestModel;
 
@@ -19,7 +19,7 @@ import static com.pb.apszone.utils.CommonUtils.getStringMonthNumber;
 
 public class AttendanceFragmentViewModel extends AndroidViewModel {
 
-    private MutableLiveData<AttendanceResponseModel> attendanceResponseModelMutableLiveData;
+    private MutableLiveData<Events.AttendanceResponseEvent> attendanceResponseModelMutableLiveData;
     private Repository repository;
     private AttendanceRequestModel attendanceRequestModel;
     private List<String> day;
@@ -39,7 +39,7 @@ public class AttendanceFragmentViewModel extends AndroidViewModel {
         repository.getAttendance(attendanceRequestModel, attendanceResponseModelMutableLiveData);
     }
 
-    public LiveData<AttendanceResponseModel> getAttendance() {
+    public LiveData<Events.AttendanceResponseEvent> getAttendance() {
         return attendanceResponseModelMutableLiveData;
     }
 

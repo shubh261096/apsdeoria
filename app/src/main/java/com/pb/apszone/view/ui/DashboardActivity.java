@@ -22,8 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
-import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.model.DashboardItem;
+import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.utils.AutoFitGridLayoutManager;
 import com.pb.apszone.utils.KeyStorePref;
@@ -36,8 +36,8 @@ import com.pb.apszone.view.fragment.HomeworkTeacherFragment;
 import com.pb.apszone.view.fragment.InboxFragment;
 import com.pb.apszone.view.fragment.ProfileFragment;
 import com.pb.apszone.view.fragment.SettingsFragment;
-import com.pb.apszone.view.fragment.TimetableFragment;
 import com.pb.apszone.view.fragment.SyllabusFragment;
+import com.pb.apszone.view.fragment.TimetableFragment;
 import com.pb.apszone.view.listener.OnDashboardItemClickListener;
 import com.pb.apszone.view.receiver.NetworkChangeReceiver;
 import com.pb.apszone.viewModel.DashboardViewModel;
@@ -63,6 +63,7 @@ import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_TIMETABLE;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener {
 
@@ -130,30 +131,34 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
                     }
                     userName.setText(profileResponseModel.getProfile().getFullname());
                 } else {
-                    Toast.makeText(DashboardActivity.this, responseEvent.getErrorModel().getMessage(), Toast.LENGTH_SHORT).show();
+                    showInformativeDialog(this, responseEvent.getErrorModel().getMessage());
                 }
             }
         });
     }
 
     private void observeDashboardUIElements() {
-        dashboardViewModel.getDashboardUIElements().observe(this, dashboardUIResponseModel -> {
-            if (dashboardUIResponseModel != null) {
-                progressBar.setVisibility(View.GONE);
+        dashboardViewModel.getDashboardUIElements().observe(this, responseEvent -> {
+            progressBar.setVisibility(View.GONE);
+            if (responseEvent != null) {
                 /* Clearing data since activity is always active */
                 if (dashboardAdapter != null) {
                     dashboardAdapter.clearData();
                 }
-                if (!dashboardUIResponseModel.isError()) {
-                    List<DashboardItem> dashboardItems = dashboardUIResponseModel.getDashboard();
+                if (responseEvent.isSuccess()) {
+                    DashboardUIResponseModel dashboardUIResponseModel = responseEvent.getDashboardUIResponseModel();
+                    if (!dashboardUIResponseModel.isError()) {
+                        List<DashboardItem> dashboardItems = dashboardUIResponseModel.getDashboard();
 
-                    /* Adding those data to list whose value is enabled */
-                    dashboardItemList.addAll(dashboardViewModel.addListData(dashboardItems, user_type));
-                    dashboardAdapter.notifyDataSetChanged();
+                        /* Adding those data to list whose value is enabled */
+                        dashboardItemList.addAll(dashboardViewModel.addListData(dashboardItems, user_type));
+                        dashboardAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(this, dashboardUIResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(this, dashboardUIResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    showInformativeDialog(this, responseEvent.getErrorModel().getMessage());
                 }
-
             }
         });
     }

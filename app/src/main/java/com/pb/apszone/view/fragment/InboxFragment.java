@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.InboxItem;
+import com.pb.apszone.service.model.InboxResponseModel;
 import com.pb.apszone.view.adapter.InboxAdapter;
 import com.pb.apszone.viewModel.InboxFragmentViewModel;
 
@@ -25,6 +26,8 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class InboxFragment extends BaseFragment {
 
@@ -87,19 +90,24 @@ public class InboxFragment extends BaseFragment {
     }
 
     private void observeInbox() {
-        inboxFragmentViewModel.getInbox().observe(this, inboxResponseModel -> {
-            if (inboxResponseModel != null) {
+        inboxFragmentViewModel.getInbox().observe(this, responseEvent -> {
+            if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
                 if (inboxAdapter != null) {
                     inboxAdapter.clearData();
                 }
-                if (!inboxResponseModel.isError()) {
-                    List<InboxItem> inboxItems = inboxResponseModel.getInbox();
-                    inboxItemList.addAll(inboxItems);
-                    inboxAdapter.notifyDataSetChanged();
+                if (responseEvent.isSuccess()) {
+                    InboxResponseModel inboxResponseModel = responseEvent.getInboxResponseModel();
+                    if (!inboxResponseModel.isError()) {
+                        List<InboxItem> inboxItems = inboxResponseModel.getInbox();
+                        inboxItemList.addAll(inboxItems);
+                        inboxAdapter.notifyDataSetChanged();
+                    } else {
+                        tvNoData.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    tvNoData.setVisibility(View.VISIBLE);
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });

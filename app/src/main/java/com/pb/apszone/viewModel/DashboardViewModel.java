@@ -8,8 +8,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.pb.apszone.service.model.DashboardItem;
-import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
+import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.utils.KeyStorePref;
 
@@ -26,7 +26,7 @@ import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 
 public class DashboardViewModel extends AndroidViewModel {
 
-    private MutableLiveData<DashboardUIResponseModel> dashboardUIResponseModelMutableLiveData;
+    private MutableLiveData<Events.DashboardUIResponseEvent> dashboardUIResponseModelMutableLiveData;
     private KeyStorePref keyStorePref;
     private Repository repository;
 
@@ -41,7 +41,7 @@ public class DashboardViewModel extends AndroidViewModel {
         repository.getDashboardUIElements(dashboardUIResponseModelMutableLiveData);
     }
 
-    public LiveData<DashboardUIResponseModel> getDashboardUIElements() {
+    public LiveData<Events.DashboardUIResponseEvent> getDashboardUIElements() {
         return dashboardUIResponseModelMutableLiveData;
     }
 

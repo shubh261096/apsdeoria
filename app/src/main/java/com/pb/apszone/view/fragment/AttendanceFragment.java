@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.AttendanceItem;
+import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.AttendanceAdapter;
 import com.pb.apszone.viewModel.AttendanceFragmentViewModel;
@@ -35,6 +36,7 @@ import butterknife.Unbinder;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
 import static com.pb.apszone.utils.CommonUtils.getCurrentMonth;
 import static com.pb.apszone.utils.CommonUtils.getCurrentYear;
+import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class AttendanceFragment extends BaseFragment {
 
@@ -107,8 +109,8 @@ public class AttendanceFragment extends BaseFragment {
     }
 
     private void observeAttendance() {
-        attendanceFragmentViewModel.getAttendance().observe(this, attendanceResponseModel -> {
-            if (attendanceResponseModel != null) {
+        attendanceFragmentViewModel.getAttendance().observe(this, responseEvent -> {
+            if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
                 updateUI(0);
@@ -116,20 +118,25 @@ public class AttendanceFragment extends BaseFragment {
                     attendanceAdapter.clearData();
                 }
 
-                if (!attendanceResponseModel.isError()) {
-                    updateUI(1);
-                    day = attendanceFragmentViewModel.setUpList(currentMonth, currentYear);
-                    List<AttendanceItem> attendanceItems = attendanceResponseModel.getAttendance();
-                    attendanceItemList.addAll(attendanceItems);
-                    attendanceAdapter = new AttendanceAdapter(getActivity(), day, attendanceItemList);
-                    rvAttendanceUI.setAdapter(attendanceAdapter);
-                    attendanceAdapter.notifyDataSetChanged();
-                    getPresentAbsentCount();
-                    numPresent.setText(String.format(getString(R.string.present), presentCount));
-                    numAbsent.setText(String.format(getString(R.string.absent), absentCount));
+                if (responseEvent.isSuccess()) {
+                    AttendanceResponseModel attendanceResponseModel = responseEvent.getAttendanceResponseModel();
+                    if (!attendanceResponseModel.isError()) {
+                        updateUI(1);
+                        day = attendanceFragmentViewModel.setUpList(currentMonth, currentYear);
+                        List<AttendanceItem> attendanceItems = attendanceResponseModel.getAttendance();
+                        attendanceItemList.addAll(attendanceItems);
+                        attendanceAdapter = new AttendanceAdapter(getActivity(), day, attendanceItemList);
+                        rvAttendanceUI.setAdapter(attendanceAdapter);
+                        attendanceAdapter.notifyDataSetChanged();
+                        getPresentAbsentCount();
+                        numPresent.setText(String.format(getString(R.string.present), presentCount));
+                        numAbsent.setText(String.format(getString(R.string.absent), absentCount));
+                    } else {
+                        updateUI(0);
+                        tvNoData.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    updateUI(0);
-                    tvNoData.setVisibility(View.VISIBLE);
+                    showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
             }
         });

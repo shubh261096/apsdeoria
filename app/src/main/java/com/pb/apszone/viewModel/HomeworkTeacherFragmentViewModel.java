@@ -6,15 +6,14 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import com.pb.apszone.service.model.ClassSubjectResponseModel;
-import com.pb.apszone.service.model.CommonResponseModel;
+import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.service.rest.HomeworkRequestModel;
 
 public class HomeworkTeacherFragmentViewModel extends AndroidViewModel {
 
-    private MutableLiveData<ClassSubjectResponseModel> classSubjectResponseModelMutableLiveData;
-    private MutableLiveData<CommonResponseModel> commonResponseModelMutableLiveData;
+    private MutableLiveData<Events.ClassSubjectResponseEvent> classSubjectResponseModelMutableLiveData;
+    private MutableLiveData<Events.CommonResponseEvent> commonResponseModelMutableLiveData;
     private Repository repository;
     private HomeworkRequestModel homeworkRequestModel;
 
@@ -35,11 +34,11 @@ public class HomeworkTeacherFragmentViewModel extends AndroidViewModel {
         repository.addHomework(homeworkRequestModel, commonResponseModelMutableLiveData);
     }
 
-    public LiveData<CommonResponseModel> getSubmitResponse() {
+    public LiveData<Events.CommonResponseEvent> getSubmitResponse() {
         return commonResponseModelMutableLiveData;
     }
 
-    public LiveData<ClassSubjectResponseModel> getClassSubjectDetail() {
+    public LiveData<Events.ClassSubjectResponseEvent> getClassSubjectDetail() {
         return classSubjectResponseModelMutableLiveData;
     }
 

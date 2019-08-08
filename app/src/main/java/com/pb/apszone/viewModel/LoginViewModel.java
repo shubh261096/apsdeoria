@@ -9,6 +9,7 @@ import android.text.TextUtils;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.LoginResponseModel;
+import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.service.rest.LoginRequestModel;
 import com.pb.apszone.utils.KeyStorePref;
@@ -19,7 +20,7 @@ import static com.pb.apszone.utils.AppConstants.KEY_USER_LOGIN_STATUS;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 
 public class LoginViewModel extends AndroidViewModel {
-    private MutableLiveData<LoginResponseModel> loginResponseModelMutableLiveData;
+    private MutableLiveData<Events.LoginResponseEvent> loginResponseModelMutableLiveData;
     private Repository repository;
     private LoginRequestModel loginRequestModel;
     private SnackbarMessage snackbarMessage;
@@ -41,7 +42,7 @@ public class LoginViewModel extends AndroidViewModel {
         repository.checkLogin(loginRequestModel, loginResponseModelMutableLiveData);
     }
 
-    public LiveData<LoginResponseModel> getUser() {
+    public LiveData<Events.LoginResponseEvent> getUser() {
         return loginResponseModelMutableLiveData;
     }
 
