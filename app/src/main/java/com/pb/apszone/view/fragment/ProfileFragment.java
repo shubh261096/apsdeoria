@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pb.apszone.R;
+import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.ProfileAdapter;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
@@ -106,8 +107,9 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void observeProfile() {
-        profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
-            if (profileResponseModel != null) {
+        profileFragmentViewModel.getProfile().observe(this, responseEvent -> {
+            if (responseEvent != null) {
+                ProfileResponseModel profileResponseModel = responseEvent.getProfileResponseModel();
                 progressBar.setVisibility(View.GONE);
 
                 if (profileAdapter != null) {

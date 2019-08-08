@@ -6,11 +6,14 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pb.apszone.service.model.AttendanceResponseModel;
 import com.pb.apszone.service.model.ClassDetailResponseModel;
 import com.pb.apszone.service.model.ClassSubjectResponseModel;
 import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
+import com.pb.apszone.service.model.ErrorModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.service.model.InboxResponseModel;
@@ -32,6 +35,7 @@ import com.pb.apszone.service.rest.SyllabusRequestModel;
 import com.pb.apszone.service.rest.TimetableRequestModel;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +46,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.pb.apszone.utils.AppConstants.ErrorConstants.BAD_REQUEST_ERROR;
+import static com.pb.apszone.utils.AppConstants.ErrorConstants.SERVER_ERROR;
+import static com.pb.apszone.utils.AppConstants.ErrorConstants.SOCKET_ERROR;
+import static com.pb.apszone.utils.AppConstants.ErrorConstants.UNKNOWN_ERROR;
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_DAY;
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_WEEK;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
@@ -88,7 +96,7 @@ public class Repository {
     }
 
     /* Profile Request */
-    public void getProfile(ProfileRequestModel profileRequestModel, MutableLiveData<ProfileResponseModel> profileResponseModelMutableLiveData) {
+    public void getProfile(ProfileRequestModel profileRequestModel, MutableLiveData<Events.ProfileFragmentResponseEvent> profileResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("id", profileRequestModel.getId());
         params.put("type", profileRequestModel.getType());
@@ -98,17 +106,29 @@ public class Repository {
                     public void onResponse(@NonNull Call<ProfileResponseModel> call, @Nullable Response<ProfileResponseModel> response) {
                         if (response != null) {
                             if (response.isSuccessful()) {
-                                profileResponseModelMutableLiveData.postValue(response.body());
+                                profileResponseModelMutableLiveData.
+                                        postValue(new Events.ProfileFragmentResponseEvent(null, true, response.body()));
                             } else {
-                                handleResponseCode(response.code());
+                                if (response.errorBody() != null) {
+                                    profileResponseModelMutableLiveData.
+                                            postValue(new Events.ProfileFragmentResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    profileResponseModelMutableLiveData.
+                                            postValue(new Events.ProfileFragmentResponseEvent(errorModel, false, null));
+                                }
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<ProfileResponseModel> call, Throwable t) {
-                        handleFailureResponse(t);
-                        profileResponseModelMutableLiveData.postValue(null);
+                    public void onFailure(@NonNull Call<ProfileResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        profileResponseModelMutableLiveData.
+                                postValue(new Events.ProfileFragmentResponseEvent(errorModel, false, null));
                     }
                 });
     }
@@ -537,11 +557,30 @@ public class Repository {
     }
 
     /* Handle Retrofit Response Failure */
-    private void handleFailureResponse(Throwable throwable) {
+    private String handleFailureResponse(Throwable throwable) {
         if (throwable instanceof IOException) {
             Log.i("Network Error ", throwable.getMessage());
+            return SOCKET_ERROR;
         } else {
             Log.i("Unknown Error ", throwable.getMessage());
+            return UNKNOWN_ERROR;
         }
+    }
+
+    private ErrorModel buildErrorModel(int responseCode, ResponseBody body) {
+        Gson gson = new GsonBuilder().create();
+        ErrorModel mError = new ErrorModel();
+        try {
+            mError = gson.fromJson(body.string(), ErrorModel.class);
+        } catch (Exception e) {
+            if (responseCode >= HttpURLConnection.HTTP_BAD_REQUEST && responseCode < HttpURLConnection.HTTP_INTERNAL_ERROR) {
+                mError.setMessage(BAD_REQUEST_ERROR);
+            } else if (responseCode >= HttpURLConnection.HTTP_INTERNAL_ERROR && responseCode < (HttpURLConnection.HTTP_INTERNAL_ERROR + 100)) {
+                mError.setMessage(SERVER_ERROR);
+            } else {
+                mError.setMessage(UNKNOWN_ERROR);
+            }
+        }
+        return mError;
     }
 }

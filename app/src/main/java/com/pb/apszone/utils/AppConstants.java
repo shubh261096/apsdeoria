@@ -55,10 +55,18 @@ public class AppConstants {
     public final static String KEY_DASHBOARD_ELEMENT_NAME = "key_dashboard_element_name";
 
     /* KEY CONSTANT VALUES */
-    public final static int READ_EXTERNAL_STORAGE_CODE = 101 ;
-    public final static  int PDF_REQ_CODE = 901;
+    public final static int READ_EXTERNAL_STORAGE_CODE = 101;
+    public final static int PDF_REQ_CODE = 901;
 
     /* CONSTANT APP URL AND INFO */
     public final static String PRIVACY_POLICY_URL = "http://www.apsdeoria.com/privacy-policy.html";
     public final static String WEBSITE_URL = "http://www.apsdeoria.com/";
+
+    /* ERROR CONSTANTS USED IN REPOSITORY */
+    public interface ErrorConstants {
+        String SERVER_ERROR = "Unable to process your request. \nPlease try again later.";
+        String BAD_REQUEST_ERROR = "Unable to process your request. \nPlease try again later.";
+        String UNKNOWN_ERROR = "Unable to process your request. \nPlease try again later.";
+        String SOCKET_ERROR = "Unable to connect with the server.\nPlease try again later.";
+    }
 }

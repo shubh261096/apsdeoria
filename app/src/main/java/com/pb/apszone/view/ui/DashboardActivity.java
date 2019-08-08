@@ -22,7 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
+import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.model.DashboardItem;
+import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.utils.AutoFitGridLayoutManager;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.DashboardAdapter;
@@ -117,14 +119,19 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     }
 
     private void observeProfile() {
-        profileFragmentViewModel.getProfile().observe(this, profileResponseModel -> {
-            if (profileResponseModel != null) {
-                dashboardViewModel.putSharedPrefData(profileResponseModel); // Adding SharedPref in case student/parent
-                if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
-                    int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
-                    userDp.setImageResource(drawable);
+        profileFragmentViewModel.getProfile().observe(this, responseEvent -> {
+            if (responseEvent != null) {
+                if (responseEvent.isSuccess()) {
+                    ProfileResponseModel profileResponseModel = responseEvent.getProfileResponseModel();
+                    dashboardViewModel.putSharedPrefData(profileResponseModel); // Adding SharedPref in case student/parent
+                    if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
+                        int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
+                        userDp.setImageResource(drawable);
+                    }
+                    userName.setText(profileResponseModel.getProfile().getFullname());
+                } else {
+                    Toast.makeText(DashboardActivity.this, responseEvent.getErrorModel().getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                userName.setText(profileResponseModel.getProfile().getFullname());
             }
         });
     }
