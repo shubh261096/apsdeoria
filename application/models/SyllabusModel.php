@@ -35,9 +35,9 @@ class SyllabusModel extends CI_model
     }
 
     /* Teacher - Query to update syllabus data */
-    public function update_Syllabus($subject_id, $path)
+    public function update_Syllabus($subject_id, $subject_description, $path)
     {
-        $sql = 'UPDATE subject SET syllabus = "' . $path . '" WHERE id = "' . $subject_id . '"';
+        $sql = 'UPDATE subject SET syllabus = "' . $path . '" , description = "' . $subject_description . '" WHERE id = "' . $subject_id . '"';
         $query = $this->db->query($sql);
         if ($query) {
             return TRUE;

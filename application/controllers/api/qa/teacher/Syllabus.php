@@ -33,6 +33,7 @@ class Syllabus extends REST_Controller
   public function update_post()
   {
     $subject_id = $this->input->post('subject_id');
+    $subject_description = $this->input->post('subject_description');
     $config = [
       'upload_path' => 'asset/pdf/syllabus/',
       'allowed_types' => 'pdf|doc|docx',
@@ -44,7 +45,7 @@ class Syllabus extends REST_Controller
       $data = $this->upload->data();
       $path = base_url($config['upload_path'] . $data['raw_name'] . $data['file_ext']);
       if (!empty($path)) {
-        if ($this->SyllabusModel->update_Syllabus($subject_id, $path)) {
+        if ($this->SyllabusModel->update_Syllabus($subject_id, $subject_description, $path)) {
           $response['error'] = false;
           $response['message'] = "Added Successfully";
           $this->response($response, REST_Controller::HTTP_OK);
