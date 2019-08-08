@@ -1,6 +1,7 @@
 package com.pb.apszone.view.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -9,15 +10,20 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -212,8 +218,8 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
         syllabusTeacherFragmentViewModel.sendRequest(subject_id);
     }
 
-    private void subscribeUpdateSyllabus(File file, String subject_id) {
-        syllabusTeacherFragmentViewModel.updateRequest(file, subject_id);
+    private void subscribeUpdateSyllabus(File file, String subject_id, String subject_description) {
+        syllabusTeacherFragmentViewModel.updateRequest(file, subject_id, subject_description);
     }
 
     @Override
@@ -319,14 +325,69 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
             Uri uri = data.getData();
             if (uri != null) {
                 if (isValidFileType(Objects.requireNonNull(uri.getPath()))) {
-                    showProgress(getContext(), "Please wait while we upload the syllabus.");
                     isPDFSelected = true;
                     File file = new File(Objects.requireNonNull(getUriRealPath(getActivity(), uri)));
-                    subscribeUpdateSyllabus(file, this.subjectId);
+                    showAddSyllabusDescriptionAlertDialog(file, this.subjectId);
                 } else {
                     Toast.makeText(getContext(), "Please select a valid pdf file", Toast.LENGTH_SHORT).show();
                 }
             }
         }
+    }
+
+    private void showAddSyllabusDescriptionAlertDialog(File file, String subjectId) {
+        LayoutInflater inflater = this.getLayoutInflater();
+        @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.dialog_add_syllabus_description, null, false);
+
+        TextInputLayout tilDescription = dialogView.findViewById(R.id.til_description);
+        EditText description = dialogView.findViewById(R.id.description);
+        Button addSyllabus = dialogView.findViewById(R.id.add_syllabus);
+
+        description.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence text, int start, int before, int count) {
+                if (!TextUtils.isEmpty(text)) {
+                    if (tilDescription.isErrorEnabled()) {
+                        tilDescription.setErrorEnabled(false);
+                        tilDescription.setHelperTextEnabled(true);
+                    } else {
+                        tilDescription.setHelperTextEnabled(true);
+                    }
+                } else {
+                    tilDescription.setError("Description is required");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        //Now we need an AlertDialog.Builder object
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.Theme_AppCompat_Dialog);
+        builder.setView(dialogView);
+
+        //finally creating the alert dialog and displaying it
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        addSyllabus.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(Objects.requireNonNull(tilDescription.getEditText()).getText().toString().trim())) {
+                tilDescription.setError("Description is required");
+                return;
+            }
+
+            String subject_description = tilDescription.getEditText().getText().toString().trim();
+            alertDialog.dismiss();
+            showProgress(getContext(), "Please wait while we upload the syllabus.");
+            subscribeUpdateSyllabus(file, subjectId, subject_description);
+        });
+        alertDialog.show();
     }
 }

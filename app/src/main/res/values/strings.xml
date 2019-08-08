@@ -97,6 +97,9 @@
     <string name="helper_remarks">Homework remarks if any</string>
     <string name="hint_description">Description</string>
     <string name="helper_description">Homework Description</string>
+    <string name="label_add">Add</string>
+    <string name="helper_subject_description">Write here some subject description</string>
+    <string name="label_subject_description">Subject Description</string>
 
     <string-array name="day">
         <item>Monday</item>

@@ -34,11 +34,12 @@ public class SyllabusTeacherFragmentViewModel extends AndroidViewModel {
         repository.checkSyllabus(syllabusRequestModel, commonResponseModelMutableLiveData);
     }
 
-    public void updateRequest(File file, String subject_id) {
+    public void updateRequest(File file, String subject_id, String subject_description) {
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("pdf/*"), file);
         RequestBody subjectId = RequestBody.create(MediaType.parse("text/plain"), subject_id);
+        RequestBody subjectDescription = RequestBody.create(MediaType.parse("text/plain"), subject_description);
         MultipartBody.Part part = MultipartBody.Part.createFormData("pdfData", file.getName(), fileReqBody);
-        repository.updateSyllabus(part, subjectId, commonResponseModelMutableLiveData);
+        repository.updateSyllabus(part, subjectId, subjectDescription, commonResponseModelMutableLiveData);
     }
 
     public LiveData<Events.CommonResponseEvent> checkResponse() {

@@ -86,7 +86,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("teacher/Syllabus/update")
-    Call<CommonResponseModel> updateSyllabus(@Part MultipartBody.Part file, @Part("subject_id") RequestBody subject_id);
+    Call<CommonResponseModel> updateSyllabus(@Part MultipartBody.Part file, @Part("subject_id") RequestBody subject_id, @Part("subject_description") RequestBody subject_description);
 
     @POST("Login/validate")
     @FormUrlEncoded

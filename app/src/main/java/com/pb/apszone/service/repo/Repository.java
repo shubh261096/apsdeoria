@@ -644,8 +644,8 @@ public class Repository {
     }
 
     /* Update Syllabus Request */
-    public void updateSyllabus(MultipartBody.Part file, RequestBody subject_id, MutableLiveData<Events.CommonResponseEvent> commonResponseModelMutableLiveData) {
-        apiService.updateSyllabus(file, subject_id)
+    public void updateSyllabus(MultipartBody.Part file, RequestBody subject_id, RequestBody subject_description, MutableLiveData<Events.CommonResponseEvent> commonResponseModelMutableLiveData) {
+        apiService.updateSyllabus(file, subject_id, subject_description)
                 .enqueue(new Callback<CommonResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {

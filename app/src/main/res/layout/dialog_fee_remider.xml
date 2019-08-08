@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/dp_10"
-            android:background="@drawable/edit_style"
+            android:background="@drawable/corner_style"
             android:text="@string/ok"
             android:textColor="@color/colorPrimary" />
 
