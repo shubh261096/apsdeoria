@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import com.pb.apszone.R;
 import com.pb.apszone.viewModel.SharedViewModel;
 
+import java.util.Objects;
+
 public abstract class BaseFragment extends Fragment {
 
     LinearLayout includeNetworkLayout;
@@ -30,7 +32,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        includeNetworkLayout = getActivity().findViewById(R.id.includeNetworkLayout);
+        includeNetworkLayout = Objects.requireNonNull(getActivity()).findViewById(R.id.includeNetworkLayout);
         sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
         observeInternetChange();
 

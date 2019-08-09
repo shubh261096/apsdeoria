@@ -27,7 +27,6 @@ import static com.pb.apszone.utils.CommonUtils.isTimeBetweenTwoTime;
 public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.TimetableViewHolder> {
 
     private final List<TimetableItem> timetableItemList;
-    private Context context;
     private String user_type;
 
     static class TimetableViewHolder extends RecyclerView.ViewHolder {
@@ -52,9 +51,8 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.Time
         }
     }
 
-    public TimetableAdapter(List<TimetableItem> timetableItemList, Context context, String user_type) {
+    public TimetableAdapter(List<TimetableItem> timetableItemList, String user_type) {
         this.timetableItemList = timetableItemList;
-        this.context = context;
         this.user_type = user_type;
     }
 

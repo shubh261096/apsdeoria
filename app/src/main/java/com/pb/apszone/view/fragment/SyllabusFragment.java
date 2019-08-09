@@ -75,7 +75,7 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
         unbinder = ButterKnife.bind(this, view);
         syllabusItemList = new ArrayList<>();
         rvSyllabus.setLayoutManager(new LinearLayoutManager(getActivity()));
-        syllabusAdapter = new SyllabusAdapter(syllabusItemList, getActivity(), this);
+        syllabusAdapter = new SyllabusAdapter(syllabusItemList, this);
         rvSyllabus.setAdapter(syllabusAdapter);
         toolbarSyllabus.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         downloadBroadcastReceiver = new DownloadBroadcastReceiver();
@@ -151,7 +151,7 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
             if (URLUtil.isValidUrl(syllabusItemList.get(position).getSyllabus())) {
                 KEY_DOWNLOAD_ID = beginDownload(syllabusItemList.get(position).getSyllabus(), getContext());
             } else {
-                Toast.makeText(getContext(), "Not a valid URL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
             }
         }
     }

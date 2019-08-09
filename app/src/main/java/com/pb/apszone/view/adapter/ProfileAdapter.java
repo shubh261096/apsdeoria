@@ -19,7 +19,6 @@ import butterknife.ButterKnife;
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder> {
 
     private final HashMap<String, String> profileValueHashmap;
-    private Context context;
 
     static class ProfileViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.input_text_key)
@@ -33,9 +32,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         }
     }
 
-    public ProfileAdapter(HashMap<String, String> profileValueHashmap, Context context) {
+    public ProfileAdapter(HashMap<String, String> profileValueHashmap) {
         this.profileValueHashmap = profileValueHashmap;
-        this.context = context;
     }
 
     @NonNull

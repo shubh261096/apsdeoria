@@ -86,7 +86,7 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
         unbinder = ButterKnife.bind(this, view);
         timetableItemList = new ArrayList<>();
         rvTimetable.setLayoutManager(new LinearLayoutManager(getActivity()));
-        timetableAdapter = new TimetableAdapter(timetableItemList, getActivity(), user_type);
+        timetableAdapter = new TimetableAdapter(timetableItemList, user_type);
         rvTimetable.setAdapter(timetableAdapter);
         toolbarTimetable.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         day = getDayOfWeek();

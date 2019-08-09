@@ -315,7 +315,7 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQ_CODE);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.msg_select_pdf)), PDF_REQ_CODE);
     }
 
     @Override
@@ -329,7 +329,7 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
                     File file = new File(Objects.requireNonNull(getUriRealPath(getActivity(), uri)));
                     showAddSyllabusDescriptionAlertDialog(file, this.subjectId);
                 } else {
-                    Toast.makeText(getContext(), "Please select a valid pdf file", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.msg_invalid_pdf), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -359,7 +359,7 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
                         tilDescription.setHelperTextEnabled(true);
                     }
                 } else {
-                    tilDescription.setError("Description is required");
+                    tilDescription.setError(getString(R.string.msg_description_required));
                 }
             }
 
@@ -379,13 +379,13 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
         alertDialog.setCanceledOnTouchOutside(false);
         addSyllabus.setOnClickListener(v -> {
             if (TextUtils.isEmpty(Objects.requireNonNull(tilDescription.getEditText()).getText().toString().trim())) {
-                tilDescription.setError("Description is required");
+                tilDescription.setError(getString(R.string.msg_description_required));
                 return;
             }
 
             String subject_description = tilDescription.getEditText().getText().toString().trim();
             alertDialog.dismiss();
-            showProgress(getContext(), "Please wait while we upload the syllabus.");
+            showProgress(getContext(), getString(R.string.msg_wait_upload_syllabus));
             subscribeUpdateSyllabus(file, subjectId, subject_description);
         });
         alertDialog.show();

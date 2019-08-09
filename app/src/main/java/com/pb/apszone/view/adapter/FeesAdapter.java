@@ -17,6 +17,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.pb.apszone.utils.AppConstants.Numbers.ZERO;
+
 public class FeesAdapter extends RecyclerView.Adapter<FeesAdapter.FeesViewHolder> {
 
     private final List<FeesItem> feesItemList;
@@ -72,7 +74,7 @@ public class FeesAdapter extends RecyclerView.Adapter<FeesAdapter.FeesViewHolder
         }
         if (!TextUtils.isEmpty(feesItem.getDueAmount())) {
             feesViewHolder.dueAmount.setText(String.format("%s %s", context.getString(R.string.rupee_symbol), feesItem.getDueAmount()));
-            if (TextUtils.equals(feesItem.getDueAmount(), "0")) {
+            if (TextUtils.equals(feesItem.getDueAmount(), ZERO)) {
                 feesViewHolder.dueAmount.setTextColor(context.getResources().getColor(R.color.green));
             } else {
                 feesViewHolder.dueAmount.setTextColor(context.getResources().getColor(R.color.red));

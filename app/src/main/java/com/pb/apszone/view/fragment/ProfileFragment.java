@@ -38,7 +38,7 @@ import static com.pb.apszone.utils.AppConstants.PROFILE_FATHER_NAME;
 import static com.pb.apszone.utils.AppConstants.PROFILE_GUARDIAN_NAME;
 import static com.pb.apszone.utils.AppConstants.PROFILE_HUSBAND_NAME;
 import static com.pb.apszone.utils.AppConstants.PROFILE_ID;
-import static com.pb.apszone.utils.AppConstants.PROFILE_MOTHER_NAMW;
+import static com.pb.apszone.utils.AppConstants.PROFILE_MOTHER_NAME;
 import static com.pb.apszone.utils.AppConstants.PROFILE_PHONE;
 import static com.pb.apszone.utils.AppConstants.PROFILE_QUALIFICATION;
 import static com.pb.apszone.utils.AppConstants.USER_GENDER_MALE;
@@ -95,7 +95,7 @@ public class ProfileFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
         rvProfileUI.setLayoutManager(new LinearLayoutManager(getActivity()));
-        profileAdapter = new ProfileAdapter(profileValueHashmap, getActivity());
+        profileAdapter = new ProfileAdapter(profileValueHashmap);
         rvProfileUI.setAdapter(profileAdapter);
         toolbarProfile.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         return view;
@@ -166,7 +166,7 @@ public class ProfileFragment extends BaseFragment {
 
                         /* Showing mother's name which is at position 1 of parent */
                         if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(1).getFullname())) {
-                            profileValueHashmap.put(PROFILE_MOTHER_NAMW, profileResponseModel.getProfile().getParent().get(1).getFullname());
+                            profileValueHashmap.put(PROFILE_MOTHER_NAME, profileResponseModel.getProfile().getParent().get(1).getFullname());
                         }
 
                         /* Showing guardian's name which is at position 2 of parent */
@@ -196,7 +196,7 @@ public class ProfileFragment extends BaseFragment {
                         }
                         /* Showing teacher's mother name */
                         if (!TextUtils.isEmpty(profileResponseModel.getProfile().getMotherName())) {
-                            profileValueHashmap.put(PROFILE_MOTHER_NAMW, profileResponseModel.getProfile().getMotherName());
+                            profileValueHashmap.put(PROFILE_MOTHER_NAME, profileResponseModel.getProfile().getMotherName());
                         }
                         /* Showing teacher's husband name */
                         if (!TextUtils.isEmpty(profileResponseModel.getProfile().getHusbandName())) {

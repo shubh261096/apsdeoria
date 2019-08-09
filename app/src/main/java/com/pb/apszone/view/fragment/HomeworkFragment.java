@@ -96,7 +96,7 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
         unbinder = ButterKnife.bind(this, view);
         homeworkItemList = new ArrayList<>();
         rvHomework.setLayoutManager(new LinearLayoutManager(getActivity()));
-        homeworkAdapter = new HomeworkAdapter(homeworkItemList, getActivity(), this::onItemClick);
+        homeworkAdapter = new HomeworkAdapter(homeworkItemList, this::onItemClick);
         rvHomework.setAdapter(homeworkAdapter);
         toolbarHomework.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         today_date = getTodayDate();
@@ -179,7 +179,7 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
             if (URLUtil.isValidUrl(homeworkItemList.get(position).getData())) {
                 KEY_DOWNLOAD_ID = beginDownload(homeworkItemList.get(position).getData(), getContext());
             } else {
-                Toast.makeText(getContext(), "Not a valid URL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
             }
         }
     }

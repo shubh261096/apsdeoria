@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.pb.apszone.utils.AppConstants.Numbers.ONE;
 import static com.pb.apszone.utils.CommonUtils.getFirstDateValueFromFullDate;
 
 
@@ -63,7 +64,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
             attendanceViewHolder.status.setVisibility(View.VISIBLE);
             if (TextUtils.equals(attendanceViewHolder.day.getText(), day)) {
                 i++; // Increment the position by 1 if day value set in viewHolder is equal to day. This is a hack
-                if (TextUtils.equals(status, "1")) {
+                if (TextUtils.equals(status, ONE)) {
                     attendanceViewHolder.status.setBackground(context.getResources().getDrawable(R.drawable.view_bg_round_green));
                 } else {
                     attendanceViewHolder.status.setBackground(context.getResources().getDrawable(R.drawable.view_bg_round_red));

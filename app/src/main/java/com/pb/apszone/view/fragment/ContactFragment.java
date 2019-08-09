@@ -89,7 +89,7 @@ public class ContactFragment extends BaseFragment {
             case R.id.ll_email:
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", "contact@apsdeoria.com", null));
-                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                startActivity(Intent.createChooser(emailIntent, getString(R.string.msg_send_email)));
                 break;
         }
     }

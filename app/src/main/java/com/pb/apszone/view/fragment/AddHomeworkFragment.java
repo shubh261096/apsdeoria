@@ -241,11 +241,11 @@ public class AddHomeworkFragment extends BaseFragment {
 
     private boolean validate() {
         if (TextUtils.isEmpty(Objects.requireNonNull(tilTitle.getEditText()).getText().toString().trim())) {
-            tilTitle.setError("Title is required");
+            tilTitle.setError(getString(R.string.msg_title_required));
             return false;
         }
         if (TextUtils.isEmpty(Objects.requireNonNull(tilDescription.getEditText()).getText().toString().trim())) {
-            tilDescription.setError("Description is required");
+            tilDescription.setError(getString(R.string.msg_description_required));
             return false;
         }
         return true;
@@ -262,7 +262,7 @@ public class AddHomeworkFragment extends BaseFragment {
             }
         } else {
             tilTitle.setErrorEnabled(true);
-            tilTitle.setError("Title is required");
+            tilTitle.setError(getString(R.string.msg_title_required));
         }
     }
 
@@ -276,10 +276,11 @@ public class AddHomeworkFragment extends BaseFragment {
                 tilDescription.setHelperTextEnabled(true);
             }
         } else {
-            tilDescription.setError("Description is required");
+            tilDescription.setError(getString(R.string.msg_description_required));
         }
     }
 
+    @SuppressWarnings("unused")
     @OnEditorAction(R.id.description)
     boolean onDescriptionEditorAction(KeyEvent key, int actionId) {
         boolean handled = false;

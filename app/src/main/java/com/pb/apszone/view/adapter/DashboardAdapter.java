@@ -1,6 +1,5 @@
 package com.pb.apszone.view.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import butterknife.ButterKnife;
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardViewHolder> {
 
     private final List<DashboardItem> dashboardItemList;
-    private Context context;
     private final OnDashboardItemClickListener onDashboardItemClickListener;
 
 
@@ -43,10 +41,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         }
     }
 
-    public DashboardAdapter(List<DashboardItem> dashboardItemList, OnDashboardItemClickListener clickListener, Context context, String user_type) {
+    public DashboardAdapter(List<DashboardItem> dashboardItemList, OnDashboardItemClickListener clickListener) {
         this.dashboardItemList = dashboardItemList;
         this.onDashboardItemClickListener = clickListener;
-        this.context = context;
     }
 
     @NonNull

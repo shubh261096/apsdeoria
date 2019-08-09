@@ -177,17 +177,17 @@ public class ResetPasswordFragment extends BaseFragment {
 
     private void validateBtnValidateInput(String id, String dob) {
         if (TextUtils.isEmpty(id)) {
-            tilSchoolId.setError("School Id is required");
+            tilSchoolId.setError(getString(R.string.msg_school_id_required));
             return;
         }
         if (TextUtils.isEmpty(dob)) {
-            tilDob.setError("DOB is required");
+            tilDob.setError(getString(R.string.msg_dob_required));
             return;
         }
 
         if (!TextUtils.isEmpty(dob) && !TextUtils.isEmpty(id)) {
             hideSoftKeyboard(getActivity());
-            showProgress(getActivity(), "Please wait...");
+            showProgress(getActivity(), getString(R.string.msg_please_wait));
             resetPasswordFragmentViewModel.validateResetPasswordRequest(id, dob);
         }
     }
@@ -197,7 +197,7 @@ public class ResetPasswordFragment extends BaseFragment {
         if (!TextUtils.isEmpty(text)) {
             tilSchoolId.setError(null);
         } else {
-            tilSchoolId.setError("School Id is required");
+            tilSchoolId.setError(getString(R.string.msg_school_id_required));
         }
     }
 
@@ -206,28 +206,28 @@ public class ResetPasswordFragment extends BaseFragment {
         if (!TextUtils.isEmpty(text)) {
             tilDob.setError(null);
         } else {
-            tilDob.setError("School Id is required");
+            tilDob.setError(getString(R.string.msg_school_id_required));
         }
     }
 
     private void validateBtnResetInput(String new_pass, String confirm_pass) {
         if (TextUtils.isEmpty(new_pass)) {
-            tilNewPassword.setError("New password is required");
+            tilNewPassword.setError(getString(R.string.msg_new_password_required));
             return;
         }
         if (TextUtils.isEmpty(confirm_pass)) {
-            tilConfirmPassword.setError("Confirm password is required");
+            tilConfirmPassword.setError(getString(R.string.msg_confirm_password_required));
             return;
         }
 
         if (!TextUtils.equals(new_pass, confirm_pass)) {
-            tilConfirmPassword.setError("Password do not match");
+            tilConfirmPassword.setError(getString(R.string.msg_password_dont_match));
             return;
         }
 
         if (!TextUtils.isEmpty(new_pass) && !TextUtils.isEmpty(confirm_pass) && TextUtils.equals(new_pass, confirm_pass)) {
             hideSoftKeyboard(getActivity());
-            showProgress(getActivity(), "Please wait...");
+            showProgress(getActivity(), getString(R.string.msg_please_wait));
             resetPasswordFragmentViewModel.resetPasswordRequest(schoolID, confirm_pass);
         }
     }
@@ -237,7 +237,7 @@ public class ResetPasswordFragment extends BaseFragment {
         if (!TextUtils.isEmpty(text)) {
             tilNewPassword.setError(null);
         } else {
-            tilNewPassword.setError("New password is required");
+            tilNewPassword.setError(getString(R.string.msg_new_password_required));
         }
     }
 
@@ -246,7 +246,7 @@ public class ResetPasswordFragment extends BaseFragment {
         if (!TextUtils.isEmpty(text)) {
             tilConfirmPassword.setError(null);
         } else {
-            tilConfirmPassword.setError("Confirm password is required");
+            tilConfirmPassword.setError(getString(R.string.msg_confirm_password_required));
         }
     }
 

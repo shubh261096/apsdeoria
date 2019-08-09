@@ -29,7 +29,7 @@ public class AppConstants {
     public final static String PROFILE_DOB = "Date of birth";
     public final static String PROFILE_ADDRESS = "Address";
     public final static String PROFILE_FATHER_NAME = "Father's Name";
-    public final static String PROFILE_MOTHER_NAMW = "Mother's Name";
+    public final static String PROFILE_MOTHER_NAME = "Mother's Name";
     public final static String PROFILE_GUARDIAN_NAME = "Guardian Name";
     public final static String PROFILE_HUSBAND_NAME = "Husband's Name";
     public final static String PROFILE_QUALIFICATION = "Qualification";
@@ -68,5 +68,11 @@ public class AppConstants {
         String BAD_REQUEST_ERROR = "Unable to process your request. \nPlease try again later.";
         String UNKNOWN_ERROR = "Unable to process your request. \nPlease try again later.";
         String SOCKET_ERROR = "Unable to connect with the server.\nPlease try again later.";
+    }
+
+    /* APP CONSTANT NUMBERS */
+    public interface Numbers {
+        String ZERO = "0";
+        String ONE = "1";
     }
 }

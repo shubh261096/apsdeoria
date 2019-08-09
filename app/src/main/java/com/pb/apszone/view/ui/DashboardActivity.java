@@ -192,7 +192,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     private void setUpGridView() {
         AutoFitGridLayoutManager manager = new AutoFitGridLayoutManager(this, 500);
         if (dashboardAdapter == null) {
-            dashboardAdapter = new DashboardAdapter(dashboardItemList, onDashboardItemClickListener, DashboardActivity.this, user_type);
+            dashboardAdapter = new DashboardAdapter(dashboardItemList, onDashboardItemClickListener);
             rvDashboardUI.setLayoutManager(manager);
             rvDashboardUI.setAdapter(dashboardAdapter);
         } else {

@@ -103,6 +103,23 @@
     <string name="label_terms">Terms</string>
     <string name="label_policy">Policy</string>
     <string name="helper_confirm_password">Enter confirm password</string>
+    <string name="version_dash">Version:</string>
+    <string name="msg_title_required">Title is required</string>
+    <string name="msg_description_required">Description is required</string>
+    <string name="msg_absent">Absent</string>
+    <string name="msg_no_student_found">No students found</string>
+    <string name="msg_present">Present</string>
+    <string name="msg_send_email">Send email...</string>
+    <string name="msg_invalid_url">Not a valid URL</string>
+    <string name="msg_select_pdf">Select Pdf</string>
+    <string name="msg_invalid_pdf">Please select a valid pdf file</string>
+    <string name="msg_wait_upload_syllabus">Please wait while we upload the syllabus.</string>
+    <string name="msg_school_id_required">School Id is required</string>
+    <string name="msg_dob_required">DOB is required</string>
+    <string name="msg_please_wait">Please wait...</string>
+    <string name="msg_new_password_required">New password is required</string>
+    <string name="msg_confirm_password_required">Confirm password is required</string>
+    <string name="msg_password_dont_match">Password do not match</string>
 
     <string-array name="day">
         <item>Monday</item>

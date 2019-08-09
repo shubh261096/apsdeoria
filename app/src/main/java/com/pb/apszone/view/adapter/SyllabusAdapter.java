@@ -1,6 +1,5 @@
 package com.pb.apszone.view.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,7 +19,6 @@ import butterknife.ButterKnife;
 public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.SyllabusViewHolder> {
 
     private final List<SyllabusItem> syllabusItemList;
-    private Context context;
     private final OnDownloadItemClickListener onDownloadItemClickListener;
 
     static class SyllabusViewHolder extends RecyclerView.ViewHolder {
@@ -42,9 +40,8 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
         }
     }
 
-    public SyllabusAdapter(List<SyllabusItem> syllabusItemList, Context context, OnDownloadItemClickListener onDownloadItemClickListener) {
+    public SyllabusAdapter(List<SyllabusItem> syllabusItemList, OnDownloadItemClickListener onDownloadItemClickListener) {
         this.syllabusItemList = syllabusItemList;
-        this.context = context;
         this.onDownloadItemClickListener = onDownloadItemClickListener;
     }
 

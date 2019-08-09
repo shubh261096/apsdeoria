@@ -1,6 +1,5 @@
 package com.pb.apszone.view.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +24,6 @@ import static com.pb.apszone.utils.CommonUtils.getTime;
 public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHolder> {
 
     private final List<InboxItem> inboxItemList;
-    private Context context;
 
     static class InboxViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.inbox_title)
@@ -47,9 +45,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         }
     }
 
-    public InboxAdapter(List<InboxItem> inboxItemList, Context context) {
+    public InboxAdapter(List<InboxItem> inboxItemList) {
         this.inboxItemList = inboxItemList;
-        this.context = context;
     }
 
     @NonNull

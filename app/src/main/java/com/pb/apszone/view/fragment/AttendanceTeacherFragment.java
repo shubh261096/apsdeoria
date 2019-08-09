@@ -45,6 +45,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
+import static com.pb.apszone.utils.AppConstants.Numbers.ONE;
+import static com.pb.apszone.utils.AppConstants.Numbers.ZERO;
 import static com.pb.apszone.utils.CommonUtils.getTodayDate;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
@@ -138,8 +140,8 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                                     attendanceItem.setTimetableId(classDetailItems.get(this.classPos).getTimetableId());
                                     attendanceItem.setStudentId(classDetailItems.get(this.classPos).getClassId().getStudents().get(i).getId());
                                     attendanceItem.setDate(this.today_date);
-                                    attendanceItem.setStatus("0");
-                                    attendanceItem.setRemarks("Absent");
+                                    attendanceItem.setStatus(ZERO);
+                                    attendanceItem.setRemarks(getString(R.string.msg_absent));
                                     classDetailItems.get(this.classPos).getClassId().getStudents().get(i).setAttendance(attendanceItem);
                                     updateUI(false, true);
                                     isEdit = false;
@@ -150,7 +152,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
                             }
                             studentsItemList.addAll(classDetailItems.get(this.classPos).getClassId().getStudents());
                         } else {
-                            Toast.makeText(getContext(), "No students found", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getString(R.string.msg_no_student_found), Toast.LENGTH_SHORT).show();
                         }
                         teacherAttendanceAdapter.notifyDataSetChanged();
 
@@ -300,11 +302,11 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     public void onItemChecked(int position, boolean isChecked) {
         if (studentsItemList.get(position).getAttendance() != null) {
             if (isChecked) {
-                studentsItemList.get(position).getAttendance().setStatus("1");
-                studentsItemList.get(position).getAttendance().setRemarks("Present");
+                studentsItemList.get(position).getAttendance().setStatus(ONE);
+                studentsItemList.get(position).getAttendance().setRemarks(getString(R.string.msg_present));
             } else {
-                studentsItemList.get(position).getAttendance().setStatus("0");
-                studentsItemList.get(position).getAttendance().setRemarks("Absent");
+                studentsItemList.get(position).getAttendance().setStatus(ZERO);
+                studentsItemList.get(position).getAttendance().setRemarks(getString(R.string.msg_absent));
             }
             teacherAttendanceAdapter.notifyDataSetChanged();
         }

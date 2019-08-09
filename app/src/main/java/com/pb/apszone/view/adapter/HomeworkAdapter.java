@@ -1,6 +1,5 @@
 package com.pb.apszone.view.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,7 +19,6 @@ import butterknife.ButterKnife;
 public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.HomeworkViewHolder> {
 
     private final List<HomeworkItem> homeworkItemList;
-    private Context context;
     private final OnDownloadItemClickListener onDownloadItemClickListener;
 
     static class HomeworkViewHolder extends RecyclerView.ViewHolder {
@@ -44,9 +42,8 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
         }
     }
 
-    public HomeworkAdapter(List<HomeworkItem> homeworkItemList, Context context, OnDownloadItemClickListener onDownloadItemClickListener) {
+    public HomeworkAdapter(List<HomeworkItem> homeworkItemList, OnDownloadItemClickListener onDownloadItemClickListener) {
         this.homeworkItemList = homeworkItemList;
-        this.context = context;
         this.onDownloadItemClickListener = onDownloadItemClickListener;
     }
 

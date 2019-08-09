@@ -19,6 +19,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.pb.apszone.utils.AppConstants.Numbers.ONE;
+
 public class TeacherAttendanceAdapter extends RecyclerView.Adapter<TeacherAttendanceAdapter.AttendanceViewHolder> {
 
     private final List<StudentsItem> studentsItemList;
@@ -72,7 +74,7 @@ public class TeacherAttendanceAdapter extends RecyclerView.Adapter<TeacherAttend
                 if (studentsItem.getAttendance() == null) {
                     attendanceViewHolder.checkbox.setChecked(false);
                 } else {
-                    if (studentsItem.getAttendance().getStatus().equals("1")) {
+                    if (studentsItem.getAttendance().getStatus().equals(ONE)) {
                         attendanceViewHolder.checkbox.setChecked(true);
                         attendanceViewHolder.checkbox.setButtonTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.green)));
                     } else {

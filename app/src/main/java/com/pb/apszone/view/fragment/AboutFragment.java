@@ -76,7 +76,7 @@ public class AboutFragment extends BaseFragment {
     }
 
     private void getVersionCode() {
-        appVersion.setText(String.format("Version: %s", VERSION_NAME));
+        appVersion.setText(String.format(getString(R.string.version_dash) + " %s", VERSION_NAME));
     }
 
     @Override

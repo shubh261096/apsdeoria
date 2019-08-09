@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
     private void validateLogin(String id, String password) {
         if (loginViewModel.validateLogin(id, password)) {
             hideSoftKeyboard(this);
-            showProgress(this, "Please wait...");
+            showProgress(this, getString(R.string.msg_please_wait));
             loginViewModel.sendRequest(id, password);
         } else {
             hideProgress();
@@ -126,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressWarnings("unused")
     @OnEditorAction(R.id.edt_password)
     boolean onPasswordEditorAction(KeyEvent key, int actionId) {
         boolean handled = false;
