@@ -13,9 +13,19 @@ android {
         flavorDimensions "environment"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        config {
+            keyAlias 'apszone'
+            keyPassword '@apsdeoria123'
+            storeFile file(project.keyStore)
+            storePassword '@apsdeoria123'
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.config
+            minifyEnabled true
+            shrinkResources true
             manifestPlaceholders = [crashlyticsEnabled: true]
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
