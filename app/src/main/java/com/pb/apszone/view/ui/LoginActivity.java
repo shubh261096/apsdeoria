@@ -2,6 +2,7 @@ package com.pb.apszone.view.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,6 +30,8 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
+import static com.pb.apszone.utils.AppConstants.PRIVACY_POLICY_URL;
+import static com.pb.apszone.utils.AppConstants.WEBSITE_URL;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.hideSoftKeyboard;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
@@ -46,6 +49,10 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     @BindView(R.id.forgot_password)
     TextView forgotPassword;
+    @BindView(R.id.tvTerms)
+    TextView tvTerms;
+    @BindView(R.id.tvPolicy)
+    TextView tvPolicy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,5 +166,21 @@ public class LoginActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.login_frame_layout, destFragment).addToBackStack(destFragment.getClass().getSimpleName());
         // Commit the Fragment replace action.
         fragmentTransaction.commit();
+    }
+
+    @OnClick({R.id.tvPolicy, R.id.tvTerms})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tvPolicy:
+                Intent privacyIntent = new Intent(Intent.ACTION_VIEW);
+                privacyIntent.setData(Uri.parse(PRIVACY_POLICY_URL));
+                startActivity(privacyIntent);
+                break;
+            case R.id.tvTerms:
+                Intent webIntent = new Intent(Intent.ACTION_VIEW);
+                webIntent.setData(Uri.parse(WEBSITE_URL));
+                startActivity(webIntent);
+                break;
+        }
     }
 }
