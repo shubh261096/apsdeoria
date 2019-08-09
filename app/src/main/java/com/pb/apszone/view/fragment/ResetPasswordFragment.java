@@ -114,7 +114,6 @@ public class ResetPasswordFragment extends BaseFragment {
                     if (!commonResponseModel.isError()) {
                         llValidate.setVisibility(View.GONE);
                         llReset.setVisibility(View.VISIBLE);
-                        Toast.makeText(getActivity(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getActivity(), commonResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -251,6 +250,7 @@ public class ResetPasswordFragment extends BaseFragment {
         }
     }
 
+    @SuppressWarnings("unused")
     @OnEditorAction(R.id.edt_dob)
     boolean onDobEditorAction(KeyEvent key, int actionId) {
         boolean handled = false;
@@ -261,6 +261,7 @@ public class ResetPasswordFragment extends BaseFragment {
         return handled;
     }
 
+    @SuppressWarnings("unused")
     @OnEditorAction(R.id.edt_confirm_password)
     boolean onConfirmPasswordEditorAction(KeyEvent key, int actionId) {
         boolean handled = false;

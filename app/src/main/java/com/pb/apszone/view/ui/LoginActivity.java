@@ -153,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.forgot_password)
     public void onForgotPasswordClicked() {
+        hideSoftKeyboard(this);
         Fragment resetPassFragment = ResetPasswordFragment.newInstance();
         replaceFragment(resetPassFragment);
     }

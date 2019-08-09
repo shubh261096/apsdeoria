@@ -102,6 +102,7 @@
     <string name="label_subject_description">Subject Description</string>
     <string name="label_terms">Terms</string>
     <string name="label_policy">Policy</string>
+    <string name="helper_confirm_password">Enter confirm password</string>
 
     <string-array name="day">
         <item>Monday</item>
