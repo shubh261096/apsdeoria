@@ -124,6 +124,7 @@
     <string name="msg_failed_load_pdf">Failed to load the pdf. Please try again later</string>
     <string name="view_syllabus">View Syllabus</string>
     <string name="view_homework">View Homework</string>
+    <string name="exit_application">Press back again to exit Apszone app.</string>
 
     <string-array name="day">
         <item>Monday</item>

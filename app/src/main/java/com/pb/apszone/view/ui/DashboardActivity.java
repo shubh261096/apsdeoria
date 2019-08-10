@@ -4,6 +4,9 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -85,11 +88,14 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     ProgressBar progressBar;
     @BindView(R.id.toolbar_dashboard)
     Toolbar toolbarDashboard;
+    @BindView(R.id.myCoordinatorLayout)
+    CoordinatorLayout myCoordinatorLayout;
     private List<DashboardItem> dashboardItemList;
     private OnDashboardItemClickListener onDashboardItemClickListener;
     KeyStorePref keyStorePref;
     private String user_type, user_id;
     NetworkChangeReceiver changeReceiver;
+    boolean doubleBackToExitPressedOnce;
 
     @Override
     protected void onStart() {
@@ -254,7 +260,14 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         } else {
-            finishAffinity();
+            if (this.doubleBackToExitPressedOnce) {
+                finishAffinity();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Snackbar snackbar = Snackbar.make(myCoordinatorLayout, getString(R.string.exit_application), Snackbar.LENGTH_LONG);
+            snackbar.show();
+            new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
         }
     }
 
