@@ -63,6 +63,7 @@ $route['login'] = "admin/login"; // login controller
 $route['parents'] = "admin/parents"; // parents controller
 $route['homework'] = "admin/homework"; // homework controller
 $route['notification'] = "admin/notification"; // notification controller
+$route['expense'] = "admin/expense"; // Expenses controller
 
 /** called from views */
 $route['teacher/add'] = "admin/teacher/add"; // teacher controller add mthod
@@ -112,6 +113,9 @@ $route['homework/edit/(:any)'] = "admin/homework/edit/$1"; // homework controlle
 $route['homework/update/(:any)'] = "admin/homework/update/$1"; // homework controller  update method
 $route['homework/delete/(:any)'] = "admin/homework/delete/$1"; // homework controller delete method
 $route['homework/download/(:any)'] = "admin/homework/download/$1"; // homework controller download method
+
+$route['expense/add'] = "admin/expense/add"; // expense controller add mthod
+$route['expense/insert'] = "admin/expense/insert"; // expense controller adinsertd method
 
 $route['admin/logout'] = "admin/admin/logout"; // admin controller logout method
 $route['admin'] = "admin/admin"; // admin controller logout method

@@ -118,4 +118,16 @@ $config = [
 		]
 	],
 	
+	'add_expense_rules' => [
+		[
+			'field' => 'description',
+			'label' => 'Description',
+			'rules' => 'trim|required'
+		],
+		[
+			'field' => 'amount',
+			'label' => 'Amount',
+			'rules' => 'trim|required'
+		]
+	],
 ];
