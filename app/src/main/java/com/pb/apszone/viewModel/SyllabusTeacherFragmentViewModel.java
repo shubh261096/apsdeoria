@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
+import com.pb.apszone.service.rest.HomeworkRequestModel;
 import com.pb.apszone.service.rest.SyllabusRequestModel;
 
 import java.io.File;
@@ -19,14 +20,23 @@ import okhttp3.RequestBody;
 public class SyllabusTeacherFragmentViewModel extends AndroidViewModel {
 
     private MutableLiveData<Events.CommonResponseEvent> commonResponseModelMutableLiveData;
+    private MutableLiveData<Events.ClassSubjectResponseEvent> classSubjectResponseModelMutableLiveData;
     private Repository repository;
     private SyllabusRequestModel syllabusRequestModel;
+    private HomeworkRequestModel homeworkRequestModel;
 
     public SyllabusTeacherFragmentViewModel(@NonNull Application application) {
         super(application);
+        classSubjectResponseModelMutableLiveData = new MutableLiveData<>();
         commonResponseModelMutableLiveData = new MutableLiveData<>();
         repository = Repository.getInstance();
         syllabusRequestModel = new SyllabusRequestModel();
+        homeworkRequestModel = new HomeworkRequestModel();
+    }
+
+    public void sendClassDetailRequest(String teacher_id) {
+        homeworkRequestModel.setTeacherId(teacher_id);
+        repository.getClassSubjectDetail(homeworkRequestModel, classSubjectResponseModelMutableLiveData);
     }
 
     public void sendRequest(String subject_id) {
@@ -44,5 +54,9 @@ public class SyllabusTeacherFragmentViewModel extends AndroidViewModel {
 
     public LiveData<Events.CommonResponseEvent> checkResponse() {
         return commonResponseModelMutableLiveData;
+    }
+
+    public LiveData<Events.ClassSubjectResponseEvent> getClassSubjectDetail() {
+        return classSubjectResponseModelMutableLiveData;
     }
 }

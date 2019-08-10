@@ -40,6 +40,7 @@ import com.pb.apszone.view.fragment.InboxFragment;
 import com.pb.apszone.view.fragment.ProfileFragment;
 import com.pb.apszone.view.fragment.SettingsFragment;
 import com.pb.apszone.view.fragment.SyllabusFragment;
+import com.pb.apszone.view.fragment.SyllabusTeacherFragment;
 import com.pb.apszone.view.fragment.TimetableFragment;
 import com.pb.apszone.view.listener.OnDashboardItemClickListener;
 import com.pb.apszone.view.receiver.NetworkChangeReceiver;
@@ -232,16 +233,10 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
             }
             if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_HOMEWORK)) {
                 Fragment fragment = HomeworkTeacherFragment.newInstance();
-                Bundle bundle = new Bundle();
-                bundle.putString(KEY_DASHBOARD_ELEMENT_NAME, UI_ELEMENT_HOMEWORK);
-                fragment.setArguments(bundle);
                 replaceFragment(fragment);
             }
             if (TextUtils.equals(dashboardItemList.get(position).getName(), UI_ELEMENT_SYLLABUS)) {
-                Fragment fragment = HomeworkTeacherFragment.newInstance();
-                Bundle bundle = new Bundle();
-                bundle.putString(KEY_DASHBOARD_ELEMENT_NAME, UI_ELEMENT_SYLLABUS);
-                fragment.setArguments(bundle);
+                Fragment fragment = SyllabusTeacherFragment.newInstance();
                 replaceFragment(fragment);
             }
         }

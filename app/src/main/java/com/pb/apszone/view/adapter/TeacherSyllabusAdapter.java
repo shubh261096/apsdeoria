@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pb.apszone.R;
@@ -16,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TeacherHomeworkAdapter extends RecyclerView.Adapter<TeacherHomeworkAdapter.HomeworkViewHolder> {
+public class TeacherSyllabusAdapter extends RecyclerView.Adapter<TeacherSyllabusAdapter.HomeworkViewHolder> {
 
     private final List<SubjectId> subjectIdList;
     private final OnSubjectItemClick onSubjectItemClick;
@@ -24,8 +23,7 @@ public class TeacherHomeworkAdapter extends RecyclerView.Adapter<TeacherHomework
     static class HomeworkViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.subject_name)
         TextView subjectName;
-        @BindView(R.id.image_next)
-        ImageView imageNext;
+
 
         HomeworkViewHolder(final View itemView, final OnSubjectItemClick subjectItemClick) {
             super(itemView);
@@ -38,7 +36,7 @@ public class TeacherHomeworkAdapter extends RecyclerView.Adapter<TeacherHomework
         }
     }
 
-    public TeacherHomeworkAdapter(List<SubjectId> subjectIdList, OnSubjectItemClick onSubjectItemClick) {
+    public TeacherSyllabusAdapter(List<SubjectId> subjectIdList, OnSubjectItemClick onSubjectItemClick) {
         this.subjectIdList = subjectIdList;
         this.onSubjectItemClick = onSubjectItemClick;
     }
@@ -47,7 +45,7 @@ public class TeacherHomeworkAdapter extends RecyclerView.Adapter<TeacherHomework
     @Override
     public HomeworkViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                                  int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_teacher_homework, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_teacher_syllabus, parent, false);
         return new HomeworkViewHolder(view, onSubjectItemClick);
     }
 
