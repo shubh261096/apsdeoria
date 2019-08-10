@@ -125,6 +125,10 @@
     <string name="view_syllabus">View Syllabus</string>
     <string name="view_homework">View Homework</string>
     <string name="exit_application">Press back again to exit Apszone app.</string>
+    <string name="title_logout">Logout?</string>
+    <string name="msg_logout">Are you sure to logout from Apszone App?</string>
+    <string name="msg_dialog_positive">LOG OUT</string>
+    <string name="msg_dialog_negative">NOT NOW</string>
 
     <string-array name="day">
         <item>Monday</item>

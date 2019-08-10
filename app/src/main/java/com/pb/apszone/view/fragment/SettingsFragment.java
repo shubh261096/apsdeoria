@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.pb.apszone.BuildConfig;
 import com.pb.apszone.R;
 import com.pb.apszone.utils.KeyStorePref;
+import com.pb.apszone.utils.DialogHelper;
 import com.pb.apszone.view.ui.LoginActivity;
 
 import java.util.Objects;
@@ -98,8 +99,20 @@ public class SettingsFragment extends BaseFragment {
                 replaceFragment(aboutFragment);
                 break;
             case R.id.ll_logout:
-                keyStorePref.clearAllPref();
-                startActivity(new Intent(getActivity(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                DialogHelper.build(getActivity(),
+                        getString(R.string.title_logout), getString(R.string.msg_logout), getString(R.string.msg_dialog_positive),getString(R.string.msg_dialog_negative), new DialogHelper.SimpleAlertListener() {
+                            @Override
+                            public void onPositive() {
+                                keyStorePref.clearAllPref();
+                                startActivity(new Intent(getActivity(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            }
+
+                            @Override
+                            public void onNegative() {
+
+                            }
+                        }
+                ).show();
                 break;
             case R.id.ll_contact:
                 Fragment contactFragment = ContactFragment.newInstance();
