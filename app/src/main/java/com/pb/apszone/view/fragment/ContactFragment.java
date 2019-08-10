@@ -1,11 +1,13 @@
 package com.pb.apszone.view.fragment;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,8 @@ public class ContactFragment extends BaseFragment {
     LinearLayout llEmail;
     @BindView(R.id.ll_phone)
     LinearLayout llPhone;
+    @BindView(R.id.ll_whatsapp)
+    LinearLayout llWhatsapp;
 
     public ContactFragment() {
         // Required empty public constructor
@@ -78,7 +82,7 @@ public class ContactFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.ll_email, R.id.ll_phone})
+    @OnClick({R.id.ll_email, R.id.ll_phone, R.id.ll_whatsapp})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_phone:
@@ -90,6 +94,15 @@ public class ContactFragment extends BaseFragment {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", "contact@apsdeoria.com", null));
                 startActivity(Intent.createChooser(emailIntent, getString(R.string.msg_send_email)));
+                break;
+            case R.id.ll_whatsapp:
+                String number = "919454549454";
+                number = number.replace(" ", "").replace("+", "");
+                Intent sendIntent = new Intent("android.intent.action.MAIN");
+                sendIntent.setType("text/plain");
+                sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
+                sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(number) + "@s.whatsapp.net");
+                startActivity(sendIntent);
                 break;
         }
     }
