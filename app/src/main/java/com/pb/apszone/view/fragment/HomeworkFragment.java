@@ -25,8 +25,8 @@ import com.pb.apszone.service.model.HomeworkItem;
 import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.HomeworkAdapter;
-import com.pb.apszone.view.adapter.SyllabusAdapter;
 import com.pb.apszone.view.receiver.DownloadBroadcastReceiver;
+import com.pb.apszone.view.ui.RemotePDFActivity;
 import com.pb.apszone.viewModel.HomeworkFragmentViewModel;
 
 import java.text.SimpleDateFormat;
@@ -50,7 +50,7 @@ import static com.pb.apszone.utils.CommonUtils.getPreviousDate;
 import static com.pb.apszone.utils.CommonUtils.getTodayDate;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
-public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.OnDownloadItemClickListener {
+public class HomeworkFragment extends BaseFragment implements HomeworkAdapter.OnDownloadItemClickListener {
 
     Unbinder unbinder;
     @BindView(R.id.toolbar_homework)
@@ -96,7 +96,7 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
         unbinder = ButterKnife.bind(this, view);
         homeworkItemList = new ArrayList<>();
         rvHomework.setLayoutManager(new LinearLayoutManager(getActivity()));
-        homeworkAdapter = new HomeworkAdapter(homeworkItemList, this::onItemClick);
+        homeworkAdapter = new HomeworkAdapter(homeworkItemList, this);
         rvHomework.setAdapter(homeworkAdapter);
         toolbarHomework.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         today_date = getTodayDate();
@@ -174,10 +174,21 @@ public class HomeworkFragment extends BaseFragment implements SyllabusAdapter.On
     }
 
     @Override
-    public void onItemClick(int position, View view) {
+    public void onDownloadItemClick(int position, View view) {
         if (!TextUtils.isEmpty(homeworkItemList.get(position).getData())) {
             if (URLUtil.isValidUrl(homeworkItemList.get(position).getData())) {
                 KEY_DOWNLOAD_ID = beginDownload(homeworkItemList.get(position).getData(), getContext());
+            } else {
+                Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onViewItemClick(int position, View view) {
+        if (!TextUtils.isEmpty(homeworkItemList.get(position).getData())) {
+            if (URLUtil.isValidUrl(homeworkItemList.get(position).getData())) {
+                RemotePDFActivity.launchForUrl(getContext(), homeworkItemList.get(position).getSubjectId().getName(), homeworkItemList.get(position).getData());
             } else {
                 Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
             }

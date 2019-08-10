@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pb.apszone.R;
@@ -27,14 +28,21 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
         @BindView(R.id.subject_description)
         TextView subjectDescription;
         @BindView(R.id.download_syllabus)
-        TextView downloadSyllabus;
+        ImageView downloadSyllabus;
+        @BindView(R.id.view_syllabus)
+        TextView viewSyllabus;
 
         SyllabusViewHolder(final View itemView, final OnDownloadItemClickListener clickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             downloadSyllabus.setOnClickListener(v -> {
                 if (clickListener != null) {
-                    clickListener.onItemClick(getAdapterPosition(), v);
+                    clickListener.onDownloadItemClick(getAdapterPosition(), v);
+                }
+            });
+            viewSyllabus.setOnClickListener(v -> {
+                if (clickListener != null) {
+                    clickListener.onViewItemClick(getAdapterPosition(), v);
                 }
             });
         }
@@ -70,6 +78,11 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
         } else {
             syllabusViewHolder.downloadSyllabus.setVisibility(View.GONE);
         }
+        if (!TextUtils.isEmpty(syllabusItem.getSyllabus())) {
+            syllabusViewHolder.viewSyllabus.setVisibility(View.VISIBLE);
+        } else {
+            syllabusViewHolder.viewSyllabus.setVisibility(View.GONE);
+        }
     }
 
     private SyllabusItem getItem(int position) {
@@ -82,7 +95,8 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
     }
 
     public interface OnDownloadItemClickListener {
-        void onItemClick(int position, View view);
+        void onDownloadItemClick(int position, View view);
+        void onViewItemClick(int position, View view);
     }
 
     public void clearData() {

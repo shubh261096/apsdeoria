@@ -29,9 +29,7 @@
     <string name="present">Present %d</string>
     <string name="absent">Absent %d</string>
     <string name="toolbar_syllabus">Syllabus</string>
-    <string name="download_syllabus"><u>Download Syllabus</u></string>
     <string name="toolbar_homework">Homework</string>
-    <string name="download_homework"><u>Download Homework</u></string>
     <string name="previous_date"><![CDATA[<]]></string>
     <string name="next_date"><![CDATA[>]]></string>
     <string name="toolbar_fees">Fees</string>
@@ -123,6 +121,9 @@
     <string name="label_whatsapp">WhatsApp</string>
     <string name="whatsapp_description">Send message directly through WhatsApp</string>
     <string name="youtube">YouTube</string>
+    <string name="msg_failed_load_pdf">Failed to load the pdf. Please try again later</string>
+    <string name="view_syllabus">View Syllabus</string>
+    <string name="view_homework">View Homework</string>
 
     <string-array name="day">
         <item>Monday</item>

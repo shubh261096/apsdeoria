@@ -23,6 +23,7 @@ import com.pb.apszone.service.model.SyllabusResponseModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.SyllabusAdapter;
 import com.pb.apszone.view.receiver.DownloadBroadcastReceiver;
+import com.pb.apszone.view.ui.RemotePDFActivity;
 import com.pb.apszone.viewModel.SyllabusFragmentViewModel;
 
 import java.util.ArrayList;
@@ -146,10 +147,21 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
     }
 
     @Override
-    public void onItemClick(int position, View view) {
+    public void onDownloadItemClick(int position, View view) {
         if (!TextUtils.isEmpty(syllabusItemList.get(position).getSyllabus())) {
             if (URLUtil.isValidUrl(syllabusItemList.get(position).getSyllabus())) {
                 KEY_DOWNLOAD_ID = beginDownload(syllabusItemList.get(position).getSyllabus(), getContext());
+            } else {
+                Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onViewItemClick(int position, View view) {
+        if (!TextUtils.isEmpty(syllabusItemList.get(position).getSyllabus())) {
+            if (URLUtil.isValidUrl(syllabusItemList.get(position).getSyllabus())) {
+                RemotePDFActivity.launchForUrl(getContext(), syllabusItemList.get(position).getName(), syllabusItemList.get(position).getSyllabus());
             } else {
                 Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
             }
