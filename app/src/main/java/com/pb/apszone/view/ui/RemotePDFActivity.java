@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pb.apszone.R;
+import com.pb.apszone.utils.ZoomImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,7 +49,7 @@ public class RemotePDFActivity extends AppCompatActivity implements View.OnClick
     @BindView(R.id.toolbar_pdf)
     Toolbar toolbarPdf;
     @BindView(R.id.pdf_preview_image_view)
-    ImageView pdfPreviewImageView;
+    ZoomImageView pdfPreviewImageView;
     @BindView(R.id.previous_page_view)
     ImageButton previousPageView;
     @BindView(R.id.pdf_page_counter_text_view)

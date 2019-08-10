@@ -38,13 +38,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <com.pb.apszone.utils.ZoomImageView
                     android:id="@+id/pdf_preview_image_view"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:adjustViewBounds="true"
-                    tools:ignore="ContentDescription" />
+                    android:adjustViewBounds="true" />
             </ScrollView>
         </LinearLayout>
 
