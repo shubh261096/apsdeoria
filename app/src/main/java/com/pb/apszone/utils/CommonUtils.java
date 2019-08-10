@@ -6,9 +6,9 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -547,5 +547,66 @@ public class CommonUtils {
                 .setPositiveButton(context.getString(R.string.ok), (dialog, id) -> dialog.dismiss());
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public static void openFacebookApp(Context context) {
+        String facebookPageID = "apsdeoria";
+        String facebookUrl = "https://www.facebook.com/" + facebookPageID;
+        String facebookUrlScheme = "fb://page/" + facebookPageID;
+        try {
+            int versionCode = Objects.requireNonNull(context).getPackageManager().getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) {
+                Uri uri = Uri.parse("fb://facewebmodal/f?href=" + facebookUrl);
+                context.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            } else {
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrlScheme)));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl)));
+        }
+    }
+
+    public static void openInstaApp(Context context) {
+        Uri uri = Uri.parse("http://instagram.com/_u/apsdeoria");
+        Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+        likeIng.setPackage("com.instagram.android");
+        try {
+            context.startActivity(likeIng);
+        } catch (ActivityNotFoundException e) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://instagram.com/apsdeoria")));
+        }
+    }
+
+    public static void openTwitterApp(Context context) {
+        Intent intent;
+        try {
+            // get the Twitter app if possible
+            Objects.requireNonNull(context).getPackageManager().getPackageInfo("com.twitter.android", 0);
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?user_id=1101801777639419904"));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        } catch (Exception e) {
+            // no Twitter app, revert to browser
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/apsdeoria"));
+        }
+        context.startActivity(intent);
+    }
+
+    public static void openYoutubeApp(Context context) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://www.youtube.com/channel/UCqWRbnwa38SUG3fdBZjh7oQ"));
+        intent.setPackage("com.google.android.youtube");
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.youtube.com/channel/UCqWRbnwa38SUG3fdBZjh7oQ")));
+        }
+    }
+
+    public static void openWebIntent(Context context, String url){
+        Intent webIntent = new Intent(Intent.ACTION_VIEW);
+        webIntent.setData(Uri.parse(url));
+        context.startActivity(webIntent);
     }
 }

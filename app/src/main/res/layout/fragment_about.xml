@@ -157,6 +157,30 @@
                     android:textSize="@dimen/text_18" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_youtube"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/dp_22"
+                android:paddingTop="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/dp_22"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                tools:ignore="UnusedAttribute">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/youtube"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/text_18" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <TextView

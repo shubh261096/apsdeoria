@@ -1,10 +1,6 @@
 package com.pb.apszone.view.fragment;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +22,11 @@ import butterknife.Unbinder;
 import static com.pb.apszone.BuildConfig.VERSION_NAME;
 import static com.pb.apszone.utils.AppConstants.PRIVACY_POLICY_URL;
 import static com.pb.apszone.utils.AppConstants.WEBSITE_URL;
+import static com.pb.apszone.utils.CommonUtils.openFacebookApp;
+import static com.pb.apszone.utils.CommonUtils.openInstaApp;
+import static com.pb.apszone.utils.CommonUtils.openTwitterApp;
+import static com.pb.apszone.utils.CommonUtils.openWebIntent;
+import static com.pb.apszone.utils.CommonUtils.openYoutubeApp;
 
 public class AboutFragment extends BaseFragment {
 
@@ -42,6 +43,8 @@ public class AboutFragment extends BaseFragment {
     LinearLayout llFacebook;
     @BindView(R.id.ll_twitter)
     LinearLayout llTwitter;
+    @BindView(R.id.ll_youtube)
+    LinearLayout llYoutube;
     @BindView(R.id.app_version)
     TextView appVersion;
 
@@ -99,78 +102,27 @@ public class AboutFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.ll_privacy_policy, R.id.ll_website, R.id.ll_instagram, R.id.ll_facebook, R.id.ll_twitter})
+    @OnClick({R.id.ll_privacy_policy, R.id.ll_website, R.id.ll_instagram, R.id.ll_facebook, R.id.ll_twitter, R.id.ll_youtube})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_privacy_policy:
-                Intent privacyIntent = new Intent(Intent.ACTION_VIEW);
-                privacyIntent.setData(Uri.parse(PRIVACY_POLICY_URL));
-                startActivity(privacyIntent);
+                openWebIntent(Objects.requireNonNull(getContext()), PRIVACY_POLICY_URL);
                 break;
             case R.id.ll_website:
-                Intent webIntent = new Intent(Intent.ACTION_VIEW);
-                webIntent.setData(Uri.parse(WEBSITE_URL));
-                startActivity(webIntent);
+                openWebIntent(Objects.requireNonNull(getContext()), WEBSITE_URL);
                 break;
             case R.id.ll_instagram:
-                openInstaApp();
+                openInstaApp(Objects.requireNonNull(getContext()));
                 break;
             case R.id.ll_facebook:
-                openFacebookApp();
+                openFacebookApp(Objects.requireNonNull(getContext()));
                 break;
             case R.id.ll_twitter:
-                openTwitterApp();
+                openTwitterApp(Objects.requireNonNull(getContext()));
+                break;
+            case R.id.ll_youtube:
+                openYoutubeApp(Objects.requireNonNull(getContext()));
                 break;
         }
-    }
-
-    protected void openFacebookApp() {
-
-        String facebookPageID = "apsdeoria";
-        String facebookUrl = "https://www.facebook.com/" + facebookPageID;
-        String facebookUrlScheme = "fb://page/" + facebookPageID;
-
-        try {
-            int versionCode = Objects.requireNonNull(getContext()).getPackageManager().getPackageInfo("com.facebook.katana", 0).versionCode;
-
-            if (versionCode >= 3002850) {
-                Uri uri = Uri.parse("fb://facewebmodal/f?href=" + facebookUrl);
-                startActivity(new Intent(Intent.ACTION_VIEW, uri));
-            } else {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrlScheme)));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl)));
-
-        }
-
-    }
-
-    public void openInstaApp() {
-        Uri uri = Uri.parse("http://instagram.com/_u/apsdeoria");
-        Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
-
-        likeIng.setPackage("com.instagram.android");
-
-        try {
-            startActivity(likeIng);
-        } catch (ActivityNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://instagram.com/apsdeoria")));
-        }
-    }
-
-    public void openTwitterApp() {
-        Intent intent;
-        try {
-            // get the Twitter app if possible
-            Objects.requireNonNull(getContext()).getPackageManager().getPackageInfo("com.twitter.android", 0);
-            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?user_id=1101801777639419904"));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        } catch (Exception e) {
-            // no Twitter app, revert to browser
-            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/apsdeoria"));
-        }
-        this.startActivity(intent);
     }
 }

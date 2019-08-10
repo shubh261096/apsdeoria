@@ -2,7 +2,6 @@ package com.pb.apszone.view.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,6 +33,7 @@ import static com.pb.apszone.utils.AppConstants.PRIVACY_POLICY_URL;
 import static com.pb.apszone.utils.AppConstants.WEBSITE_URL;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.hideSoftKeyboard;
+import static com.pb.apszone.utils.CommonUtils.openWebIntent;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
@@ -174,14 +174,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvPolicy:
-                Intent privacyIntent = new Intent(Intent.ACTION_VIEW);
-                privacyIntent.setData(Uri.parse(PRIVACY_POLICY_URL));
-                startActivity(privacyIntent);
+                openWebIntent(this, PRIVACY_POLICY_URL);
                 break;
             case R.id.tvTerms:
-                Intent webIntent = new Intent(Intent.ACTION_VIEW);
-                webIntent.setData(Uri.parse(WEBSITE_URL));
-                startActivity(webIntent);
+                openWebIntent(this, WEBSITE_URL);
                 break;
         }
     }
