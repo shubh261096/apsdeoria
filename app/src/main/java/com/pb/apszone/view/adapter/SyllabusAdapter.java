@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pb.apszone.R;
@@ -28,7 +27,7 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
         @BindView(R.id.subject_description)
         TextView subjectDescription;
         @BindView(R.id.download_syllabus)
-        ImageView downloadSyllabus;
+        TextView downloadSyllabus;
         @BindView(R.id.view_syllabus)
         TextView viewSyllabus;
 

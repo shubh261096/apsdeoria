@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pb.apszone.R;
@@ -30,7 +29,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
         @BindView(R.id.teacher_remarks)
         TextView teacherRemarks;
         @BindView(R.id.download_homework)
-        ImageView downloadHomework;
+        TextView downloadHomework;
         @BindView(R.id.view_homework)
         TextView viewHomework;
 
