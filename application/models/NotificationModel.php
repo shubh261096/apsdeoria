@@ -11,7 +11,7 @@ class NotificationModel extends CI_Model
     public function add_notification($array)
     {
         date_default_timezone_set("Asia/Calcutta");
-        $array['date'] = date("Y-m-d H:i:sa");
+        $array['date'] = date("Y-m-d H:i:s");
         return $this->db->insert('inbox', $array);
     }
 
