@@ -129,6 +129,8 @@
     <string name="msg_logout">Are you sure to logout from Apszone App?</string>
     <string name="msg_dialog_positive">LOG OUT</string>
     <string name="msg_dialog_negative">NOT NOW</string>
+    <string name="label_location">Location</string>
+    <string name="location_description">Google Maps direction to our school</string>
 
     <string-array name="day">
         <item>Monday</item>

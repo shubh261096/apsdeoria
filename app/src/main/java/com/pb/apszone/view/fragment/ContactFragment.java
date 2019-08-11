@@ -22,6 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.pb.apszone.utils.CommonUtils.openWebIntent;
+
 public class ContactFragment extends BaseFragment {
 
     Unbinder unbinder;
@@ -33,6 +35,8 @@ public class ContactFragment extends BaseFragment {
     LinearLayout llPhone;
     @BindView(R.id.ll_whatsapp)
     LinearLayout llWhatsapp;
+    @BindView(R.id.ll_location)
+    LinearLayout llLocation;
 
     public ContactFragment() {
         // Required empty public constructor
@@ -82,7 +86,7 @@ public class ContactFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.ll_email, R.id.ll_phone, R.id.ll_whatsapp})
+    @OnClick({R.id.ll_email, R.id.ll_phone, R.id.ll_whatsapp, R.id.ll_location})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_phone:
@@ -103,6 +107,9 @@ public class ContactFragment extends BaseFragment {
                 sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
                 sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(number) + "@s.whatsapp.net");
                 startActivity(sendIntent);
+                break;
+            case R.id.ll_location:
+                openWebIntent(Objects.requireNonNull(getContext()), "https://maps.app.goo.gl/FQNSjweof7YQ6u3h8");
                 break;
         }
     }
