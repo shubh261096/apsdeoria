@@ -36,7 +36,7 @@ class CommonModel extends CI_model {
 
     /* Query for getting subject details by subject_id */
     public function get_subjectDetails($subject_id) {
-        $query = $this->db->select('id, name')
+        $query = $this->db->select('id, name, syllabus')
                     ->where(['id'=>$subject_id])
     			    ->from('subject')	
                     ->get();
