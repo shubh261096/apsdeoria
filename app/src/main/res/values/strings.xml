@@ -131,6 +131,8 @@
     <string name="msg_dialog_negative">NOT NOW</string>
     <string name="label_location">Location</string>
     <string name="location_description">Google Maps direction to our school</string>
+    <string name="label_upload">Upload</string>
+    <string name="label_download">Download</string>
 
     <string-array name="day">
         <item>Monday</item>

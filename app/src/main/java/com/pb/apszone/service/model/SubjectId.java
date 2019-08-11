@@ -10,6 +10,9 @@ public class SubjectId {
     @SerializedName("id")
     private String id;
 
+    @SerializedName("syllabus")
+    private String syllabus;
+
     public void setName(String name) {
         this.name = name;
     }
@@ -26,12 +29,21 @@ public class SubjectId {
         return id;
     }
 
+    public String getSyllabus() {
+        return syllabus;
+    }
+
+    public void setSyllabus(String syllabus) {
+        this.syllabus = syllabus;
+    }
+
     @Override
     public String toString() {
         return
                 "SubjectId{" +
                         "name = '" + name + '\'' +
                         ",id = '" + id + '\'' +
+                        ",syllabus = '" + syllabus + '\'' +
                         "}";
     }
 }

@@ -116,28 +116,17 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         syllabusTeacherFragmentViewModel = ViewModelProviders.of(this).get(SyllabusTeacherFragmentViewModel.class);
         observeHomework();
-        syllabusTeacherFragmentViewModel = ViewModelProviders.of(this).get(SyllabusTeacherFragmentViewModel.class);
         observeSyllabus();
     }
 
     private void observeSyllabus() {
         syllabusTeacherFragmentViewModel.checkResponse().observe(this, responseEvent -> {
+            hideProgress();
             if (responseEvent != null) {
                 if (responseEvent.isSuccess()) {
                     CommonResponseModel commonResponseModel = responseEvent.getCommonResponseModel();
-                    if (commonResponseModel.isError()) {
-                        Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
-                    } else {
-                        if (isPDFSelected) {
-                            isPDFSelected = false;
-                            clearData();
-                            subscribe();
-                            hideProgress();
-                            Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
-                        } else {
-                            openPDFIntent();
-                        }
-                    }
+                    Toast.makeText(getContext(), commonResponseModel.getMessage(), Toast.LENGTH_LONG).show();
+                    clearAndSubscribe();
                 } else {
                     showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
                 }
@@ -193,9 +182,6 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    private void subscribeSyllabus(String subject_id) {
-        syllabusTeacherFragmentViewModel.sendRequest(subject_id);
-    }
 
     private void subscribeUpdateSyllabus(File file, String subject_id, String subject_description) {
         syllabusTeacherFragmentViewModel.updateRequest(file, subject_id, subject_description);
@@ -250,13 +236,25 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     }
 
     @Override
-    public void onItemClick(int position, View view) {
+    public void onDownloadClick(int position, View view) {
+        Toast.makeText(getContext(), "Download it", Toast.LENGTH_SHORT).show();
+        // TODO Download functionality here
+    }
+
+    @Override
+    public void onUploadClick(int position, View view) {
         this.subjectId = classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getId();
         if (isReadStoragePermissionGranted(getContext())) {
-            subscribeSyllabus(this.subjectId);
+            openPDFIntent();
         } else {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_EXTERNAL_STORAGE_CODE);
         }
+    }
+
+    private void clearAndSubscribe() {
+        isPDFSelected = false;
+        clearData();
+        subscribe();
     }
 
     @Override
@@ -265,7 +263,7 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
         if (requestCode == READ_EXTERNAL_STORAGE_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.i(TAG, "onRequestPermissionsResult: Permission Granted");
-                subscribeSyllabus(this.subjectId);
+                openPDFIntent();
             } else if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 Log.i(TAG, "onRequestPermissionsResult: Permission Denied");
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()), Manifest.permission.READ_EXTERNAL_STORAGE)) {

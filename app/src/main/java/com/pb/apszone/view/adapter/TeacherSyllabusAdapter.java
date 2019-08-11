@@ -2,6 +2,7 @@ package com.pb.apszone.view.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +24,22 @@ public class TeacherSyllabusAdapter extends RecyclerView.Adapter<TeacherSyllabus
     static class HomeworkViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.subject_name)
         TextView subjectName;
-
+        @BindView(R.id.upload_syllabus)
+        TextView uploadSyllabus;
+        @BindView(R.id.download_syllabus)
+        TextView downloadSyllabus;
 
         HomeworkViewHolder(final View itemView, final OnSubjectItemClick subjectItemClick) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(v -> {
+            downloadSyllabus.setOnClickListener(v -> {
                 if (subjectItemClick != null) {
-                    subjectItemClick.onItemClick(getAdapterPosition(), v);
+                    subjectItemClick.onDownloadClick(getAdapterPosition(), v);
+                }
+            });
+            uploadSyllabus.setOnClickListener(v -> {
+                if (subjectItemClick != null) {
+                    subjectItemClick.onUploadClick(getAdapterPosition(), v);
                 }
             });
         }
@@ -54,6 +63,13 @@ public class TeacherSyllabusAdapter extends RecyclerView.Adapter<TeacherSyllabus
     public void onBindViewHolder(@NonNull HomeworkViewHolder homeworkViewHolder, final int position) {
         SubjectId subjectId = getItem(position);
         homeworkViewHolder.subjectName.setText(subjectId.getName());
+        if (!TextUtils.isEmpty(subjectId.getSyllabus())) {
+            homeworkViewHolder.uploadSyllabus.setVisibility(View.GONE);
+            homeworkViewHolder.downloadSyllabus.setVisibility(View.VISIBLE);
+        } else {
+            homeworkViewHolder.uploadSyllabus.setVisibility(View.VISIBLE);
+            homeworkViewHolder.downloadSyllabus.setVisibility(View.GONE);
+        }
     }
 
     private SubjectId getItem(int position) {
@@ -71,6 +87,7 @@ public class TeacherSyllabusAdapter extends RecyclerView.Adapter<TeacherSyllabus
     }
 
     public interface OnSubjectItemClick {
-        void onItemClick(int position, View view);
+        void onDownloadClick(int position, View view);
+        void onUploadClick(int position, View view);
     }
 }
