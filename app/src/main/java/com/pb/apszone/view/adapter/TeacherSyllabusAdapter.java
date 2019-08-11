@@ -28,6 +28,8 @@ public class TeacherSyllabusAdapter extends RecyclerView.Adapter<TeacherSyllabus
         TextView uploadSyllabus;
         @BindView(R.id.download_syllabus)
         TextView downloadSyllabus;
+        @BindView(R.id.view_syllabus)
+        TextView viewSyllabus;
 
         HomeworkViewHolder(final View itemView, final OnSubjectItemClick subjectItemClick) {
             super(itemView);
@@ -40,6 +42,11 @@ public class TeacherSyllabusAdapter extends RecyclerView.Adapter<TeacherSyllabus
             uploadSyllabus.setOnClickListener(v -> {
                 if (subjectItemClick != null) {
                     subjectItemClick.onUploadClick(getAdapterPosition(), v);
+                }
+            });
+            viewSyllabus.setOnClickListener(v -> {
+                if (subjectItemClick != null) {
+                    subjectItemClick.onViewClick(getAdapterPosition(), v);
                 }
             });
         }
@@ -66,9 +73,11 @@ public class TeacherSyllabusAdapter extends RecyclerView.Adapter<TeacherSyllabus
         if (!TextUtils.isEmpty(subjectId.getSyllabus())) {
             homeworkViewHolder.uploadSyllabus.setVisibility(View.GONE);
             homeworkViewHolder.downloadSyllabus.setVisibility(View.VISIBLE);
+            homeworkViewHolder.viewSyllabus.setVisibility(View.VISIBLE);
         } else {
             homeworkViewHolder.uploadSyllabus.setVisibility(View.VISIBLE);
             homeworkViewHolder.downloadSyllabus.setVisibility(View.GONE);
+            homeworkViewHolder.viewSyllabus.setVisibility(View.GONE);
         }
     }
 
@@ -89,5 +98,6 @@ public class TeacherSyllabusAdapter extends RecyclerView.Adapter<TeacherSyllabus
     public interface OnSubjectItemClick {
         void onDownloadClick(int position, View view);
         void onUploadClick(int position, View view);
+        void onViewClick(int position, View view);
     }
 }

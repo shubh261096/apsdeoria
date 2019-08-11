@@ -3,9 +3,11 @@ package com.pb.apszone.view.fragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -36,6 +39,8 @@ import com.pb.apszone.service.model.SubjectId;
 import com.pb.apszone.utils.CommonUtils;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.TeacherSyllabusAdapter;
+import com.pb.apszone.view.receiver.DownloadBroadcastReceiver;
+import com.pb.apszone.view.ui.RemotePDFActivity;
 import com.pb.apszone.viewModel.SyllabusTeacherFragmentViewModel;
 
 import java.io.File;
@@ -49,8 +54,10 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_OK;
+import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.AppConstants.READ_EXTERNAL_STORAGE_CODE;
+import static com.pb.apszone.utils.CommonUtils.beginDownload;
 import static com.pb.apszone.utils.CommonUtils.getUriRealPath;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.isReadStoragePermissionGranted;
@@ -81,6 +88,7 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     private String subjectId, classId;
     private int classPos = 0;
     private boolean isPDFSelected;
+    DownloadBroadcastReceiver downloadBroadcastReceiver;
 
     public SyllabusTeacherFragment() {
         // Required empty public constructor
@@ -108,6 +116,11 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
         teacherSyllabusAdapter = new TeacherSyllabusAdapter(subjectIdList, this);
         rvSubject.setAdapter(teacherSyllabusAdapter);
         toolbarSyllabus.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
+
+        // Registering download broadcast receiver
+        downloadBroadcastReceiver = new DownloadBroadcastReceiver();
+        Objects.requireNonNull(getContext()).registerReceiver(downloadBroadcastReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
         return view;
     }
 
@@ -201,6 +214,7 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        Objects.requireNonNull(getContext()).unregisterReceiver(downloadBroadcastReceiver);
     }
 
     @OnClick(R.id.tvClass)
@@ -237,8 +251,11 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
 
     @Override
     public void onDownloadClick(int position, View view) {
-        Toast.makeText(getContext(), "Download it", Toast.LENGTH_SHORT).show();
-        // TODO Download functionality here
+        if (URLUtil.isValidUrl(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getSyllabus())) {
+            KEY_DOWNLOAD_ID = beginDownload(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getSyllabus(), getContext());
+        } else {
+            Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -248,6 +265,15 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
             openPDFIntent();
         } else {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_EXTERNAL_STORAGE_CODE);
+        }
+    }
+
+    @Override
+    public void onViewClick(int position, View view) {
+        if (URLUtil.isValidUrl(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getSyllabus())) {
+            RemotePDFActivity.launchForUrl(getContext(), classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getName(), classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getSyllabus());
+        } else {
+            Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
         }
     }
 
