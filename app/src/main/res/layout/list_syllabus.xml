@@ -36,7 +36,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_4">
+            android:layout_marginTop="@dimen/dp_8">
 
             <TextView
                 android:id="@+id/view_syllabus"
@@ -50,7 +50,7 @@
                 android:padding="@dimen/dp_4"
                 android:text="@string/label_view"
                 android:textColor="@color/white"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/download_syllabus"
@@ -64,7 +64,7 @@
                 android:padding="@dimen/dp_4"
                 android:text="@string/label_download"
                 android:textColor="@color/white"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="RelativeOverlap" />
         </RelativeLayout>
     </LinearLayout>
