@@ -16,6 +16,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.pb.apszone.utils.CommonUtils.getExtensionFromURL;
+
 public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.HomeworkViewHolder> {
 
     private final List<HomeworkItem> homeworkItemList;
@@ -84,7 +86,11 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
             homeworkViewHolder.downloadHomework.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(homeworkItem.getData())) {
-            homeworkViewHolder.viewHomework.setVisibility(View.VISIBLE);
+            if (getExtensionFromURL(homeworkItem.getData()).equals("pdf")) {
+                homeworkViewHolder.viewHomework.setVisibility(View.VISIBLE);
+            } else {
+                homeworkViewHolder.viewHomework.setVisibility(View.GONE);
+            }
         } else {
             homeworkViewHolder.viewHomework.setVisibility(View.GONE);
         }
@@ -101,6 +107,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.Homewo
 
     public interface OnDownloadItemClickListener {
         void onDownloadItemClick(int position, View view);
+
         void onViewItemClick(int position, View view);
     }
 

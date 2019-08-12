@@ -16,6 +16,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.pb.apszone.utils.CommonUtils.getExtensionFromURL;
+
 public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.SyllabusViewHolder> {
 
     private final List<SyllabusItem> syllabusItemList;
@@ -78,7 +80,11 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
             syllabusViewHolder.downloadSyllabus.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(syllabusItem.getSyllabus())) {
-            syllabusViewHolder.viewSyllabus.setVisibility(View.VISIBLE);
+            if (getExtensionFromURL(syllabusItem.getSyllabus()).equals("pdf")) {
+                syllabusViewHolder.viewSyllabus.setVisibility(View.VISIBLE);
+            } else {
+                syllabusViewHolder.viewSyllabus.setVisibility(View.GONE);
+            }
         } else {
             syllabusViewHolder.viewSyllabus.setVisibility(View.GONE);
         }
@@ -95,6 +101,7 @@ public class SyllabusAdapter extends RecyclerView.Adapter<SyllabusAdapter.Syllab
 
     public interface OnDownloadItemClickListener {
         void onDownloadItemClick(int position, View view);
+
         void onViewItemClick(int position, View view);
     }
 

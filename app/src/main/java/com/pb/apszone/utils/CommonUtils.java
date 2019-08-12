@@ -604,9 +604,14 @@ public class CommonUtils {
         }
     }
 
-    public static void openWebIntent(Context context, String url){
+    public static void openWebIntent(Context context, String url) {
         Intent webIntent = new Intent(Intent.ACTION_VIEW);
         webIntent.setData(Uri.parse(url));
         context.startActivity(webIntent);
+    }
+
+    public static String getExtensionFromURL(String url) {
+        String[] filenameArray = url.split("\\.");
+        return filenameArray[filenameArray.length - 1];
     }
 }
