@@ -134,6 +134,12 @@
     <string name="label_upload">Upload</string>
     <string name="label_download">Download</string>
     <string name="label_view">View</string>
+    <string name="msg_downloading">Downloading</string>
+    <string name="time_sec_ago">sec ago</string>
+    <string name="time_min_ago">min ago</string>
+    <string name="type_father">Father</string>
+    <string name="type_mother">Mother</string>
+    <string name="type_guardian">Guardian</string>
 
     <string-array name="day">
         <item>Monday</item>

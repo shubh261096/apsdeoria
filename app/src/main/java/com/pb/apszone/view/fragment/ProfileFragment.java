@@ -159,20 +159,21 @@ public class ProfileFragment extends BaseFragment {
                             profileValueHashmap.put(PROFILE_ADDRESS, profileResponseModel.getProfile().getParent().get(0).getAddress());
                         }
 
-                        /* Showing father's name which is at position 0 of parent */
-                        if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(0).getFullname())) {
-                            profileValueHashmap.put(PROFILE_FATHER_NAME, profileResponseModel.getProfile().getParent().get(0).getFullname());
+                        /* Showing Parent FullName */
+                        if (profileResponseModel.getProfile().getParent() != null) {
+                            for (int i = 0; i < profileResponseModel.getProfile().getParent().size(); i++) {
+                                if (TextUtils.equals(profileResponseModel.getProfile().getParent().get(i).getType(), getString(R.string.type_father))) {
+                                    profileValueHashmap.put(PROFILE_FATHER_NAME, profileResponseModel.getProfile().getParent().get(i).getFullname());
+                                }
+                                if (TextUtils.equals(profileResponseModel.getProfile().getParent().get(i).getType(), getString(R.string.type_mother))) {
+                                    profileValueHashmap.put(PROFILE_MOTHER_NAME, profileResponseModel.getProfile().getParent().get(i).getFullname());
+                                }
+                                if (TextUtils.equals(profileResponseModel.getProfile().getParent().get(i).getType(), getString(R.string.type_guardian))) {
+                                    profileValueHashmap.put(PROFILE_GUARDIAN_NAME, profileResponseModel.getProfile().getParent().get(i).getFullname());
+                                }
+                            }
                         }
 
-                        /* Showing mother's name which is at position 1 of parent */
-                        if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(1).getFullname())) {
-                            profileValueHashmap.put(PROFILE_MOTHER_NAME, profileResponseModel.getProfile().getParent().get(1).getFullname());
-                        }
-
-                        /* Showing guardian's name which is at position 2 of parent */
-                        if (profileResponseModel.getProfile().getParent() != null && !TextUtils.isEmpty(profileResponseModel.getProfile().getParent().get(2).getFullname())) {
-                            profileValueHashmap.put(PROFILE_GUARDIAN_NAME, profileResponseModel.getProfile().getParent().get(2).getFullname());
-                        }
                     } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) { /* Checking if user type is teacher */
                         /* Showing teacher's email */
                         if (!TextUtils.isEmpty(profileResponseModel.getProfile().getEmail())) {
