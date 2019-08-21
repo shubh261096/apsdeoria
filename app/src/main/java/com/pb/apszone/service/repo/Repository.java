@@ -757,10 +757,8 @@ public class Repository {
     /* Handle Retrofit Response Failure */
     private String handleFailureResponse(Throwable throwable) {
         if (throwable instanceof IOException) {
-            Log.i("Network Error ", throwable.getMessage());
             return SOCKET_ERROR;
         } else {
-            Log.i("Unknown Error ", throwable.getMessage());
             return UNKNOWN_ERROR;
         }
     }
