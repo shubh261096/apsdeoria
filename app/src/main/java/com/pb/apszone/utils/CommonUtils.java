@@ -45,6 +45,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
+import static com.pb.apszone.utils.AppConstants.Numbers.ONE;
 
 public class CommonUtils {
     private static ProgressDialog progressDialog;
@@ -238,7 +239,7 @@ public class CommonUtils {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url))
                 .setMimeType(getMimeFromFileName(getFileNameFromURL(url)))
                 .setTitle(getFileNameFromURL(url))// Title of the Download Notification
-                .setDescription("Downloading") // Description of the Download Notification
+                .setDescription(context.getString(R.string.msg_downloading)) // Description of the Download Notification
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) // Visibility of the download Notification
                 .setDestinationUri(Uri.fromFile(file)) // Uri of the destination file
                 .setRequiresCharging(false) // Set if charging is required to begin the download
@@ -320,7 +321,7 @@ public class CommonUtils {
         alertDialog.show();
     }
 
-    public static String getTime(String time) {
+    public static String getTime(String time, Context context) {
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             Date past = format.parse(time);
@@ -331,24 +332,24 @@ public class CommonUtils {
             long days = TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime());
 
             if (seconds < 60) {
-                return seconds + " sec ago";
+                return seconds + context.getString(R.string.time_sec_ago);
             } else if (minutes < 60) {
                 if (minutes == 1) {
-                    return "1 min ago";
+                    return ONE + context.getString(R.string.time_min_ago);
                 } else {
-                    return minutes + " mins ago";
+                    return minutes + context.getString(R.string.time_mins_ago);
                 }
             } else if (hours < 24) {
                 if (hours == 1) {
-                    return "1 hour ago";
+                    return ONE + context.getString(R.string.time_hour_ago);
                 } else {
-                    return hours + " hours ago";
+                    return hours + context.getString(R.string.time_hours_ago);
                 }
             } else if (days <= 2) {
                 if (days == 1) {
-                    return "1 day ago";
+                    return ONE + context.getString(R.string.time_day_ago);
                 } else {
-                    return days + " days ago";
+                    return days + context.getString(R.string.time_days_ago);
                 }
             } else {
                 Date dt = format.parse(time);
@@ -383,8 +384,8 @@ public class CommonUtils {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage(activity.getResources().getString(R.string.app_storage_permission_warning_msg))
                 .setCancelable(false)
-                .setNegativeButton("Cancel", ((dialog, which) -> dialog.dismiss()))
-                .setPositiveButton("Settings", (dialog, id) -> {
+                .setNegativeButton(activity.getString(R.string.msg_cancel), ((dialog, which) -> dialog.dismiss()))
+                .setPositiveButton(activity.getString(R.string.msg_settings), (dialog, id) -> {
                     dialog.dismiss();
                     Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                             Uri.fromParts("package", BuildConfig.APPLICATION_ID, null));

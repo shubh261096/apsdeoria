@@ -66,7 +66,7 @@ public class InboxFragment extends BaseFragment {
         inboxItemList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvInbox.setLayoutManager(layoutManager);
-        inboxAdapter = new InboxAdapter(inboxItemList);
+        inboxAdapter = new InboxAdapter(inboxItemList, getContext());
         rvInbox.setAdapter(inboxAdapter);
         toolbarInbox.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         return view;
