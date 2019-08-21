@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "768771141655",
+    "firebase_url": "https://apszone-qa.firebaseio.com",
+    "project_id": "apszone-qa",
+    "storage_bucket": "apszone-qa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768771141655:android:3ed32af7104dafa0",
+        "android_client_info": {
+          "package_name": "com.aps.apszone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768771141655-k9uqq4cu090p5egj5u75h87m2ht766a4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDllvnJ0isGoFZIiAxvaOG9WqhbviWBFUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768771141655-k9uqq4cu090p5egj5u75h87m2ht766a4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
