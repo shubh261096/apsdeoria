@@ -70,6 +70,8 @@ class Homework extends REST_Controller
     }
     if (!empty($value['remarks'])) {
       $remarks = $value['remarks'];
+    } else {
+      $remarks = "";
     }
 
     /* Getting class name  by id */
