@@ -14,19 +14,19 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-body">
-                        <?php echo form_open('admin/Notification/notify', ['role' => 'form']); ?>
+                        <?php echo form_open_multipart('admin/Notification/notify', ['role' => 'form']); ?>
                         <div class="form-group">
                             <label for="send_to">Send To:</label>
                             <select name="send_to" id="send_to" class="form-control">
-                                <option value="sngle">Single Device</option>
                                 <option value="topic">Topic</option>
+                                <!-- <option value="sngle">Single Device</option> -->
                             </select>
                         </div>
-                        <div class="form-group" id="firebase_token_group">
+                        <div class="form-group" style="display: none" id="firebase_token_group">
                             <label for="firebase_token">Firebase Token:</label>
-                            <input type="text" required="" class="form-control" id="firebase_token" placeholder="Enter Firebase Token" name="firebase_token">
+                            <input type="text" class="form-control" id="firebase_token" placeholder="Enter Firebase Token" name="firebase_token">
                         </div>
-                        <div class="form-group" style="display: none" id="topic_group">
+                        <div class="form-group" id="topic_group">
                             <label for="topic">Choose Topic:</label>
                             <select name="topic" id="topic" class="form-control">
                                 <option value="global">Global</option>
@@ -42,10 +42,18 @@
                         </div>
                         <div class="checkbox">
                             <label><input type="checkbox" id="include_image" name="include_image">Include Image</label>
+                            <?php if (isset($upload_error)) echo $upload_error  ?>
                         </div>
                         <div class="form-group" style="display: none" id="image_url_group">
-                            <label for="image_url">Image URL:</label>
-                            <input type="url" class="form-control" id="image_url" placeholder="Enter Image URL" name="image_url">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" id="file_path" readonly="true" class="form-control" placeholder="Browse...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button" id="file_browser">Browse</button>
+                                    </span>
+                                </div>
+                                <?php echo form_upload(['name' => 'image', 'class' => 'hidden', 'id' => 'image']); ?>
+                            </div>
                         </div>
                         <div class="checkbox">
                             <label><input type="checkbox" id="include_action" name="include_action">Include Action</label>
@@ -70,15 +78,15 @@
             <div class="col-lg-6">
                 <?php
                 if ($result != NULL && $fields != NULL) { ?>
-                    <div class="box box-primary">
-                        <div class="box-body">
-                            <?php echo '<h1>Result</h1><hr/><h3>Request</h3><p><pre>';
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <?php echo '<h1>Result</h1><hr/><h3>Request</h3><p><pre>';
                             echo json_encode($fields, JSON_PRETTY_PRINT);
                             echo '</pre></p><h3>Response </h3><p><pre>';
                             echo $result;
                             echo '</pre></p>'; ?>
-                        </div>
                     </div>
+                </div>
                 <?php } else {
                     echo '';
                 }
@@ -144,6 +152,22 @@
 <script src="<?php echo base_url(); ?>dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url(); ?>dist/js/demo.js"></script>
+
+<script type="text/javascript">
+  $('#file_browser').click(function(e) {
+    e.preventDefault();
+    $('#image').click();
+  });
+
+  $('#image').change(function() {
+    $('#file_path').val($(this).val());
+  });
+
+  $('#file_path').click(function() {
+    $('#file_browser').click();
+  });
+
+</script>
 
 <script>
     $('#include_image').change(function(e) {

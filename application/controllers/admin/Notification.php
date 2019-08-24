@@ -12,7 +12,7 @@ class Notification extends CI_Controller
         $this->load->view('admin/includes/footer');
         if (!$this->session->userdata('user_id'))
             return redirect('admin');
-            
+
         $this->load->model('NotificationModel');
     }
 
@@ -25,10 +25,30 @@ class Notification extends CI_Controller
 
     public function notify()
     {
+        $config = [
+            'upload_path' => 'asset/images/notification/',
+            'allowed_types' => 'jpg|png|jpeg|PNG',
+        ];
+
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        if (empty($_FILES['image']['name'])) {
+            $imageUrl = null;
+        } else {
+            if ($this->upload->do_upload('image')) {
+                $data = $this->upload->data();
+                $imageUrl = base_url($config['upload_path'] . $data['raw_name'] . $data['file_ext']);
+            } else {
+                $data['upload_error'] = $this->upload->display_errors();
+                $data['result'] = NULL;
+                $this->load->view('admin/notification', $data);
+                return;
+            }
+        }
+
         $notification = new NotificationPOJO();
         $title = $this->input->post('title');
         $message = $this->input->post('message');
-        $imageUrl = $this->input->post('image_url');
         $action = $this->input->post('action');
 
         $actionDestination = $this->input->post('action_destination');
