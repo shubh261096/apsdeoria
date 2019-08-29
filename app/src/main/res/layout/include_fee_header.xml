@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/dp_8"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:layout_marginBottom="@dimen/dp_8"
+    app:cardElevation="@dimen/dp_2"
+    app:contentPadding="@dimen/activity_horizontal_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_4"
+            android:text="@string/basic_fee_information"
+            android:textColor="@color/black_90"
+            android:textSize="@dimen/text_17" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="start"
+                android:text="@string/admission_fee"
+                android:textColor="@color/black_80"
+                android:textSize="@dimen/text_15" />
+
+            <TextView
+                android:id="@+id/admission_fee"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary_70"
+                android:textSize="@dimen/text_15" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="start"
+                android:text="@string/annual_fee"
+                android:textColor="@color/black_80"
+                android:textSize="@dimen/text_15" />
+
+            <TextView
+                android:id="@+id/annual_fee"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary_70"
+                android:textSize="@dimen/text_15" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="start"
+                android:text="@string/activity_fee"
+                android:textColor="@color/black_80"
+                android:textSize="@dimen/text_15" />
+
+            <TextView
+                android:id="@+id/activity_fee"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary_70"
+                android:textSize="@dimen/text_15" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_computer_fee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="start"
+                android:text="@string/computer_fee"
+                android:textColor="@color/black_80"
+                android:textSize="@dimen/text_15" />
+
+            <TextView
+                android:id="@+id/computer_fee"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="end"
+                android:textColor="@color/colorPrimary_70"
+                android:textSize="@dimen/text_15" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

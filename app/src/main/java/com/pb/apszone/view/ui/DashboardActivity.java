@@ -55,7 +55,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.pb.apszone.utils.AppConstants.KEY_DASHBOARD_ELEMENT_NAME;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_ATTENDANCE;

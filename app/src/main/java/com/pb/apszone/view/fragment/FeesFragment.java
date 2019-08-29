@@ -1,6 +1,5 @@
 package com.pb.apszone.view.fragment;
 
-import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -53,6 +53,18 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
     TextView feeDeadlineNotice;
     @BindView(R.id.no_data)
     TextView tvNoData;
+    @BindView(R.id.admission_fee)
+    TextView admissionFee;
+    @BindView(R.id.annual_fee)
+    TextView annualFee;
+    @BindView(R.id.activity_fee)
+    TextView activityFee;
+    @BindView(R.id.computer_fee)
+    TextView computerFee;
+    @BindView(R.id.ll_computer_fee)
+    LinearLayout llComputerFee;
+    @BindView(R.id.ll_display_fee)
+    LinearLayout llDisplayFee;
     private List<FeesItem> feesItemList;
     FeesFragmentViewModel feesFragmentViewModel;
     KeyStorePref keyStorePref;
@@ -100,16 +112,10 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         feesFragmentViewModel = ViewModelProviders.of(this).get(FeesFragmentViewModel.class);
+        observeFee();
     }
 
-    @SuppressLint("SetTextI18n")
-    private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_ID))) {
-            feesFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), getCurrentYear(), keyStorePref.getString(KEY_STUDENT_ID));
-        }
-        tvNoData.setVisibility(View.GONE);
-        feeDeadlineNotice.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
+    private void observeFee() {
         feesFragmentViewModel.getFees().observe(this, responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
@@ -121,11 +127,16 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
                     FeesResponseModel feesResponseModel = responseEvent.getFeesResponseModel();
                     if (!feesResponseModel.isError()) {
                         List<FeesItem> feesItems = feesResponseModel.getFees();
+                        // Setting up common static data which is same for every list item
+                        setupData(feesItems);
+
                         feesItemList.addAll(feesItems);
                         feesAdapter.notifyDataSetChanged();
                         checkForLateFee();
-                        feeDeadlineNotice.setVisibility(View.VISIBLE);
+                        llDisplayFee.setVisibility(View.VISIBLE);
+                        tvNoData.setVisibility(View.GONE);
                     } else {
+                        llDisplayFee.setVisibility(View.GONE);
                         tvNoData.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -133,6 +144,31 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
                 }
             }
         });
+    }
+
+    private void subscribe() {
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_ID))) {
+            feesFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), getCurrentYear(), keyStorePref.getString(KEY_STUDENT_ID));
+        }
+        tvNoData.setVisibility(View.GONE);
+        llDisplayFee.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void setupData(List<FeesItem> feesItems) {
+        if (!TextUtils.isEmpty(feesItems.get(0).getFeesId().getActivityFee())) {
+            activityFee.setText(String.format("%s %s", getString(R.string.rupee_symbol), feesItems.get(0).getFeesId().getActivityFee()));
+        }
+        if (!TextUtils.isEmpty(feesItems.get(0).getFeesId().getAdmissionFee())) {
+            admissionFee.setText(String.format("%s %s", getString(R.string.rupee_symbol), feesItems.get(0).getFeesId().getAdmissionFee()));
+        }
+        if (!TextUtils.isEmpty(feesItems.get(0).getFeesId().getAnnualFee())) {
+            annualFee.setText(String.format("%s %s", getString(R.string.rupee_symbol), feesItems.get(0).getFeesId().getAnnualFee()));
+        }
+        if (!TextUtils.isEmpty(feesItems.get(0).getFeesId().getComputerFee())) {
+            llComputerFee.setVisibility(View.VISIBLE);
+            computerFee.setText(String.format("%s %s", getString(R.string.rupee_symbol), feesItems.get(0).getFeesId().getComputerFee()));
+        }
     }
 
     private void checkForLateFee() {

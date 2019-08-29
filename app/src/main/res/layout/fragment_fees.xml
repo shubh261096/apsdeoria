@@ -42,15 +42,13 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_display_fee"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rvFees"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    <include layout="@layout/include_fee_header"/>
 
                     <TextView
                         android:id="@+id/feeDeadlineNotice"
@@ -62,8 +60,21 @@
                         android:layout_marginBottom="@dimen/dp_10"
                         android:text="@string/late_fee_notice"
                         android:textColor="@color/red"
-                        android:textStyle="italic"
-                        android:visibility="gone" />
+                        android:textStyle="italic" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_2"
+                        android:layerType="software"
+                        android:src="@drawable/dotted_line"
+                        tools:ignore="ContentDescription" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvFees"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
                 </LinearLayout>
 
                 <TextView

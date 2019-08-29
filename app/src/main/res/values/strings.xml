@@ -147,6 +147,11 @@
     <string name="type_guardian">Guardian</string>
     <string name="msg_cancel">Cancel</string>
     <string name="msg_settings">Settings</string>
+    <string name="admission_fee">Admission Fee</string>
+    <string name="annual_fee">Annual Fee</string>
+    <string name="activity_fee">Activity Fee</string>
+    <string name="computer_fee">Computer Fee</string>
+    <string name="basic_fee_information">Basic Fee Information</string>
 
     <string-array name="day">
         <item>Monday</item>

@@ -16,6 +16,50 @@ public class FeesId {
     @SerializedName("id")
     private String id;
 
+    @SerializedName("admission_fee")
+    private String admissionFee;
+
+    @SerializedName("annual_fee")
+    private String annualFee;
+
+    @SerializedName("activity_fee")
+    private String activityFee;
+
+    @SerializedName("computer_fee")
+    private String computerFee;
+
+    public String getAdmissionFee() {
+        return admissionFee;
+    }
+
+    public void setAdmissionFee(String admissionFee) {
+        this.admissionFee = admissionFee;
+    }
+
+    public String getAnnualFee() {
+        return annualFee;
+    }
+
+    public void setAnnualFee(String annualFee) {
+        this.annualFee = annualFee;
+    }
+
+    public String getActivityFee() {
+        return activityFee;
+    }
+
+    public void setActivityFee(String activityFee) {
+        this.activityFee = activityFee;
+    }
+
+    public String getComputerFee() {
+        return computerFee;
+    }
+
+    public void setComputer_fee(String computer_fee) {
+        this.computerFee = computer_fee;
+    }
+
     public void setYear(String year) {
         this.year = year;
     }
@@ -56,6 +100,10 @@ public class FeesId {
                         ",total_amount = '" + totalAmount + '\'' +
                         ",class_id = '" + classId + '\'' +
                         ",id = '" + id + '\'' +
+                        ",admission_fee = '" + admissionFee + '\'' +
+                        ",annual_fee = '" + annualFee + '\'' +
+                        ",activity_fee = '" + activityFee + '\'' +
+                        ",computer_fee = '" + computerFee + '\'' +
                         "}";
     }
 }
