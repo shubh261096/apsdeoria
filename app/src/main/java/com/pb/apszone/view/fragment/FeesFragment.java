@@ -174,7 +174,9 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
     private void checkForLateFee() {
         boolean found = false;
         for (int i = 0; i < feesItemList.size(); i++) {
-            found = TextUtils.equals(feesItemList.get(i).getPeriod(), getCurrentMonth());
+            if (TextUtils.equals(feesItemList.get(i).getPeriod(), getCurrentMonth())) {
+                found = true;
+            }
         }
         if (!found) {
             showLateFeeAlertDialog(Objects.requireNonNull(getView()), getContext());
