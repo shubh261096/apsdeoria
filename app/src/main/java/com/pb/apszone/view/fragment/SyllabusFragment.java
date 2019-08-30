@@ -1,11 +1,14 @@
 package com.pb.apszone.view.fragment;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.SyllabusItem;
 import com.pb.apszone.service.model.SyllabusResponseModel;
+import com.pb.apszone.utils.CommonUtils;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.SyllabusAdapter;
 import com.pb.apszone.view.receiver.DownloadBroadcastReceiver;
@@ -36,7 +40,9 @@ import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
+import static com.pb.apszone.utils.AppConstants.WRITE_EXTERNAL_STORAGE_CODE;
 import static com.pb.apszone.utils.CommonUtils.beginDownload;
+import static com.pb.apszone.utils.CommonUtils.isWriteStoragePermissionGranted;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.OnDownloadItemClickListener {
@@ -53,6 +59,7 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
     KeyStorePref keyStorePref;
     SyllabusAdapter syllabusAdapter;
     DownloadBroadcastReceiver downloadBroadcastReceiver;
+    private int itemPosition;
 
     public SyllabusFragment() {
         // Required empty public constructor
@@ -148,11 +155,34 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
 
     @Override
     public void onDownloadItemClick(int position, View view) {
-        if (!TextUtils.isEmpty(syllabusItemList.get(position).getSyllabus())) {
-            if (URLUtil.isValidUrl(syllabusItemList.get(position).getSyllabus())) {
-                KEY_DOWNLOAD_ID = beginDownload(syllabusItemList.get(position).getSyllabus(), getContext());
+        if (isWriteStoragePermissionGranted(getContext())) {
+            this.itemPosition = position;
+            downloadSyllabus();
+        } else {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_CODE);
+        }
+    }
+
+    private void downloadSyllabus() {
+        if (!TextUtils.isEmpty(syllabusItemList.get(this.itemPosition).getSyllabus())) {
+            if (URLUtil.isValidUrl(syllabusItemList.get(this.itemPosition).getSyllabus())) {
+                KEY_DOWNLOAD_ID = beginDownload(syllabusItemList.get(this.itemPosition).getSyllabus(), Objects.requireNonNull(getContext()));
             } else {
                 Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == WRITE_EXTERNAL_STORAGE_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                downloadSyllabus();
+            } else if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    CommonUtils.showPermissionDeniedDialog(getActivity());
+                }
             }
         }
     }

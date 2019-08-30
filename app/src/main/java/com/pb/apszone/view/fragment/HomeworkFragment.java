@@ -1,12 +1,15 @@
 package com.pb.apszone.view.fragment;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.DownloadManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.HomeworkItem;
 import com.pb.apszone.service.model.HomeworkResponseModel;
+import com.pb.apszone.utils.CommonUtils;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.HomeworkAdapter;
 import com.pb.apszone.view.receiver.DownloadBroadcastReceiver;
@@ -44,10 +48,12 @@ import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
+import static com.pb.apszone.utils.AppConstants.WRITE_EXTERNAL_STORAGE_CODE;
 import static com.pb.apszone.utils.CommonUtils.beginDownload;
 import static com.pb.apszone.utils.CommonUtils.getNextDate;
 import static com.pb.apszone.utils.CommonUtils.getPreviousDate;
 import static com.pb.apszone.utils.CommonUtils.getTodayDate;
+import static com.pb.apszone.utils.CommonUtils.isWriteStoragePermissionGranted;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class HomeworkFragment extends BaseFragment implements HomeworkAdapter.OnDownloadItemClickListener {
@@ -73,6 +79,7 @@ public class HomeworkFragment extends BaseFragment implements HomeworkAdapter.On
     HomeworkAdapter homeworkAdapter;
     DownloadBroadcastReceiver downloadBroadcastReceiver;
     private String today_date;
+    private int itemPosition;
 
     public HomeworkFragment() {
         // Required empty public constructor
@@ -175,14 +182,38 @@ public class HomeworkFragment extends BaseFragment implements HomeworkAdapter.On
 
     @Override
     public void onDownloadItemClick(int position, View view) {
-        if (!TextUtils.isEmpty(homeworkItemList.get(position).getData())) {
-            if (URLUtil.isValidUrl(homeworkItemList.get(position).getData())) {
-                KEY_DOWNLOAD_ID = beginDownload(homeworkItemList.get(position).getData(), getContext());
+        if (isWriteStoragePermissionGranted(getContext())) {
+            this.itemPosition = position;
+            downloadSyllabus();
+        } else {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_CODE);
+        }
+    }
+
+    private void downloadSyllabus() {
+        if (!TextUtils.isEmpty(homeworkItemList.get(this.itemPosition).getData())) {
+            if (URLUtil.isValidUrl(homeworkItemList.get(this.itemPosition).getData())) {
+                KEY_DOWNLOAD_ID = beginDownload(homeworkItemList.get(this.itemPosition).getData(), Objects.requireNonNull(getContext()));
             } else {
                 Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == WRITE_EXTERNAL_STORAGE_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                downloadSyllabus();
+            } else if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    CommonUtils.showPermissionDeniedDialog(getActivity());
+                }
+            }
+        }
+    }
+
 
     @Override
     public void onViewItemClick(int position, View view) {

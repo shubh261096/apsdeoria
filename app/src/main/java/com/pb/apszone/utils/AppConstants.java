@@ -58,6 +58,7 @@ public class AppConstants {
 
     /* KEY CONSTANT VALUES */
     public final static int READ_EXTERNAL_STORAGE_CODE = 101;
+    public final static int WRITE_EXTERNAL_STORAGE_CODE = 102;
     public final static int PDF_REQ_CODE = 901;
 
     /* CONSTANT APP URL AND INFO */

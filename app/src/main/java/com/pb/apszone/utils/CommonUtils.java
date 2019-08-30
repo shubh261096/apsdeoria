@@ -34,7 +34,6 @@ import android.widget.Button;
 import com.pb.apszone.BuildConfig;
 import com.pb.apszone.R;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -232,7 +231,6 @@ public class CommonUtils {
 
     @TargetApi(Build.VERSION_CODES.N)
     public static long beginDownload(String url, Context context) {
-        File file = new File(Objects.requireNonNull(context).getExternalFilesDir(null), "Download");
         /*
         Create a DownloadManager.Request with all the information necessary to start the download
          */
@@ -241,7 +239,7 @@ public class CommonUtils {
                 .setTitle(getFileNameFromURL(url))// Title of the Download Notification
                 .setDescription(context.getString(R.string.msg_downloading)) // Description of the Download Notification
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) // Visibility of the download Notification
-                .setDestinationUri(Uri.fromFile(file)) // Uri of the destination file
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/apszone/" + getFileNameFromURL(url) )
                 .setRequiresCharging(false) // Set if charging is required to begin the download
                 .setAllowedOverMetered(true) // Set if download is allowed on Mobile network
                 .setAllowedOverRoaming(true); // Set if download is allowed on roaming network
@@ -374,6 +372,15 @@ public class CommonUtils {
     public static boolean isReadStoragePermissionGranted(Context context) {
         if (Build.VERSION.SDK_INT >= 23) {
             return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+
+    public static boolean isWriteStoragePermissionGranted(Context context) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED;
         } else {
             return true;

@@ -57,11 +57,13 @@ import static android.app.Activity.RESULT_OK;
 import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.AppConstants.READ_EXTERNAL_STORAGE_CODE;
+import static com.pb.apszone.utils.AppConstants.WRITE_EXTERNAL_STORAGE_CODE;
 import static com.pb.apszone.utils.CommonUtils.beginDownload;
 import static com.pb.apszone.utils.CommonUtils.getUriRealPath;
 import static com.pb.apszone.utils.CommonUtils.hideProgress;
 import static com.pb.apszone.utils.CommonUtils.isReadStoragePermissionGranted;
 import static com.pb.apszone.utils.CommonUtils.isValidFileType;
+import static com.pb.apszone.utils.CommonUtils.isWriteStoragePermissionGranted;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 import static com.pb.apszone.utils.CommonUtils.showProgress;
 
@@ -89,6 +91,7 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     private int classPos = 0;
     private boolean isPDFSelected;
     DownloadBroadcastReceiver downloadBroadcastReceiver;
+    private int itemPosition;
 
     public SyllabusTeacherFragment() {
         // Required empty public constructor
@@ -251,8 +254,17 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
 
     @Override
     public void onDownloadClick(int position, View view) {
-        if (URLUtil.isValidUrl(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getSyllabus())) {
-            KEY_DOWNLOAD_ID = beginDownload(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(position).getSyllabus(), getContext());
+        if (isWriteStoragePermissionGranted(getContext())) {
+            this.itemPosition = position;
+            downloadSyllabus();
+        } else {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_CODE);
+        }
+    }
+
+    private void downloadSyllabus() {
+        if (URLUtil.isValidUrl(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(this.itemPosition).getSyllabus())) {
+            KEY_DOWNLOAD_ID = beginDownload(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(this.itemPosition).getSyllabus(), getContext());
         } else {
             Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
         }
@@ -293,6 +305,17 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
             } else if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 Log.i(TAG, "onRequestPermissionsResult: Permission Denied");
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    CommonUtils.showPermissionDeniedDialog(getActivity());
+                }
+            }
+        }
+        if (requestCode == WRITE_EXTERNAL_STORAGE_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "onRequestPermissionsResult: Permission Granted");
+                downloadSyllabus();
+            } else if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                Log.i(TAG, "onRequestPermissionsResult: Permission Denied");
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     CommonUtils.showPermissionDeniedDialog(getActivity());
                 }
             }
