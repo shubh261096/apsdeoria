@@ -1,6 +1,8 @@
 package com.pb.apszone.view.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -22,7 +24,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pb.apszone.App;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.DashboardItem;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
@@ -81,6 +82,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     DashboardViewModel dashboardViewModel;
     ProfileFragmentViewModel profileFragmentViewModel;
     DashboardAdapter dashboardAdapter;
+    NetworkChangeReceiver networkChangeReceiver;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.toolbar_dashboard)
@@ -101,12 +103,17 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         ButterKnife.bind(this);
         setSupportActionBar(toolbarDashboard);
 
+        /* Starting observer of Internet change*/
+        networkChangeReceiver = new NetworkChangeReceiver();
+        registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         observeInternetChange();
+        /* ViewModel initialization */
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
-
+        /* Observe LiveData*/
         observeDashboardUIElements();
         observeProfile();
+
         dashboardItemList = new ArrayList<>();
         onDashboardItemClickListener = this;
         keyStorePref = KeyStorePref.getInstance(this);
@@ -297,6 +304,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((App) getApplication()).unregisterNetworkChangeReceiver();
+        unregisterReceiver(networkChangeReceiver);
     }
 }
