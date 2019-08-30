@@ -1,8 +1,6 @@
 package com.pb.apszone.view.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -24,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pb.apszone.App;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.DashboardItem;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
@@ -46,7 +45,6 @@ import com.pb.apszone.view.listener.OnDashboardItemClickListener;
 import com.pb.apszone.view.receiver.NetworkChangeReceiver;
 import com.pb.apszone.viewModel.DashboardViewModel;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
-import com.pb.apszone.viewModel.SharedViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +80,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     LinearLayout includeNetworkLayout;
     DashboardViewModel dashboardViewModel;
     ProfileFragmentViewModel profileFragmentViewModel;
-    SharedViewModel sharedViewModel;
     DashboardAdapter dashboardAdapter;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
@@ -94,14 +91,8 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     private OnDashboardItemClickListener onDashboardItemClickListener;
     KeyStorePref keyStorePref;
     private String user_type, user_id;
-    NetworkChangeReceiver changeReceiver;
     boolean doubleBackToExitPressedOnce;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        registerReceiver(changeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,12 +100,11 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
         setSupportActionBar(toolbarDashboard);
-        /* Starting observer of Internet change*/
-        changeReceiver = new NetworkChangeReceiver(this);
-        sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
+
         observeInternetChange();
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
+
         observeDashboardUIElements();
         observeProfile();
         dashboardItemList = new ArrayList<>();
@@ -170,7 +160,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     }
 
     private void observeInternetChange() {
-        sharedViewModel.getStatus().observe(this, status -> {
+        NetworkChangeReceiver.getStatus().observe(this, status -> {
             if (status != null) {
                 if (status) {
                     if (dashboardAdapter != null) {
@@ -288,12 +278,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
 
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        unregisterReceiver(changeReceiver);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
@@ -308,5 +292,11 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ((App) getApplication()).unregisterNetworkChangeReceiver();
     }
 }

@@ -1,28 +1,33 @@
 package com.pb.apszone.view.receiver;
 
-import android.arch.lifecycle.ViewModelProviders;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 
 import com.pb.apszone.utils.CommonUtils;
-import com.pb.apszone.viewModel.SharedViewModel;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
     boolean status;
-    SharedViewModel sharedViewModel;
+    private final static MutableLiveData<Boolean> networkChange = new MutableLiveData<>();
 
-    public NetworkChangeReceiver(FragmentActivity activity){
-        sharedViewModel = ViewModelProviders.of(activity).get(SharedViewModel.class);
+    public void setStatus(Boolean status) {
+        networkChange.postValue(status);
+    }
+
+    public static LiveData<Boolean> getStatus() {
+        return networkChange;
+    }
+
+    public NetworkChangeReceiver() {
+
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         status = CommonUtils.getConnectivityStatus(context);
-        sharedViewModel.setStatus(status);
+        setStatus(status);
     }
-
-
 
 }

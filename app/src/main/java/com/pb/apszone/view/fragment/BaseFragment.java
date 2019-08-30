@@ -1,6 +1,5 @@
 package com.pb.apszone.view.fragment;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,14 +9,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.pb.apszone.R;
-import com.pb.apszone.viewModel.SharedViewModel;
+import com.pb.apszone.view.receiver.NetworkChangeReceiver;
 
 import java.util.Objects;
 
 public abstract class BaseFragment extends Fragment {
 
     LinearLayout includeNetworkLayout;
-    SharedViewModel sharedViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,13 +31,12 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         includeNetworkLayout = Objects.requireNonNull(getActivity()).findViewById(R.id.includeNetworkLayout);
-        sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
         observeInternetChange();
 
     }
 
     private void observeInternetChange() {
-        sharedViewModel.getStatus().observe(this, status -> {
+        NetworkChangeReceiver.getStatus().observe(this, status -> {
             if (status != null) {
                 if (includeNetworkLayout == null)
                     return;
@@ -69,7 +66,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
     }
 
 }
