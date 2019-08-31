@@ -128,6 +128,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
                 if (responseEvent.isSuccess()) {
                     ProfileResponseModel profileResponseModel = responseEvent.getProfileResponseModel();
                     dashboardViewModel.putSharedPrefData(profileResponseModel); // Adding SharedPref in case student/parent
+                    dashboardViewModel.subscribeToTopic(profileResponseModel);
                     if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
                         int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
                         userDp.setImageResource(drawable);

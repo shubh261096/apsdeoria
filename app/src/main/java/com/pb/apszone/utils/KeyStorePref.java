@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.pb.apszone.viewModel.DashboardViewModel;
+
 public class KeyStorePref {
     private static KeyStorePref store;
     private final SharedPreferences SP;
@@ -42,6 +44,7 @@ public class KeyStorePref {
 
     public void clearAllPref() {
         SP.edit().clear().apply();
+        DashboardViewModel.unsubscribeFromAllTopic();
     }
 
 }

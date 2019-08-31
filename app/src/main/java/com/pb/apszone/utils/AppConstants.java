@@ -78,4 +78,9 @@ public class AppConstants {
         String ZERO = "0";
         String ONE = "1";
     }
+
+    /* SHARED PREFERENCE FOR FCM SUBSCRIPTION */
+    public final static String KEY_SUBSCRIBE_CLASS_ID = "key_subscribe_class_id";
+    public final static String KEY_SUBSCRIBE_TEACHER = "key_subscribe_teacher";
+    public final static String KEY_SUBSCRIBE_STUDENT = "key_subscribe_student";
 }
