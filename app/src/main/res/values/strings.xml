@@ -152,6 +152,7 @@
     <string name="activity_fee">Activity Fee</string>
     <string name="computer_fee">Computer Fee</string>
     <string name="basic_fee_information">Basic Fee Information</string>
+    <string name="toolbar_downloads">Downloads</string>
 
     <string-array name="day">
         <item>Monday</item>

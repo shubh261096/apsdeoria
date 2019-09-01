@@ -12,6 +12,7 @@ import com.pb.apszone.service.model.ClassDetailResponseModel;
 import com.pb.apszone.service.model.ClassSubjectResponseModel;
 import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
+import com.pb.apszone.service.model.DownloadResponseModel;
 import com.pb.apszone.service.model.ErrorModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
@@ -751,6 +752,43 @@ public class Repository {
                         errorModel.setMessage(errorMsg);
                         commonResponseModelMutableLiveData.
                                 postValue(new Events.CommonResponseEvent(errorModel, false, null));
+                    }
+                });
+    }
+
+    /* Downloads Request */
+    public void getDownloads(String user_type, MutableLiveData<Events.DownloadResponseEvent> downloadResponseEventMutableLiveData) {
+        Map<String, String> params = new HashMap<>();
+        params.put("user_type", user_type);
+        apiService.getDownloads(params)
+                .enqueue(new Callback<DownloadResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<DownloadResponseModel> call, @Nullable Response<DownloadResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                downloadResponseEventMutableLiveData.
+                                        postValue(new Events.DownloadResponseEvent(null, true, response.body()));
+                            } else {
+                                if (response.errorBody() != null) {
+                                    downloadResponseEventMutableLiveData.
+                                            postValue(new Events.DownloadResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    downloadResponseEventMutableLiveData.
+                                            postValue(new Events.DownloadResponseEvent(errorModel, false, null));
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<DownloadResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        downloadResponseEventMutableLiveData.
+                                postValue(new Events.DownloadResponseEvent(errorModel, false, null));
                     }
                 });
     }

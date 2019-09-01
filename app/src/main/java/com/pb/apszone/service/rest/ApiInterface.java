@@ -5,6 +5,7 @@ import com.pb.apszone.service.model.ClassDetailResponseModel;
 import com.pb.apszone.service.model.ClassSubjectResponseModel;
 import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
+import com.pb.apszone.service.model.DownloadResponseModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.service.model.InboxResponseModel;
@@ -96,4 +97,8 @@ public interface ApiInterface {
     @POST("Login/reset")
     @FormUrlEncoded
     Call<CommonResponseModel> resetPassword(@FieldMap Map<String, String> params);
+
+    @POST("Download")
+    @FormUrlEncoded
+    Call<DownloadResponseModel> getDownloads(@FieldMap Map<String, String> params);
 }

@@ -45,6 +45,7 @@ public class AppConstants {
     public final static String UI_ELEMENT_HOMEWORK = "Homework";
     public final static String UI_ELEMENT_FEES = "Fees";
     public final static String UI_ELEMENT_INBOX = "Inbox";
+    public final static String UI_ELEMENT_DOWNLOAD = "Downloads";
 
     public static long KEY_DOWNLOAD_ID;
 

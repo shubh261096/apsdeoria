@@ -5,6 +5,7 @@ import com.pb.apszone.service.model.ClassDetailResponseModel;
 import com.pb.apszone.service.model.ClassSubjectResponseModel;
 import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
+import com.pb.apszone.service.model.DownloadResponseModel;
 import com.pb.apszone.service.model.ErrorModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
@@ -204,6 +205,19 @@ public class Events {
 
         public CommonResponseModel getCommonResponseModel() {
             return commonResponseModel;
+        }
+    }
+
+    public static class DownloadResponseEvent extends BaseEvent {
+        private DownloadResponseModel downloadResponseModel;
+
+        DownloadResponseEvent(ErrorModel errorModel, boolean success, DownloadResponseModel downloadResponseModel) {
+            super(errorModel, success);
+            this.downloadResponseModel = downloadResponseModel;
+        }
+
+        public DownloadResponseModel getDownloadResponseModel() {
+            return downloadResponseModel;
         }
     }
 
