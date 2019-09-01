@@ -388,8 +388,10 @@ public class Repository {
     }
 
     /* Inbox Request */
-    public void getInbox(MutableLiveData<Events.InboxResponseEvent> inboxResponseModelMutableLiveData) {
-        apiService.getInbox()
+    public void getInbox(String user_type, MutableLiveData<Events.InboxResponseEvent> inboxResponseModelMutableLiveData) {
+        Map<String, String> params = new HashMap<>();
+        params.put("user_type", user_type);
+        apiService.getInbox(params)
                 .enqueue(new Callback<InboxResponseModel>() {
                     @Override
                     public void onResponse(@NonNull Call<InboxResponseModel> call, @Nullable Response<InboxResponseModel> response) {

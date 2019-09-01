@@ -59,8 +59,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<FeesResponseModel> getFees(@FieldMap Map<String, String> params);
 
-    @GET("Inbox")
-    Call<InboxResponseModel> getInbox();
+    @POST("Inbox")
+    @FormUrlEncoded
+    Call<InboxResponseModel> getInbox(@FieldMap Map<String, String> params);
 
     /* Teacher's api end point */
     @POST("teacher/Attendance")
