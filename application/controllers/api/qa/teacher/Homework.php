@@ -95,6 +95,7 @@ class Homework extends REST_Controller
         $add_array = array('date' => $date, 'class_id' => $class_id, 'teacher_id' => $teacher_id, 'subject_id' => $subject_id, 'data' => $path, 'remarks' => $remarks);
         if ($this->HomeworkModel->add_Homework($add_array)) {
           generateTCPDF($title, $description, 'asset/pdf/homework/', $class_name . '_' . $subject_name . '_' . $date);
+          sendPushNotification($subject_name . ' homework is added', 'Please check into the homework section', NULL, NULL, $class_id, NULL, 'topic');       
           $response['error'] = false;
           $response['message'] = "Added successfully";
           $httpStatus = REST_Controller::HTTP_OK;

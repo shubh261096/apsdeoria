@@ -28,4 +28,19 @@ class NotificationModel extends CI_Model
             return FALSE;
         }
     }
+
+    /* Query for getting notification by user_type*/
+    public function get_notificationByUserType($user_type)
+    {
+        $query = $this->db->where('topic', 'global')
+            ->or_where('topic', $user_type)
+            ->order_by('date', 'DESC')
+            ->get('inbox');
+
+        if ($query->num_rows()) {
+            return $query->result();
+        } else {
+            return FALSE;
+        }
+    }
 }
