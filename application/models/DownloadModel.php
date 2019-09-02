@@ -11,6 +11,7 @@ class DownloadModel extends CI_Model
     public function get_downloadByUserType($user_type)
     {
         $query = $this->db->where('type', $user_type)
+            ->where('status', '1')
             ->or_where('type', 'global')
             ->get('download');
 
