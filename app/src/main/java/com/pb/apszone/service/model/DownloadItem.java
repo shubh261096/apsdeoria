@@ -16,6 +16,28 @@ public class DownloadItem {
     @SerializedName("url")
     private String url;
 
+    @SerializedName("date_added")
+    private String dateAdded;
+
+    @SerializedName("status")
+    private String status;
+
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -56,6 +78,8 @@ public class DownloadItem {
                         ",id = '" + id + '\'' +
                         ",type = '" + type + '\'' +
                         ",url = '" + url + '\'' +
+                        ",date_added = '" + dateAdded + '\'' +
+                        ",status = '" + status + '\'' +
                         "}";
     }
 }
