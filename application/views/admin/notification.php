@@ -30,6 +30,8 @@
                             <label for="topic">Choose Topic:</label>
                             <select name="topic" id="topic" class="form-control">
                                 <option value="global">Global</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="student">Student</option>
                             </select>
                         </div>
                         <div class="form-group">
