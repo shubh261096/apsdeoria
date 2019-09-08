@@ -1,7 +1,7 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <a href="<?php echo base_url('expense/add'); ?>" class="btn btn-primary btn-s">Add Expense</a>
+    <a href="<?php echo base_url('expense/add'); ?>" class="btn btn-primary btn-s">Add</a>
   </section>
 
   <?php if ($feedback = $this->session->flashdata('feedback')) :
@@ -24,7 +24,7 @@
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Expense Details</h3>
+            <h3 class="box-title">Expense & Account Details</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -36,7 +36,9 @@
                   <th>Category</th>
                   <th>Description</th>
                   <th>Amount</th>
+                  <th>Month</th>
                   <th>Date</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,17 +49,24 @@
                       <td><?= $expense->id; ?></td>
                       <td>
                         <?php if ($expense->type == 'Credit') { ?>
-                          <span class="label label-success">Credit</span>
+                          <span class="label label-success"><?= $expense->type ?></span>
+                        <?php } else if ($expense->type == 'Debit') { ?>
+                          <span class="label label-danger"><?= $expense->type ?></span>
                         <?php } else { ?>
-                          <span class="label label-danger">Debit</span>
+                          <span class="label label-info"><?= $expense->type ?></span>
                         <?php } ?>
                       </td>
                       <td><?= $expense->category; ?></td>
                       <td><?= $expense->description; ?></td>
                       <td><?= $expense->amount; ?></td>
+                      <td><?php $datetime = new DateTime($expense->date);
+                              echo $datetime->format('F'); ?></td>
                       <td><?= $expense->date; ?></td>
+                      <td>
+                        <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'expense/delete/' . $expense->id; ?>');" deleteConfirm href="#"></a>
+                      </td>
                     </tr>
-                  <?php }
+                <?php }
                 } ?>
             </table>
           </div>
@@ -80,6 +89,15 @@
 
 <div class="control-sidebar-bg"></div>
 </div>
+
+<script type="text/javascript">
+  function deleteConfirm(url) {
+    if (confirm('Do you want to Delete this record ?')) {
+      window.location.href = url;
+    }
+  }
+</script>
+
 <!-- jQuery 2.2.3 -->
 <script src="<?php echo base_url(); ?>plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -137,6 +155,9 @@
 <script>
   $(function() {
     $('#example2').DataTable({
+      "order": [
+        [0, "desc"]
+      ],
       "sScrollX": "100%",
       "bScrollCollapse": true,
       "paging": true,

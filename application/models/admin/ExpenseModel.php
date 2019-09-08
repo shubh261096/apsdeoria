@@ -28,4 +28,12 @@ class ExpenseModel extends CI_Model
 		$array['date'] = date("Y-m-d H:i:s");
 		return $this->db->insert('school_expense', $array);
 	}
+
+	/** function to delete expenditure */
+	public function deleteExpense($expense_id)
+	{
+		return $this->db
+			->where('id', $expense_id)
+			->delete('school_expense');
+	}
 }

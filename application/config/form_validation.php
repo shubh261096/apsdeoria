@@ -128,6 +128,11 @@ $config = [
 			'field' => 'amount',
 			'label' => 'Amount',
 			'rules' => 'trim|required'
+		],
+		[
+			'field' => 'type',
+			'label' => 'Expense type',
+			'rules' => 'trim|required'
 		]
 	],
 ];

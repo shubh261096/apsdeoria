@@ -9,7 +9,7 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Add Expenditure</h3>
+            <h3 class="box-title">Add</h3>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
@@ -17,12 +17,20 @@
 
           <div class="box-body">
             <div class="form-group">
-              <label for="type">Select Type</label>
-              <?php echo form_dropdown('type', $type, '', 'class="form-control"'); ?>
+              <label for="type">Choose Type</label>
+              <select name="type" id="type" class="form-control">
+                <option value="">Select Expense Type</option>
+                <option value="Credit">Credit</option>
+                <option value="Debit">Debit</option>
+                <option value="Settlement">Settlement</option>
+              </select>
+              <?php echo form_error('type'); ?>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="category_group">
               <label for="category">Select Category</label>
-              <?php echo form_dropdown('category', $category, '', 'class="form-control"'); ?>
+              <select name="category" id="category" class="form-control">
+                <option value=''>Select Category</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="InputText">Description</label>
@@ -60,7 +68,27 @@
 
 <div class="control-sidebar-bg"></div>
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $("#type").change(function() {
+      var val = $(this).val();
+      if (val == "Debit") {
+        $("#category_group").show();
+        $("#category").html("<option value='Food'>Food & Beverages</option><option value='Salary'>Salary</option><option value='Function'>School Function</option><option value='Entertainment'>Entertainment</option><option value='Gifts'>Gifts</option><option value='Stationery'>Stationery</option><option value='Transport'>Transport</option><option value='Health'>Health & Fitness</option><option value='Others'>Others</option>");
+      } else if (val == "Credit") {
+        $("#category_group").show();
+        $("#category").html("<option value='Fees'>Fees</option><option value='Conveyance'>Conveyance</option><option value='Uniform'>School Uniform</option><option value='Others'>Others</option>");
+      } else if (val == "Settlement") {
+        $("#category_group").hide();
+        $("#category").html("<option value=''></option>");
+      } else if (val == "") {
+        $("#category_group").show();
+        $("#category").html("<option value=''>Select Category</option>");
+      }
+    });
+  });
+</script>
 
 <script src="<?php echo base_url(); ?>plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->

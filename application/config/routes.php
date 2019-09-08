@@ -116,6 +116,7 @@ $route['homework/download/(:any)'] = "admin/homework/download/$1"; // homework c
 
 $route['expense/add'] = "admin/expense/add"; // expense controller add mthod
 $route['expense/insert'] = "admin/expense/insert"; // expense controller adinsertd method
+$route['expense/delete/(:any)'] = "admin/expense/delete/$1"; // expense controller delete method
 
 $route['admin/logout'] = "admin/admin/logout"; // admin controller logout method
 $route['admin'] = "admin/admin"; // admin controller logout method

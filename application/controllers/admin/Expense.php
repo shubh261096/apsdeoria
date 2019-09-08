@@ -27,28 +27,14 @@ class Expense extends CI_Controller
 
   public function add()
   {
-    $data['type'] = array(
-      'Credit' => 'Credit', 'Debit' => 'Debit'
-    );
-    $data['category'] = array(
-      'Bills' => 'Bills & Utilities', 'Education' => 'Education', 'Entertainment' => 'Entertainment', 'Fees' => 'Fees & Charges', 'Food' => 'Food & Beverages', 'Gifts' => 'Gifts & Donation', 'Stationery' => 'Stationery',
-      'Health' => 'Health & Fitness', 'Transportation' => 'Transportation', 'Function' => 'School Function', 'Others' => 'Others'
-    );
-    $this->load->view('admin/expense/add_expense', $data);
+    $this->load->view('admin/expense/add_expense');
   }
 
   public function insert()
   {
     $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
     if ($this->form_validation->run('add_expense_rules') == FALSE) {
-      $data['type'] = array(
-        'Credit' => 'Credit', 'Debit' => 'Debit'
-      );
-      $data['category'] = array(
-        'Bills' => 'Bills & Utilities', 'Education' => 'Education', 'Entertainment' => 'Entertainment', 'Fees' => 'Fees & Charges', 'Food' => 'Food & Beverages', 'Gifts' => 'Gifts & Donation', 'Stationery' => 'Stationery',
-        'Health' => 'Health & Fitness', 'Transportation' => 'Transportation', 'Function' => 'School Function', 'Others' => 'Others'
-      );
-      $this->load->view('admin/expense/add_expense', $data);
+      $this->load->view('admin/expense/add_expense');
     } else {
       $post = $this->input->post();
       unset($post['submit']);
@@ -61,6 +47,18 @@ class Expense extends CI_Controller
       }
       return redirect('expense');
     }
+  }
+
+  public function delete($expense_id)
+  {
+    if ($this->ExpenseModel->deleteExpense($expense_id)) {
+      $this->session->set_flashdata('feedback', 'Deleted Succefully');
+      $this->session->set_flashdata('feedback_class', 'alert-success');
+    } else {
+      $this->session->set_flashdata('feedback', 'Not deleted');
+      $this->session->set_flashdata('feedback_class', 'alert-danger');
+    }
+    return redirect('expense');
   }
 
 }
