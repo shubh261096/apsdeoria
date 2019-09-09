@@ -20,6 +20,78 @@
 
   <section class="content">
     <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title"><?php echo date('F'); ?> Account Report</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-footer">
+            <div class="row">
+              <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+                  <h5 class="description-header text-success"><?php if (!$credit_amount->credit == NULL) {
+                                                                echo '<i class="fa fa-rupee"></i> ' . $credit_amount->credit;
+                                                              } else {
+                                                                echo '<i class="fa fa-rupee"></i> 0';
+                                                              } ?></h5>
+                  <span class="description-text">CREDIT AMOUNT</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+                  <h5 class="description-header text-danger"><?php if (!$debit_amount->debit == NULL) {
+                                                                echo '<i class="fa fa-rupee"></i> ' . $debit_amount->debit;
+                                                              } else {
+                                                                echo '<i class="fa fa-rupee"></i> 0';
+                                                              } ?></h5>
+                  <span class="description-text">DEBIT AMOUNT</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+                  <h5 class="description-header text-info"><?php if (!$settle_amount->settle == NULL) {
+                                                              echo '<i class="fa fa-rupee"></i> ' . $settle_amount->settle;
+                                                            } else {
+                                                              echo '<i class="fa fa-rupee"></i> 0';
+                                                            } ?></h5>
+                  <span class="description-text">SETTLED AMOUNT</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-3 col-xs-6">
+                <div class="description-block">
+                  <h5 class="description-header"><?php if (!$collect_amount->collect == NULL) {
+                                                    echo '<i class="fa fa-rupee"></i>' . $collect_amount->collect;
+                                                  } else {
+                                                    echo '<i class="fa fa-rupee"></i> 0';
+                                                  } ?></h5>
+                  <span class="description-text">MONTHLY ACADEMIC FEE</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.box-footer -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
       <div class="col-xs-12">
 
         <div class="box">

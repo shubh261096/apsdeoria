@@ -18,6 +18,10 @@ class Expense extends CI_Controller
   public function index()
   {
     $query = $this->ExpenseModel->getExpense();
+    $data['credit_amount'] = $this->ExpenseModel->getTotalCredit();
+    $data['debit_amount'] = $this->ExpenseModel->getTotalDebit();
+    $data['settle_amount'] = $this->ExpenseModel->getTotalSettlement();
+    $data['collect_amount'] = $this->ExpenseModel->getCollectAmount();
     $data['EXPENSES'] = null;
     if ($query) {
       $data['EXPENSES'] =  $query;

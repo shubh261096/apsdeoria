@@ -36,4 +36,38 @@ class ExpenseModel extends CI_Model
 			->where('id', $expense_id)
 			->delete('school_expense');
 	}
+
+	/** function to get total credit amount */
+	public function getTotalCredit()
+	{
+		$sql = 'SELECT SUM(amount) as credit FROM `school_expense` WHERE type="Credit" AND MONTH(date) = MONTH(CURRENT_DATE())';
+		$query = $this->db->query($sql);
+		return $query->row();
+	}
+
+	/** function to get total debit amount */
+	public function getTotalDebit()
+	{
+		$sql = 'SELECT SUM(amount) as debit FROM `school_expense` WHERE type="Debit" AND MONTH(date) = MONTH(CURRENT_DATE())';
+		$query = $this->db->query($sql);
+		return $query->row();
+	}
+
+	/** function to get total debit amount */
+	public function getTotalSettlement()
+	{
+		$sql = 'SELECT SUM(amount) as settle FROM `school_expense` WHERE type="Settlement" AND MONTH(date) = MONTH(CURRENT_DATE())';
+		$query = $this->db->query($sql);
+		return $query->row();
+	}
+
+	public function getCollectAmount()
+	{
+		$sql = 'SELECT SUM(a.total_compensation) AS collect FROM (
+					SELECT t.class_id, (f.total_amount * t.student) AS total_compensation FROM (
+						SELECT COUNT(s.id) student, s.class_id FROM student s GROUP BY s.class_id) AS t
+							JOIN fees f ON t.class_id = f.class_id) AS a';
+		$query = $this->db->query($sql);
+		return $query->row();
+	}
 }
