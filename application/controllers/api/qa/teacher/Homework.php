@@ -18,8 +18,16 @@ class Homework extends REST_Controller
     if (isTheseParametersAvailable(array('teacher_id'))) {
       $response = array();
       $teacher_id = $this->input->post('teacher_id');
-      $response = $this->get_classSubject($teacher_id); // getting class and subject by teacher_id
-      $httpStatus = REST_Controller::HTTP_OK;
+
+      /** Checking teacher status */
+      if (getTeacherStatus($teacher_id)) {
+        $response = $this->get_classSubject($teacher_id); // getting class and subject by teacher_id
+        $httpStatus = REST_Controller::HTTP_OK;
+      } else {
+        $response['error'] = true;
+        $response['message'] = "Status is not active. Please contact administration";
+        $httpStatus = REST_Controller::HTTP_OK;
+      }
     } else {
       $response['error'] = true;
       $response['message'] = "Parameters not found";
@@ -62,52 +70,60 @@ class Homework extends REST_Controller
     $class_id = $value['class_id'];
     $subject_id = $value['subject_id'];
     $teacher_id = $value['teacher_id'];
-    if (!empty($value['title'])) {
-      $title = $value['title'];
-    }
-    if (!empty($value['description'])) {
-      $description = $value['description'];
-    }
-    if (!empty($value['remarks'])) {
-      $remarks = $value['remarks'];
-    } else {
-      $remarks = "";
-    }
 
-    /* Getting class name  by id */
-    $class = getClassDetails($class_id);
-    $class_name = str_replace(' ', '_', $class->name);
-    /* Getting subject name  by id */
-    $subject = getSubjectDetails($subject_id);
-    $subject_name = str_replace(' ', '_', $subject->name);
-    $path =  base_url() . 'asset/pdf/homework/' . $class_name . '_' . $subject_name . '_' . $date . '.pdf';
-
-    $check_array = array('date' => $date, 'class_id' => $class_id, 'teacher_id' => $teacher_id, 'subject_id' => $subject_id);
-
-    if ($this->HomeworkModel->is_HomeworkAvailable($check_array) == FALSE) {
-      if (empty($value['title']) || empty($value['description'])) {
-        $response['error'] = true;
-        $response['message'] = "Title and description cannot be empty";
-        $data = array('params' => null);
-        $response['data'] = $data;
-        $httpStatus = REST_Controller::HTTP_OK;
+    /** Checking teacher status */
+    if (getTeacherStatus($teacher_id)) {
+      if (!empty($value['title'])) {
+        $title = $value['title'];
+      }
+      if (!empty($value['description'])) {
+        $description = $value['description'];
+      }
+      if (!empty($value['remarks'])) {
+        $remarks = $value['remarks'];
       } else {
-        $add_array = array('date' => $date, 'class_id' => $class_id, 'teacher_id' => $teacher_id, 'subject_id' => $subject_id, 'data' => $path, 'remarks' => $remarks);
-        if ($this->HomeworkModel->add_Homework($add_array)) {
-          generateTCPDF($title, $description, 'asset/pdf/homework/', $class_name . '_' . $subject_name . '_' . $date);
-          sendPushNotification($subject_name . ' homework is added', 'Please check into the homework section', NULL, NULL, $class_id, NULL, 'topic');       
-          $response['error'] = false;
-          $response['message'] = "Added successfully";
+        $remarks = "";
+      }
+
+      /* Getting class name  by id */
+      $class = getClassDetails($class_id);
+      $class_name = str_replace(' ', '_', $class->name);
+      /* Getting subject name  by id */
+      $subject = getSubjectDetails($subject_id);
+      $subject_name = str_replace(' ', '_', $subject->name);
+      $path =  base_url() . 'asset/pdf/homework/' . $class_name . '_' . $subject_name . '_' . $date . '.pdf';
+
+      $check_array = array('date' => $date, 'class_id' => $class_id, 'teacher_id' => $teacher_id, 'subject_id' => $subject_id);
+
+      if ($this->HomeworkModel->is_HomeworkAvailable($check_array) == FALSE) {
+        if (empty($value['title']) || empty($value['description'])) {
+          $response['error'] = true;
+          $response['message'] = "Title and description cannot be empty";
+          $data = array('params' => null);
+          $response['data'] = $data;
           $httpStatus = REST_Controller::HTTP_OK;
         } else {
-          $response['error'] = true;
-          $response['message'] = "An Error occured! Please try again.";
-          $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+          $add_array = array('date' => $date, 'class_id' => $class_id, 'teacher_id' => $teacher_id, 'subject_id' => $subject_id, 'data' => $path, 'remarks' => $remarks);
+          if ($this->HomeworkModel->add_Homework($add_array)) {
+            generateTCPDF($title, $description, 'asset/pdf/homework/', $class_name . '_' . $subject_name . '_' . $date);
+            sendPushNotification($subject_name . ' homework is added', 'Please check into the homework section', NULL, NULL, $class_id, NULL, 'topic');
+            $response['error'] = false;
+            $response['message'] = "Added successfully";
+            $httpStatus = REST_Controller::HTTP_OK;
+          } else {
+            $response['error'] = true;
+            $response['message'] = "An Error occured! Please try again.";
+            $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+          }
         }
+      } else {
+        $response['error'] = true;
+        $response['message'] = "Homework is already added for the date.";
+        $httpStatus = REST_Controller::HTTP_OK;
       }
     } else {
       $response['error'] = true;
-      $response['message'] = "Homework is already added for the date.";
+      $response['message'] = "Status is not active. Please contact administration";
       $httpStatus = REST_Controller::HTTP_OK;
     }
 

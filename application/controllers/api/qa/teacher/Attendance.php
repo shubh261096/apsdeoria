@@ -19,8 +19,16 @@ class Attendance extends REST_Controller
       $response = array();
       $teacher_id = $this->input->post('teacher_id');
       $date = $this->input->post('date');
-      $response = $this->get_classByTeacher($teacher_id, $date); // getting classes which a teacher teaches
-      $httpStatus = REST_Controller::HTTP_OK;
+
+      /** Checking teacher status */
+      if (getTeacherStatus($teacher_id)) {
+        $response = $this->get_classByTeacher($teacher_id, $date); // getting classes which a teacher teaches
+        $httpStatus = REST_Controller::HTTP_OK;
+      } else {
+        $response['error'] = true;
+        $response['message'] = "Status is not active. Please contact administration";
+        $httpStatus = REST_Controller::HTTP_OK;
+      }
     } else {
       $response['error'] = true;
       $response['message'] = "Parameters not found";

@@ -38,6 +38,17 @@ function getTeacherDetails($teacher_id)
     }
 }
 
+function getTeacherStatus($teacher_id)
+{
+    // get main CodeIgniter object
+    $ci = get_instance();
+    $ci->load->model('CommonModel');
+    $data = $ci->CommonModel->get_teacherStatus($teacher_id);
+    if ($data) {
+        return $data;
+    }
+}
+
 function getSubjectDetails($subject_id)
 {
     // get main CodeIgniter object
@@ -152,7 +163,7 @@ function sendPushNotification($title, $message, $imageUrl, $action, $topic, $act
     $url = 'https://fcm.googleapis.com/fcm/send';
 
     $headers = array(
-        'Authorization: key=' . $firebase_api_prod,
+        'Authorization: key=' . $firebase_api_qa,
         'Content-Type: application/json'
     );
 
