@@ -229,7 +229,6 @@ public class CommonUtils {
         return null;
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
     public static long beginDownload(String url, Context context) {
         /*
         Create a DownloadManager.Request with all the information necessary to start the download
@@ -240,7 +239,6 @@ public class CommonUtils {
                 .setDescription(context.getString(R.string.msg_downloading)) // Description of the Download Notification
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) // Visibility of the download Notification
                 .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/apszone/" + getFileNameFromURL(url) )
-                .setRequiresCharging(false) // Set if charging is required to begin the download
                 .setAllowedOverMetered(true) // Set if download is allowed on Mobile network
                 .setAllowedOverRoaming(true); // Set if download is allowed on roaming network
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
