@@ -26,12 +26,37 @@ public class TeacherId {
         return fullname;
     }
 
+    /* These keys are used in FeedbackFragment*/
+    @SerializedName("feedback")
+    private String feedback;
+
+    @SerializedName("rating")
+    private int rating;
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return
                 "TeacherId{" +
                         "id = '" + id + '\'' +
                         ",fullname = '" + fullname + '\'' +
+                        ",rating = '" + rating + '\'' +
+                        ",feedback = '" + feedback + '\'' +
                         "}";
     }
 }

@@ -26,6 +26,7 @@ import com.pb.apszone.service.rest.ApiClient;
 import com.pb.apszone.service.rest.ApiInterface;
 import com.pb.apszone.service.rest.AttendanceRequestModel;
 import com.pb.apszone.service.rest.ClassDetailRequestModel;
+import com.pb.apszone.service.rest.FeedbackRequestModel;
 import com.pb.apszone.service.rest.SubmitAttendanceRequestModel;
 import com.pb.apszone.service.rest.FeesRequestModel;
 import com.pb.apszone.service.rest.HomeworkRequestModel;
@@ -789,6 +790,78 @@ public class Repository {
                         errorModel.setMessage(errorMsg);
                         downloadResponseEventMutableLiveData.
                                 postValue(new Events.DownloadResponseEvent(errorModel, false, null));
+                    }
+                });
+    }
+
+    /* Check Feedback Request */
+    public void checkFeedback(String student_id, MutableLiveData<Events.CommonResponseEvent> commonResponseModelMutableLiveData) {
+        Map<String, String> params = new HashMap<>();
+        params.put("student_id", student_id);
+        apiService.checkFeedback(params)
+                .enqueue(new Callback<CommonResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                commonResponseModelMutableLiveData.
+                                        postValue(new Events.CommonResponseEvent(null, true, response.body()));
+                            } else {
+                                if (response.errorBody() != null) {
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    commonResponseModelMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(errorModel, false, null));
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        commonResponseModelMutableLiveData.
+                                postValue(new Events.CommonResponseEvent(errorModel, false, null));
+                    }
+                });
+    }
+
+    /* Add Feedback Request */
+    public void addFeedback(FeedbackRequestModel feedbackRequestModel, MutableLiveData<Events.CommonResponseEvent> commonResponseEventMutableLiveData) {
+        apiService.addFeedback(feedbackRequestModel)
+                .enqueue(new Callback<CommonResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponseModel> call, @Nullable Response<CommonResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                commonResponseEventMutableLiveData.
+                                        postValue(new Events.CommonResponseEvent(null, true, response.body()));
+                            } else {
+                                if (response.errorBody() != null) {
+                                    commonResponseEventMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    commonResponseEventMutableLiveData.
+                                            postValue(new Events.CommonResponseEvent(errorModel, false, null));
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        commonResponseEventMutableLiveData.
+                                postValue(new Events.CommonResponseEvent(errorModel, false, null));
                     }
                 });
     }

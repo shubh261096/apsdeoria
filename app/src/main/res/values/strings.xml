@@ -153,6 +153,10 @@
     <string name="computer_fee">Computer Fee</string>
     <string name="basic_fee_information">Basic Fee Information</string>
     <string name="toolbar_downloads">Downloads</string>
+    <string name="toolbar_feedback">Feedback</string>
+    <string name="text_write_feedback">Write feedback (optional)</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    <string name="msg_rating_required">Please give rating to all the teachers</string>
 
     <string-array name="day">
         <item>Monday</item>

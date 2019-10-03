@@ -101,4 +101,11 @@ public interface ApiInterface {
     @POST("Download")
     @FormUrlEncoded
     Call<DownloadResponseModel> getDownloads(@FieldMap Map<String, String> params);
+
+    @POST("Feedback")
+    @FormUrlEncoded
+    Call<CommonResponseModel> checkFeedback(@FieldMap Map<String, String> params);
+
+    @POST("Feedback/add")
+    Call<CommonResponseModel> addFeedback (@Body FeedbackRequestModel feedbackRequestModel);
 }
