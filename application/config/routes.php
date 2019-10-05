@@ -64,6 +64,7 @@ $route['parents'] = "admin/parents"; // parents controller
 $route['homework'] = "admin/homework"; // homework controller
 $route['notification'] = "admin/notification"; // notification controller
 $route['expense'] = "admin/expense"; // Expenses controller
+$route['feedback'] = "admin/feedback"; // Feedback controller
 
 /** called from views */
 $route['teacher/add'] = "admin/teacher/add"; // teacher controller add mthod

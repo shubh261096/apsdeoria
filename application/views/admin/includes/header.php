@@ -135,9 +135,10 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
           <li><a href="<?php echo base_url('parents'); ?>"><i class="fa fa-users"></i> <span>Parents</span></a></li>
           <li><a href="<?php echo base_url('homework'); ?>"><i class="fa fa-book"></i> <span>Homework</span></a></li>
           <li><a href="<?php echo base_url('notification'); ?>"><i class="fa fa-bell"></i> <span>Notification</span></a></li>
+          <li><a href="<?php echo base_url('feedback'); ?>"><i class="fa fa-comments"></i> <span>Feedback</span></a></li>
 
           <li class="header">SCHOOL CONTENT</li>
           <li><a href="<?php echo base_url('expense'); ?>"><i class="fa fa-credit-card"></i> <span>Expenses & Accounts</span></a></li>
-        </section>
+      </section>
       <!-- /.sidebar -->
     </aside>
