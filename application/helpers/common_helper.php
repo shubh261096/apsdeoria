@@ -97,6 +97,17 @@ function getStudentDetails($student_id)
     }
 }
 
+function getAllSubjects($class_id)
+{
+    // get main CodeIgniter object
+    $ci = get_instance();
+    $ci->load->model('CommonModel');
+    $data = $ci->CommonModel->get_AllSubjectsByClassId($class_id);
+    if ($data) {
+        return $data;
+    }
+}
+
 /* Generate and save PDF file using TCPDF Library*/
 function generateTCPDF($title, $message, $path, $filename)
 {

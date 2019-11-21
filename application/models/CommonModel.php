@@ -96,4 +96,18 @@ class CommonModel extends CI_model
             return FALSE;
         }
     }
+
+    /* Query for getting all subjects by class_id */
+    public function get_AllSubjectsByClassId($class_id)
+    {
+        $query = $this->db->select('id, name')
+            ->where(['class_id' => $class_id])
+            ->from('subject')
+            ->get();
+        if ($query->num_rows()) {
+            return $query->result();
+        } else {
+            return NULL;
+        }
+    }
 }
