@@ -21,7 +21,7 @@ class Learn extends REST_Controller
             $class_id = $student_details->class_id;
             $subject_details = getAllSubjects($class_id);
             foreach ($subject_details as $key => $field) {
-                $subject_details[$key]->videourl = $this->LearnModel->getVideoUrl($field->id);
+                $subject_details[$key]->video = $this->LearnModel->getVideoUrl($field->id);
             }
             $response['error'] = false;
             $response['message'] = "Videos fetched successfully";
