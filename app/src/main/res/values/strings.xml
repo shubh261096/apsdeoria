@@ -157,6 +157,12 @@
     <string name="text_write_feedback">Write feedback (optional)</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="msg_rating_required">Please give rating to all the teachers</string>
+    <string name="toolbar_youtube">YouTube</string>
+    <string name="toolbar_accounts">Accounts</string>
+    <string name="add_account">Add account</string>
+    <string name="toolbar_learn">Learn</string>
+    <string name="toolbar_videos">Videos</string>
+    <string name="recommended_videos">Recommended Videos</string>
 
     <string-array name="day">
         <item>Monday</item>

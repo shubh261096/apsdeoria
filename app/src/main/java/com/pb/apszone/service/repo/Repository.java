@@ -17,6 +17,7 @@ import com.pb.apszone.service.model.ErrorModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.service.model.InboxResponseModel;
+import com.pb.apszone.service.model.LearnResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.service.model.SubmitAttendanceResponseModel;
@@ -862,6 +863,43 @@ public class Repository {
                         errorModel.setMessage(errorMsg);
                         commonResponseEventMutableLiveData.
                                 postValue(new Events.CommonResponseEvent(errorModel, false, null));
+                    }
+                });
+    }
+
+    /* Get All Learn Section Video Request */
+    public void getLearnVideo(String student_id, MutableLiveData<Events.LearnResponseEvent> learnResponseEventMutableLiveData) {
+        Map<String, String> params = new HashMap<>();
+        params.put("student_id", student_id);
+        apiService.getLearnVideo(params)
+                .enqueue(new Callback<LearnResponseModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<LearnResponseModel> call, @Nullable Response<LearnResponseModel> response) {
+                        if (response != null) {
+                            if (response.isSuccessful()) {
+                                learnResponseEventMutableLiveData.
+                                        postValue(new Events.LearnResponseEvent(null, true, response.body()));
+                            } else {
+                                if (response.errorBody() != null) {
+                                    learnResponseEventMutableLiveData.
+                                            postValue(new Events.LearnResponseEvent(buildErrorModel(response.code(), response.errorBody()), false, null));
+                                } else {
+                                    ErrorModel errorModel = new ErrorModel();
+                                    errorModel.setMessage(UNKNOWN_ERROR);
+                                    learnResponseEventMutableLiveData.
+                                            postValue(new Events.LearnResponseEvent(errorModel, false, null));
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<LearnResponseModel> call, @NonNull Throwable t) {
+                        String errorMsg = handleFailureResponse(t);
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setMessage(errorMsg);
+                        learnResponseEventMutableLiveData.
+                                postValue(new Events.LearnResponseEvent(errorModel, false, null));
                     }
                 });
     }

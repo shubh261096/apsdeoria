@@ -9,6 +9,7 @@ import com.pb.apszone.service.model.DownloadResponseModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.service.model.InboxResponseModel;
+import com.pb.apszone.service.model.LearnResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.service.model.SubmitAttendanceResponseModel;
@@ -108,4 +109,8 @@ public interface ApiInterface {
 
     @POST("Feedback/add")
     Call<CommonResponseModel> addFeedback (@Body FeedbackRequestModel feedbackRequestModel);
+
+    @POST("Learn")
+    @FormUrlEncoded
+    Call<LearnResponseModel> getLearnVideo(@FieldMap Map<String, String> params);
 }

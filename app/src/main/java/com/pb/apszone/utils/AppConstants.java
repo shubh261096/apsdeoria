@@ -47,6 +47,7 @@ public class AppConstants {
     public final static String UI_ELEMENT_INBOX = "Inbox";
     public final static String UI_ELEMENT_DOWNLOAD = "Downloads";
     public final static String UI_ELEMENT_TEACHER_FEEDBACK = "Teacher's Feedback";
+    public final static String UI_ELEMENT_LEARN = "Learn";
 
     public static long KEY_DOWNLOAD_ID;
 
@@ -85,4 +86,13 @@ public class AppConstants {
     public final static String KEY_SUBSCRIBE_CLASS_ID = "key_subscribe_class_id";
     public final static String KEY_SUBSCRIBE_TEACHER = "key_subscribe_teacher";
     public final static String KEY_SUBSCRIBE_STUDENT = "key_subscribe_student";
+
+    /*API KEYS */
+    public final static String YOUTUBE_API_KEY = "AIzaSyBAEhRwaUAxTn42CRe14nO2riK3yUZt8WE";
+
+    /* BUNDLE CONSTANTS */
+    public final static String VIDEO_LIST = "video_list";
+    public final static String VIDEO_URL = "video_url";
+    public final static String VIDEO_TITLE = "video_title";
+    public final static String VIDEO_POSITION = "video_position";
 }

@@ -10,6 +10,7 @@ import com.pb.apszone.service.model.ErrorModel;
 import com.pb.apszone.service.model.FeesResponseModel;
 import com.pb.apszone.service.model.HomeworkResponseModel;
 import com.pb.apszone.service.model.InboxResponseModel;
+import com.pb.apszone.service.model.LearnResponseModel;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.service.model.SubmitAttendanceResponseModel;
@@ -218,6 +219,19 @@ public class Events {
 
         public DownloadResponseModel getDownloadResponseModel() {
             return downloadResponseModel;
+        }
+    }
+
+    public static class LearnResponseEvent extends BaseEvent {
+        private LearnResponseModel learnResponseModel;
+
+        LearnResponseEvent(ErrorModel errorModel, boolean success, LearnResponseModel learnResponseModel) {
+            super(errorModel, success);
+            this.learnResponseModel = learnResponseModel;
+        }
+
+        public LearnResponseModel getLearnResponseModel() {
+            return learnResponseModel;
         }
     }
 
