@@ -16,7 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pb.apszone.R;
-import com.pb.apszone.service.model.LearnItem;
 import com.pb.apszone.service.model.VideoItem;
 import com.pb.apszone.view.adapter.VideoAdapter;
 
@@ -120,7 +119,7 @@ public class VideoFragment extends BaseFragment implements VideoAdapter.OnItemCl
 
     public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = Objects.requireNonNull(getFragmentManager()).beginTransaction();
-        transaction.replace(R.id.dynamic_video_frame, fragment);
+        transaction.replace(R.id.dynamic_video_frame, fragment, fragment.getClass().getName());
         transaction.addToBackStack(null);
         transaction.commit();
     }

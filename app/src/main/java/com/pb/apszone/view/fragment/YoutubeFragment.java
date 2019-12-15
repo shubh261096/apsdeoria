@@ -2,10 +2,7 @@ package com.pb.apszone.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -31,7 +28,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.VIDEO_LIST;
-import static com.pb.apszone.utils.AppConstants.VIDEO_POSITION;
 import static com.pb.apszone.utils.AppConstants.VIDEO_TITLE;
 import static com.pb.apszone.utils.AppConstants.VIDEO_URL;
 import static com.pb.apszone.utils.AppConstants.YOUTUBE_API_KEY;
@@ -46,9 +42,9 @@ public class YoutubeFragment extends BaseFragment implements YouTubePlayer.OnIni
     @BindView(R.id.txtViewVideoTitle)
     TextView txtViewVideoTitle;
     private List<VideoItem> videoItemList = new ArrayList<>();
-    private List<VideoItem> videoItemTempList = new ArrayList<>();
     VideoAdapter videoAdapter;
     private String videoUrl;
+    private YouTubePlayer mYouTubePlayer;
 
     public YoutubeFragment() {
         // Required empty public constructor
@@ -77,15 +73,6 @@ public class YoutubeFragment extends BaseFragment implements YouTubePlayer.OnIni
         if (getArguments() != null) {
             videoUrl = getArguments().getString(VIDEO_URL);
             videoItemList = getArguments().getParcelableArrayList(VIDEO_LIST);
-            if (videoItemList != null) {
-                videoItemTempList.addAll(videoItemList);
-                for (int i = 0; i < videoItemList.size(); i++) {
-                    if (TextUtils.equals(getArguments().getString(VIDEO_POSITION), videoItemList.get(i).getId())) {
-                        videoItemList.remove(i);
-                        i++;
-                    }
-                }
-            }
             txtViewVideoTitle.setText(getArguments().getString(VIDEO_TITLE));
         }
 
@@ -130,6 +117,7 @@ public class YoutubeFragment extends BaseFragment implements YouTubePlayer.OnIni
         youTubePlayer.setFullscreenControlFlags(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
 
         if (!wasRestored) {
+            mYouTubePlayer = youTubePlayer;
             youTubePlayer.setFullscreen(true);
             youTubePlayer.loadVideo(videoUrl);
             youTubePlayer.play();
@@ -145,22 +133,14 @@ public class YoutubeFragment extends BaseFragment implements YouTubePlayer.OnIni
 
     @Override
     public void onItemClick(int position) {
-        Bundle bundle = new Bundle();
-        String videoUrl = videoItemList.get(position).getVideoUrl();
-        List<VideoItem> videoItems = new ArrayList<>(videoItemTempList);
-        bundle.putParcelableArrayList(VIDEO_LIST, (ArrayList<? extends Parcelable>) videoItems);
-        bundle.putString(VIDEO_URL, videoUrl);
-        bundle.putString(VIDEO_TITLE, videoItemList.get(position).getTitle());
-        bundle.putString(VIDEO_POSITION, videoItemList.get(position).getId());
-        Fragment youtubeFragment = YoutubeFragment.newInstance();
-        youtubeFragment.setArguments(bundle);
-        replaceFragment(youtubeFragment);
-    }
-
-    public void replaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = Objects.requireNonNull(getFragmentManager()).beginTransaction();
-        transaction.replace(R.id.dynamic_youtube_frame, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        if (!TextUtils.equals(this.videoUrl, videoItemList.get(position).getVideoUrl())) {
+            if (mYouTubePlayer != null) {
+                mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                mYouTubePlayer.loadVideo(videoItemList.get(position).getVideoUrl());
+                mYouTubePlayer.play();
+                this.videoUrl = videoItemList.get(position).getVideoUrl();
+                txtViewVideoTitle.setText(videoItemList.get(position).getTitle());
+            }
+        }
     }
 }
