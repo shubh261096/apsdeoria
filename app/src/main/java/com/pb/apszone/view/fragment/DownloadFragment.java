@@ -25,7 +25,6 @@ import com.pb.apszone.R;
 import com.pb.apszone.service.model.DownloadItem;
 import com.pb.apszone.service.model.DownloadResponseModel;
 import com.pb.apszone.utils.CommonUtils;
-import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.DownloadAdapter;
 import com.pb.apszone.view.receiver.DownloadBroadcastReceiver;
 import com.pb.apszone.viewModel.DownloadFragmentViewModel;
@@ -56,10 +55,9 @@ public class DownloadFragment extends BaseFragment implements DownloadAdapter.On
     @BindView(R.id.no_data)
     TextView tvNoData;
     private List<DownloadItem> downloadItemList;
-    DownloadFragmentViewModel downloadFragmentViewModel;
-    KeyStorePref keyStorePref;
-    DownloadAdapter downloadAdapter;
-    DownloadBroadcastReceiver downloadBroadcastReceiver;
+    private DownloadFragmentViewModel downloadFragmentViewModel;
+    private DownloadAdapter downloadAdapter;
+    private DownloadBroadcastReceiver downloadBroadcastReceiver;
     private int itemPosition;
 
     public DownloadFragment() {
@@ -73,7 +71,6 @@ public class DownloadFragment extends BaseFragment implements DownloadAdapter.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        keyStorePref = KeyStorePref.getInstance(getContext());
     }
 
     @Override

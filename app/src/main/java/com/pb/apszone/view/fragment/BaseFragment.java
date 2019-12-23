@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public abstract class BaseFragment extends Fragment {
 
-    LinearLayout includeNetworkLayout;
+    private LinearLayout includeNetworkLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
