@@ -22,7 +22,7 @@ import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.ProfileAdapter;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -64,7 +64,7 @@ public class ProfileFragment extends BaseFragment {
     ProfileFragmentViewModel profileFragmentViewModel;
     String user_type, user_id;
     KeyStorePref keyStorePref;
-    HashMap<String, String> profileValueHashmap = new HashMap<>();
+    LinkedHashMap<String, String> profileValueHashmap = new LinkedHashMap<>();
     ProfileAdapter profileAdapter;
 
     public ProfileFragment() {
