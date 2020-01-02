@@ -1,7 +1,7 @@
 package com.pb.apszone.utils;
 
-import android.arch.lifecycle.LifecycleOwner;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
+import androidx.lifecycle.LifecycleOwner;
 
 
 public class SnackbarMessage extends SingleLiveEvent<Integer> {

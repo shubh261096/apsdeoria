@@ -4,19 +4,20 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -31,6 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.ClassSubjectItem;
 import com.pb.apszone.service.model.ClassSubjectResponseModel;
@@ -82,15 +84,15 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     ProgressBar progressBar;
     private List<ClassSubjectItem> classSubjectItemList;
     private List<SubjectId> subjectIdList;
-    SyllabusTeacherFragmentViewModel syllabusTeacherFragmentViewModel;
+    private SyllabusTeacherFragmentViewModel syllabusTeacherFragmentViewModel;
     KeyStorePref keyStorePref;
-    TeacherSyllabusAdapter teacherSyllabusAdapter;
+    private TeacherSyllabusAdapter teacherSyllabusAdapter;
     private String[] class_name;
     private String[] class_id;
     private String subjectId, classId;
     private int classPos = 0;
     private boolean isPDFSelected;
-    DownloadBroadcastReceiver downloadBroadcastReceiver;
+    private DownloadBroadcastReceiver downloadBroadcastReceiver;
     private int itemPosition;
 
     public SyllabusTeacherFragment() {
@@ -221,7 +223,7 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     }
 
     @OnClick(R.id.tvClass)
-    public void onClassViewClicked() {
+    void onClassViewClicked() {
         if (class_name != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle(getString(R.string.select_class));
@@ -264,7 +266,7 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
 
     private void downloadSyllabus() {
         if (URLUtil.isValidUrl(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(this.itemPosition).getSyllabus())) {
-            KEY_DOWNLOAD_ID = beginDownload(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(this.itemPosition).getSyllabus(), getContext());
+            KEY_DOWNLOAD_ID = beginDownload(classSubjectItemList.get(this.classPos).getClassId().getSubjectId().get(this.itemPosition).getSyllabus(), Objects.requireNonNull(getContext()));
         } else {
             Toast.makeText(getContext(), getString(R.string.msg_invalid_url), Toast.LENGTH_SHORT).show();
         }

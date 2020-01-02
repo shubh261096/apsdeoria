@@ -3,13 +3,13 @@ package com.pb.apszone.utils;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 public class DialogHelper extends DialogHelperFragment {
-    SimpleAlertListener listener;
-    String positiveText, negativeText;
-    int alertIcon;
+    private SimpleAlertListener listener;
+    private String positiveText, negativeText;
 
     public static DialogHelper build(FragmentActivity activity, String title, String message,
                                      String positiveText, String negativeText,
@@ -26,15 +26,14 @@ public class DialogHelper extends DialogHelperFragment {
 
     @SuppressWarnings("unused")
     public void setAlertIcon(int drawable) {
-        this.alertIcon = drawable;
     }
 
-    public void setAlertButtonText(String positiveText, String negativeText) {
+    private void setAlertButtonText(String positiveText, String negativeText) {
         this.positiveText = positiveText;
         this.negativeText = negativeText;
     }
 
-    protected void setAlertListener(SimpleAlertListener listener) {
+    private void setAlertListener(SimpleAlertListener listener) {
         this.listener = listener;
     }
 

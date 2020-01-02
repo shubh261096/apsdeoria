@@ -3,15 +3,16 @@ package com.pb.apszone.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.pb.apszone.BuildConfig;
 import com.pb.apszone.R;
@@ -121,7 +122,7 @@ public class SettingsFragment extends BaseFragment {
         }
     }
 
-    public void replaceFragment(Fragment someFragment) {
+    private void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = Objects.requireNonNull(getFragmentManager()).beginTransaction();
         transaction.replace(R.id.dynamic_settings_frame, someFragment);
         transaction.addToBackStack(null);

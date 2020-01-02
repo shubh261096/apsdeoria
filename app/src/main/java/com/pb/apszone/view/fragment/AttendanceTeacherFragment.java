@@ -2,13 +2,8 @@ package com.pb.apszone.view.fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.AttendanceItem;
@@ -73,10 +74,10 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     TextView tvNoData;
     private List<ClassDetailItem> classDetailItemList = new ArrayList<>();
     private List<StudentsItem> studentsItemList = new ArrayList<>();
-    AttendanceTeacherFragmentViewModel attendanceTeacherFragmentViewModel;
+    private AttendanceTeacherFragmentViewModel attendanceTeacherFragmentViewModel;
     KeyStorePref keyStorePref;
-    String[] class_name;
-    TeacherAttendanceAdapter teacherAttendanceAdapter;
+    private String[] class_name;
+    private TeacherAttendanceAdapter teacherAttendanceAdapter;
     private int classPos = 0;
     private String today_date;
     private boolean isEdit;

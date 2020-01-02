@@ -1,12 +1,12 @@
 package com.pb.apszone.view.fragment;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.viewModel.ResetPasswordFragmentViewModel;
@@ -56,7 +58,7 @@ public class ResetPasswordFragment extends BaseFragment {
     Button btnReset;
     @BindView(R.id.ll_reset)
     LinearLayout llReset;
-    ResetPasswordFragmentViewModel resetPasswordFragmentViewModel;
+    private ResetPasswordFragmentViewModel resetPasswordFragmentViewModel;
     @BindView(R.id.edt_schoolId)
     TextInputEditText edtSchoolId;
     @BindView(R.id.edt_dob)
@@ -65,7 +67,7 @@ public class ResetPasswordFragment extends BaseFragment {
     TextInputEditText edtNewPassword;
     @BindView(R.id.edt_confirm_password)
     TextInputEditText edtConfirmPassword;
-    String schoolID;
+    private String schoolID;
 
 
     public ResetPasswordFragment() {
@@ -193,7 +195,7 @@ public class ResetPasswordFragment extends BaseFragment {
     }
 
     @OnTextChanged(value = R.id.edt_schoolId, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onSchoolIdTextChanged(CharSequence text) {
+    void onSchoolIdTextChanged(CharSequence text) {
         if (!TextUtils.isEmpty(text)) {
             tilSchoolId.setError(null);
         } else {
@@ -202,7 +204,7 @@ public class ResetPasswordFragment extends BaseFragment {
     }
 
     @OnTextChanged(value = R.id.edt_dob, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onDobTextChanged(CharSequence text) {
+    void onDobTextChanged(CharSequence text) {
         if (!TextUtils.isEmpty(text)) {
             tilDob.setError(null);
         } else {
@@ -233,7 +235,7 @@ public class ResetPasswordFragment extends BaseFragment {
     }
 
     @OnTextChanged(value = R.id.edt_new_password, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onNewPasswordTextChanged(CharSequence text) {
+    void onNewPasswordTextChanged(CharSequence text) {
         if (!TextUtils.isEmpty(text)) {
             tilNewPassword.setError(null);
         } else {
@@ -242,7 +244,7 @@ public class ResetPasswordFragment extends BaseFragment {
     }
 
     @OnTextChanged(value = R.id.edt_confirm_password, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onConfirmPasswordTextChanged(CharSequence text) {
+    void onConfirmPasswordTextChanged(CharSequence text) {
         if (!TextUtils.isEmpty(text)) {
             tilConfirmPassword.setError(null);
         } else {

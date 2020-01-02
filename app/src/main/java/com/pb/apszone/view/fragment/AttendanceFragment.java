@@ -1,14 +1,8 @@
 package com.pb.apszone.view.fragment;
 
 import android.app.AlertDialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +10,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.AttendanceItem;
@@ -43,20 +44,20 @@ public class AttendanceFragment extends BaseFragment {
     Unbinder unbinder;
     @BindView(R.id.rvAttendanceUI)
     RecyclerView rvAttendanceUI;
-    AttendanceAdapter attendanceAdapter;
-    List<String> day;
-    String currentMonth, currentYear;
+    private AttendanceAdapter attendanceAdapter;
+    private List<String> day;
+    private String currentMonth, currentYear;
     @BindView(R.id.textMonth)
     TextView textMonth;
     @BindView(R.id.textYear)
     TextView textYear;
     @BindView(R.id.rlMonth)
     LinearLayout rlMonth;
-    AttendanceFragmentViewModel attendanceFragmentViewModel;
+    private AttendanceFragmentViewModel attendanceFragmentViewModel;
     KeyStorePref keyStorePref;
     @BindView(R.id.toolbar_profile)
     Toolbar toolbarProfile;
-    List<AttendanceItem> attendanceItemList = new ArrayList<>();
+    private List<AttendanceItem> attendanceItemList = new ArrayList<>();
     @BindView(R.id.card_monthly_attendance)
     CardView cardMonthlyAttendance;
     @BindView(R.id.card_calendar)

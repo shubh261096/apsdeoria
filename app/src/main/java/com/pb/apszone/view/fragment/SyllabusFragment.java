@@ -2,16 +2,18 @@ package com.pb.apszone.view.fragment;
 
 import android.Manifest;
 import android.app.DownloadManager;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,10 +57,10 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     private List<SyllabusItem> syllabusItemList;
-    SyllabusFragmentViewModel syllabusFragmentViewModel;
+    private SyllabusFragmentViewModel syllabusFragmentViewModel;
     KeyStorePref keyStorePref;
-    SyllabusAdapter syllabusAdapter;
-    DownloadBroadcastReceiver downloadBroadcastReceiver;
+    private SyllabusAdapter syllabusAdapter;
+    private DownloadBroadcastReceiver downloadBroadcastReceiver;
     private int itemPosition;
 
     public SyllabusFragment() {

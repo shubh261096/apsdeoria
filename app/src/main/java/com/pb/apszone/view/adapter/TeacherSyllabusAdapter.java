@@ -1,7 +1,8 @@
 package com.pb.apszone.view.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,7 +98,9 @@ public class TeacherSyllabusAdapter extends RecyclerView.Adapter<TeacherSyllabus
 
     public interface OnSubjectItemClick {
         void onDownloadClick(int position, View view);
+
         void onUploadClick(int position, View view);
+
         void onViewClick(int position, View view);
     }
 }

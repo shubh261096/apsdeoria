@@ -2,10 +2,12 @@ package com.pb.apszone.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerSupportFragmentX;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.VideoItem;
 import com.pb.apszone.view.adapter.VideoAdapter;
@@ -42,7 +45,6 @@ public class YoutubeFragment extends BaseFragment implements YouTubePlayer.OnIni
     @BindView(R.id.txtViewVideoTitle)
     TextView txtViewVideoTitle;
     private List<VideoItem> videoItemList = new ArrayList<>();
-    VideoAdapter videoAdapter;
     private String videoUrl;
     private YouTubePlayer mYouTubePlayer;
 
@@ -65,7 +67,7 @@ public class YoutubeFragment extends BaseFragment implements YouTubePlayer.OnIni
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_youtube, container, false);
         unbinder = ButterKnife.bind(this, view);
-        YouTubePlayerSupportFragment youTubePlayerSupportFragment = (YouTubePlayerSupportFragment) getChildFragmentManager()
+        YouTubePlayerSupportFragmentX youTubePlayerSupportFragment = (YouTubePlayerSupportFragmentX) getChildFragmentManager()
                 .findFragmentById(R.id.youtube_player_fragment);
         if (youTubePlayerSupportFragment != null) {
             youTubePlayerSupportFragment.initialize(YOUTUBE_API_KEY, this);
@@ -78,7 +80,7 @@ public class YoutubeFragment extends BaseFragment implements YouTubePlayer.OnIni
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvVideo.setLayoutManager(layoutManager);
-        videoAdapter = new VideoAdapter(videoItemList, this);
+        VideoAdapter videoAdapter = new VideoAdapter(videoItemList, this);
         rvVideo.setAdapter(videoAdapter);
         toolbarYoutube.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         return view;

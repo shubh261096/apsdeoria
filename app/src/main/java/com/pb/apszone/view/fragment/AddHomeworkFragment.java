@@ -1,12 +1,13 @@
 package com.pb.apszone.view.fragment;
 
 import android.app.DatePickerDialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.rest.HomeworkRequestModel;
@@ -53,7 +55,7 @@ public class AddHomeworkFragment extends BaseFragment {
     Toolbar toolbarAddHomework;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    HomeworkTeacherFragmentViewModel homeworkTeacherFragmentViewModel;
+    private HomeworkTeacherFragmentViewModel homeworkTeacherFragmentViewModel;
     KeyStorePref keyStorePref;
     @BindView(R.id.date_filter)
     TextView dateFilter;
@@ -73,7 +75,7 @@ public class AddHomeworkFragment extends BaseFragment {
     TextView tvSubjectName;
     @BindView(R.id.add_homework)
     TextView addHomework;
-    HomeworkRequestModel homeworkRequestModel;
+    private HomeworkRequestModel homeworkRequestModel;
     @BindView(R.id.til_title)
     TextInputLayout tilTitle;
     @BindView(R.id.til_description)

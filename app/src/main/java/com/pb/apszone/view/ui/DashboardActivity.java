@@ -1,18 +1,10 @@
 package com.pb.apszone.view.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +16,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.DashboardItem;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
@@ -85,10 +87,10 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     ImageView userDp;
     @BindView(R.id.includeNetworkLayout)
     LinearLayout includeNetworkLayout;
-    DashboardViewModel dashboardViewModel;
-    ProfileFragmentViewModel profileFragmentViewModel;
-    DashboardAdapter dashboardAdapter;
-    NetworkChangeReceiver networkChangeReceiver;
+    private DashboardViewModel dashboardViewModel;
+    private ProfileFragmentViewModel profileFragmentViewModel;
+    private DashboardAdapter dashboardAdapter;
+    private NetworkChangeReceiver networkChangeReceiver;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.toolbar_dashboard)
@@ -97,7 +99,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     CoordinatorLayout myCoordinatorLayout;
     private List<DashboardItem> dashboardItemList;
     private OnDashboardItemClickListener onDashboardItemClickListener;
-    KeyStorePref keyStorePref;
     private String user_type, user_id;
     boolean doubleBackToExitPressedOnce;
 
@@ -122,7 +123,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
 
         dashboardItemList = new ArrayList<>();
         onDashboardItemClickListener = this;
-        keyStorePref = KeyStorePref.getInstance(this);
+        KeyStorePref keyStorePref = KeyStorePref.getInstance(this);
         user_type = keyStorePref.getString(KEY_USER_TYPE);
         user_id = keyStorePref.getString(KEY_USER_ID);
         setUpGridView();

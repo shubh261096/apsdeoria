@@ -1,13 +1,15 @@
 package com.pb.apszone.view.fragment;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,11 +63,11 @@ public class ProfileFragment extends BaseFragment {
     Toolbar toolbarProfile;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    ProfileFragmentViewModel profileFragmentViewModel;
-    String user_type, user_id;
+    private ProfileFragmentViewModel profileFragmentViewModel;
+    private String user_type, user_id;
     KeyStorePref keyStorePref;
-    LinkedHashMap<String, String> profileValueHashmap = new LinkedHashMap<>();
-    ProfileAdapter profileAdapter;
+    private LinkedHashMap<String, String> profileValueHashmap = new LinkedHashMap<>();
+    private ProfileAdapter profileAdapter;
 
     public ProfileFragment() {
         // Required empty public constructor

@@ -1,17 +1,20 @@
 package com.pb.apszone.view.fragment;
 
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
 import com.pb.apszone.R;
 
@@ -106,7 +109,11 @@ public class ContactFragment extends BaseFragment {
                 sendIntent.setType("text/plain");
                 sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
                 sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(number) + "@s.whatsapp.net");
-                startActivity(sendIntent);
+                try {
+                    startActivity(sendIntent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.ll_location:
                 openWebIntent(Objects.requireNonNull(getContext()), "https://maps.app.goo.gl/FQNSjweof7YQ6u3h8");

@@ -1,12 +1,14 @@
 package com.pb.apszone.view.fragment;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +43,8 @@ public class InboxFragment extends BaseFragment {
     @BindView(R.id.no_data)
     TextView tvNoData;
     private List<InboxItem> inboxItemList;
-    InboxFragmentViewModel inboxFragmentViewModel;
-    InboxAdapter inboxAdapter;
+    private InboxFragmentViewModel inboxFragmentViewModel;
+    private InboxAdapter inboxAdapter;
 
     public InboxFragment() {
         // Required empty public constructor

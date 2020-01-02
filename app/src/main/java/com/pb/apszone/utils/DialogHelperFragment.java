@@ -1,7 +1,8 @@
 package com.pb.apszone.utils;
 
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
+
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 
 public abstract class DialogHelperFragment extends DialogFragment {
     private FragmentActivity activity;

@@ -163,6 +163,7 @@
     <string name="toolbar_learn">Learn</string>
     <string name="toolbar_videos">Videos</string>
     <string name="recommended_videos">Recommended Videos</string>
+    <string name="whatsapp_not_installed">WhatsApp is not installed in your device.</string>
 
     <string-array name="day">
         <item>Monday</item>

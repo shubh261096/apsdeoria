@@ -1,13 +1,15 @@
 package com.pb.apszone.view.fragment;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,9 +68,9 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
     @BindView(R.id.ll_display_fee)
     LinearLayout llDisplayFee;
     private List<FeesItem> feesItemList;
-    FeesFragmentViewModel feesFragmentViewModel;
+    private FeesFragmentViewModel feesFragmentViewModel;
     KeyStorePref keyStorePref;
-    FeesAdapter feesAdapter;
+    private FeesAdapter feesAdapter;
 
     public FeesFragment() {
         // Required empty public constructor

@@ -1,7 +1,8 @@
 package com.pb.apszone.utils;
 
-import android.support.design.widget.Snackbar;
 import android.view.View;
+
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Provides a method to show a Snackbar.
