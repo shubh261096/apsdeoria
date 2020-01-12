@@ -26,6 +26,11 @@
               <?php echo form_dropdown('period', $months, $fees->period, 'class="form-control"'); ?>
             </div>
             <div class="form-group">
+              <label for="InputPhone">Year</label>
+              <?php echo form_input(['id' => 'year', 'name' => 'year', 'class' => 'form-control', 'placeholder' => 'Year', 'type' => 'phone', 'value' => set_value('year', $fees->year)]); ?>
+              <?php echo form_error('year');   ?>
+            </div>
+            <div class="form-group">
               <label for="InputPhone">Due Amount</label>
               <?php echo form_input(['id' => 'due_amount', 'name' => 'due_amount', 'class' => 'form-control', 'placeholder' => 'Enter Due Amount (If Any)', 'type' => 'phone', 'value' => set_value('due_amount', $fees->due_amount)]); ?>
               <?php echo form_error('due_amount');   ?>

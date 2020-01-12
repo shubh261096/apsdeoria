@@ -46,6 +46,7 @@ class FeesModel extends CI_Model
 	{
 		$array['status'] = 'paid';
 		$array['date_paid'] = date("Y-m-d");
+		$array['year'] = date("Y");
 		return $this->db->insert('fee_receipt', $array);
 	}
 

@@ -37,6 +37,7 @@
                   <th>Due Amount</th>
                   <th>Paid Amount</th>
                   <th>Month</th>
+                  <th>Year</th>
                   <th>Date Paid</th>
                   <th>Status</th>
                   <th>Action</th>
@@ -53,6 +54,7 @@
                       <td><?= $fee->due_amount; ?></td>
                       <td><?= $fee->fees_paid; ?></td>
                       <td><?= $fee->period; ?></td>
+                      <td><?= $fee->year; ?></td>
                       <td><?= $fee->date_paid; ?></td>
                       <td>
                         <?php if ($fee->status == 'paid') { ?>
