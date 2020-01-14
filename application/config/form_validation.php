@@ -135,4 +135,17 @@ $config = [
 			'rules' => 'trim|required'
 		]
 	],
+
+	'add_video_rules' => [
+		[
+			'field' => 'title',
+			'label' => 'Title',
+			'rules' => 'trim|required'
+		],
+		[
+			'field' => 'video_url',
+			'label' => 'Url',
+			'rules' => 'trim|required'
+		]
+	],
 ];

@@ -65,6 +65,7 @@ $route['homework'] = "admin/homework"; // homework controller
 $route['notification'] = "admin/notification"; // notification controller
 $route['expense'] = "admin/expense"; // Expenses controller
 $route['feedback'] = "admin/feedback"; // Feedback controller
+$route['learn'] = "admin/learn"; // Feedback controller
 
 /** called from views */
 $route['teacher/add'] = "admin/teacher/add"; // teacher controller add mthod
@@ -118,6 +119,13 @@ $route['homework/download/(:any)'] = "admin/homework/download/$1"; // homework c
 $route['expense/add'] = "admin/expense/add"; // expense controller add mthod
 $route['expense/insert'] = "admin/expense/insert"; // expense controller adinsertd method
 $route['expense/delete/(:any)'] = "admin/expense/delete/$1"; // expense controller delete method
+
+$route['learn/add'] = "admin/learn/add"; // learn controller add method
+$route['learn/getSubjectFromClass'] = "admin/learn/getSubjectFromClass"; // learn controller add method
+$route['learn/insert'] = "admin/learn/insert"; // learn controller adinsertd method
+$route['learn/edit/(:any)'] = "admin/learn/edit/$1"; // homework controller edit method
+$route['learn/update/(:any)'] = "admin/learn/update/$1"; // homework controller  update method
+$route['learn/delete/(:any)'] = "admin/learn/delete/$1"; // learn controller delete method
 
 $route['admin/logout'] = "admin/admin/logout"; // admin controller logout method
 $route['admin'] = "admin/admin"; // admin controller logout method
