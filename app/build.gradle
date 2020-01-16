@@ -12,6 +12,7 @@ android {
         versionName "1.0.5"
         flavorDimensions "environment"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        proguardFiles 'proguard-rules.pro'
     }
     signingConfigs {
         config {

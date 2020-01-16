@@ -14,28 +14,8 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
--keepattributes SourceFile,LineNumberTable,*Annotation*
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
-
-
-####### SUPPORT LIBRARIES #######
-# Hide warnings about references to newer platforms in the library
--dontwarn android.support.v7.**
--keep class android.support.v7.** { *; }
--keep interface android.support.v7.** { *; }
--keep public class android.support.v7..design.R$* { *; }
--keep public class android.support.v7.widget.** { *; }
--keep public class android.support.v7.internal.widget.** { *; }
--keep public class android.support.v7.internal.view.menu.** { *; }
--keep public class * extends android.support.v4.view.ActionProvider {
-    public <init>(android.content.Context);
-}
-
-# restrict obfuscation of classes extended from Activity
--keep public class * extends android.app.Activity
+-dontwarn com.squareup.okhttp.**
 
 # restrict obfuscation of data members which has parcelable implemention
 -keepclassmembers class * implements android.os.Parcelable {
@@ -52,6 +32,9 @@
 ####### CRASHLYTICS #######
 -keep class com.crashlytics.** { *; }
 -keep class com.crashlytics.android.**
+-keepattributes SourceFile, LineNumberTable, *Annotation*
+-printmapping mapping.txt
+-keep public class * extends java.lang.Exception
 
 ####### RETROFIT ########
 -dontwarn retrofit2.**
@@ -66,56 +49,13 @@
 
 ####### GSON ########
 -keepattributes EnclosingMethod
+# Gson specific classes
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.stream.** { *; }
 
 
-
--dontwarn com.squareup.okhttp.**
--keep public class * extends java.lang.Exception
-
-####### SERVICES #######
+####### MODELS #######
 -keep class com.pb.apszone.service.model.** {*;}
 -keep class com.pb.apszone.service.model.*$** {*;}
--keep class com.pb.apszone.service.rest.** {*;}
--keep class com.pb.apszone.service.rest.*$** {*;}
--keep class com.pb.apszone.service.repo.** {*;}
--keep class com.pb.apszone.service.repo.*$** {*;}
--keep class com.pb.apszone.viewModel.** {*;}
--keep class com.pb.apszone.viewModel.*$** {*;}
-
-
--assumenosideeffects class android.util.Log {
-     public static * d(...);
-     public static * w(...);
-     public static * v(...);
-     public static * i(...);
-}
-
--keep class com.google.** { *; }
--keep class com.github.** { *; }
--keep class org.apache.** { *; }
--keep class com.android.** { *; }
--keep interface android.support.** { *; }
--keep class android.support.** { *; }
-
-
-## Android architecture components: Lifecycle
-# LifecycleObserver's empty constructor is considered to be unused by proguard
--keepclassmembers class * implements android.arch.lifecycle.LifecycleObserver {
-    <init>(...);
-}
-# ViewModel's empty constructor is considered to be unused by proguard
--keepclassmembers class * extends android.arch.lifecycle.ViewModel {
-    <init>(...);
-}
-# keep Lifecycle State and Event enums values
--keepclassmembers class android.arch.lifecycle.Lifecycle$State { *; }
--keepclassmembers class android.arch.lifecycle.Lifecycle$Event { *; }
-# keep methods annotated with @OnLifecycleEvent even if they seem to be unused
-# (Mostly for LiveData.LifecycleBoundObserver.onStateChange(), but who knows)
--keepclassmembers class * {
-    @android.arch.lifecycle.OnLifecycleEvent *;
-}
-
--dontnote android.arch.lifecycle.**
+-keep class com.pb.apszone.service.rest.model** {*;}
+-keep class com.pb.apszone.service.rest.model*$** {*;}
