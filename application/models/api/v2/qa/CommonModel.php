@@ -2,11 +2,12 @@
 
 class CommonModel extends CI_model
 {
-
+    var $db;
+    
     public function __construct()
     {
         parent::__construct();
-        $this->load->database();
+        $this->db = $this->load->database('qa_db', TRUE);
     }
 
     /* Query for getting class etails by class_id */

@@ -2,10 +2,12 @@
 
 class TimeTableModel extends CI_model {
 
-	public function __construct() 
+	var $db;
+    
+    public function __construct()
     {
-        parent::__construct(); 
-        $this->load->database();
+        parent::__construct();
+        $this->db = $this->load->database('qa_db', TRUE);
     }
 
 	/* Query for getting timetable by day for students */
@@ -46,6 +48,3 @@ class TimeTableModel extends CI_model {
     
 
 }
-
-
-?>

@@ -2,11 +2,12 @@
 
 class HomeworkModel extends CI_model
 {
+    var $db;
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->database();
+        $this->db = $this->load->database('qa_db', TRUE);
     }
 
     /* Query for getting homework by date and class*/
@@ -37,7 +38,7 @@ class HomeworkModel extends CI_model
     /* Query for getting subject by class_id and teacher_id*/
     public function get_Subject($class_id, $teacher_id)
     {
-        $sql = 'SELECT subject_id FROM `timetable` WHERE class_id = "'.$class_id.'" AND teacher_id = "'.$teacher_id.'" GROUP BY subject_id';
+        $sql = 'SELECT subject_id FROM `timetable` WHERE class_id = "' . $class_id . '" AND teacher_id = "' . $teacher_id . '" GROUP BY subject_id';
         $query = $this->db->query($sql);
         if ($query->num_rows()) {
             return $query->result();

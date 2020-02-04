@@ -1,10 +1,12 @@
 <?php
 class DownloadModel extends CI_Model
 {
+    var $db;
+    
     public function __construct()
     {
         parent::__construct();
-        $this->load->database();
+        $this->db = $this->load->database('qa_db', TRUE);
     }
 
     /* Query for getting download by user_type*/

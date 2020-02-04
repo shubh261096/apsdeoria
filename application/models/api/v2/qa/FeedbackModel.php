@@ -2,10 +2,12 @@
 
 class FeedbackModel extends CI_model
 {
+    var $db;
+    
     public function __construct()
     {
         parent::__construct();
-        $this->load->database();
+        $this->db = $this->load->database('qa_db', TRUE);
     }
 
     /* Query to check if feedback is already added by student_id*/
