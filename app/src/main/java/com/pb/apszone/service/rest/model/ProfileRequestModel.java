@@ -1,4 +1,4 @@
-package com.pb.apszone.service.rest;
+package com.pb.apszone.service.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 

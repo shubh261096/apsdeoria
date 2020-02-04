@@ -2,11 +2,9 @@ package com.pb.apszone.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,18 +33,18 @@ public class AboutFragment extends BaseFragment {
     Unbinder unbinder;
     @BindView(R.id.toolbar_about)
     Toolbar toolbarAbout;
-    @BindView(R.id.ll_privacy_policy)
-    LinearLayout llPrivacyPolicy;
-    @BindView(R.id.ll_website)
-    LinearLayout llWebsite;
-    @BindView(R.id.ll_instagram)
-    LinearLayout llInstagram;
-    @BindView(R.id.ll_facebook)
-    LinearLayout llFacebook;
-    @BindView(R.id.ll_twitter)
-    LinearLayout llTwitter;
-    @BindView(R.id.ll_youtube)
-    LinearLayout llYoutube;
+    @BindView(R.id.txtViewPrivacyPolicy)
+    TextView txtViewPrivacyPolicy;
+    @BindView(R.id.txtViewWebsite)
+    TextView txtViewWebsite;
+    @BindView(R.id.txtViewInstagram)
+    TextView txtViewInstagram;
+    @BindView(R.id.txtViewFacebook)
+    TextView txtViewFacebook;
+    @BindView(R.id.txtViewTwitter)
+    TextView txtViewTwitter;
+    @BindView(R.id.txtViewYouTube)
+    TextView txtViewYouTube;
     @BindView(R.id.app_version)
     TextView appVersion;
 
@@ -104,25 +102,25 @@ public class AboutFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.ll_privacy_policy, R.id.ll_website, R.id.ll_instagram, R.id.ll_facebook, R.id.ll_twitter, R.id.ll_youtube})
+    @OnClick({R.id.txtViewPrivacyPolicy, R.id.txtViewWebsite, R.id.txtViewInstagram, R.id.txtViewFacebook, R.id.txtViewTwitter, R.id.txtViewYouTube})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_privacy_policy:
+            case R.id.txtViewPrivacyPolicy:
                 openWebIntent(Objects.requireNonNull(getContext()), PRIVACY_POLICY_URL);
                 break;
-            case R.id.ll_website:
+            case R.id.txtViewWebsite:
                 openWebIntent(Objects.requireNonNull(getContext()), WEBSITE_URL);
                 break;
-            case R.id.ll_instagram:
+            case R.id.txtViewInstagram:
                 openInstaApp(Objects.requireNonNull(getContext()));
                 break;
-            case R.id.ll_facebook:
+            case R.id.txtViewFacebook:
                 openFacebookApp(Objects.requireNonNull(getContext()));
                 break;
-            case R.id.ll_twitter:
+            case R.id.txtViewTwitter:
                 openTwitterApp(Objects.requireNonNull(getContext()));
                 break;
-            case R.id.ll_youtube:
+            case R.id.txtViewYouTube:
                 openYoutubeApp(Objects.requireNonNull(getContext()));
                 break;
         }

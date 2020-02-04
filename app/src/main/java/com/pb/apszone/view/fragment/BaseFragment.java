@@ -3,10 +3,10 @@ package com.pb.apszone.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.pb.apszone.R;
@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public abstract class BaseFragment extends Fragment {
 
-    private LinearLayout includeNetworkLayout;
+    private ConstraintLayout includeNetworkLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public abstract class BaseFragment extends Fragment {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

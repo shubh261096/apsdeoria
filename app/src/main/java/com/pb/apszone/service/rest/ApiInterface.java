@@ -15,6 +15,9 @@ import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.service.model.SubmitAttendanceResponseModel;
 import com.pb.apszone.service.model.SyllabusResponseModel;
 import com.pb.apszone.service.model.TimetableResponseModel;
+import com.pb.apszone.service.rest.model.FeedbackRequestModel;
+import com.pb.apszone.service.rest.model.HomeworkRequestModel;
+import com.pb.apszone.service.rest.model.SubmitAttendanceRequestModel;
 
 import java.util.Map;
 

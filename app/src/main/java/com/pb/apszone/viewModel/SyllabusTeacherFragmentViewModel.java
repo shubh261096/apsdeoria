@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
-import com.pb.apszone.service.rest.HomeworkRequestModel;
-import com.pb.apszone.service.rest.SyllabusRequestModel;
+import com.pb.apszone.service.rest.model.HomeworkRequestModel;
+import com.pb.apszone.service.rest.model.SyllabusRequestModel;
 
 import java.io.File;
 

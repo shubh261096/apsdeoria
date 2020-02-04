@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
-import com.pb.apszone.service.rest.AttendanceRequestModel;
+import com.pb.apszone.service.rest.model.AttendanceRequestModel;
 
 import java.util.ArrayList;
 import java.util.List;

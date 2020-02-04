@@ -1,240 +1,275 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/txtFeeDetail"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_14"
-        android:layout_marginTop="@dimen/text_14"
-        android:layout_marginEnd="@dimen/text_14"
-        android:orientation="horizontal"
-        tools:ignore="UseCompoundDrawables">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:text="@string/fee_details"
-            android:textColor="@color/black_90"
-            android:textSize="@dimen/text_18" />
-
-        <ImageView
-            android:id="@+id/close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_close"
-            tools:ignore="ContentDescription" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_margin="@dimen/dp_6"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_8">
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:padding="@dimen/dp_8"
+        android:text="@string/fee_details"
+        android:textColor="@color/black_90"
+        android:textSize="@dimen/text_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:text="@string/month"
-            android:textColor="@color/hint_gray_80"
-            android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/dp_6"
+        android:padding="@dimen/dp_8"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
-        <TextView
-            android:id="@+id/period"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:textColor="@color/black_80"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/txtMonth"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_6"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:text="@string/month"
+        android:textColor="@color/hint_gray_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/period"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtFeeDetail"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/period"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_6"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:textColor="@color/black_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txtMonth"
+        app:layout_constraintTop_toBottomOf="@id/txtFeeDetail" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0_5"
-        android:background="@color/light_gray" />
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/period" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <TextView
+        android:id="@+id/txtMonthlyFee"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_6"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_8">
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:text="@string/monthly_fee"
+        android:textColor="@color/hint_gray_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/total_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtMonth"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:text="@string/monthly_fee"
-            android:textColor="@color/hint_gray_80"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/total_amount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:textColor="@color/black_80"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/total_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_6"
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:textColor="@color/black_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txtMonthlyFee"
+        app:layout_constraintTop_toBottomOf="@id/period" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0_5"
-        android:background="@color/light_gray" />
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/total_amount" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <TextView
+        android:id="@+id/txtDueAmount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_6"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_8">
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:text="@string/due_amount"
+        android:textColor="@color/hint_gray_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/due_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtMonthlyFee"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:text="@string/due_amount"
-            android:textColor="@color/hint_gray_80"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/due_amount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:textColor="@color/black_80"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/due_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_6"
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:textColor="@color/black_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txtDueAmount"
+        app:layout_constraintTop_toBottomOf="@id/total_amount" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0_5"
-        android:background="@color/light_gray" />
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/due_amount" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+    <TextView
+        android:id="@+id/txtFeePaid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_6"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_8">
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:text="@string/paid_amount"
+        android:textColor="@color/hint_gray_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/fees_paid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtDueAmount"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:text="@string/paid_amount"
-            android:textColor="@color/hint_gray_80"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/fees_paid"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:textColor="@color/black_80"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/fees_paid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_6"
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:textColor="@color/black_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txtFeePaid"
+        app:layout_constraintTop_toBottomOf="@id/due_amount" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0_5"
-        android:background="@color/light_gray" />
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fees_paid" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+    <TextView
+        android:id="@+id/txtDatePaid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_6"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_8">
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:text="@string/date_paid"
+        android:textColor="@color/hint_gray_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/date_paid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtFeePaid"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:text="@string/date_paid"
-            android:textColor="@color/hint_gray_80"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/date_paid"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:textColor="@color/black_80"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/date_paid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_6"
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:textColor="@color/black_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txtDatePaid"
+        app:layout_constraintTop_toBottomOf="@id/fees_paid" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0_5"
-        android:background="@color/light_gray" />
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date_paid" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_6"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_8">
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:text="@string/status"
+        android:textColor="@color/hint_gray_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtDatePaid"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:text="@string/status"
-            android:textColor="@color/hint_gray_80"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="start"
-            android:textColor="@color/black_80"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_6"
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start"
+        android:padding="@dimen/dp_8"
+        android:textColor="@color/black_80"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txtStatus"
+        app:layout_constraintTop_toBottomOf="@id/date_paid" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0_5"
-        android:background="@color/light_gray" />
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status" />
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
-import com.pb.apszone.service.rest.FeedbackRequestModel;
-import com.pb.apszone.service.rest.TimetableRequestModel;
+import com.pb.apszone.service.rest.model.FeedbackRequestModel;
+import com.pb.apszone.service.rest.model.TimetableRequestModel;
 import com.pb.apszone.utils.KeyStorePref;
 
 import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;

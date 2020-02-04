@@ -10,11 +10,9 @@
     app:cardElevation="@dimen/dp_2"
     app:contentPadding="@dimen/activity_vertical_margin">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/name"
@@ -24,7 +22,11 @@
             android:layout_weight="1"
             android:fontFamily="@font/roboto_regular"
             android:textColor="@color/black_80"
-            android:textSize="@dimen/text_17" />
+            android:textSize="@dimen/text_17"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/download_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/download_content"
@@ -38,7 +40,11 @@
             android:padding="@dimen/dp_4"
             android:text="@string/label_download"
             android:textColor="@color/white"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/name"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

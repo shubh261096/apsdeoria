@@ -26,7 +26,7 @@ import com.pb.apszone.service.model.ClassDetailItem;
 import com.pb.apszone.service.model.ClassDetailResponseModel;
 import com.pb.apszone.service.model.StudentsItem;
 import com.pb.apszone.service.model.SubmitAttendanceResponseModel;
-import com.pb.apszone.service.rest.SubmitAttendanceRequestModel;
+import com.pb.apszone.service.rest.model.SubmitAttendanceRequestModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.TeacherAttendanceAdapter;
 import com.pb.apszone.view.listener.OnCheckBoxCheckedListener;

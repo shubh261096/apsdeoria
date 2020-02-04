@@ -10,111 +10,113 @@
     app:cardElevation="@dimen/dp_2"
     app:contentPadding="@dimen/activity_horizontal_margin">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/txtBasicFeeInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_4"
             android:text="@string/basic_fee_information"
             android:textColor="@color/black_90"
-            android:textSize="@dimen/text_17" />
+            android:textSize="@dimen/text_17"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/txtAdmissionFee"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="start"
+            android:text="@string/admission_fee"
+            android:textColor="@color/black_80"
+            android:textSize="@dimen/text_15"
+            app:layout_constraintEnd_toStartOf="@id/admission_fee"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtBasicFeeInfo" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="start"
-                android:text="@string/admission_fee"
-                android:textColor="@color/black_80"
-                android:textSize="@dimen/text_15" />
-
-            <TextView
-                android:id="@+id/admission_fee"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="end"
-                android:textColor="@color/colorPrimary_70"
-                android:textSize="@dimen/text_15" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/admission_fee"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="end"
+            android:textColor="@color/colorPrimary_70"
+            android:textSize="@dimen/text_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txtAdmissionFee"
+            app:layout_constraintTop_toBottomOf="@id/txtBasicFeeInfo" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="start"
-                android:text="@string/annual_fee"
-                android:textColor="@color/black_80"
-                android:textSize="@dimen/text_15" />
-
-            <TextView
-                android:id="@+id/annual_fee"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="end"
-                android:textColor="@color/colorPrimary_70"
-                android:textSize="@dimen/text_15" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/txtAnnualFee"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="start"
+            android:text="@string/annual_fee"
+            android:textColor="@color/black_80"
+            android:textSize="@dimen/text_15"
+            app:layout_constraintEnd_toStartOf="@id/annual_fee"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtAdmissionFee" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="start"
-                android:text="@string/activity_fee"
-                android:textColor="@color/black_80"
-                android:textSize="@dimen/text_15" />
+        <TextView
+            android:id="@+id/annual_fee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="end"
+            android:textColor="@color/colorPrimary_70"
+            android:textSize="@dimen/text_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txtAnnualFee"
+            app:layout_constraintTop_toBottomOf="@id/admission_fee" />
 
-            <TextView
-                android:id="@+id/activity_fee"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="end"
-                android:textColor="@color/colorPrimary_70"
-                android:textSize="@dimen/text_15" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/txtActivityFee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="start"
+            android:text="@string/activity_fee"
+            android:textColor="@color/black_80"
+            android:textSize="@dimen/text_15"
+            app:layout_constraintEnd_toStartOf="@id/activity_fee"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtAnnualFee" />
+
+        <TextView
+            android:id="@+id/activity_fee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="end"
+            android:textColor="@color/colorPrimary_70"
+            android:textSize="@dimen/text_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txtActivityFee"
+            app:layout_constraintTop_toBottomOf="@id/annual_fee" />
+
 
         <LinearLayout
             android:id="@+id/ll_computer_fee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtActivityFee">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="start"
                 android:text="@string/computer_fee"
@@ -133,5 +135,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>

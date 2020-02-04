@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -86,7 +87,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     @BindView(R.id.user_dp)
     ImageView userDp;
     @BindView(R.id.includeNetworkLayout)
-    LinearLayout includeNetworkLayout;
+    ConstraintLayout includeNetworkLayout;
     private DashboardViewModel dashboardViewModel;
     private ProfileFragmentViewModel profileFragmentViewModel;
     private DashboardAdapter dashboardAdapter;

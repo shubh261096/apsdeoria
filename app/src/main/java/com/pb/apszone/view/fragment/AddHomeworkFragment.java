@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.CommonResponseModel;
-import com.pb.apszone.service.rest.HomeworkRequestModel;
+import com.pb.apszone.service.rest.model.HomeworkRequestModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.viewModel.HomeworkTeacherFragmentViewModel;
 

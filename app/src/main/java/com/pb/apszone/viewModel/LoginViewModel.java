@@ -11,7 +11,7 @@ import com.pb.apszone.R;
 import com.pb.apszone.service.model.LoginResponseModel;
 import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
-import com.pb.apszone.service.rest.LoginRequestModel;
+import com.pb.apszone.service.rest.model.LoginRequestModel;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.utils.SnackbarMessage;
 

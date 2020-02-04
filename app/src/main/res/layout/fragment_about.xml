@@ -1,198 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:fillViewport="true"
+    android:focusable="true">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_about"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="@string/toolbar_about"
+                app:titleTextColor="@color/colorPrimary" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <TextView
+            android:id="@+id/txtViewPrivacyPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:clickable="true"
             android:focusable="true"
-            android:orientation="vertical">
+            android:fontFamily="@font/roboto_regular"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="@dimen/dp_22"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/dp_22"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:text="@string/privacy_policy"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/text_18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+            tools:ignore="UnusedAttribute" />
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                tools:ignore="MissingConstraints">
+        <TextView
+            android:id="@+id/txtViewWebsite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_regular"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="@dimen/dp_22"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/dp_22"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:text="@string/website"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/text_18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtViewPrivacyPolicy"
+            tools:ignore="UnusedAttribute" />
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar_about"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/white"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:navigationIcon="@drawable/ic_arrow_back"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:title="@string/toolbar_about"
-                    app:titleTextColor="@color/colorPrimary" />
+        <TextView
+            android:id="@+id/txtViewInstagram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_regular"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="@dimen/dp_22"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/dp_22"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:text="@string/instagram"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/text_18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtViewWebsite"
+            tools:ignore="UnusedAttribute" />
 
-            </com.google.android.material.appbar.AppBarLayout>
+        <TextView
+            android:id="@+id/txtViewFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_regular"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="@dimen/dp_22"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/dp_22"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:text="@string/facebook"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/text_18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtViewInstagram"
+            tools:ignore="UnusedAttribute" />
 
+        <TextView
+            android:id="@+id/txtViewTwitter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_regular"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="@dimen/dp_22"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/dp_22"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:text="@string/twitter"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/text_18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtViewFacebook"
+            tools:ignore="UnusedAttribute" />
 
-            <LinearLayout
-                android:id="@+id/ll_privacy_policy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/dp_22"
-                android:paddingTop="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/dp_22"
-                android:paddingBottom="@dimen/activity_horizontal_margin"
-                tools:ignore="UnusedAttribute">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@string/privacy_policy"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/text_18" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_website"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/dp_22"
-                android:paddingTop="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/dp_22"
-                android:paddingBottom="@dimen/activity_horizontal_margin"
-                tools:ignore="UnusedAttribute">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@string/website"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/text_18" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_instagram"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/dp_22"
-                android:paddingTop="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/dp_22"
-                android:paddingBottom="@dimen/activity_horizontal_margin"
-                tools:ignore="UnusedAttribute">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@string/instagram"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/text_18" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_facebook"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/dp_22"
-                android:paddingTop="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/dp_22"
-                android:paddingBottom="@dimen/activity_horizontal_margin"
-                tools:ignore="UnusedAttribute">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@string/facebook"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/text_18" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_twitter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/dp_22"
-                android:paddingTop="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/dp_22"
-                android:paddingBottom="@dimen/activity_horizontal_margin"
-                tools:ignore="UnusedAttribute">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@string/twitter"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/text_18" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_youtube"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/dp_22"
-                android:paddingTop="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/dp_22"
-                android:paddingBottom="@dimen/activity_horizontal_margin"
-                tools:ignore="UnusedAttribute">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@string/youtube"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/text_18" />
-            </LinearLayout>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/txtViewYouTube"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_regular"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="@dimen/dp_22"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/dp_22"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:text="@string/youtube"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/text_18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtViewTwitter"
+            tools:ignore="UnusedAttribute" />
 
         <TextView
             android:id="@+id/app_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:background="@color/white"
             android:fontFamily="@font/roboto_regular"
             android:gravity="center"
             android:padding="@dimen/activity_horizontal_margin"
             android:textColor="@color/lightPrimary"
             android:textSize="@dimen/text_16"
-            android:textStyle="bold" />
-    </FrameLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
