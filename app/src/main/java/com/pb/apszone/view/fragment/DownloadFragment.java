@@ -137,7 +137,7 @@ public class DownloadFragment extends BaseFragment implements DownloadAdapter.On
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

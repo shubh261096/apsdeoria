@@ -14,6 +14,9 @@ public class HomeworkRequestModel {
     @SerializedName("teacher_id")
     private String teacherId;
 
+    @SerializedName("student_id")
+    private String studentId;
+
     @SerializedName("class_id")
     private String classId;
 
@@ -50,12 +53,12 @@ public class HomeworkRequestModel {
         return teacherId;
     }
 
-    public void setClassId(String classId) {
-        this.classId = classId;
+    public void setStudentID(String studentId) {
+        this.studentId = studentId;
     }
 
-    public String getClassId() {
-        return classId;
+    public String getStudentID() {
+        return studentId;
     }
 
     public void setDescription(String description) {
@@ -82,6 +85,15 @@ public class HomeworkRequestModel {
         return remarks;
     }
 
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
+
     @Override
     public String toString() {
         return
@@ -89,10 +101,12 @@ public class HomeworkRequestModel {
                         "date = '" + date + '\'' +
                         ",subject_id = '" + subjectId + '\'' +
                         ",teacher_id = '" + teacherId + '\'' +
-                        ",class_id = '" + classId + '\'' +
+                        ",student_id = '" + studentId + '\'' +
                         ",description = '" + description + '\'' +
                         ",title = '" + title + '\'' +
                         ",remarks = '" + remarks + '\'' +
+                        ",class_id = '" + classId + '\'' +
                         "}";
     }
+
 }

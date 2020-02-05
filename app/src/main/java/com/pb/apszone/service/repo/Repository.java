@@ -115,7 +115,6 @@ public class Repository {
     public void getProfile(ProfileRequestModel profileRequestModel, MutableLiveData<Events.ProfileResponseEvent> profileResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
         params.put("id", profileRequestModel.getId());
-        params.put("type", profileRequestModel.getType());
         apiService.getProfile(params)
                 .enqueue(new Callback<ProfileResponseModel>() {
                     @Override
@@ -189,14 +188,14 @@ public class Repository {
         Map<String, String> params = new HashMap<>();
         if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
             if (TextUtils.equals(filter, KEY_FILTER_BY_DAY)) {
-                params.put("class_id", timetableRequestModel.getClassId());
+                params.put("student_id", timetableRequestModel.getUserId());
                 params.put("today", timetableRequestModel.getToday());
             } else if (TextUtils.equals(filter, KEY_FILTER_BY_WEEK)) {
-                params.put("class_id", timetableRequestModel.getClassId());
+                params.put("student_id", timetableRequestModel.getUserId());
             }
         } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {
             if (TextUtils.equals(filter, KEY_FILTER_BY_DAY)) {
-                params.put("teacher_id", timetableRequestModel.getTeacherId());
+                params.put("teacher_id", timetableRequestModel.getUserId());
                 params.put("today", timetableRequestModel.getToday());
             }
         }
@@ -277,7 +276,7 @@ public class Repository {
     /* Syllabus Request */
     public void getSyllabus(SyllabusRequestModel syllabusRequestModel, MutableLiveData<Events.SyllabusResponseEvent> syllabusResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
-        params.put("class_id", syllabusRequestModel.getClassId());
+        params.put("student_id", syllabusRequestModel.getStudentID());
 
         apiService.getSyllabus(params)
                 .enqueue(new Callback<SyllabusResponseModel>() {
@@ -315,7 +314,7 @@ public class Repository {
     /* Homework Request */
     public void getHomework(HomeworkRequestModel homeworkRequestModel, MutableLiveData<Events.HomeworkResponseEvent> homeworkResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
-        params.put("class_id", homeworkRequestModel.getClassId());
+        params.put("student_id", homeworkRequestModel.getStudentID());
         params.put("date", homeworkRequestModel.getDate());
 
         apiService.getHomework(params)
@@ -354,7 +353,6 @@ public class Repository {
     /* Fees Request */
     public void getFees(FeesRequestModel feesRequestModel, MutableLiveData<Events.FeesResponseEvent> feesResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
-        params.put("class_id", feesRequestModel.getClassId());
         params.put("year", feesRequestModel.getYear());
         params.put("student_id", feesRequestModel.getStudentId());
 
@@ -392,9 +390,9 @@ public class Repository {
     }
 
     /* Inbox Request */
-    public void getInbox(String user_type, MutableLiveData<Events.InboxResponseEvent> inboxResponseModelMutableLiveData) {
+    public void getInbox(String user_id, MutableLiveData<Events.InboxResponseEvent> inboxResponseModelMutableLiveData) {
         Map<String, String> params = new HashMap<>();
-        params.put("user_type", user_type);
+        params.put("id", user_id);
         apiService.getInbox(params)
                 .enqueue(new Callback<InboxResponseModel>() {
                     @Override
@@ -760,9 +758,9 @@ public class Repository {
     }
 
     /* Downloads Request */
-    public void getDownloads(String user_type, MutableLiveData<Events.DownloadResponseEvent> downloadResponseEventMutableLiveData) {
+    public void getDownloads(String user_id, MutableLiveData<Events.DownloadResponseEvent> downloadResponseEventMutableLiveData) {
         Map<String, String> params = new HashMap<>();
-        params.put("user_type", user_type);
+        params.put("id", user_id);
         apiService.getDownloads(params)
                 .enqueue(new Callback<DownloadResponseModel>() {
                     @Override

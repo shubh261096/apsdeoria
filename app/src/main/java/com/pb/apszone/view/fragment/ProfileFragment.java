@@ -229,7 +229,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void subscribe() {
-        profileFragmentViewModel.sendRequest(user_id, user_type);
+        profileFragmentViewModel.sendRequest(user_id);
         progressBar.setVisibility(View.VISIBLE);
     }
 

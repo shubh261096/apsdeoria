@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -135,7 +134,6 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
             if (responseEvent != null) {
                 if (responseEvent.isSuccess()) {
                     ProfileResponseModel profileResponseModel = responseEvent.getProfileResponseModel();
-                    dashboardViewModel.putSharedPrefData(profileResponseModel); // Adding SharedPref in case student/parent
                     dashboardViewModel.subscribeToTopic(profileResponseModel);
                     if (!TextUtils.isEmpty(profileResponseModel.getProfile().getGender())) {
                         int drawable = TextUtils.equals(profileResponseModel.getProfile().getGender(), USER_GENDER_MALE) ? R.drawable.profile_boy : R.drawable.profile_girl;
@@ -193,7 +191,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     }
 
     private void subscribeProfile() {
-        profileFragmentViewModel.sendRequest(user_id, user_type);
+        profileFragmentViewModel.sendRequest(user_id);
     }
 
     private void subscribe() {

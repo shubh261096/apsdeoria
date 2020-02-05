@@ -57,7 +57,7 @@ import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_OK;
 import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
-import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.READ_EXTERNAL_STORAGE_CODE;
 import static com.pb.apszone.utils.AppConstants.WRITE_EXTERNAL_STORAGE_CODE;
 import static com.pb.apszone.utils.CommonUtils.beginDownload;
@@ -194,8 +194,8 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     }
 
     private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
-            syllabusTeacherFragmentViewModel.sendClassDetailRequest(keyStorePref.getString(KEY_TEACHER_ID));
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_USER_ID))) {
+            syllabusTeacherFragmentViewModel.sendClassDetailRequest(keyStorePref.getString(KEY_USER_ID));
         }
         progressBar.setVisibility(View.VISIBLE);
     }

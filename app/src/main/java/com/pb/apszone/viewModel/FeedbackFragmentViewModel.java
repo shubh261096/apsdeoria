@@ -1,6 +1,7 @@
 package com.pb.apszone.viewModel;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -12,7 +13,7 @@ import com.pb.apszone.service.rest.model.FeedbackRequestModel;
 import com.pb.apszone.service.rest.model.TimetableRequestModel;
 import com.pb.apszone.utils.KeyStorePref;
 
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 
 public class FeedbackFragmentViewModel extends AndroidViewModel {
 
@@ -31,16 +32,16 @@ public class FeedbackFragmentViewModel extends AndroidViewModel {
         timetableRequestModel = new TimetableRequestModel();
     }
 
-    public void sendRequest(){
-        repository.checkFeedback(keyStorePref.getString(KEY_STUDENT_ID), commonResponseEventMutableLiveData);
+    public void sendRequest() {
+        repository.checkFeedback(keyStorePref.getString(KEY_USER_ID), commonResponseEventMutableLiveData);
     }
 
     public LiveData<Events.CommonResponseEvent> checkFeedback() {
         return commonResponseEventMutableLiveData;
     }
 
-    public void sendTimetableRequest(String class_id, String filter, String user_type) {
-        timetableRequestModel.setClassId(class_id);
+    public void sendTimetableRequest(String user_id, String filter, String user_type) {
+        timetableRequestModel.setUserId(user_id);
         repository.getTimetable(timetableRequestModel, filter, user_type, timetableResponseModelMutableLiveData);
     }
 

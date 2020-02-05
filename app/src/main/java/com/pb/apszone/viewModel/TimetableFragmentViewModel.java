@@ -23,14 +23,8 @@ public class TimetableFragmentViewModel extends AndroidViewModel {
         timetableRequestModel = new TimetableRequestModel();
     }
 
-    public void sendRequest(String class_id, String day, String filter, String user_type) {
-        timetableRequestModel.setClassId(class_id);
-        timetableRequestModel.setToday(day);
-        repository.getTimetable(timetableRequestModel, filter, user_type, timetableResponseModelMutableLiveData);
-    }
-
-    public void sendTeacherRequest(String teacher_id, String day, String filter, String user_type) {
-        timetableRequestModel.setTeacherId(teacher_id);
+    public void sendRequest(String user_id, String day, String filter, String user_type) {
+        timetableRequestModel.setUserId(user_id);
         timetableRequestModel.setToday(day);
         repository.getTimetable(timetableRequestModel, filter, user_type, timetableResponseModelMutableLiveData);
     }

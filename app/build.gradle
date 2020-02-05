@@ -38,11 +38,11 @@ android {
     }
     productFlavors {
         prod {
-            buildConfigField 'String', 'BASE_URL', '"http://apsdeoria.000webhostapp.com/apszone/api/"'
+            buildConfigField 'String', 'BASE_URL', '"http://apsdeoria.000webhostapp.com/apszone/api/v2/prod/"'
             dimension "environment"
         }
         qa {
-            buildConfigField 'String', 'BASE_URL', '"http://apsdeoria.000webhostapp.com/apszone/api/qa/"'
+            buildConfigField 'String', 'BASE_URL', '"http://apsdeoria.000webhostapp.com/apszone/api/v2/qa/"'
             versionNameSuffix "-qa"
             dimension "environment"
         }

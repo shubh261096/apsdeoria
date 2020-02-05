@@ -4,18 +4,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class SyllabusRequestModel {
 
-    @SerializedName("class_id")
-    private String classId;
+    @SerializedName("student_id")
+    private String studentID;
 
     @SerializedName("subject_id")
     private String subjectId;
 
-    public void setClassId(String classId) {
-        this.classId = classId;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
-    public String getClassId() {
-        return classId;
+    public String getStudentID() {
+        return studentID;
     }
 
     public String getSubjectId() {
@@ -30,7 +30,7 @@ public class SyllabusRequestModel {
     public String toString() {
         return
                 "SyllabusRequestModel{" +
-                        "class_id = '" + classId + '\'' +
+                        "student_id = '" + studentID + '\'' +
                         ",subject_id = '" + subjectId + '\'' +
                         "}";
     }

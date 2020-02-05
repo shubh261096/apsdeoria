@@ -2,14 +2,6 @@ package com.pb.apszone.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +10,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.FeesItem;
@@ -34,8 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.CommonUtils.capitalize;
 import static com.pb.apszone.utils.CommonUtils.getCurrentMonth;
 import static com.pb.apszone.utils.CommonUtils.getCurrentYear;
@@ -149,8 +147,8 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
     }
 
     private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_ID))) {
-            feesFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), getCurrentYear(), keyStorePref.getString(KEY_STUDENT_ID));
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_USER_ID))) {
+            feesFragmentViewModel.sendRequest(getCurrentYear(), keyStorePref.getString(KEY_USER_ID));
         }
         tvNoData.setVisibility(View.GONE);
         llDisplayFee.setVisibility(View.GONE);
@@ -186,7 +184,7 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

@@ -4,17 +4,12 @@ public class AppConstants {
     /* SHARED PREFERENCE */
     public final static String KEY_USER_ID = "key_user_id";
     public final static String KEY_USER_TYPE = "key_user_type";
-    public final static String KEY_USER_EMAIL = "key_user_email";
     public final static String KEY_USER_LOGIN_STATUS = "key_user_login_status";
-    public final static String KEY_STUDENT_CLASS_ID = "key_student_class_id";
-    public final static String KEY_STUDENT_ID = "key_student_id";
     public final static String KEY_TEACHER_ID = "key_teacher_id";
 
     /* USER TYPE */
-    public final static String USER_TYPE_PARENT = "parent";
     public final static String USER_TYPE_STUDENT = "student";
     public final static String USER_TYPE_TEACHER = "teacher";
-    public final static String USER_TYPE_ADMIN = "admin";
 
     /* USER GENDER */
     public final static String USER_GENDER_MALE = "Male";

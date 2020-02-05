@@ -2,13 +2,6 @@ package com.pb.apszone.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.TimetableItem;
@@ -36,8 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_DAY;
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
-import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
@@ -147,19 +145,11 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
     }
 
     private void subscribe() {
-        if (!TextUtils.isEmpty(user_type)) {
-            if (TextUtils.equals(user_type, USER_TYPE_STUDENT)) {
-                if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-                    timetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), day, KEY_FILTER_BY_DAY, user_type);
-                }
-            } else if (TextUtils.equals(user_type, USER_TYPE_TEACHER)) {
-                if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
-                    timetableFragmentViewModel.sendTeacherRequest(keyStorePref.getString(KEY_TEACHER_ID), day, KEY_FILTER_BY_DAY, user_type);
-                }
-            }
-            tvNoData.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_USER_ID))) {
+            timetableFragmentViewModel.sendRequest(keyStorePref.getString(KEY_USER_ID), day, KEY_FILTER_BY_DAY, user_type);
         }
+        tvNoData.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -23,8 +23,8 @@ public class HomeworkFragmentViewModel extends AndroidViewModel {
         homeworkRequestModel = new HomeworkRequestModel();
     }
 
-    public void sendRequest(String class_id, String date) {
-        homeworkRequestModel.setClassId(class_id);
+    public void sendRequest(String student_id, String date) {
+        homeworkRequestModel.setStudentID(student_id);
         homeworkRequestModel.setDate(date);
         repository.getHomework(homeworkRequestModel, homeworkResponseModelMutableLiveData);
     }

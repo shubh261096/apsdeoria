@@ -2,13 +2,6 @@ package com.pb.apszone.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +10,12 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.CommonResponseModel;
@@ -42,9 +41,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_WEEK;
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
-import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
@@ -191,10 +188,8 @@ public class FeedbackFragment extends BaseFragment implements OnFeebackRatingEdi
     }
 
     private void subscribeTimetable() {
-        if (TextUtils.equals(keyStorePref.getString(KEY_USER_TYPE), USER_TYPE_STUDENT)) {
-            if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-                feedbackFragmentViewModel.sendTimetableRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), KEY_FILTER_BY_WEEK, USER_TYPE_STUDENT);
-            }
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_USER_ID))) {
+            feedbackFragmentViewModel.sendTimetableRequest(keyStorePref.getString(KEY_USER_ID), KEY_FILTER_BY_WEEK, USER_TYPE_STUDENT);
         }
     }
 
@@ -225,7 +220,7 @@ public class FeedbackFragment extends BaseFragment implements OnFeebackRatingEdi
             FeedbackItem feedbackItem = new FeedbackItem();
             feedbackItem.setFeedback(teacherIdList.get(i).getFeedback());
             feedbackItem.setRating(teacherIdList.get(i).getRating());
-            feedbackItem.setStudentId(keyStorePref.getString(KEY_STUDENT_ID));
+            feedbackItem.setStudentId(keyStorePref.getString(KEY_USER_ID));
             feedbackItem.setTeacherId(teacherIdList.get(i).getId());
             feedbackItemList.add(i, feedbackItem);
         }

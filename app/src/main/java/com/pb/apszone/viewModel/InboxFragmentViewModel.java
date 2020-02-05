@@ -1,6 +1,7 @@
 package com.pb.apszone.viewModel;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -10,7 +11,7 @@ import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.utils.KeyStorePref;
 
-import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 
 public class InboxFragmentViewModel extends AndroidViewModel {
 
@@ -26,7 +27,7 @@ public class InboxFragmentViewModel extends AndroidViewModel {
     }
 
     public void sendRequest(){
-        repository.getInbox(keyStorePref.getString(KEY_USER_TYPE), inboxResponseModelMutableLiveData);
+        repository.getInbox(keyStorePref.getString(KEY_USER_ID), inboxResponseModelMutableLiveData);
     }
 
     public LiveData<Events.InboxResponseEvent> getInbox() {

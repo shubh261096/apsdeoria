@@ -7,9 +7,6 @@ public class FeesRequestModel {
     @SerializedName("year")
     private String year;
 
-    @SerializedName("class_id")
-    private String classId;
-
     @SerializedName("student_id")
     private String studentId;
 
@@ -19,14 +16,6 @@ public class FeesRequestModel {
 
     public String getYear() {
         return year;
-    }
-
-    public void setClassId(String classId) {
-        this.classId = classId;
-    }
-
-    public String getClassId() {
-        return classId;
     }
 
     public void setStudentId(String studentId) {
@@ -42,7 +31,6 @@ public class FeesRequestModel {
         return
                 "FeesRequestModel{" +
                         "year = '" + year + '\'' +
-                        ",class_id = '" + classId + '\'' +
                         ",student_id = '" + studentId + '\'' +
                         "}";
     }

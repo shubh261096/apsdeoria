@@ -2,48 +2,36 @@ package com.pb.apszone.service.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TimetableRequestModel{
+public class TimetableRequestModel {
 
-	@SerializedName("class_id")
-	private String classId;
+    @SerializedName("user_id")
+    private String userId;
 
-	@SerializedName("today")
-	private String today;
+    @SerializedName("today")
+    private String today;
 
-	@SerializedName("teacher_id")
-	private String teacherId;
+    public void setToday(String today) {
+        this.today = today;
+    }
 
-	public void setClassId(String classId){
-		this.classId = classId;
-	}
+    public String getToday() {
+        return today;
+    }
 
-	public String getClassId(){
-		return classId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public void setToday(String today){
-		this.today = today;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public String getToday(){
-		return today;
-	}
-
-	public void setTeacherId(String teacherId){
-		this.teacherId = teacherId;
-	}
-
-	public String getTeacherId(){
-		return teacherId;
-	}
-
-	@Override
- 	public String toString(){
-		return 
-			"TimetableRequestModel{" + 
-			"class_id = '" + classId + '\'' + 
-			",today = '" + today + '\'' +
-			",teacher_id = '" + teacherId + '\'' +
-			"}";
-		}
+    @Override
+    public String toString() {
+        return
+                "TimetableRequestModel{" +
+                        ",today = '" + today + '\'' +
+                        ",user_id = '" + userId + '\'' +
+                        "}";
+    }
 }

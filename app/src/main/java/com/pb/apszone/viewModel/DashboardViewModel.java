@@ -1,10 +1,12 @@
 package com.pb.apszone.viewModel;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
 import android.text.TextUtils;
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -18,12 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.pb.apszone.utils.AppConstants.KEY_ENABLED;
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_SUBSCRIBE_CLASS_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_SUBSCRIBE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.KEY_SUBSCRIBE_TEACHER;
-import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
@@ -49,20 +48,6 @@ public class DashboardViewModel extends AndroidViewModel {
         return dashboardUIResponseModelMutableLiveData;
     }
 
-    public void putSharedPrefData(ProfileResponseModel profileResponseModel) {
-        if (TextUtils.equals(keyStorePref.getString(KEY_USER_TYPE), USER_TYPE_STUDENT)) {
-            if (!TextUtils.isEmpty(profileResponseModel.getProfile().getClassId().getId())) {
-                keyStorePref.putString(KEY_STUDENT_CLASS_ID, profileResponseModel.getProfile().getClassId().getId());
-            }
-            if (!TextUtils.isEmpty(profileResponseModel.getProfile().getId())) {
-                keyStorePref.putString(KEY_STUDENT_ID, profileResponseModel.getProfile().getId());
-            }
-        } else if (TextUtils.equals(keyStorePref.getString(KEY_USER_TYPE), USER_TYPE_TEACHER)) {
-            if (!TextUtils.isEmpty(profileResponseModel.getProfile().getId())) {
-                keyStorePref.putString(KEY_TEACHER_ID, profileResponseModel.getProfile().getId());
-            }
-        }
-    }
 
     public List<DashboardItem> addListData(List<DashboardItem> dashboardItems, String user_type) {
         List<DashboardItem> dashboardItemList = new ArrayList<>();
@@ -104,7 +89,7 @@ public class DashboardViewModel extends AndroidViewModel {
         }
     }
 
-    public static void unsubscribeFromAllTopic(){
+    public static void unsubscribeFromAllTopic() {
         FirebaseMessaging.getInstance().unsubscribeFromTopic("student");
         FirebaseMessaging.getInstance().unsubscribeFromTopic("teacher");
         FirebaseMessaging.getInstance().unsubscribeFromTopic("C101");

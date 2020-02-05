@@ -45,7 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.pb.apszone.utils.AppConstants.KEY_TEACHER_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.Numbers.ONE;
 import static com.pb.apszone.utils.AppConstants.Numbers.ZERO;
 import static com.pb.apszone.utils.CommonUtils.getTodayDate;
@@ -204,15 +204,15 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     }
 
     private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
-            attendanceTeacherFragmentViewModel.sendRequest(keyStorePref.getString(KEY_TEACHER_ID), this.today_date);
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_USER_ID))) {
+            attendanceTeacherFragmentViewModel.sendRequest(keyStorePref.getString(KEY_USER_ID), this.today_date);
         }
         tvNoData.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 
@@ -228,7 +228,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     }
 
     @OnClick(R.id.tvClass)
-    public void onClassViewClicked() {
+    void onClassViewClicked() {
         if (class_name != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle(getString(R.string.select_class));
@@ -244,7 +244,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     }
 
     @OnClick(R.id.date_filter)
-    public void onDateFilterClicked() {
+    void onDateFilterClicked() {
         final Calendar c = Calendar.getInstance();
         int mYear, mMonth, mDay;
         String currentDate = dateFilter.getText().toString();
@@ -279,12 +279,12 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     }
 
     @OnClick(R.id.edit_attendance)
-    public void onEditAttendanceClicked() {
+    void onEditAttendanceClicked() {
         updateUI(false, true);
     }
 
     @OnClick(R.id.submit_attendance)
-    public void onSubmitAttendanceClicked() {
+    void onSubmitAttendanceClicked() {
         List<AttendanceItem> attendanceItems = new ArrayList<>();
         for (int i = 0; i < studentsItemList.size(); i++) {
             attendanceItems.add(i, classDetailItemList.get(classPos).getClassId().getStudents().get(i).getAttendance());

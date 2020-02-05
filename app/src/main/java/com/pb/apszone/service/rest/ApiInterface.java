@@ -33,38 +33,38 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface ApiInterface {
-    @POST("Login")
+    @POST("common/Login")
     @FormUrlEncoded
     Call<LoginResponseModel> checkLogin(@FieldMap Map<String, String> params);
 
-    @POST("Profile")
+    @POST("common/Profile")
     @FormUrlEncoded
     Call<ProfileResponseModel> getProfile(@FieldMap Map<String, String> params);
 
-    @GET("Dashboard")
+    @GET("common/Dashboard")
     Call<DashboardUIResponseModel> getDashboardUIElements();
 
-    @POST("TimeTable")
+    @POST("common/TimeTable")
     @FormUrlEncoded
     Call<TimetableResponseModel> getTimeTable(@FieldMap Map<String, String> params);
 
-    @POST("Attendance")
+    @POST("student/Attendance")
     @FormUrlEncoded
     Call<AttendanceResponseModel> getAttendance(@FieldMap Map<String, String> params);
 
-    @POST("Syllabus")
+    @POST("student/Syllabus")
     @FormUrlEncoded
     Call<SyllabusResponseModel> getSyllabus(@FieldMap Map<String, String> params);
 
-    @POST("Homework")
+    @POST("student/Homework")
     @FormUrlEncoded
     Call<HomeworkResponseModel> getHomework(@FieldMap Map<String, String> params);
 
-    @POST("Fees")
+    @POST("student/Fees")
     @FormUrlEncoded
     Call<FeesResponseModel> getFees(@FieldMap Map<String, String> params);
 
-    @POST("Inbox")
+    @POST("common/Inbox")
     @FormUrlEncoded
     Call<InboxResponseModel> getInbox(@FieldMap Map<String, String> params);
 
@@ -94,26 +94,26 @@ public interface ApiInterface {
     @POST("teacher/Syllabus/update")
     Call<CommonResponseModel> updateSyllabus(@Part MultipartBody.Part file, @Part("subject_id") RequestBody subject_id, @Part("subject_description") RequestBody subject_description);
 
-    @POST("Login/validate")
+    @POST("common/Login/validate")
     @FormUrlEncoded
     Call<CommonResponseModel> validateResetPassword(@FieldMap Map<String, String> params);
 
-    @POST("Login/reset")
+    @POST("common/Login/reset")
     @FormUrlEncoded
     Call<CommonResponseModel> resetPassword(@FieldMap Map<String, String> params);
 
-    @POST("Download")
+    @POST("common/Download")
     @FormUrlEncoded
     Call<DownloadResponseModel> getDownloads(@FieldMap Map<String, String> params);
 
-    @POST("Feedback")
+    @POST("student/Feedback")
     @FormUrlEncoded
     Call<CommonResponseModel> checkFeedback(@FieldMap Map<String, String> params);
 
-    @POST("Feedback/add")
+    @POST("student/Feedback/add")
     Call<CommonResponseModel> addFeedback (@Body FeedbackRequestModel feedbackRequestModel);
 
-    @POST("Learn")
+    @POST("student/Learn")
     @FormUrlEncoded
     Call<LearnResponseModel> getLearnVideo(@FieldMap Map<String, String> params);
 }

@@ -10,7 +10,7 @@ import com.pb.apszone.service.repo.Events;
 import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.utils.KeyStorePref;
 
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 
 public class LearnFragmentViewModel extends AndroidViewModel {
 
@@ -26,7 +26,7 @@ public class LearnFragmentViewModel extends AndroidViewModel {
     }
 
     public void sendRequest() {
-        repository.getLearnVideo(keyStorePref.getString(KEY_STUDENT_ID), learnResponseEventMutableLiveData);
+        repository.getLearnVideo(keyStorePref.getString(KEY_USER_ID), learnResponseEventMutableLiveData);
     }
 
     public LiveData<Events.LearnResponseEvent> getLearnVideo() {

@@ -23,9 +23,8 @@ public class ProfileFragmentViewModel extends AndroidViewModel {
         profileRequestModel = new ProfileRequestModel();
     }
 
-    public void sendRequest(String id, String type) {
+    public void sendRequest(String id) {
         profileRequestModel.setId(id);
-        profileRequestModel.setType(type);
         repository.getProfile(profileRequestModel, profileResponseModelMutableLiveData);
     }
 

@@ -6,14 +6,6 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +13,13 @@ import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.SyllabusItem;
@@ -41,7 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.WRITE_EXTERNAL_STORAGE_CODE;
 import static com.pb.apszone.utils.CommonUtils.beginDownload;
 import static com.pb.apszone.utils.CommonUtils.isWriteStoragePermissionGranted;
@@ -132,8 +131,8 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
     }
 
     private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-            syllabusFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID));
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_USER_ID))) {
+            syllabusFragmentViewModel.sendRequest(keyStorePref.getString(KEY_USER_ID));
         }
         progressBar.setVisibility(View.VISIBLE);
     }

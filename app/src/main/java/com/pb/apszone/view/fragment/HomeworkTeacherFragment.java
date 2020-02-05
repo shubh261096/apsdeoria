@@ -144,14 +144,14 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
     }
 
     private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_TEACHER_ID))) {
-            homeworkTeacherFragmentViewModel.sendRequest(keyStorePref.getString(KEY_TEACHER_ID));
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_USER_ID))) {
+            homeworkTeacherFragmentViewModel.sendRequest(keyStorePref.getString(KEY_USER_ID));
         }
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

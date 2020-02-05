@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.CommonUtils.getCurrentMonth;
 import static com.pb.apszone.utils.CommonUtils.getCurrentYear;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
@@ -154,8 +154,8 @@ public class AttendanceFragment extends BaseFragment {
     }
 
     private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_ID))) {
-            attendanceFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_ID), currentMonth, currentYear);
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_USER_ID))) {
+            attendanceFragmentViewModel.sendRequest(keyStorePref.getString(KEY_USER_ID), currentMonth, currentYear);
             updateUI(0);
             tvNoData.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);

@@ -7,14 +7,6 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +16,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.HomeworkItem;
@@ -49,7 +48,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
-import static com.pb.apszone.utils.AppConstants.KEY_STUDENT_CLASS_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.WRITE_EXTERNAL_STORAGE_CODE;
 import static com.pb.apszone.utils.CommonUtils.beginDownload;
 import static com.pb.apszone.utils.CommonUtils.getNextDate;
@@ -158,8 +157,8 @@ public class HomeworkFragment extends BaseFragment implements HomeworkAdapter.On
     }
 
     private void subscribe() {
-        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_STUDENT_CLASS_ID))) {
-            homeworkFragmentViewModel.sendRequest(keyStorePref.getString(KEY_STUDENT_CLASS_ID), today_date);
+        if (!TextUtils.isEmpty(keyStorePref.getString(KEY_USER_ID))) {
+            homeworkFragmentViewModel.sendRequest(keyStorePref.getString(KEY_USER_ID), today_date);
         }
         tvNoData.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);

@@ -1,6 +1,7 @@
 package com.pb.apszone.viewModel;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -23,8 +24,7 @@ public class FeesFragmentViewModel extends AndroidViewModel {
         feesRequestModel = new FeesRequestModel();
     }
 
-    public void sendRequest(String class_id, String year, String student_id) {
-        feesRequestModel.setClassId(class_id);
+    public void sendRequest(String year, String student_id) {
         feesRequestModel.setYear(year);
         feesRequestModel.setStudentId(student_id);
         repository.getFees(feesRequestModel, feesResponseModelMutableLiveData);
