@@ -11,6 +11,7 @@ class Login extends REST_Controller
     parent::__construct();
     $this->load->database();
     $this->load->model('LoginModel');
+    $this->load->helper('common');
   }
 
   public function index_post()

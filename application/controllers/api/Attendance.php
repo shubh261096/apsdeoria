@@ -9,6 +9,7 @@ class Attendance extends REST_Controller {
     parent::__construct();
     $this->load->database();
     $this->load->model('AttendanceModel');
+    $this->load->helper('common');
   }
 
   public function index_post() {

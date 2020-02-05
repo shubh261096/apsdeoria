@@ -11,6 +11,7 @@ class Syllabus extends REST_Controller
     parent::__construct();
     $this->load->database();
     $this->load->model('api/v2/qa/SyllabusModel', 'SyllabusModel');
+    $this->load->helper('commonqa');
   }
 
   /* Check if syllabus already exists */

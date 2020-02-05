@@ -12,6 +12,7 @@ class Fees extends REST_Controller
     $this->load->database();
     $this->load->model('api/v2/qa/FeesModel', 'FeesModel');
     $this->load->model('api/v2/qa/CommonModel', 'CommonModel');
+    $this->load->helper('commonqa');
   }
 
   public function index_post()

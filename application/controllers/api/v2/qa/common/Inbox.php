@@ -12,6 +12,7 @@ class Inbox extends REST_Controller
     $this->load->database();
     $this->load->model('api/v2/qa/NotificationModel', 'NotificationModel');
     $this->load->model('api/v2/qa/CommonModel', 'CommonModel');
+    $this->load->helper('commonqa');
   }
 
   /** This function is not in use */

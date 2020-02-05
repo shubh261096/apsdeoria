@@ -11,6 +11,7 @@ class Feedback extends REST_Controller
     parent::__construct();
     $this->load->database();
     $this->load->model('FeedbackModel');
+    $this->load->helper('common');
   }
 
   /* Check if feedback is already filled */

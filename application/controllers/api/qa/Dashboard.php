@@ -9,6 +9,7 @@ class Dashboard extends REST_Controller {
     parent::__construct();
     $this->load->database();
     $this->load->model('DashboardModel');
+    $this->load->helper('common');
   }
 
   public function index_get() {

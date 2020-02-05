@@ -11,6 +11,7 @@ class Learn extends REST_Controller
         $this->load->database();
         $this->load->model('api/v2/qa/LearnModel', 'LearnModel');
         $this->load->model('api/v2/qa/CommonModel', 'CommonModel');
+        $this->load->helper('commonqa');
     }
 
     public function index_post()

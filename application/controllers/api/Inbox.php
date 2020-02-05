@@ -11,6 +11,7 @@ class Inbox extends REST_Controller
     parent::__construct();
     $this->load->database();
     $this->load->model('NotificationModel');
+    $this->load->helper('common');
   }
 
   public function index_get()
