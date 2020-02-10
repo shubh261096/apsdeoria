@@ -13,6 +13,7 @@ class Feedback extends CI_Controller
       return redirect('admin');
 
     $this->load->model('admin/FeedbackModel', 'FeedbackModel');
+    $this->load->helper('common');
   }
 
   public function index()

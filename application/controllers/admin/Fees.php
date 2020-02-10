@@ -13,6 +13,7 @@ class Fees extends CI_Controller
       return redirect('admin');
 
     $this->load->model('admin/FeesModel', 'FeesModel');
+    $this->load->helper('common');
   }
 
   public function index()
