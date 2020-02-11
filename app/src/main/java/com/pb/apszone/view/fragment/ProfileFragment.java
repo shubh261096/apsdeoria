@@ -2,14 +2,6 @@ package com.pb.apszone.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.ProfileResponseModel;
@@ -56,7 +55,7 @@ public class ProfileFragment extends BaseFragment {
     TextView userName;
     @BindView(R.id.rvProfileUI)
     RecyclerView rvProfileUI;
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.userClass)
     TextView userClass;
     @BindView(R.id.toolbar_profile)
@@ -65,7 +64,7 @@ public class ProfileFragment extends BaseFragment {
     ProgressBar progressBar;
     private ProfileFragmentViewModel profileFragmentViewModel;
     private String user_type, user_id;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     private LinkedHashMap<String, String> profileValueHashmap = new LinkedHashMap<>();
     private ProfileAdapter profileAdapter;
 
@@ -105,12 +104,12 @@ public class ProfileFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
+        profileFragmentViewModel = new ViewModelProvider(this).get(ProfileFragmentViewModel.class);
         observeProfile();
     }
 
     private void observeProfile() {
-        profileFragmentViewModel.getProfile().observe(this, responseEvent -> {
+        profileFragmentViewModel.getProfile().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -234,7 +233,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

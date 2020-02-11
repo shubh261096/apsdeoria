@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.LoginResponseModel;
@@ -41,7 +41,7 @@ import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class LoginActivity extends AppCompatActivity {
 
-    LoginViewModel loginViewModel;
+    private LoginViewModel loginViewModel;
     @BindView(R.id.edt_id)
     EditText edtID;
     @BindView(R.id.edt_password)
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         ButterKnife.bind(this);
         setupSnackbar();
         subscribe();
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getSnackbarMessage().observe(this, (SnackbarMessage.SnackbarObserver) snackbarMessageResourceId -> SnackbarUtils.showSnackbar(findViewById(R.id.myCoordinatorLayout), getString(snackbarMessageResourceId)));
     }
 
-    public void subscribe() {
+    private void subscribe() {
         loginViewModel.getUser().observe(this, responseEvent -> {
             hideProgress();
             if (responseEvent != null) {
@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
         replaceFragment(resetPassFragment);
     }
 
-    public void replaceFragment(Fragment destFragment) {
+    private void replaceFragment(Fragment destFragment) {
         // First get FragmentManager object.
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         // Begin Fragment transaction.

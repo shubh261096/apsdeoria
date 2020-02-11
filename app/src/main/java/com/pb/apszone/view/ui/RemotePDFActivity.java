@@ -68,7 +68,7 @@ public class RemotePDFActivity extends AppCompatActivity implements View.OnClick
     /**
      * Maintain status of PDF is loaded or failed to load.
      */
-    protected boolean isPdfLoaded;
+    private boolean isPdfLoaded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,7 @@ public class RemotePDFActivity extends AppCompatActivity implements View.OnClick
      * Entry point for loading intent information.
      * Override it to handle specialized mode in case of extending this class.
      */
-    protected void loadData() {
+    private void loadData() {
         String title = getIntent().getStringExtra(KEY_PDF_SUBJECT_NAME);
         toolbarPdf.setTitle(title);
         String url = getIntent().getStringExtra(KEY_PDF_URL);
@@ -94,7 +94,7 @@ public class RemotePDFActivity extends AppCompatActivity implements View.OnClick
         pdfPreviewImageView.setScaleType(ImageView.ScaleType.CENTER);
     }
 
-    public final void loadPdfPreviewUrl(String url) {
+    private void loadPdfPreviewUrl(String url) {
         showProgress(this, getString(R.string.msg_please_wait));
         final File file = new File(getCacheDir(), FILE_PDF);
         OkHttpClient client = new OkHttpClient.Builder().build();
@@ -138,7 +138,7 @@ public class RemotePDFActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    public final void loadPdfPreviewFile(File file) {
+    private void loadPdfPreviewFile(File file) {
         try {
             mFileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
             // This is the PdfRenderer we use to render the PDF.
@@ -154,7 +154,7 @@ public class RemotePDFActivity extends AppCompatActivity implements View.OnClick
         hideProgress();
     }
 
-    protected void showPreviewFailed() {
+    private void showPreviewFailed() {
         hideProgress();
         isPdfLoaded = false;
         Toast.makeText(this, getString(R.string.msg_failed_load_pdf), Toast.LENGTH_SHORT).show();
@@ -220,7 +220,7 @@ public class RemotePDFActivity extends AppCompatActivity implements View.OnClick
     /**
      * Called when PDF page rendered on Image.
      */
-    protected void updateUIOnPageShown() {
+    private void updateUIOnPageShown() {
         if (getPageCount() > 1) {
             pdfControlPanel.setVisibility(View.VISIBLE);
             previousPageView.setVisibility(mCurrentPage.getIndex() > 0 ? View.VISIBLE : View.INVISIBLE);
@@ -236,7 +236,7 @@ public class RemotePDFActivity extends AppCompatActivity implements View.OnClick
      *
      * @return The number of pages.
      */
-    public final int getPageCount() {
+    private int getPageCount() {
         return mPdfRenderer.getPageCount();
     }
 

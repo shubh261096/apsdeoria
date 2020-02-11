@@ -3,21 +3,20 @@ package com.pb.apszone.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.LearnItem;
@@ -38,7 +37,7 @@ import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class LearnFragment extends BaseFragment implements LearnAdapter.OnItemClickListener {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_learn)
     Toolbar toolbarLearn;
     @BindView(R.id.rvLearn)
@@ -92,12 +91,12 @@ public class LearnFragment extends BaseFragment implements LearnAdapter.OnItemCl
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        learnFragmentViewModel = ViewModelProviders.of(this).get(LearnFragmentViewModel.class);
+        learnFragmentViewModel = new ViewModelProvider(this).get(LearnFragmentViewModel.class);
         observeData();
     }
 
     private void observeData() {
-        learnFragmentViewModel.getLearnVideo().observe(this, responseEvent -> {
+        learnFragmentViewModel.getLearnVideo().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -136,7 +135,7 @@ public class LearnFragment extends BaseFragment implements LearnAdapter.OnItemCl
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

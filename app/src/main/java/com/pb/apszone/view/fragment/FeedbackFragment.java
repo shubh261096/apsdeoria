@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,7 +47,7 @@ import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class FeedbackFragment extends BaseFragment implements OnFeebackRatingEditListener {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_feedback)
     Toolbar toolbarFeedback;
     @BindView(R.id.rvFeedback)
@@ -62,7 +62,7 @@ public class FeedbackFragment extends BaseFragment implements OnFeebackRatingEdi
     private FeedbackFragmentViewModel feedbackFragmentViewModel;
     private List<TeacherId> teacherIdList;
     private FeedbackAdapter feedbackAdapter;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     private boolean isFeedbackSubmit;
 
 
@@ -107,13 +107,13 @@ public class FeedbackFragment extends BaseFragment implements OnFeebackRatingEdi
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        feedbackFragmentViewModel = ViewModelProviders.of(this).get(FeedbackFragmentViewModel.class);
+        feedbackFragmentViewModel = new ViewModelProvider(this).get(FeedbackFragmentViewModel.class);
         observeFeedback();
         observeTimetable(); // This is done to get list of teacher's name
     }
 
     private void observeFeedback() {
-        feedbackFragmentViewModel.checkFeedback().observe(this, responseEvent -> {
+        feedbackFragmentViewModel.checkFeedback().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -142,7 +142,7 @@ public class FeedbackFragment extends BaseFragment implements OnFeebackRatingEdi
     }
 
     private void observeTimetable() {
-        feedbackFragmentViewModel.getTimetable().observe(this, responseEvent -> {
+        feedbackFragmentViewModel.getTimetable().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -194,7 +194,7 @@ public class FeedbackFragment extends BaseFragment implements OnFeebackRatingEdi
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

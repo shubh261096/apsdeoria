@@ -14,7 +14,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,7 +73,7 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
 
     private static final int PDF_REQ_CODE = 901;
     private static final String TAG = "SyllabusTeacherFragment";
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_syllabus)
     Toolbar toolbarSyllabus;
     @BindView(R.id.tvClass)
@@ -85,7 +85,7 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     private List<ClassSubjectItem> classSubjectItemList;
     private List<SubjectId> subjectIdList;
     private SyllabusTeacherFragmentViewModel syllabusTeacherFragmentViewModel;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     private TeacherSyllabusAdapter teacherSyllabusAdapter;
     private String[] class_name;
     private String[] class_id;
@@ -132,13 +132,13 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        syllabusTeacherFragmentViewModel = ViewModelProviders.of(this).get(SyllabusTeacherFragmentViewModel.class);
+        syllabusTeacherFragmentViewModel = new ViewModelProvider(this).get(SyllabusTeacherFragmentViewModel.class);
         observeHomework();
         observeSyllabus();
     }
 
     private void observeSyllabus() {
-        syllabusTeacherFragmentViewModel.checkResponse().observe(this, responseEvent -> {
+        syllabusTeacherFragmentViewModel.checkResponse().observe(getViewLifecycleOwner(), responseEvent -> {
             hideProgress();
             if (responseEvent != null) {
                 if (responseEvent.isSuccess()) {
@@ -153,7 +153,7 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     }
 
     private void observeHomework() {
-        syllabusTeacherFragmentViewModel.getClassSubjectDetail().observe(this, responseEvent -> {
+        syllabusTeacherFragmentViewModel.getClassSubjectDetail().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -206,7 +206,7 @@ public class SyllabusTeacherFragment extends BaseFragment implements TeacherSyll
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

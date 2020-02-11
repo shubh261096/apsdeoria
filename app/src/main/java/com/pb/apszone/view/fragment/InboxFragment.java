@@ -2,18 +2,17 @@ package com.pb.apszone.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.InboxItem;
@@ -33,7 +32,7 @@ import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class InboxFragment extends BaseFragment {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_inbox)
     Toolbar toolbarInbox;
     @BindView(R.id.rvInbox)
@@ -87,12 +86,12 @@ public class InboxFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        inboxFragmentViewModel = ViewModelProviders.of(this).get(InboxFragmentViewModel.class);
+        inboxFragmentViewModel = new ViewModelProvider(this).get(InboxFragmentViewModel.class);
         observeInbox();
     }
 
     private void observeInbox() {
-        inboxFragmentViewModel.getInbox().observe(this, responseEvent -> {
+        inboxFragmentViewModel.getInbox().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 

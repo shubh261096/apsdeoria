@@ -12,27 +12,34 @@ import android.widget.ImageView;
 
 @SuppressLint("AppCompatCustomView")
 public class ZoomImageView extends ImageView {
-    Matrix matrix = new Matrix();
+    private Matrix matrix = new Matrix();
 
-    static final int NONE = 0;
-    static final int DRAG = 1;
-    static final int ZOOM = 2;
-    static final int CLICK = 3;
-    int mode = NONE;
+    private static final int NONE = 0;
+    private static final int DRAG = 1;
+    private static final int ZOOM = 2;
+    private static final int CLICK = 3;
+    private int mode = NONE;
 
-    PointF last = new PointF();
-    PointF start = new PointF();
-    float minScale = 1f;
-    float maxScale = 4f;
-    float[] m;
+    private PointF last = new PointF();
+    private PointF start = new PointF();
+    private float minScale = 1f;
+    private float maxScale = 4f;
+    private float[] m;
 
-    float redundantXSpace, redundantYSpace;
-    float width, height;
-    float saveScale = 1f;
-    float right, bottom, origWidth, origHeight, bmWidth, bmHeight;
+    private float redundantXSpace;
+    private float redundantYSpace;
+    private float width;
+    private float height;
+    private float saveScale = 1f;
+    private float right;
+    private float bottom;
+    private float origWidth;
+    private float origHeight;
+    private float bmWidth;
+    private float bmHeight;
 
-    ScaleGestureDetector mScaleDetector;
-    Context context;
+    private ScaleGestureDetector mScaleDetector;
+    private Context context;
 
     public ZoomImageView(Context context, AttributeSet attr) {
         super(context, attr);

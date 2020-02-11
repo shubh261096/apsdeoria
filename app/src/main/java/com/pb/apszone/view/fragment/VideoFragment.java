@@ -36,7 +36,7 @@ import static com.pb.apszone.utils.AppConstants.VIDEO_URL;
 
 public class VideoFragment extends BaseFragment implements VideoAdapter.OnItemClickListener {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_video)
     Toolbar toolbarVideo;
     @BindView(R.id.rvVideo)
@@ -90,7 +90,7 @@ public class VideoFragment extends BaseFragment implements VideoAdapter.OnItemCl
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

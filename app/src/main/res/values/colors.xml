@@ -6,13 +6,11 @@
     <color name="colorAccent">#448AFF</color>
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
     <color name="activeClass">#32CD32</color>
     <color name="light_gray">#BDBDBD</color>
     <color name="light_gray_50">#80BDBDBD</color>
     <color name="black_80">#B3000000</color>
     <color name="black_90">#E6000000</color>
-    <color name="colorLightPrimary">#C5CAE9</color>
     <color name="hint_gray">#80707070</color>
     <color name="hint_gray_80">#CC707070</color>
     <color name="light_black">#424343</color>

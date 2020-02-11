@@ -22,7 +22,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -100,7 +100,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     private List<DashboardItem> dashboardItemList;
     private OnDashboardItemClickListener onDashboardItemClickListener;
     private String user_type, user_id;
-    boolean doubleBackToExitPressedOnce;
+    private boolean doubleBackToExitPressedOnce;
 
 
     @Override
@@ -115,8 +115,8 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         observeInternetChange();
         /* ViewModel initialization */
-        dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
-        profileFragmentViewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
+        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        profileFragmentViewModel = new ViewModelProvider(this).get(ProfileFragmentViewModel.class);
         /* Observe LiveData*/
         observeDashboardUIElements();
         observeProfile();
@@ -291,7 +291,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         replaceFragment(fragment);
     }
 
-    public void replaceFragment(Fragment destFragment) {
+    private void replaceFragment(Fragment destFragment) {
         // First get FragmentManager object.
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         // Begin Fragment transaction.

@@ -3,13 +3,6 @@ package com.pb.apszone.view.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.ClassSubjectItem;
@@ -44,7 +43,7 @@ import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class HomeworkTeacherFragment extends BaseFragment implements TeacherHomeworkAdapter.OnSubjectItemClick {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_homework)
     Toolbar toolbarHomework;
     @BindView(R.id.tvClass)
@@ -56,7 +55,7 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
     private List<ClassSubjectItem> classSubjectItemList;
     private List<SubjectId> subjectIdList;
     private HomeworkTeacherFragmentViewModel homeworkTeacherFragmentViewModel;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     private TeacherHomeworkAdapter teacherHomeworkAdapter;
     private String[] class_name;
     private String[] class_id;
@@ -96,13 +95,13 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        homeworkTeacherFragmentViewModel = ViewModelProviders.of(this).get(HomeworkTeacherFragmentViewModel.class);
+        homeworkTeacherFragmentViewModel = new ViewModelProvider(this).get(HomeworkTeacherFragmentViewModel.class);
         observeHomework();
     }
 
 
     private void observeHomework() {
-        homeworkTeacherFragmentViewModel.getClassSubjectDetail().observe(this, responseEvent -> {
+        homeworkTeacherFragmentViewModel.getClassSubjectDetail().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -200,7 +199,7 @@ public class HomeworkTeacherFragment extends BaseFragment implements TeacherHome
 
     @Override
     public void onItemClick(int position, View view) {
-        AddHomeworkFragment nextFrag = new AddHomeworkFragment();
+        AddHomeworkFragment nextFrag = AddHomeworkFragment.newInstance();
         Bundle bundle = new Bundle();
         bundle.putString(KEY_TEACHER_ID, keyStorePref.getString(KEY_USER_ID));
         bundle.putString(KEY_CLASS_ID, this.classId);

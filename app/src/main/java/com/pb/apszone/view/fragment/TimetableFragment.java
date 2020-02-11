@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,14 +37,12 @@ import butterknife.Unbinder;
 import static com.pb.apszone.utils.AppConstants.KEY_FILTER_BY_DAY;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
-import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
-import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 import static com.pb.apszone.utils.CommonUtils.getDayOfWeek;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class TimetableFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_timetable)
     Toolbar toolbarTimetable;
     @BindView(R.id.rvTimetable)
@@ -57,7 +55,7 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
     TextView tvNoData;
     private List<TimetableItem> timetableItemList;
     private TimetableFragmentViewModel timetableFragmentViewModel;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     private TimetableAdapter timetableAdapter;
     private String day;
     private int checkInit = 0;
@@ -106,12 +104,12 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        timetableFragmentViewModel = ViewModelProviders.of(this).get(TimetableFragmentViewModel.class);
+        timetableFragmentViewModel = new ViewModelProvider(this).get(TimetableFragmentViewModel.class);
         observeTimetable();
     }
 
     private void observeTimetable() {
-        timetableFragmentViewModel.getTimetable().observe(this, responseEvent -> {
+        timetableFragmentViewModel.getTimetable().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 

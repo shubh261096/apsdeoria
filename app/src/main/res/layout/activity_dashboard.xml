@@ -35,9 +35,7 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <include
-                android:id="@+id/includeDashboardLayout"
-                layout="@layout/include_dashboard_profile" />
+            <include layout="@layout/include_dashboard_profile" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvDashboardUI"

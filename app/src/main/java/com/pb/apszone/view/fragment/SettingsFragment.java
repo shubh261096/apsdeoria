@@ -29,7 +29,7 @@ import butterknife.Unbinder;
 
 public class SettingsFragment extends BaseFragment {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_setting)
     Toolbar toolbarSettings;
     @BindView(R.id.app_version)
@@ -40,7 +40,7 @@ public class SettingsFragment extends BaseFragment {
     LinearLayout llLogout;
     @BindView(R.id.ll_contact)
     LinearLayout llContact;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -77,7 +77,7 @@ public class SettingsFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

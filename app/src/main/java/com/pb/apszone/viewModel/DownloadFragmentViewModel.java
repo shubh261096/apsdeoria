@@ -11,7 +11,6 @@ import com.pb.apszone.service.repo.Repository;
 import com.pb.apszone.utils.KeyStorePref;
 
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
-import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
 
 public class DownloadFragmentViewModel extends AndroidViewModel {
 

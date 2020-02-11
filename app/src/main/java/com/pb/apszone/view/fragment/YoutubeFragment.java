@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.google.android.youtube.player.YouTubePlayerSupportFragmentX;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.VideoItem;
@@ -37,7 +36,7 @@ import static com.pb.apszone.utils.AppConstants.YOUTUBE_API_KEY;
 
 public class YoutubeFragment extends BaseFragment implements YouTubePlayer.OnInitializedListener, VideoAdapter.OnItemClickListener {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_youtube)
     Toolbar toolbarYoutube;
     @BindView(R.id.rvVideo)
@@ -97,7 +96,7 @@ public class YoutubeFragment extends BaseFragment implements YouTubePlayer.OnIni
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

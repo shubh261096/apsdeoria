@@ -11,7 +11,7 @@ import static android.content.Context.DOWNLOAD_SERVICE;
 import static com.pb.apszone.utils.AppConstants.KEY_DOWNLOAD_ID;
 
 public class DownloadBroadcastReceiver extends BroadcastReceiver {
-    DownloadManager downloadManager;
+    private DownloadManager downloadManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {

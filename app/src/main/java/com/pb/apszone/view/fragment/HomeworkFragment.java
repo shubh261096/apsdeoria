@@ -20,7 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,7 +59,7 @@ import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class HomeworkFragment extends BaseFragment implements HomeworkAdapter.OnDownloadItemClickListener {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_homework)
     Toolbar toolbarHomework;
     @BindView(R.id.rvHomework)
@@ -76,7 +76,7 @@ public class HomeworkFragment extends BaseFragment implements HomeworkAdapter.On
     TextView tvNoData;
     private List<HomeworkItem> homeworkItemList;
     private HomeworkFragmentViewModel homeworkFragmentViewModel;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     private HomeworkAdapter homeworkAdapter;
     private DownloadBroadcastReceiver downloadBroadcastReceiver;
     private String today_date;
@@ -117,12 +117,12 @@ public class HomeworkFragment extends BaseFragment implements HomeworkAdapter.On
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        homeworkFragmentViewModel = ViewModelProviders.of(this).get(HomeworkFragmentViewModel.class);
+        homeworkFragmentViewModel = new ViewModelProvider(this).get(HomeworkFragmentViewModel.class);
         observeHomework();
     }
 
     private void observeHomework() {
-        homeworkFragmentViewModel.getHomework().observe(this, responseEvent -> {
+        homeworkFragmentViewModel.getHomework().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -165,7 +165,7 @@ public class HomeworkFragment extends BaseFragment implements HomeworkAdapter.On
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

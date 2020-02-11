@@ -13,23 +13,23 @@ public abstract class DialogHelperFragment extends DialogFragment {
         this.show(activity.getSupportFragmentManager(), null);
     }
 
-    public void setAlertMessage(String message) {
+    void setAlertMessage(String message) {
         this.alertMessage = message;
     }
 
-    protected String getAlertMessage() {
+    String getAlertMessage() {
         return alertMessage;
     }
 
-    public void setAlertTitle(String alertTitle) {
+    void setAlertTitle(String alertTitle) {
         this.alertTitle = alertTitle;
     }
 
-    protected String getAlertTitle() {
+    String getAlertTitle() {
         return alertTitle;
     }
 
-    protected void setAlertActivity(FragmentActivity activity) {
+    void setAlertActivity(FragmentActivity activity) {
         this.activity = activity;
     }
 

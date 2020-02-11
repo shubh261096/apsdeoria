@@ -18,7 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,7 +46,7 @@ import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class DownloadFragment extends BaseFragment implements DownloadAdapter.OnDownloadItemClickListener {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_download)
     Toolbar toolbarDownload;
     @BindView(R.id.rvDownload)
@@ -93,12 +93,12 @@ public class DownloadFragment extends BaseFragment implements DownloadAdapter.On
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        downloadFragmentViewModel = ViewModelProviders.of(this).get(DownloadFragmentViewModel.class);
+        downloadFragmentViewModel = new ViewModelProvider(this).get(DownloadFragmentViewModel.class);
         observerDownloads();
     }
 
     private void observerDownloads() {
-        downloadFragmentViewModel.getDownloads().observe(this, responseEvent -> {
+        downloadFragmentViewModel.getDownloads().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 

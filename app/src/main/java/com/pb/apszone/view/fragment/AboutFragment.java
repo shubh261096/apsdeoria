@@ -30,7 +30,7 @@ import static com.pb.apszone.utils.CommonUtils.openYoutubeApp;
 
 public class AboutFragment extends BaseFragment {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_about)
     Toolbar toolbarAbout;
     @BindView(R.id.txtViewPrivacyPolicy)
@@ -87,7 +87,7 @@ public class AboutFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

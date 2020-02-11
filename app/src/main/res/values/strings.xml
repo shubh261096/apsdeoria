@@ -3,15 +3,11 @@
     <string name="hint_email">Email</string>
     <string name="hint_id">School ID</string>
     <string name="hint_password">Password</string>
-    <string name="need_help">Need Help?</string>
     <string name="login">Login</string>
-    <string name="error_email_required">Email Required</string>
     <string name="error_id_required">School ID Required</string>
-    <string name="error_valid_email">Enter Valid E-mail</string>
     <string name="error_password_required">Password Required</string>
     <string name="toolbar_dashboard">Dashboard</string>
     <string name="toolbar_profile">Profile</string>
-    <string name="toolbar_login">Login</string>
     <string name="view_profile">View Profile ></string>
     <string name="school_name">Agrawal Public School</string>
     <string name="text_welcome">Welcome</string>
@@ -30,8 +26,6 @@
     <string name="absent">Absent %d</string>
     <string name="toolbar_syllabus">Syllabus</string>
     <string name="toolbar_homework">Homework</string>
-    <string name="previous_date"><![CDATA[<]]></string>
-    <string name="next_date"><![CDATA[>]]></string>
     <string name="toolbar_fees">Fees</string>
     <string name="due_amount">Due Amount</string>
     <string name="paid_amount">Paid Amount</string>
@@ -54,9 +48,6 @@
     <string name="text_exist_homework">You have already added the homework for the date. Do you want to add for another date?</string>
     <string name="edit_attendance"><u>Edit Attendance</u></string>
     <string name="submit_attendance">Submit Attendance</string>
-    <string name="enter_title">Enter Title</string>
-    <string name="enter_remarks">Enter Remarks</string>
-    <string name="enter_description">Enter Description</string>
     <string name="submit_homework">Submit Homework</string>
     <string name="toolbar_add_homework">Add Homework</string>
     <string name="add_homework"><u>Add Homework</u></string>
@@ -88,7 +79,6 @@
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="hint_new_password">Enter new password</string>
-    <string name="hint_confirm_password">Confirm password should be same as new password</string>
     <string name="hint_title">Title</string>
     <string name="helper_title">Homework Title</string>
     <string name="hint_remarks">Remarks</string>
@@ -107,14 +97,14 @@
     <string name="msg_absent">Absent</string>
     <string name="msg_no_student_found">No students found</string>
     <string name="msg_present">Present</string>
-    <string name="msg_send_email">Send email...</string>
+    <string name="msg_send_email">Send email…</string>
     <string name="msg_invalid_url">Not a valid URL</string>
     <string name="msg_select_pdf">Select Pdf</string>
     <string name="msg_invalid_pdf">Please select a valid pdf file</string>
     <string name="msg_wait_upload_syllabus">Please wait while we upload the syllabus.</string>
     <string name="msg_school_id_required">School Id is required</string>
     <string name="msg_dob_required">DOB is required</string>
-    <string name="msg_please_wait">Please wait...</string>
+    <string name="msg_please_wait">Please wait…</string>
     <string name="msg_new_password_required">New password is required</string>
     <string name="msg_confirm_password_required">Confirm password is required</string>
     <string name="msg_password_dont_match">Password do not match</string>
@@ -122,8 +112,6 @@
     <string name="whatsapp_description">Send message directly through WhatsApp</string>
     <string name="youtube">YouTube</string>
     <string name="msg_failed_load_pdf">Failed to load the pdf. Please try again later</string>
-    <string name="view_syllabus">View Syllabus</string>
-    <string name="view_homework">View Homework</string>
     <string name="exit_application">Press back again to exit Apszone app.</string>
     <string name="title_logout">Logout?</string>
     <string name="msg_logout">Are you sure to logout from Apszone App?</string>
@@ -158,8 +146,6 @@
     <string name="submit_feedback">Submit Feedback</string>
     <string name="msg_rating_required">Please give rating to all the teachers</string>
     <string name="toolbar_youtube">YouTube</string>
-    <string name="toolbar_accounts">Accounts</string>
-    <string name="add_account">Add account</string>
     <string name="toolbar_learn">Learn</string>
     <string name="toolbar_videos">Videos</string>
     <string name="recommended_videos">Recommended Videos</string>

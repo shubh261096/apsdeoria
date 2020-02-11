@@ -17,7 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,7 +48,7 @@ import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.OnDownloadItemClickListener {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_syllabus)
     Toolbar toolbarSyllabus;
     @BindView(R.id.rvSyllabus)
@@ -57,7 +57,7 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
     ProgressBar progressBar;
     private List<SyllabusItem> syllabusItemList;
     private SyllabusFragmentViewModel syllabusFragmentViewModel;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     private SyllabusAdapter syllabusAdapter;
     private DownloadBroadcastReceiver downloadBroadcastReceiver;
     private int itemPosition;
@@ -95,8 +95,8 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        syllabusFragmentViewModel = ViewModelProviders.of(this).get(SyllabusFragmentViewModel.class);
-        syllabusFragmentViewModel.getSyllabus().observe(this, responseEvent -> {
+        syllabusFragmentViewModel = new ViewModelProvider(this).get(SyllabusFragmentViewModel.class);
+        syllabusFragmentViewModel.getSyllabus().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -138,7 +138,7 @@ public class SyllabusFragment extends BaseFragment implements SyllabusAdapter.On
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

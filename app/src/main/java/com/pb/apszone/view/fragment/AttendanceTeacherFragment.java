@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,7 +53,7 @@ import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBoxCheckedListener {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_attendance)
     Toolbar toolbarAttendance;
     @BindView(R.id.progressBar)
@@ -75,7 +75,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     private List<ClassDetailItem> classDetailItemList = new ArrayList<>();
     private List<StudentsItem> studentsItemList = new ArrayList<>();
     private AttendanceTeacherFragmentViewModel attendanceTeacherFragmentViewModel;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     private String[] class_name;
     private TeacherAttendanceAdapter teacherAttendanceAdapter;
     private int classPos = 0;
@@ -114,13 +114,13 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        attendanceTeacherFragmentViewModel = ViewModelProviders.of(this).get(AttendanceTeacherFragmentViewModel.class);
+        attendanceTeacherFragmentViewModel = new ViewModelProvider(this).get(AttendanceTeacherFragmentViewModel.class);
         observeAttendance();
         observeSubmitAttendance();
     }
 
     private void observeAttendance() {
-        attendanceTeacherFragmentViewModel.getClassDetail().observe(this, responseEvent -> {
+        attendanceTeacherFragmentViewModel.getClassDetail().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -176,7 +176,7 @@ public class AttendanceTeacherFragment extends BaseFragment implements OnCheckBo
     }
 
     private void observeSubmitAttendance() {
-        attendanceTeacherFragmentViewModel.getSubmitResponse().observe(this, responseEvent -> {
+        attendanceTeacherFragmentViewModel.getSubmitResponse().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 

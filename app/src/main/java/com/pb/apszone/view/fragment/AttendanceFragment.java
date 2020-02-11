@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +41,7 @@ import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class AttendanceFragment extends BaseFragment {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.rvAttendanceUI)
     RecyclerView rvAttendanceUI;
     private AttendanceAdapter attendanceAdapter;
@@ -54,7 +54,7 @@ public class AttendanceFragment extends BaseFragment {
     @BindView(R.id.rlMonth)
     LinearLayout rlMonth;
     private AttendanceFragmentViewModel attendanceFragmentViewModel;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     @BindView(R.id.toolbar_profile)
     Toolbar toolbarProfile;
     private List<AttendanceItem> attendanceItemList = new ArrayList<>();
@@ -105,12 +105,12 @@ public class AttendanceFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        attendanceFragmentViewModel = ViewModelProviders.of(this).get(AttendanceFragmentViewModel.class);
+        attendanceFragmentViewModel = new ViewModelProvider(this).get(AttendanceFragmentViewModel.class);
         observeAttendance();
     }
 
     private void observeAttendance() {
-        attendanceFragmentViewModel.getAttendance().observe(this, responseEvent -> {
+        attendanceFragmentViewModel.getAttendance().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -176,7 +176,7 @@ public class AttendanceFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

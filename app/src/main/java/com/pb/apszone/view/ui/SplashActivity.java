@@ -16,7 +16,7 @@ import static com.pb.apszone.utils.AppConstants.KEY_USER_LOGIN_STATUS;
 
 public class SplashActivity extends AppCompatActivity {
 
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

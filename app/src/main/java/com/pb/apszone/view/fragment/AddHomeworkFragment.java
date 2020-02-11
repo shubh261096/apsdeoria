@@ -3,11 +3,6 @@ package com.pb.apszone.view.fragment;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,6 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.pb.apszone.R;
@@ -50,13 +49,13 @@ import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
 public class AddHomeworkFragment extends BaseFragment {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_add_homework)
     Toolbar toolbarAddHomework;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     private HomeworkTeacherFragmentViewModel homeworkTeacherFragmentViewModel;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     @BindView(R.id.date_filter)
     TextView dateFilter;
     @BindView(R.id.title)
@@ -137,14 +136,14 @@ public class AddHomeworkFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        homeworkTeacherFragmentViewModel = ViewModelProviders.of(this).get(HomeworkTeacherFragmentViewModel.class);
+        homeworkTeacherFragmentViewModel = new ViewModelProvider(this).get(HomeworkTeacherFragmentViewModel.class);
         createRequestModel();
         subscribe(this.homeworkRequestModel);
         observeResponse();
     }
 
     private void observeResponse() {
-        homeworkTeacherFragmentViewModel.getSubmitResponse().observe(this, responseEvent -> {
+        homeworkTeacherFragmentViewModel.getSubmitResponse().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
 
@@ -181,7 +180,7 @@ public class AddHomeworkFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

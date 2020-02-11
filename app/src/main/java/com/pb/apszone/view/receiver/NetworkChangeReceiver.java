@@ -10,10 +10,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.pb.apszone.utils.CommonUtils;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
-    boolean status;
+    private boolean status;
     private final static MutableLiveData<Boolean> networkChange = new MutableLiveData<>();
 
-    public void setStatus(Boolean status) {
+    private void setStatus(Boolean status) {
         networkChange.postValue(status);
     }
 

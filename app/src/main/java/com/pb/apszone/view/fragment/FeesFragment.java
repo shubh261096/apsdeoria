@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,7 +42,7 @@ import static com.pb.apszone.utils.CommonUtils.showLateFeeAlertDialog;
 
 public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetailItemClick {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_fees)
     Toolbar toolbarFees;
     @BindView(R.id.rvFees)
@@ -67,7 +67,7 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
     LinearLayout llDisplayFee;
     private List<FeesItem> feesItemList;
     private FeesFragmentViewModel feesFragmentViewModel;
-    KeyStorePref keyStorePref;
+    private KeyStorePref keyStorePref;
     private FeesAdapter feesAdapter;
 
     public FeesFragment() {
@@ -111,12 +111,12 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        feesFragmentViewModel = ViewModelProviders.of(this).get(FeesFragmentViewModel.class);
+        feesFragmentViewModel = new ViewModelProvider(this).get(FeesFragmentViewModel.class);
         observeFee();
     }
 
     private void observeFee() {
-        feesFragmentViewModel.getFees().observe(this, responseEvent -> {
+        feesFragmentViewModel.getFees().observe(getViewLifecycleOwner(), responseEvent -> {
             if (responseEvent != null) {
                 progressBar.setVisibility(View.GONE);
                 if (feesAdapter != null) {

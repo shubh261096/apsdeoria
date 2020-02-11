@@ -2,11 +2,6 @@ package com.pb.apszone.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,6 +11,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -39,7 +38,7 @@ import static com.pb.apszone.utils.CommonUtils.showProgress;
 
 public class ResetPasswordFragment extends BaseFragment {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_reset_password)
     Toolbar toolbarResetPassword;
     @BindView(R.id.til_school_id)
@@ -101,13 +100,13 @@ public class ResetPasswordFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        resetPasswordFragmentViewModel = ViewModelProviders.of(this).get(ResetPasswordFragmentViewModel.class);
+        resetPasswordFragmentViewModel = new ViewModelProvider(this).get(ResetPasswordFragmentViewModel.class);
         observeValidateResetPassword();
         observeResetPassword();
     }
 
     private void observeValidateResetPassword() {
-        resetPasswordFragmentViewModel.validateResetPasswordResponse().observe(this, responseEvent -> {
+        resetPasswordFragmentViewModel.validateResetPasswordResponse().observe(getViewLifecycleOwner(), responseEvent -> {
             hideProgress();
             if (responseEvent != null) {
 
@@ -127,7 +126,7 @@ public class ResetPasswordFragment extends BaseFragment {
     }
 
     private void observeResetPassword() {
-        resetPasswordFragmentViewModel.resetPassword().observe(this, responseEvent -> {
+        resetPasswordFragmentViewModel.resetPassword().observe(getViewLifecycleOwner(), responseEvent -> {
             hideProgress();
             if (responseEvent != null) {
                 if (responseEvent.isSuccess()) {
@@ -146,7 +145,7 @@ public class ResetPasswordFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

@@ -29,7 +29,7 @@ import static com.pb.apszone.utils.CommonUtils.openWebIntent;
 
 public class ContactFragment extends BaseFragment {
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
     @BindView(R.id.toolbar_contact)
     Toolbar toolbarContact;
     @BindView(R.id.ll_email)
@@ -74,7 +74,7 @@ public class ContactFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

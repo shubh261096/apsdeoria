@@ -14,7 +14,7 @@ import com.pb.apszone.view.receiver.NetworkChangeReceiver;
 
 import java.util.Objects;
 
-public abstract class BaseFragment extends Fragment {
+abstract class BaseFragment extends Fragment {
 
     private ConstraintLayout includeNetworkLayout;
 
@@ -37,7 +37,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void observeInternetChange() {
-        NetworkChangeReceiver.getStatus().observe(this, status -> {
+        NetworkChangeReceiver.getStatus().observe(getViewLifecycleOwner(), status -> {
             if (status != null) {
                 if (includeNetworkLayout == null)
                     return;
@@ -51,7 +51,7 @@ public abstract class BaseFragment extends Fragment {
         });
     }
 
-    public abstract void getNetworkData(boolean status);
+    protected abstract void getNetworkData(boolean status);
 
 
     @Override
