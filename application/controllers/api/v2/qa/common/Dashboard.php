@@ -24,7 +24,7 @@ class Dashboard extends REST_Controller
       $response['dashboard'] = $data;
     } else {
       $response['error'] = true;
-      $response['message'] = "No data found";
+      $response['message'] = "No UI Elements found";
     }
     $this->response($response, REST_Controller::HTTP_OK);
   }

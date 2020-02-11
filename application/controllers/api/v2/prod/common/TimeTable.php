@@ -72,7 +72,7 @@ class TimeTable extends REST_Controller
             $response['timetable'] = $data;
         } else {
             $response['error'] = true;
-            $response['message'] = "No data found";
+            $response['message'] = "Timetable is not available.";
         }
         return $response;
     }

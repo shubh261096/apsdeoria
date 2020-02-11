@@ -28,7 +28,7 @@ class Download extends REST_Controller
         $response['download'] = $data;
       } else {
         $response['error'] = true;
-        $response['message'] = "No data found";
+        $response['message'] = "There is nothing to download now.";
       }
       $httpStatus = REST_Controller::HTTP_OK;
     } else {

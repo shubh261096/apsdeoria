@@ -43,7 +43,7 @@ class Syllabus extends REST_Controller
       $response['syllabus'] = $data;
     } else {
       $response['error'] = true;
-      $response['message'] = "No data found";
+      $response['message'] = "Syllabus not found.";
     }
     return $response;
   }

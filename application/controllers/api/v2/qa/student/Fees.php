@@ -48,7 +48,7 @@ class Fees extends REST_Controller
       $response['fees'] = $data;
     } else {
       $response['error'] = true;
-      $response['message'] = "No data found";
+      $response['message'] = "Fees not found";
     }
     return $response;
   }

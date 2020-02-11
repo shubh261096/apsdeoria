@@ -65,7 +65,7 @@ class Attendance extends REST_Controller
       $response['class_detail'] = $data;
     } else {
       $response['error'] = true;
-      $response['message'] = "No data found";
+      $response['message'] = "Data not available.";
     }
     return $response;
   }

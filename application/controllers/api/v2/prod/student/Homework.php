@@ -56,7 +56,7 @@ class Homework extends REST_Controller
       $response['homework'] = $data;
     } else {
       $response['error'] = true;
-      $response['message'] = "No data found";
+      $response['message'] = "No homework for the day. Enjoy!";
     }
     return $response;
   }

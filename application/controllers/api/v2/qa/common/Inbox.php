@@ -26,7 +26,7 @@ class Inbox extends REST_Controller
       $response['inbox'] = $data;
     } else {
       $response['error'] = true;
-      $response['message'] = "No data found";
+      $response['message'] = "Inbox is empty.";
     }
     $this->response($response, REST_Controller::HTTP_OK);
   }
