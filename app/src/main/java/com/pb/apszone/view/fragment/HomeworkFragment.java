@@ -138,6 +138,7 @@ public class HomeworkFragment extends BaseFragment implements HomeworkAdapter.On
                         homeworkAdapter.notifyDataSetChanged();
                     } else {
                         tvNoData.setVisibility(View.VISIBLE);
+                        tvNoData.setText(homeworkResponseModel.getMessage());
                     }
                 } else {
                     showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
