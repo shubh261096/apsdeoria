@@ -113,6 +113,7 @@ public class DownloadFragment extends BaseFragment implements DownloadAdapter.On
                         downloadAdapter.notifyDataSetChanged();
                     } else {
                         tvNoData.setVisibility(View.VISIBLE);
+                        tvNoData.setText(downloadResponseModel.getMessage());
                     }
                 } else {
                     showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());

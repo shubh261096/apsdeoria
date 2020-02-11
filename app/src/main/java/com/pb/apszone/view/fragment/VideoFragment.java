@@ -3,6 +3,10 @@ package com.pb.apszone.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -10,12 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.VideoItem;
@@ -43,10 +41,7 @@ public class VideoFragment extends BaseFragment implements VideoAdapter.OnItemCl
     RecyclerView rvVideo;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    @BindView(R.id.no_data)
-    TextView tvNoData;
     private List<VideoItem> videoItemList = new ArrayList<>();
-    private VideoAdapter videoAdapter;
 
     public VideoFragment() {
         // Required empty public constructor
@@ -74,7 +69,7 @@ public class VideoFragment extends BaseFragment implements VideoAdapter.OnItemCl
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvVideo.setLayoutManager(layoutManager);
-        videoAdapter = new VideoAdapter(videoItemList, this);
+        VideoAdapter videoAdapter = new VideoAdapter(videoItemList, this);
         rvVideo.setAdapter(videoAdapter);
         toolbarVideo.setNavigationOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
         return view;

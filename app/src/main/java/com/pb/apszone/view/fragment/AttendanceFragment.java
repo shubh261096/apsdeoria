@@ -135,6 +135,7 @@ public class AttendanceFragment extends BaseFragment {
                     } else {
                         updateUI(0);
                         tvNoData.setVisibility(View.VISIBLE);
+                        tvNoData.setText(attendanceResponseModel.getMessage());
                     }
                 } else {
                     showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());

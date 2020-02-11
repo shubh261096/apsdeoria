@@ -124,6 +124,7 @@ public class TimetableFragment extends BaseFragment implements AdapterView.OnIte
                         timetableAdapter.notifyDataSetChanged();
                     } else {
                         tvNoData.setVisibility(View.VISIBLE);
+                        tvNoData.setText(timetableResponseModel.getMessage());
                     }
                 } else {
                     showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());

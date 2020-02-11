@@ -138,6 +138,7 @@ public class FeesFragment extends BaseFragment implements FeesAdapter.OnFeeDetai
                     } else {
                         llDisplayFee.setVisibility(View.GONE);
                         tvNoData.setVisibility(View.VISIBLE);
+                        tvNoData.setText(feesResponseModel.getMessage());
                     }
                 } else {
                     showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());

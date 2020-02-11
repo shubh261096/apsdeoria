@@ -106,6 +106,7 @@ public class InboxFragment extends BaseFragment {
                         inboxAdapter.notifyDataSetChanged();
                     } else {
                         tvNoData.setVisibility(View.VISIBLE);
+                        tvNoData.setText(inboxResponseModel.getMessage());
                     }
                 } else {
                     showInformativeDialog(getContext(), responseEvent.getErrorModel().getMessage());
