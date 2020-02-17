@@ -182,6 +182,7 @@ if (!empty($_POST["contact_us"])) {
                     <li><a href="events.html">Events</a></li>
                     <li><a href="about.html">About Us</a></li>
                     <li class="active"><a>Contact Us</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
                   </ul>
                 </div>
 
@@ -247,7 +248,7 @@ if (!empty($_POST["contact_us"])) {
         <div class="row">
           <div class="col-md-12">
             <h2 class="probootstrap-animate" data-animate-effect="fadeInRight">Get your admission now!</h2>
-            <a href="https://goo.gl/forms/Eaou7efbHqdzKUcE3" target="_blank" role="button" class="btn btn-primary btn-lg btn-ghost probootstrap-animate" data-animate-effect="fadeInLeft">Enroll</a>
+            <a href="https://forms.gle/aiLxn8fkkwCsLAJh6" target="_blank" role="button" class="btn btn-primary btn-lg btn-ghost probootstrap-animate" data-animate-effect="fadeInLeft">Enroll</a>
           </div>
         </div>
       </div>
