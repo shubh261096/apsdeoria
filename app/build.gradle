@@ -3,13 +3,13 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.aps.apszone"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 7
-        versionName "2.0.0"
+        targetSdkVersion 29
+        versionCode 8
+        versionName "2.0.1"
         flavorDimensions "environment"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         proguardFiles 'proguard-rules.pro'
@@ -38,11 +38,11 @@ android {
     }
     productFlavors {
         prod {
-            buildConfigField 'String', 'BASE_URL', '"http://apsdeoria.000webhostapp.com/apszone/api/v2/prod/"'
+            buildConfigField 'String', 'BASE_URL', '"http://www.apsdeoria.com/apszone/api/v2/prod/"'
             dimension "environment"
         }
         qa {
-            buildConfigField 'String', 'BASE_URL', '"http://apsdeoria.000webhostapp.com/apszone/api/v2/qa/"'
+            buildConfigField 'String', 'BASE_URL', '"http://www.apsdeoria.com/apszone/api/v2/qa/"'
             versionNameSuffix "-qa"
             dimension "environment"
         }
