@@ -13,7 +13,7 @@ class Learn extends CI_Controller
       return redirect('admin');
 
     $this->load->model('admin/LearnModel', 'LearnModel');
-    $this->load->helper('common');
+    $this->load->helper('commonprod');
   }
 
   public function index()

@@ -13,7 +13,7 @@ class Notification extends CI_Controller
         if (!$this->session->userdata('user_id'))
             return redirect('admin');
 
-        $this->load->model('NotificationModel');
+        $this->load->model('admin/NotificationModel');
     }
 
     public function index()

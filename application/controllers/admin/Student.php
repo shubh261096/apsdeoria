@@ -13,7 +13,7 @@ class Student extends CI_Controller
       return redirect('admin');
 
     $this->load->model('admin/StudentModel', 'StudentModel');
-    $this->load->helper('common');
+    $this->load->helper('commonprod');
   }
 
   public function index()

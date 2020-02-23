@@ -12,7 +12,7 @@ class Homework extends CI_Controller
       return redirect('admin');
 
     $this->load->model('admin/HomeworkModel', 'HomeworkModel');
-    $this->load->helper('common');
+    $this->load->helper('commonprod');
   }
 
   public function index()
