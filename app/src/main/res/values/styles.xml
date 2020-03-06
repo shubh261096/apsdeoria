@@ -1,8 +1,8 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base"></style>
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base" />
 
-    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MyMaterialTheme.Base" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -10,11 +10,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/lightPrimary_40</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
-    </style>
-
-    <style name="Widget.MaterialComponents.TextInputEditText.OutlinedBox" parent="Base.Widget.MaterialComponents.TextInputEditText" tools:override="true">
-        <item name="android:paddingTop">@dimen/dp_10</item>
-        <item name="android:paddingBottom">@dimen/dp_10</item>
     </style>
 
 </resources>
