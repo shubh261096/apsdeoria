@@ -75,7 +75,7 @@
       var val = $(this).val();
       if (val == "Debit") {
         $("#category_group").show();
-        $("#category").html("<option value='Food'>Food & Beverages</option><option value='Salary'>Salary</option><option value='Function'>School Function</option><option value='Entertainment'>Entertainment</option><option value='Gifts'>Gifts</option><option value='Stationery'>Stationery</option><option value='Transport'>Transport</option><option value='Health'>Health & Fitness</option><option value='Others'>Others</option>");
+        $("#category").html("<option value='Food'>Food & Beverages</option><option value='Teacher Salary'>Teacher Salary</option><option value='Eletricity Bill'>Electricity Bill</option><option value='Function'>School Function</option><option value='Entertainment'>Entertainment</option><option value='Gifts'>Gifts</option><option value='Stationery'>Stationery</option><option value='Driver Salary'>Driver Salary</option><option value='Transport'>Transport</option><option value='Health'>Health & Fitness</option><option value='Others'>Others</option>");
       } else if (val == "Credit") {
         $("#category_group").show();
         $("#category").html("<option value='Fees'>Fees</option><option value='Conveyance'>Conveyance</option><option value='Uniform'>School Uniform</option><option value='Others'>Others</option>");
