@@ -348,92 +348,92 @@
               <figcaption itemprop="caption description">Event Day 1 - Summer Camp Workshop</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/1.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/1.jpeg" itemprop="contentUrl" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/<?php echo base_url(); ?>aps/bootstrap/img/gallery/1.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/<?php echo base_url(); ?>aps/bootstrap/img/gal/1.jpeg" itemprop="contentUrl" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description">Play Group Class with playing objects</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/3.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/3.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/3.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/3.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description">Play Group class with Basket Ball</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/4.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/4.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/4.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/4.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description">Play Group Class</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/5.jpg" itemprop="contentUrl" data-size="1000x667">
-                <img src="img/gal/5.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/5.jpg" itemprop="contentUrl" data-size="1000x667">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/5.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description">Play Group Class</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/6.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/6.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/6.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/6.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description">Play Group Class</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/7.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/7.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/7.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/7.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description">Principal Room</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/8.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/8.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/8.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/8.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description">Full captured view of Play Group Room</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/9.jpg" itemprop="contentUrl" data-size="1000x667">
-                <img src="img/gal/9.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/9.jpg" itemprop="contentUrl" data-size="1000x667">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/9.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description">Full Outside captured view of School</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/10.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/10.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/10.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/10.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description">Full Outside captured view of School</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/11.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/11.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/11.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/11.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description">Full Outside captured view of School</figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/12.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/12.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/12.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/12.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description"></figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/13.jpg" itemprop="contentUrl" data-size="1000x667">
-                <img src="img/gal/13.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/13.jpg" itemprop="contentUrl" data-size="1000x667">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/13.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description"></figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/14.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/14.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/14.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/14.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description"></figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/15.jpg" itemprop="contentUrl" data-size="1000x632">
-                <img src="img/gal/15.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/15.jpg" itemprop="contentUrl" data-size="1000x632">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/15.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description"></figcaption>
             </figure>
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item probootstrap-animate">
-              <a href="img/gallery/17.jpg" itemprop="contentUrl" data-size="1000x667">
-                <img src="img/gal/17.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
+              <a href="<?php echo base_url(); ?>aps/bootstrap/img/gallery/17.jpg" itemprop="contentUrl" data-size="1000x667">
+                <img src="<?php echo base_url(); ?>aps/bootstrap/img/gal/17.jpeg" itemprop="thumbnail" alt="Loading  Please Wait..." />
               </a>
               <figcaption itemprop="caption description"></figcaption>
             </figure>
