@@ -83,7 +83,7 @@
           </p>
 
           <h2 class="logo">8. Consent </h2>
-          <p class="privacy"> By using our website, you hereby consent to our <a href="privacy-policy.html"><u>Privacy Policy</u></a> and agree to its Terms and Conditions.
+          <p class="privacy"> By using our website, you hereby consent to our <a href="<?php echo base_url() . 'privacy'; ?>"><u>Privacy Policy</u></a> and agree to its Terms and Conditions.
           </p>
         </div>
       </div>
