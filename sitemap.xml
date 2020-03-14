@@ -6,38 +6,33 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
-  <loc>http://www.apsdeoria.com/</loc>
-  <lastmod>2020-02-19T07:32:32+00:00</lastmod>
+  <loc>https://www.apsdeoria.com/</loc>
+  <lastmod>2020-03-14T07:32:32+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://www.apsdeoria.com/index.html</loc>
-  <lastmod>2020-02-19T07:32:32+00:00</lastmod>
+  <loc>https://www.apsdeoria.com/about</loc>
+  <lastmod>2020-03-14T07:32:32+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.apsdeoria.com/about.html</loc>
-  <lastmod>2020-02-19T07:32:32+00:00</lastmod>
+  <loc>https://www.apsdeoria.com/events</loc>
+  <lastmod>2020-03-14T07:32:32+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.apsdeoria.com/events.html</loc>
-  <lastmod>2020-02-19T07:32:32+00:00</lastmod>
+  <loc>https://www.apsdeoria.com/contact</loc>
+  <lastmod>2020-03-14T07:32:32+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.apsdeoria.com/contact.php</loc>
-  <lastmod>2020-02-19T07:32:32+00:00</lastmod>
+  <loc>https://www.apsdeoria.com/gallery</loc>
+  <lastmod>2019-03-14T13:44:31+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.apsdeoria.com/gallery.html</loc>
-  <lastmod>2019-03-10T13:44:31+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.apsdeoria.com/privacy-policy.html</loc>
-  <lastmod>2020-02-19T07:32:32+00:00</lastmod>
+  <loc>https://www.apsdeoria.com/privacy</loc>
+  <lastmod>2020-03-14T07:32:32+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 
