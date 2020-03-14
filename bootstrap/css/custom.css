@@ -1,0 +1,35 @@
+.w3-panel{
+	background-color: #FFF;
+}
+ 
+ h1{
+	font-family: "Raleway", Arial, sans-serif;
+	font-size: 30px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+	text-align: center;
+	color: #6a41ed;
+	margin-top: 20px;
+ }
+
+h2.logo {
+	font-family: "Raleway", Arial, sans-serif;
+  	font-weight: normal;
+   	font-size: 20px ;
+  	color: #123;
+}
+
+u{
+	color: #0000FF;
+}
+
+p.privacy{
+	font-size:14px;
+	font-family: "Open Sans", Arial, sans-serif;
+	color: #123;
+}
+
+
+
