@@ -170,6 +170,24 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0_5"
+                android:background="@color/light_gray" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingBottom="@dimen/dp_8"
+                android:text="@string/logins"
+                android:textColor="@color/lightPrimary"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:id="@+id/ll_logout"
                 android:layout_width="match_parent"
@@ -203,6 +221,7 @@
                     android:paddingBottom="@dimen/dp_8">
 
                     <TextView
+                        android:id="@+id/txtViewLogOut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_regular"
@@ -212,6 +231,51 @@
 
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_logout_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingBottom="@dimen/dp_8"
+                android:visibility="gone"
+                tools:ignore="UnusedAttribute">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circular_image_view"
+                    android:src="@drawable/ic_logout"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/dp_8"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:paddingBottom="@dimen/dp_8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/logout_from_all_accounts"
+                        android:textColor="@color/black_90"
+                        android:textSize="@dimen/text_16" />
+
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
     </FrameLayout>
 

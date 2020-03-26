@@ -10,25 +10,19 @@ import androidx.lifecycle.MutableLiveData;
 import com.pb.apszone.utils.CommonUtils;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
-    private boolean status;
-    private final static MutableLiveData<Boolean> networkChange = new MutableLiveData<>();
-
-    private void setStatus(Boolean status) {
-        networkChange.postValue(status);
-    }
-
-    public static LiveData<Boolean> getStatus() {
-        return networkChange;
-    }
+    private static MutableLiveData<Boolean> networkChange = null;
 
     public NetworkChangeReceiver() {
-
+        networkChange = new MutableLiveData<>();
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        status = CommonUtils.getConnectivityStatus(context);
-        setStatus(status);
+        networkChange.setValue(CommonUtils.getConnectivityStatus(context));
+    }
+
+    public static LiveData<Boolean> getStatus() {
+        return networkChange;
     }
 
 }

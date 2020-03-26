@@ -163,7 +163,7 @@ public class CommonUtils {
     public static Integer getNumOfDaysInMonth(String year, String month) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, getMonthNumber(month));
-        calendar.set(Calendar.YEAR, Integer.valueOf(year));
+        calendar.set(Calendar.YEAR, Integer.parseInt(year));
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
@@ -203,7 +203,7 @@ public class CommonUtils {
     public static Integer getFirstDayOfMonth(String year, String month) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.YEAR, Integer.valueOf(year));
+        calendar.set(Calendar.YEAR, Integer.parseInt(year));
         calendar.set(Calendar.MONTH, getMonthNumber(month));
         return calendar.get(Calendar.DAY_OF_WEEK);
     }
@@ -239,7 +239,7 @@ public class CommonUtils {
                 .setTitle(getFileNameFromURL(url))// Title of the Download Notification
                 .setDescription(context.getString(R.string.msg_downloading)) // Description of the Download Notification
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) // Visibility of the download Notification
-                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/apszone/" + getFileNameFromURL(url) )
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/apszone/" + getFileNameFromURL(url))
                 .setAllowedOverMetered(true) // Set if download is allowed on Mobile network
                 .setAllowedOverRoaming(true); // Set if download is allowed on roaming network
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
@@ -361,11 +361,12 @@ public class CommonUtils {
 
     public static Boolean getConnectivityStatus(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = null;
+        NetworkInfo activeNetwork;
         if (cm != null) {
             activeNetwork = cm.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.getState() == NetworkInfo.State.CONNECTED;
         }
-        return activeNetwork != null;
+        return false;
     }
 
     public static boolean isReadStoragePermissionGranted(Context context) {

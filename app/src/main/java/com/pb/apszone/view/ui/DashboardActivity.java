@@ -4,7 +4,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
-
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,12 +26,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.pb.apszone.R;
+import com.pb.apszone.database.AccountsModel;
 import com.pb.apszone.service.model.DashboardItem;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
 import com.pb.apszone.utils.AutoFitGridLayoutManager;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.DashboardAdapter;
+import com.pb.apszone.view.fragment.AccountsFragment;
 import com.pb.apszone.view.fragment.AttendanceFragment;
 import com.pb.apszone.view.fragment.AttendanceTeacherFragment;
 import com.pb.apszone.view.fragment.DownloadFragment;
@@ -49,6 +50,7 @@ import com.pb.apszone.view.fragment.SyllabusTeacherFragment;
 import com.pb.apszone.view.fragment.TimetableFragment;
 import com.pb.apszone.view.listener.OnDashboardItemClickListener;
 import com.pb.apszone.view.receiver.NetworkChangeReceiver;
+import com.pb.apszone.viewModel.AccountsViewModel;
 import com.pb.apszone.viewModel.DashboardViewModel;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
 
@@ -101,6 +103,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     private OnDashboardItemClickListener onDashboardItemClickListener;
     private String user_type, user_id;
     private boolean doubleBackToExitPressedOnce;
+    private AccountsViewModel accountsViewModel;
 
 
     @Override
@@ -117,6 +120,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
         /* ViewModel initialization */
         dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         profileFragmentViewModel = new ViewModelProvider(this).get(ProfileFragmentViewModel.class);
+        accountsViewModel = new ViewModelProvider(this).get(AccountsViewModel.class);
         /* Observe LiveData*/
         observeDashboardUIElements();
         observeProfile();
@@ -140,6 +144,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
                         userDp.setImageResource(drawable);
                     }
                     userName.setText(profileResponseModel.getProfile().getFullname());
+                    accountsViewModel.addAccount(new AccountsModel(user_id, profileResponseModel.getProfile().getFullname(), profileResponseModel.getProfile().getGender()));
                 } else {
                     showInformativeDialog(this, responseEvent.getErrorModel().getMessage());
                 }
@@ -316,6 +321,9 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
             Fragment fragment = SettingsFragment.newInstance();
             replaceFragment(fragment);
             return true;
+        } else if (item.getItemId() == R.id.accounts) {
+            Fragment fragment = AccountsFragment.newInstance();
+            replaceFragment(fragment);
         }
         return super.onOptionsItemSelected(item);
     }

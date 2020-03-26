@@ -58,7 +58,7 @@
     <string name="contact_us_description">Send us your query here</string>
     <string name="others">Others</string>
     <string name="general">General</string>
-    <string name="logout">Logout</string>
+    <string name="logout">Log out</string>
     <string name="about_us">About</string>
     <string name="toolbar_contact">Contact</string>
     <string name="phone">Phone</string>
@@ -114,7 +114,8 @@
     <string name="msg_failed_load_pdf">Failed to load the pdf. Please try again later</string>
     <string name="exit_application">Press back again to exit Apszone app.</string>
     <string name="title_logout">Logout?</string>
-    <string name="msg_logout">Are you sure to logout from Apszone App?</string>
+    <string name="msg_logout">Are you sure to logout?</string>
+    <string name="msg_logout_all">Are you sure to logout from all accounts?</string>
     <string name="msg_dialog_positive">LOG OUT</string>
     <string name="msg_dialog_negative">NOT NOW</string>
     <string name="label_location">Location</string>
@@ -150,6 +151,12 @@
     <string name="toolbar_videos">Videos</string>
     <string name="recommended_videos">Recommended Videos</string>
     <string name="whatsapp_not_installed">WhatsApp is not installed in your device.</string>
+    <string name="toolbar_accounts">Accounts</string>
+    <string name="add_account">Add Account</string>
+    <string name="label_switch_account">Switch Account</string>
+    <string name="add">Add</string>
+    <string name="logins">Logins</string>
+    <string name="logout_from_all_accounts">Log out of all accounts</string>
 
     <string-array name="day">
         <item>Monday</item>
