@@ -52,4 +52,18 @@ class AdminCommonModel extends CI_model
 		}
 		return $student;
 	}
+
+	/* Query for getting teacher details by teacher_id */
+    public function getTeacherDetails($teacher_id)
+    {
+        $query = $this->db->select('id, fullname')
+            ->where(['id' => $teacher_id])
+            ->from('teacher')
+            ->get();
+        if ($query->num_rows()) {
+            return $query->row();
+        } else {
+            return FALSE;
+        }
+    }
 }

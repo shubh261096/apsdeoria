@@ -12,6 +12,7 @@ class Homework extends CI_Controller
       return redirect('admin');
 
     $this->load->model('admin/HomeworkModel', 'HomeworkModel');
+    $this->load->model('admin/AdminCommonModel', 'AdminCommonModel');
     $this->load->helper('commonprod');
   }
 
@@ -25,7 +26,7 @@ class Homework extends CI_Controller
           $query[$key]->class_id = getClassDetails($field->class_id); // getting class details and adding it into query array
         }
         if ($field->teacher_id) {
-          $query[$key]->teacher_id = getTeacherDetails($field->teacher_id); // getting teacher details and adding it into query array
+          $query[$key]->teacher_id = $this->AdminCommonModel->getTeacherDetails($field->teacher_id); // getting teacher details and adding it into query array
         }
         if ($field->subject_id) {
           $query[$key]->subject_id = getSubjectDetails($field->subject_id); // getting subject details and adding it into query array
