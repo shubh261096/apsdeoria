@@ -60,8 +60,8 @@ public class AppConstants {
     public final static int PDF_REQ_CODE = 901;
 
     /* CONSTANT APP URL AND INFO */
-    public final static String PRIVACY_POLICY_URL = "http://www.apsdeoria.com/privacy-policy.html";
-    public final static String WEBSITE_URL = "http://www.apsdeoria.com/";
+    public final static String PRIVACY_POLICY_URL = "https://www.apsdeoria.com/privacy";
+    public final static String WEBSITE_URL = "https://www.apsdeoria.com/";
 
     /* ERROR CONSTANTS USED IN REPOSITORY */
     public interface ErrorConstants {

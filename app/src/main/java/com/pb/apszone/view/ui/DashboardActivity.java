@@ -144,7 +144,8 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
                         userDp.setImageResource(drawable);
                     }
                     userName.setText(profileResponseModel.getProfile().getFullname());
-                    accountsViewModel.addAccount(new AccountsModel(user_id, profileResponseModel.getProfile().getFullname(), profileResponseModel.getProfile().getGender()));
+                    if (TextUtils.equals(user_type, USER_TYPE_STUDENT))
+                        accountsViewModel.addAccount(new AccountsModel(user_id, profileResponseModel.getProfile().getFullname(), profileResponseModel.getProfile().getGender()));
                 } else {
                     showInformativeDialog(this, responseEvent.getErrorModel().getMessage());
                 }
@@ -312,6 +313,9 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
+        MenuItem item = menu.findItem(R.id.accounts);
+        if (TextUtils.equals(user_type, USER_TYPE_TEACHER))
+            item.setVisible(false);
         return true;
     }
 

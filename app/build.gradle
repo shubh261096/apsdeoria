@@ -8,8 +8,8 @@ android {
         applicationId "com.aps.apszone"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 9
-        versionName "2.0.2"
+        versionCode 10
+        versionName "2.0.3"
         flavorDimensions "environment"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         proguardFiles 'proguard-rules.pro'

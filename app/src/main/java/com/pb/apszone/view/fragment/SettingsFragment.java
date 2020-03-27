@@ -33,6 +33,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
+import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
+import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 
 public class SettingsFragment extends BaseFragment {
 
@@ -83,9 +86,11 @@ public class SettingsFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         appVersion.setText(BuildConfig.VERSION_NAME);
-        accountsViewModel = new ViewModelProvider(this).get(AccountsViewModel.class);
-        observeAccounts();
-        observeUserName();
+        if (TextUtils.equals(keyStorePref.getString(KEY_USER_TYPE), USER_TYPE_STUDENT)) {
+            accountsViewModel = new ViewModelProvider(this).get(AccountsViewModel.class);
+            observeAccounts();
+            observeUserName();
+        }
     }
 
     private void observeUserName() {
@@ -136,18 +141,23 @@ public class SettingsFragment extends BaseFragment {
                         getString(R.string.title_logout), getString(R.string.msg_logout), getString(R.string.msg_dialog_positive), getString(R.string.msg_dialog_negative), new DialogHelper.SimpleAlertListener() {
                             @Override
                             public void onPositive() {
-                                if (accountSize == 1) {
-                                    accountsViewModel.deleteAccount(keyStorePref.getString(KEY_USER_ID));
+                                if (TextUtils.equals(keyStorePref.getString(KEY_USER_TYPE), USER_TYPE_TEACHER)) {
                                     keyStorePref.clearAllPref();
                                     startActivity(new Intent(getActivity(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                 } else {
-                                    accountsViewModel.deleteAccount(keyStorePref.getString(KEY_USER_ID));
-                                    accountsViewModel.getUserId().observe(getViewLifecycleOwner(), userId -> {
-                                        if (!TextUtils.isEmpty(userId))
-                                            keyStorePref.putString(KEY_USER_ID, userId);
-                                    });
-                                    DashboardViewModel.unsubscribeFromAllTopic();
-                                    startActivity(new Intent(getActivity(), SplashActivity.class));
+                                    if (accountSize == 1) {
+                                        accountsViewModel.deleteAccount(keyStorePref.getString(KEY_USER_ID));
+                                        keyStorePref.clearAllPref();
+                                        startActivity(new Intent(getActivity(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                    } else {
+                                        accountsViewModel.deleteAccount(keyStorePref.getString(KEY_USER_ID));
+                                        accountsViewModel.getUserId().observe(getViewLifecycleOwner(), userId -> {
+                                            if (!TextUtils.isEmpty(userId))
+                                                keyStorePref.putString(KEY_USER_ID, userId);
+                                        });
+                                        DashboardViewModel.unsubscribeFromAllTopic();
+                                        startActivity(new Intent(getActivity(), SplashActivity.class));
+                                    }
                                 }
                             }
 
