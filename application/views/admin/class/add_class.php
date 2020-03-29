@@ -31,11 +31,6 @@
               <?php echo form_input(['id' => 'section', 'name' => 'section', 'class' => 'form-control', 'placeholder' => 'Enter Section', 'type' => 'text', 'value' => set_value('section')]); ?>
               <?php echo form_error('section');   ?>
             </div>
-            <div class="form-group">
-              <label for="InputPhone">Year</label>
-              <?php echo form_input(['id' => 'year', 'name' => 'year', 'class' => 'form-control', 'placeholder' => 'Enter Year', 'value' => set_value('year')]); ?>
-              <?php echo form_error('year');   ?>
-            </div>
             <div class="form-group ">
               <label for="InputName">Description</label>
               <?php echo form_input(['id' => 'remarks', 'name' => 'remarks', 'class' => 'form-control', 'placeholder' => 'Enter Description', 'type' => 'text', 'value' => set_value('reamrks')]); ?>

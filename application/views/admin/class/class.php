@@ -34,7 +34,6 @@
                   <th>ID</th>
                   <th>Name</th>
                   <th>Section</th>
-                  <th>Year</th>
                   <th>Description</th>
                   <th>Status</th>
                   <th>Action</th>
@@ -48,7 +47,6 @@
                       <td><?= $class->id; ?></td>
                       <td><?= $class->name; ?></td>
                       <td><?= $class->section; ?></td>
-                      <td><?= $class->year; ?></td>
                       <td><?= $class->remarks; ?></td>
                       <td>
                         <?php if ($class->status == 1) { ?>

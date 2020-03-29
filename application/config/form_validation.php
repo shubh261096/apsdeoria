@@ -46,11 +46,6 @@ $config = [
 			'field' => 'section',
 			'label' => 'Class Section',
 			'rules' => 'trim|required'
-		],
-		[
-			'field' => 'year',
-			'label' => 'Year',
-			'rules' => 'trim|required|numeric|max_length[4]'
 		]
 	],
 
