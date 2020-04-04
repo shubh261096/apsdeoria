@@ -10,8 +10,8 @@ class Attendance extends REST_Controller
   {
     parent::__construct();
     $this->load->database();
-    $this->load->model('api/v2/qa/AttendanceModel', 'AttendanceModel');
-    $this->load->helper('commonqa');
+    $this->load->model('api/v2/prod/AttendanceModel', 'AttendanceModel');
+    $this->load->helper('commonprod');
   }
 
   public function index_post()
@@ -50,11 +50,13 @@ class Attendance extends REST_Controller
         if ($field->class_id) {
           $data[$key]->class_id = getClassDetails($field->class_id); // getting class details and adding it into data array
           $data[$key]->class_id->students = $this->AttendanceModel->get_studentByClass($data[$key]->class_id->id); // getting students list and adding it as extra parameter to data->class->students array
-          foreach ($data[$key]->class_id->students as $new_key => $new_field) {
-            if ($new_field->id) {
-              $data[$key]->class_id->students[$new_key]->attendance = $this->AttendanceModel->get_attendanceByStudent($new_field->id, $date);
-            } else {
-              $data[$key]->class_id->students[$new_key]->attendance = null;
+          if ($data[$key]->class_id->students != NULL) {
+            foreach ($data[$key]->class_id->students as $new_key => $new_field) {
+              if ($new_field->id) {
+                $data[$key]->class_id->students[$new_key]->attendance = $this->AttendanceModel->get_attendanceByStudent($new_field->id, $date);
+              } else {
+                $data[$key]->class_id->students[$new_key]->attendance = null;
+              }
             }
           }
         }
