@@ -98,6 +98,7 @@ $route['fees/update/(:any)'] = "admin/fees/update/$1"; // fees controller update
 $route['fees/delete/(:any)'] = "admin/fees/delete/$1"; // fees controller delete method
 
 $route['timetable/add'] = "admin/timetable/add"; // timetabale controller add method
+$route['timetable/getSubjectFromClass'] = "admin/timetable/getSubjectFromClass"; // timetable controller add method
 $route['timetable/insert'] = "admin/timetable/insert"; // timetabale controller insert method
 $route['timetable/edit/(:any)'] = "admin/timetable/edit/$1"; // timetabale controller edit method
 $route['timetable/update/(:any)'] = "admin/timetable/update/$1"; // timetabale controller update method

@@ -17,8 +17,16 @@
 
           <div class="box-body">
             <div class="form-group">
-              <label for="class_id">Select Class</label>
-              <?php echo form_dropdown('class_id', $classes, $timetable->class_id, 'class="form-control"'); ?>
+              <label>Class</label>
+              <select class="form-control" name="class_id" id="class_id">
+                <?php foreach ($classes as $row) :
+                  if (strcmp($row->id, $timetable->class_id) == 0) { ?>
+                    <option value="<?php echo $row->id; ?>" selected="selected"><?php echo $row->name; ?></option>
+                  <?php } else { ?>
+                    <option value="<?php echo $row->id; ?>"><?php echo $row->name; ?></option>
+                  <?php } ?>
+                <?php endforeach; ?>
+              </select>
             </div>
             <?php if ($timetable->subject_id == NULL && $timetable->teacher_id == NULL) { ?>
               <div class="checkbox">
@@ -36,9 +44,11 @@
               <div class="checkbox">
                 <label> <?php echo form_input(['id' => 'recess', 'name' => 'recess', 'type' => 'checkbox']); ?> Is it a recess? </label>
               </div>
-              <div id="subject" class="form-group">
-                <label for="subject_id">Select Subject</label>
-                <?php echo form_dropdown('subject_id', $subjects, $timetable->subject_id, 'class="form-control"'); ?>
+              <div class="form-group">
+                <label>Subject</label>
+                <select class="form-control" id="subject_id" name="subject_id">
+                  <option value="<?php $subject_id->id ?>" selected="selected"> <?php echo $subject_id->name ?> </option>
+                </select>
               </div>
               <div id="teacher" class="form-group">
                 <label for="teacher_id">Select Teacher</label>
@@ -94,7 +104,38 @@
 
 <div class="control-sidebar-bg"></div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#class_id').change(function() {
+      var id = $(this).val();
+      $.ajax({
+        url: "<?php echo base_url('timetable/getSubjectFromClass'); ?>",
+        method: "POST",
+        data: {
+          id: id
+        },
+        async: true,
+        dataType: 'json',
+        success: function(data) {
+          var html = '';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+          }
+          $('#subject_id').html(html);
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+        },
+      });
+      return false;
+    });
+
+  });
+</script>
 
 <script src="<?php echo base_url(); ?>plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->

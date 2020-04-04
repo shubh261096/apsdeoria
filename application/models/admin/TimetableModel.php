@@ -18,6 +18,20 @@ class TimetableModel extends CI_Model
 		}
 	}
 
+	/** Getting class details */
+	function getClassList()
+	{
+		$query = $this->db->get('class');
+		return $query;
+	}
+
+	/** Getting Subjects filter from class_id*/
+	public function getSubjectFromClass($class_id)
+	{
+		$query = $this->db->get_where('subject', array('class_id' => $class_id));
+		return $query->result();
+	}
+
 	public function addTimetable($array)
 	{
 		$array['status'] = 1;

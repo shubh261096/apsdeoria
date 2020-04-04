@@ -37,9 +37,16 @@ class Timetable extends CI_Controller
     $this->load->view('admin/timetable/timetable', $data);
   }
 
+  public function getSubjectFromClass()
+  {
+    $class_id = $this->input->post('id', TRUE);
+    $data = $this->TimetableModel->getSubjectFromClass($class_id);
+    $this->output->set_content_type('application/json')->set_output(json_encode($data));
+  }
+
   public function add()
   {
-    $data['classes'] = $this->AdminCommonModel->getClassList();
+    $data['classes'] = $this->TimetableModel->getClassList()->result();
     $data['subjects'] = $this->AdminCommonModel->getSubjectList();
     $data['teachers'] = $this->AdminCommonModel->getTeacherList();
     $data['days'] = array(
@@ -71,7 +78,8 @@ class Timetable extends CI_Controller
   public function edit($timetable_id)
   {
     $data['timetable'] = $this->TimetableModel->editTimetable($timetable_id);
-    $data['classes'] = $this->AdminCommonModel->getClassList();
+    $data['classes'] = $this->TimetableModel->getClassList()->result();
+    $data['subject_id'] = getSubjectDetails($data['timetable']->subject_id);
     $data['subjects'] = $this->AdminCommonModel->getSubjectList();
     $data['teachers'] = $this->AdminCommonModel->getTeacherList();
     $data['days'] = array(
