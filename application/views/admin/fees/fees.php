@@ -158,8 +158,8 @@
 <!-- page script -->
 <script>
   $(function() {
-    $("#example1").DataTable();
     $('#example2').DataTable({
+      "aaSorting": [[ 0, "desc" ]],
       "sScrollX": "100%",
       "bScrollCollapse": true,
       "paging": true,
