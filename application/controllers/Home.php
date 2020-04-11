@@ -23,11 +23,6 @@ class Home extends CI_Controller
 		$this->load->template('events');
 	}
 
-	public function contact()
-	{
-		$this->load->template('contact');
-	}
-
 	public function gallery()
 	{
 		$this->load->template('gallery');

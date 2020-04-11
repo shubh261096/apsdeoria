@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <h2 class="probootstrap-animate" data-animate-effect="fadeInRight">Get your admission now!</h2>
-        <a href="https://forms.gle/aiLxn8fkkwCsLAJh6" target="_blank" role="button" class="btn btn-primary btn-lg btn-ghost probootstrap-animate" data-animate-effect="fadeInLeft">Enroll</a>
+        <a href="<?php echo base_url() . 'admission'; ?>" role="button" class="btn btn-primary btn-lg btn-ghost probootstrap-animate" data-animate-effect="fadeInLeft">Enroll</a>
       </div>
     </div>
   </div>
@@ -31,6 +31,7 @@
           <h3>Links</h3>
           <ul>
             <li><a href="<?php echo base_url() ?>">Home</a></li>
+            <li><a href="<?php echo base_url() . 'admission'; ?>">Admission</a></li>
             <li><a href="<?php echo base_url() . 'about'; ?>">About Us</a></li>
             <li><a href="<?php echo base_url() . 'events'; ?>">Events</a></li>
             <li><a href="<?php echo base_url() . 'contact'; ?>">Contact</a></li>

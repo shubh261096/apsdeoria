@@ -125,6 +125,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
         <div id="navbar-collapse" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="<?php echo base_url(); ?>">Home</a></li> <!-- TODO li class="active" -->
+            <li><a href="<?php echo base_url() . 'admission'; ?>">Admission</a></li>
             <li><a href="<?php echo base_url() . 'about'; ?>">About Us</a></li>
             <li><a href="<?php echo base_url() . 'events'; ?>">Events</a></li>
             <li><a href="<?php echo base_url() . 'contact'; ?>">Contact</a></li>

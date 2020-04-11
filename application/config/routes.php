@@ -52,9 +52,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $route['about'] = "Home/about"; //  About Page via Home controller
 $route['events'] = "Home/events"; //  Events Page via Home controller
-$route['contact'] = "Contact/index"; //  Contact Page via Home controller
+$route['contact'] = "Contact/index"; //  Contact Page via Contact controller
 $route['gallery'] = "Home/gallery"; //  Gallery Page via Home controller
-$route['privacy'] = "Home/privacy"; //  Gallery Page via Home controller
+$route['privacy'] = "Home/privacy"; //  Privacy Page via Home controller
+$route['admission'] = "Admission/index"; //  Admission controller
 
 
 $route['default_controller'] = 'home';

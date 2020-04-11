@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <h2 class="probootstrap-animate" data-animate-effect="fadeInRight">Get your admission now!</h2>
-        <a href="https://forms.gle/aiLxn8fkkwCsLAJh6" target="_blank" role="button" class="btn btn-primary btn-lg btn-ghost probootstrap-animate" data-animate-effect="fadeInLeft">Apply</a>
+        <a href="<?php echo base_url() . 'admission'; ?>" role="button" class="btn btn-primary btn-lg btn-ghost probootstrap-animate" data-animate-effect="fadeInLeft">Apply</a>
       </div>
     </div>
   </div>
