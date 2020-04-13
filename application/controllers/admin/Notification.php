@@ -47,11 +47,11 @@ class Notification extends CI_Controller
         }
 
         $notification = new NotificationPOJO();
-        $title = $this->input->post('title');
-        $message = $this->input->post('message');
+        $title = trim($this->input->post('title'));
+        $message = trim($this->input->post('message'));
         $action = $this->input->post('action');
 
-        $actionDestination = $this->input->post('action_destination');
+        $actionDestination = trim($this->input->post('action_destination'));
         if ($actionDestination == '') {
             $action = '';
         }
