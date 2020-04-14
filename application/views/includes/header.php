@@ -4,22 +4,24 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Agrawal Public School | Welcome To The New School Of Thoughts</title>
-  <meta property="og:title" content="Agrawal Public School | Welcome To The New School Of Thoughts">
-  <meta property="og:site_name" content="Agrawal Public School">
-  <meta property="og:url" content="https://www.apsdeoria.com">
-  <meta property="og:description" content="Welcome to the new school of thoughts and excellence.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://www.apsdeoria.com/img/aps_logo.png">
-  <meta property="og:image" content="https://www.apsdeoria.com/img/slider_5.jpg">
-  <meta property="og:image" content="https://www.apsdeoria.com/img/slider_6.jpg">
-  <meta property="og:image" content="https://www.apsdeoria.com/img/slider_7.jpg">
-  <meta property="og:image" content="https://www.apsdeoria.com/img/slider_8.jpg">
-  <meta name="description" content="Agrawal Public School | Welcome To The New School Of Thoughts. Admission Open For 2019-2020 | Play Group - Class VIII">
-  <meta name="keywords" content="School, Education, Admission Open, Play-Group, LKG, UKG, APS, Deoria, Public School">
-  <meta name="author" content="Shubham Agrawal">
+  <meta property="og:title" content="Agrawal Public School | Welcome To The New School Of Thoughts" />
+  <meta property="og:site_name" content="Agrawal Public School" />
+  <meta property="og:url" content="https://www.apsdeoria.com" />
+  <meta property="og:description" content="Welcome to the new school of thoughts and excellence." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.apsdeoria.com/aps/bootstrap/img/slider_5.jpg" />
+  <meta property="og:image" content="https://www.apsdeoria.com/aps/bootstrap/img/aps_logo.png" />
+  <meta property="og:image" content="https://www.apsdeoria.com/aps/bootstrap/img/slider_6.jpg" />
+  <meta property="og:image" content="https://www.apsdeoria.com/aps/bootstrap/img/slider_7.jpg" />
+  <meta property="og:image" content="https://www.apsdeoria.com/aps/bootstrap/img/slider_8.jpg" />
+  <meta property="og:image:alt" content="APS Students" />
+  <meta property="og:video" content="https://www.youtube.com/watch?v=B14dnnDZi2o" />
+  <meta name="description" content="Agrawal Public School | Welcome To The New School Of Thoughts. Admission Open For 2019-2020 | Play Group - Class VIII" />
+  <meta name="keywords" content="School, Education, Admission Open, Play-Group, LKG, UKG, APS, Deoria, Public School" />
+  <meta name="author" content="Shubham Agrawal" />
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url(); ?>aps/bootstrap/img/aps_logo.png">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
   <link rel="stylesheet" href="<?php echo base_url(); ?>aps/bootstrap/css/styles-merged.css">
@@ -55,9 +57,9 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
         "description": "Welcome to the new school of thoughts and excellence"
       },
       "areaServed": "Deoria",
-      "@id": "https://www.apsdeoria.com/index.html",
+      "@id": "https://www.apsdeoria.com/",
       "url": "https://www.apsdeoria.com/",
-      "logo": "https://www.apsdeoria.com/img/aps_logo.png",
+      "logo": "https://www.apsdeoria.com/aps/bootstrap/img/aps_logo.png",
       "email": "contact@apsdeoria.com",
       "sameAs": [
         "https://www.facebook.com/apsdeoria",
