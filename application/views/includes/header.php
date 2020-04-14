@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8" />
@@ -102,6 +102,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
               <li><a href="https://www.facebook.com/apsdeoria" target="_blank"><i class="icon-facebook2"></i></a></li>
               <li><a href="https://www.instagram.com/apsdeoria" target="_blank"><i class="icon-instagram2"></i></a></li>
               <li><a href="https://www.youtube.com/channel/UCqWRbnwa38SUG3fdBZjh7oQ" target="_blank"><i class="icon-youtube"></i></a></li>
+              <li><a href="https://www.linkedin.com/in/apsdeoria/" target="_blank"><i class="icon-linkedin"></i></a></li>
               <li><a href="#" class="probootstrap-search-icon js-probootstrap-search"><i class="icon-search"></i></a>
               </li>
             </ul>

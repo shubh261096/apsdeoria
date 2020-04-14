@@ -19,10 +19,10 @@
           <h3>Social</h3>
           <ul class="probootstrap-footer-social">
             <li><a href="https://www.facebook.com/apsdeoria" target="_blank"><i class="icon-facebook"></i></a></li>
-            <li><a href="https://www.instagram.com/apsdeoria" target="_blank"><i class="icon-instagram"></i></a>
-            </li>
+            <li><a href="https://www.instagram.com/apsdeoria" target="_blank"><i class="icon-instagram"></i></a></li>
             <li><a href="https://www.youtube.com/channel/UCqWRbnwa38SUG3fdBZjh7oQ" target="_blank"><i class="icon-youtube"></i></a></li>
             <li><a href="https://twitter.com/apsdeoria" target="_blank"><i class="icon-twitter"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/apsdeoria/" target="_blank"><i class="icon-linkedin"></i></a></li>
           </ul>
         </div>
       </div>
