@@ -10,6 +10,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
@@ -621,5 +622,15 @@ public class CommonUtils {
     public static String getExtensionFromURL(String url) {
         String[] filenameArray = url.split("\\.");
         return filenameArray[filenameArray.length - 1];
+    }
+
+    public static Integer getVersionCode(Context context) {
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

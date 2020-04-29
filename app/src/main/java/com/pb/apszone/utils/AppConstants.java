@@ -90,4 +90,28 @@ public class AppConstants {
     public final static String VIDEO_URL = "video_url";
     public final static String VIDEO_TITLE = "video_title";
     public final static String VIDEO_POSITION = "video_position";
+
+    /* IN-APP UPDATE MANAGER*/
+    public static final String KEY_APP_UPDATE_LAST_SHOWN_DAY = "key_app_update_day";
+
+    /**
+     * Enum for Update Mode that can either be #FLEXIBLE or #IMMEDIATE
+     */
+    public enum UpdateMode {
+        FLEXIBLE,
+        IMMEDIATE
+    }
+
+    /**
+     * Enum for InstallStatus that can either #DOWNLOADED or #INSTALLED or #FAILED
+     */
+    public enum InstallStat {
+        DOWNLOADED, INSTALLED, FAILED
+    }
+
+    static final int UPDATE_ERROR_START_APP_UPDATE_FLEXIBLE = 100;
+    static final int UPDATE_ERROR_START_APP_UPDATE_IMMEDIATE = 101;
+
+    public static final int REQ_CODE_VERSION_UPDATE_FLEXIBLE = 530;
+    public static final int REQ_CODE_VERSION_UPDATE_IMMEDIATE = 531;
 }

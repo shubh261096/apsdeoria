@@ -8,8 +8,8 @@ android {
         applicationId "com.aps.apszone"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 10
-        versionName "2.0.3"
+        versionCode 75
+        versionName "2.0.4.006"
         flavorDimensions "environment"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         proguardFiles 'proguard-rules.pro'
@@ -60,14 +60,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.squareup.okhttp3:okhttp:4.0.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    //noinspection AnnotationProcessorOnCompilePath
     implementation 'com.jakewharton:butterknife:10.2.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'me.zhanghai.android.materialratingbar:library:1.3.2'
@@ -83,8 +84,12 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
-    implementation 'com.google.android.material:material:1.2.0-alpha05'
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
     // Room library dependency
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+    implementation 'com.google.android.play:core:1.7.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
+    //noinspection GradleDependency
+    implementation 'com.google.firebase:firebase-config:16.5.0'
 }

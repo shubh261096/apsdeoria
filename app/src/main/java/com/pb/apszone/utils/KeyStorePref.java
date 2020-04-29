@@ -42,6 +42,16 @@ public class KeyStorePref {
         return SP.getString(key, "");
     }
 
+    public void putLong(String key, long val) {
+        Editor editor = SP.edit();
+        editor.putLong(key, val);
+        editor.apply();
+    }
+
+    public long getLong(String key) {
+        return SP.getLong(key, 0);
+    }
+
     public void clearAllPref() {
         SP.edit().clear().apply();
         DashboardViewModel.unsubscribeFromAllTopic();
