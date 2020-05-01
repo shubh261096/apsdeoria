@@ -1,10 +1,13 @@
 package com.pb.apszone.view.ui;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -30,7 +34,9 @@ import com.pb.apszone.database.AccountsModel;
 import com.pb.apszone.service.model.DashboardItem;
 import com.pb.apszone.service.model.DashboardUIResponseModel;
 import com.pb.apszone.service.model.ProfileResponseModel;
+import com.pb.apszone.utils.AppConstants;
 import com.pb.apszone.utils.AutoFitGridLayoutManager;
+import com.pb.apszone.utils.InAppUpdateManager;
 import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.view.adapter.DashboardAdapter;
 import com.pb.apszone.view.fragment.AccountsFragment;
@@ -55,14 +61,18 @@ import com.pb.apszone.viewModel.DashboardViewModel;
 import com.pb.apszone.viewModel.ProfileFragmentViewModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.pb.apszone.utils.AppConstants.KEY_APP_UPDATE_LAST_SHOWN_DAY;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_ID;
 import static com.pb.apszone.utils.AppConstants.KEY_USER_TYPE;
+import static com.pb.apszone.utils.AppConstants.REQ_CODE_VERSION_UPDATE_FLEXIBLE;
+import static com.pb.apszone.utils.AppConstants.REQ_CODE_VERSION_UPDATE_IMMEDIATE;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_ATTENDANCE;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_DOWNLOAD;
 import static com.pb.apszone.utils.AppConstants.UI_ELEMENT_FEES;
@@ -77,7 +87,7 @@ import static com.pb.apszone.utils.AppConstants.USER_TYPE_STUDENT;
 import static com.pb.apszone.utils.AppConstants.USER_TYPE_TEACHER;
 import static com.pb.apszone.utils.CommonUtils.showInformativeDialog;
 
-public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener {
+public class DashboardActivity extends AppCompatActivity implements OnDashboardItemClickListener, InAppUpdateManager.InAppUpdateHandler {
 
     @BindView(R.id.rvDashboardUI)
     RecyclerView rvDashboardUI;
@@ -104,6 +114,9 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     private String user_type, user_id;
     private boolean doubleBackToExitPressedOnce;
     private AccountsViewModel accountsViewModel;
+    private InAppUpdateManager inAppUpdateManager;
+    private static final String TAG = "DashboardActivity";
+    private KeyStorePref keyStorePref;
 
 
     @Override
@@ -127,10 +140,40 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
 
         dashboardItemList = new ArrayList<>();
         onDashboardItemClickListener = this;
-        KeyStorePref keyStorePref = KeyStorePref.getInstance(this);
+        keyStorePref = KeyStorePref.getInstance(this);
         user_type = keyStorePref.getString(KEY_USER_TYPE);
         user_id = keyStorePref.getString(KEY_USER_ID);
         setUpGridView();
+
+        initAppUpdate();
+    }
+
+    private void initAppUpdate() {
+        Log.d(TAG, "initAppUpdate: ");
+        inAppUpdateManager = new InAppUpdateManager(this);
+        inAppUpdateManager.handler(this);
+        inAppUpdateManager.checkForAppUpdate();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d(TAG, "onActivityResult: ");
+        if (requestCode == REQ_CODE_VERSION_UPDATE_IMMEDIATE) {
+            if (resultCode != RESULT_OK) {
+                // If the update is cancelled by the user,
+                // you can request to start the update again.
+                Log.d(TAG, "Update flow failed! Result code: " + resultCode);
+                finishAffinity();
+            }
+        } else if (requestCode == REQ_CODE_VERSION_UPDATE_FLEXIBLE) {
+            if (resultCode == Activity.RESULT_CANCELED) {
+                // If the update is cancelled by the user,
+                // you can request to start the update again.
+                keyStorePref.putLong(KEY_APP_UPDATE_LAST_SHOWN_DAY, Calendar.getInstance().getTimeInMillis());
+                Log.d(TAG, "Update flow failed! Result code: " + resultCode);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void observeProfile() {
@@ -333,8 +376,39 @@ public class DashboardActivity extends AppCompatActivity implements OnDashboardI
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume:");
+        if (inAppUpdateManager != null) inAppUpdateManager.onResume();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(networkChangeReceiver);
+        Log.d(TAG, "onDestroy: ");
+        if (inAppUpdateManager != null) inAppUpdateManager.onDestroy();
+    }
+
+    @Override
+    public void onInAppUpdateError(int code, Throwable error) {
+        /*
+         * Called when some error occurred. See Constants class for more details
+         */
+        Log.d(TAG, "code: " + code, error);
+        Toast.makeText(this, getString(R.string.error_app_update), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onInAppUpdateStatus(AppConstants.InstallStat status) {
+        Log.d(TAG, "onInAppUpdateStatus: ");
+        if (status == AppConstants.InstallStat.DOWNLOADED) {
+            Log.d(TAG, "App downloaded");
+        }
+    }
+
+    @Override
+    public void onInAppUpdateAvailable(boolean isAvailable) {
+        Log.d(TAG, "onInAppUpdateAvailable:" + isAvailable);
     }
 }

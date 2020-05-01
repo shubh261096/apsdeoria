@@ -23,7 +23,6 @@ import com.pb.apszone.view.listener.OnItemClickListener;
 import com.pb.apszone.view.ui.LoginActivity;
 import com.pb.apszone.view.ui.SplashActivity;
 import com.pb.apszone.viewModel.AccountsViewModel;
-import com.pb.apszone.viewModel.DashboardViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

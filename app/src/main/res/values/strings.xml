@@ -157,6 +157,9 @@
     <string name="add">Add</string>
     <string name="logins">Logins</string>
     <string name="logout_from_all_accounts">Log out of all accounts</string>
+    <string name="update_downloaded">An update has just been downloaded.</string>
+    <string name="restart">RESTART</string>
+    <string name="error_app_update">Update Error</string>
 
     <string-array name="day">
         <item>Monday</item>

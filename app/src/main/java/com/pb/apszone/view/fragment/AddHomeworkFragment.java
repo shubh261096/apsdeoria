@@ -24,7 +24,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.pb.apszone.R;
 import com.pb.apszone.service.model.CommonResponseModel;
 import com.pb.apszone.service.rest.model.HomeworkRequestModel;
-import com.pb.apszone.utils.KeyStorePref;
 import com.pb.apszone.viewModel.HomeworkTeacherFragmentViewModel;
 
 import java.text.SimpleDateFormat;
@@ -55,7 +54,6 @@ public class AddHomeworkFragment extends BaseFragment {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     private HomeworkTeacherFragmentViewModel homeworkTeacherFragmentViewModel;
-    private KeyStorePref keyStorePref;
     @BindView(R.id.date_filter)
     TextView dateFilter;
     @BindView(R.id.title)
@@ -94,7 +92,6 @@ public class AddHomeworkFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        keyStorePref = KeyStorePref.getInstance(getContext());
         if (getArguments() != null) {
             teacher_id = getArguments().getString(KEY_TEACHER_ID);
             subject_id = getArguments().getString(KEY_SUBJECT_ID);
@@ -196,7 +193,7 @@ public class AddHomeworkFragment extends BaseFragment {
     }
 
     @OnClick(R.id.date_filter)
-    public void onDateFilterClicked() {
+    void onDateFilterClicked() {
         final Calendar c = Calendar.getInstance();
         int mYear, mMonth, mDay;
         String currentDate = dateFilter.getText().toString();
@@ -227,7 +224,7 @@ public class AddHomeworkFragment extends BaseFragment {
 
 
     @OnClick(R.id.submit_homework)
-    public void onSubmitHomeworkClicked() {
+    void onSubmitHomeworkClicked() {
         if (validate()) {
             createRequestModel();
             subscribe(this.homeworkRequestModel);
@@ -235,7 +232,7 @@ public class AddHomeworkFragment extends BaseFragment {
     }
 
     @OnClick(R.id.add_homework)
-    public void onAddHomeworkClicked() {
+    void onAddHomeworkClicked() {
         llExistHomework.setVisibility(View.GONE);
         llHomework.setVisibility(View.VISIBLE);
     }
@@ -253,7 +250,7 @@ public class AddHomeworkFragment extends BaseFragment {
     }
 
     @OnTextChanged(value = R.id.title, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onTitleTextChanged(CharSequence text) {
+    void onTitleTextChanged(CharSequence text) {
         if (!TextUtils.isEmpty(text)) {
             if (tilTitle.isErrorEnabled()) {
                 tilTitle.setErrorEnabled(false);
@@ -268,7 +265,7 @@ public class AddHomeworkFragment extends BaseFragment {
     }
 
     @OnTextChanged(value = R.id.description, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onDescriptionTextChanged(CharSequence text) {
+    void onDescriptionTextChanged(CharSequence text) {
         if (!TextUtils.isEmpty(text)) {
             if (tilDescription.isErrorEnabled()) {
                 tilDescription.setErrorEnabled(false);

@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 public class AccountsRepository {
 

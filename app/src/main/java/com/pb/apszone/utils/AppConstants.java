@@ -93,6 +93,7 @@ public class AppConstants {
 
     /* IN-APP UPDATE MANAGER*/
     public static final String KEY_APP_UPDATE_LAST_SHOWN_DAY = "key_app_update_day";
+    public static final String KEY_FIREBASE_REMOTE_CONFIG_UPDATE_TYPE = "update_type";
 
     /**
      * Enum for Update Mode that can either be #FLEXIBLE or #IMMEDIATE

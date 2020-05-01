@@ -19,12 +19,14 @@ import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.pb.apszone.R;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.android.play.core.install.model.InstallStatus.DOWNLOADED;
 import static com.pb.apszone.utils.AppConstants.KEY_APP_UPDATE_LAST_SHOWN_DAY;
+import static com.pb.apszone.utils.AppConstants.KEY_FIREBASE_REMOTE_CONFIG_UPDATE_TYPE;
 
 
 /**
@@ -67,13 +69,6 @@ public class InAppUpdateManager implements LifecycleObserver {
          * @param isAvailable the Boolean value for availability.
          */
         void onInAppUpdateAvailable(boolean isAvailable);
-
-        /**
-         * Monitoring the dialog so that handle onBackPress()
-         *
-         * @param updateMode {@link AppConstants.UpdateMode}
-         */
-        void onDialogShown(AppConstants.UpdateMode updateMode);
     }
 
     // Region member variable declarations
@@ -82,9 +77,7 @@ public class InAppUpdateManager implements LifecycleObserver {
     private AppConstants.UpdateMode mode = AppConstants.UpdateMode.FLEXIBLE;
     private InAppUpdateHandler handler;
     private Snackbar snackbar;
-    private static InAppUpdateManager instance;
     private long noOfDaysToShowNextUpdateFlow = 0;
-    private boolean isSnackbarShown = false;
 
     // Application Specific Component
     private KeyStorePref keyStorePref;
@@ -115,24 +108,11 @@ public class InAppUpdateManager implements LifecycleObserver {
     // Region Constructor
 
     /**
-     * Creates a builder for initialization.
-     *
-     * @param activity the activity
-     * @return a new {@link InAppUpdateManager} instance
-     */
-    public static InAppUpdateManager Builder(AppCompatActivity activity) {
-        if (instance == null) {
-            instance = new InAppUpdateManager(activity);
-        }
-        return instance;
-    }
-
-    /**
      * Creates a private constructor because we are making it Singleton.
      *
      * @param activity the activity
      */
-    private InAppUpdateManager(AppCompatActivity activity) {
+    public InAppUpdateManager(AppCompatActivity activity) {
         this.activity = activity;
         init();
     }
@@ -152,11 +132,9 @@ public class InAppUpdateManager implements LifecycleObserver {
      * Set the callback handler
      *
      * @param handler the handler
-     * @return the update manager instance
      */
-    public InAppUpdateManager handler(InAppUpdateHandler handler) {
+    public void handler(InAppUpdateHandler handler) {
         this.handler = handler;
-        return this;
     }
 
     /**
@@ -164,6 +142,7 @@ public class InAppUpdateManager implements LifecycleObserver {
      *
      * @param mode the UpdateMode
      */
+    @SuppressWarnings("unused")
     public void mode(AppConstants.UpdateMode mode) {
         this.mode = mode;
     }
@@ -301,7 +280,6 @@ public class InAppUpdateManager implements LifecycleObserver {
                     activity,
                     // Include a request code to later monitor this update request.
                     AppConstants.REQ_CODE_VERSION_UPDATE_IMMEDIATE);
-            reportOnDialogShown(AppConstants.UpdateMode.IMMEDIATE);
         } catch (IntentSender.SendIntentException e) {
             Log.e(TAG, "error in startAppUpdateImmediate", e);
             reportUpdateError(AppConstants.UPDATE_ERROR_START_APP_UPDATE_IMMEDIATE, e);
@@ -325,7 +303,6 @@ public class InAppUpdateManager implements LifecycleObserver {
                     activity,
                     // Include a request code to later monitor this update request.
                     AppConstants.REQ_CODE_VERSION_UPDATE_FLEXIBLE);
-            reportOnDialogShown(AppConstants.UpdateMode.FLEXIBLE);
         } catch (IntentSender.SendIntentException e) {
             Log.e(TAG, "error in startAppUpdateFlexible", e);
             reportUpdateError(AppConstants.UPDATE_ERROR_START_APP_UPDATE_FLEXIBLE, e);
@@ -337,26 +314,19 @@ public class InAppUpdateManager implements LifecycleObserver {
      * Needed only for Flexible app update
      */
     private void popupSnackbarForUserConfirmation() {
-        if (isSnackbarShown) {
-            appUpdateManager.completeUpdate();
-        } else {
-            isSnackbarShown = true;
-            Log.d(TAG, "setupSnackbar");
-            if (snackbar != null && snackbar.isShownOrQueued()) {
-                snackbar.dismiss();
-            }
-            snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                    "An update has just been downloaded.",
-                    Snackbar.LENGTH_INDEFINITE);
-
-            snackbar.setAction("RESTART", view -> {
-                // Triggers the completion of the update of the app for the flexible flow.
-                appUpdateManager.completeUpdate();
-            });
-
-            snackbar.show();
+        Log.d(TAG, "setupSnackbar");
+        if (snackbar != null && snackbar.isShownOrQueued()) {
+            snackbar.dismiss();
         }
+        snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                activity.getString(R.string.update_downloaded),
+                Snackbar.LENGTH_INDEFINITE);
 
+        snackbar.setAction(activity.getString(R.string.restart), view -> {
+            // Triggers the completion of the update of the app for the flexible flow.
+            appUpdateManager.completeUpdate();
+        });
+        snackbar.show();
     }
 
     /**
@@ -401,17 +371,6 @@ public class InAppUpdateManager implements LifecycleObserver {
         }
     }
 
-    /**
-     * callback to report which dialog is shown so that it can be handled 'onBackPress()'
-     *
-     * @param updateMode the UpdateMode
-     */
-    private void reportOnDialogShown(AppConstants.UpdateMode updateMode) {
-        if (handler != null) {
-            handler.onDialogShown(updateMode);
-        }
-    }
-
 
     /**
      * method to fetch firebase config values
@@ -421,17 +380,21 @@ public class InAppUpdateManager implements LifecycleObserver {
     private boolean fetchFirebaseAndCheck() {
         Log.d(TAG, "getFirebaseConfig: ");
         FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        String[] arrUpdateType = firebaseRemoteConfig.getString("update_type").split("#");
-        Log.d(TAG, "getFirebaseConfig: updateVersion" + arrUpdateType[0] + " updateType " + arrUpdateType[1] + "Current App version" + CommonUtils.getVersionCode(activity));
-        int versionNumber = Integer.parseInt(arrUpdateType[0]);
-        this.noOfDaysToShowNextUpdateFlow = Long.parseLong(arrUpdateType[2]);
-        if (versionNumber > CommonUtils.getVersionCode(activity)) {
-            if (TextUtils.equals(arrUpdateType[1], "FLEXIBLE")) {
-                this.mode = AppConstants.UpdateMode.FLEXIBLE;
+        if (!TextUtils.isEmpty(firebaseRemoteConfig.getString(KEY_FIREBASE_REMOTE_CONFIG_UPDATE_TYPE))) {
+            String[] arrUpdateType = firebaseRemoteConfig.getString(KEY_FIREBASE_REMOTE_CONFIG_UPDATE_TYPE).split("#");
+            Log.d(TAG, "getFirebaseConfig: updateVersion" + arrUpdateType[0] + " updateType " + arrUpdateType[1] + "Current App version" + CommonUtils.getVersionCode(activity));
+            int versionNumber = Integer.parseInt(arrUpdateType[0]);
+            this.noOfDaysToShowNextUpdateFlow = Long.parseLong(arrUpdateType[2]);
+            if (versionNumber > CommonUtils.getVersionCode(activity)) {
+                if (TextUtils.equals(arrUpdateType[1], "FLEXIBLE")) {
+                    this.mode = AppConstants.UpdateMode.FLEXIBLE;
+                } else {
+                    this.mode = AppConstants.UpdateMode.IMMEDIATE;
+                }
+                return true;
             } else {
-                this.mode = AppConstants.UpdateMode.IMMEDIATE;
+                return false;
             }
-            return true;
         } else {
             return false;
         }

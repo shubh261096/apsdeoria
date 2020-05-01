@@ -64,7 +64,6 @@ public class ProfileFragment extends BaseFragment {
     ProgressBar progressBar;
     private ProfileFragmentViewModel profileFragmentViewModel;
     private String user_type, user_id;
-    private KeyStorePref keyStorePref;
     private LinkedHashMap<String, String> profileValueHashmap = new LinkedHashMap<>();
     private ProfileAdapter profileAdapter;
 
@@ -79,7 +78,7 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        keyStorePref = KeyStorePref.getInstance(getContext());
+        KeyStorePref keyStorePref = KeyStorePref.getInstance(getContext());
         if (getArguments() != null) {
             user_id = getArguments().getString(KEY_USER_ID);
             user_type = getArguments().getString(KEY_USER_TYPE);

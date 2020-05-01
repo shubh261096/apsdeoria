@@ -32,7 +32,6 @@ public class App extends Application {
 
             FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
             FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                    .setMinimumFetchIntervalInSeconds(5)
                     .build();
             remoteConfig.setConfigSettings(configSettings);
 

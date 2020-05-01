@@ -115,7 +115,7 @@ public class VideoFragment extends BaseFragment implements VideoAdapter.OnItemCl
     }
 
     private void replaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = Objects.requireNonNull(getFragmentManager()).beginTransaction();
+        FragmentTransaction transaction = Objects.requireNonNull(getParentFragmentManager()).beginTransaction();
         transaction.replace(R.id.dynamic_video_frame, fragment, fragment.getClass().getName());
         transaction.addToBackStack(null);
         transaction.commit();

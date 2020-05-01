@@ -193,7 +193,7 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void replaceFragment(Fragment someFragment) {
-        FragmentTransaction transaction = Objects.requireNonNull(getFragmentManager()).beginTransaction();
+        FragmentTransaction transaction = Objects.requireNonNull(getParentFragmentManager()).beginTransaction();
         transaction.replace(R.id.dynamic_settings_frame, someFragment);
         transaction.addToBackStack(null);
         transaction.commit();

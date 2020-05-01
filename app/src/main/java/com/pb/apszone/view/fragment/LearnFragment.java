@@ -160,7 +160,7 @@ public class LearnFragment extends BaseFragment implements LearnAdapter.OnItemCl
     }
 
     private void replaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = Objects.requireNonNull(getFragmentManager()).beginTransaction();
+        FragmentTransaction transaction = Objects.requireNonNull(getParentFragmentManager()).beginTransaction();
         transaction.replace(R.id.dynamic_learn_frame, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
