@@ -65,6 +65,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
         "https://www.facebook.com/apsdeoria",
         "https://twitter.com/apsdeoria",
         "https://www.instagram.com/apsdeoria",
+        "https://www.linkedin.com/in/apsdeoria",
         "https://www.youtube.com/channel/UCqWRbnwa38SUG3fdBZjh7oQ"
       ]
     }
