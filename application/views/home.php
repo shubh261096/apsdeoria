@@ -68,7 +68,7 @@
             <h3>About School</h3>
             <p>With the mission to cultivate and nurture young minds into leaders of the future, we as the Agrawal
               Group have widespread interest in the sphere of quality education with a commitment to excellence.</p>
-            <p><a href="about.html" class="btn btn-primary">Learn More</a></p>
+            <p><a href="<?php echo base_url() . 'about'; ?>" class="btn btn-primary">Learn More</a></p>
           </div>
           <div class="probootstrap-image probootstrap-animate" style="background-image: url(<?php echo base_url('aps/bootstrap/img/slider_3.jpg'); ?>)">
             <iframe class="btn-video popup-vimeo" src="https://www.youtube.com/embed/B14dnnDZi2o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -225,7 +225,7 @@
                   </div>
                   <!-- END item -->
                   <div class="item">
-                    <a href="gallery.html" class="probootstrap-featured-news-box">
+                    <a href="<?php echo base_url() . 'gallery'; ?>" class="probootstrap-featured-news-box">
                       <figure class="probootstrap-media"><img src="<?php echo base_url(); ?>aps/bootstrap/img/gallery/8.jpg" alt="Loading Please Wait..." class="img-responsive"></figure>
                       <div class="probootstrap-text">
                         <h3>Summer Camp Workshop</h3>
