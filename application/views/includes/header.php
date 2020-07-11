@@ -6,11 +6,11 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Agrawal Public School | Welcome To The New School Of Thoughts</title>
-  <meta property="og:title" content="Agrawal Public School | Welcome To The New School Of Thoughts" />
+  <title>Agrawal Public School | School in Deoria</title>
+  <meta property="og:title" content="Agrawal Public School | School in Deoria" />
   <meta property="og:site_name" content="Agrawal Public School" />
   <meta property="og:url" content="https://www.apsdeoria.com" />
-  <meta property="og:description" content="Welcome to the new school of thoughts and excellence." />
+  <meta property="og:description" content="School in Deoria. Welcome to the new school of thoughts and excellence." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://www.apsdeoria.com/aps/bootstrap/img/slider_5.jpg" />
   <meta property="og:image" content="https://www.apsdeoria.com/aps/bootstrap/img/aps_logo.png" />
@@ -19,7 +19,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
   <meta property="og:image" content="https://www.apsdeoria.com/aps/bootstrap/img/slider_8.jpg" />
   <meta property="og:image:alt" content="APS Students" />
   <meta property="og:video" content="https://www.youtube.com/watch?v=B14dnnDZi2o" />
-  <meta name="description" content="Agrawal Public School | Welcome To The New School Of Thoughts. Admission Open For 2019-2020 | Play Group - Class VIII" />
+  <meta name="description" content="Agrawal Public School | School in Deoria | Welcome To The New School Of Thoughts. Admission Open For 2020-2021 | Play Group - Class VIII" />
   <meta name="keywords" content="School, Education, Admission Open, Play-Group, LKG, UKG, APS, Deoria, Public School" />
   <meta name="author" content="Shubham Agrawal" />
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url(); ?>aps/bootstrap/img/aps_logo.png">
