@@ -123,7 +123,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<?php echo base_url(); ?>" title="Welcome:APS">CD Agrawal Public School</a>
+          <a class="navbar-brand" href="<?php echo base_url(); ?>" title="Welcome:APS">Agrawal Public School</a>
         </div>
 
         <div id="navbar-collapse" class="navbar-collapse collapse">

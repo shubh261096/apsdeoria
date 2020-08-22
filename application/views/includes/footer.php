@@ -61,7 +61,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 text-left">
-          <p>&copy; 2020 <a href="https://www.apsdeoria.com/">CD Agrawal Public School</a>. All Rights Reserved.
+          <p>&copy; 2020 <a href="https://www.apsdeoria.com/">Agrawal Public School</a>. All Rights Reserved.
             Designed &amp; Developed with <i class="icon icon-heart"></i> by <a href="https://apsdeoria.com/">apsdeoria.com</a></p>
         </div>
         <div class="col-md-4 probootstrap-back-to-top">
