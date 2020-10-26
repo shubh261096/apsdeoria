@@ -3,14 +3,12 @@ package com.pb.apszone;
 import android.app.Application;
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import io.fabric.sdk.android.Fabric;
 
 import static com.pb.apszone.BuildConfig.BUILD_TYPE;
 import static com.pb.apszone.utils.CommonUtils.getVersionCode;
@@ -28,7 +26,6 @@ public class App extends Application {
         super.onCreate();
         instance = this;
         if (BUILD_TYPE.equals("release")) {
-            Fabric.with(this, new Crashlytics());
 
             FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
             FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
