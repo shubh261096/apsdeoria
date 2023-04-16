@@ -40,14 +40,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <!-- DataTables -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/datatables/dataTables.bootstrap.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
   <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js"></script>
 
+  <script type="text/javascript" src="<?php echo base_url(); ?>dist/js/whatsapp/bypass_pro.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>dist/js/whatsapp/bypass_pro_v2.js"></script>
 
 </head>
 
 <body>
+  <script type="text/javascript" src="<?php echo base_url(); ?>dist/js/whatsapp/bypass_free.js"></script>
+
+
+
   <div class="container">
     <div class="row">
       <div class="col-sm-6 col-md-4 col-md-offset-4">
@@ -55,13 +62,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="account-wall">
           <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120" alt="">
 
-          <?php if ($feedback = $this->session->flashdata('login_failed')) :  ?>
+          <?php if ($feedback = $this->session->flashdata('login_failed')) : ?>
             <div class="row">
               <div class="col-lg-12 ">
                 <div class="alert alert-danger alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
                   </button>
-                  <strong><?= $feedback ?></strong>
+                  <strong>
+                    <?= $feedback ?>
+                  </strong>
                 </div>
               </div>
             </div>
@@ -70,18 +79,65 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
           <?php echo form_open('admin/Admin/login', ['role' => 'form', 'class' => 'form-signin']); ?>
           <?php echo form_input(['id' => 'id', 'name' => 'id', 'class' => 'form-control', 'placeholder' => 'ID', 'value' => set_value('id')]); ?>
-          <?php echo form_error('id');   ?>
+          <?php echo form_error('id'); ?>
 
           <?php echo form_password(['id' => 'password', 'name' => 'password', 'class' => 'form-control', 'placeholder' => 'Password', 'type' => 'password']); ?>
           <?php echo form_error('password'); ?>
 
           <?php echo form_submit(['id' => 'submit', 'value' => 'Submit', 'class' => 'btn btn-lg btn-primary btn-block']); ?>
+          <script>
+            initButton(function(onFreeMessageSent) {
+                console.log(onFreeMessageSent);
+              },
+              function(onFreeMessageReceived) {
+                console.log(onFreeMessageReceived);
+              });
+          </script>
           <?php form_close(); ?>
-          </form>
+
+          <input type="button" value="ByPass Free Version" onclick="start()" />
+          <input type="button" value="ByPass Pro Version" onclick="startPro()" />
+          <input type="button" value="ByPass Pro Version 2" onclick="startProV2()" />
+
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    function start() {
+      initFree(function(onFreeMessageSent) {
+          console.log(onFreeMessageSent);
+        },
+        function(onFreeMessageReceived) {
+          console.log(onFreeMessageReceived);
+        });
+    }
+  </script>
+
+  <script>
+    function startPro() {
+      initPro("karza_123", "918447050052",
+        function(onProMessageSent) {
+          console.log(onProMessageSent);
+        },
+        function(onProMessageReceived) {
+          console.log(onProMessageReceived);
+        });
+    }
+  </script>
+
+  <script>
+    function startProV2() {
+      initProV2("karza_123", "918447050052",
+        function(onProV2MessageSent) {
+          console.log(onProV2MessageSent);
+        },
+        function(onProV2MessageReceived) {
+          console.log(onProV2MessageReceived);
+        });
+    }
+  </script>
 
 
   <script src="<?php echo base_url(); ?>plugins/jQuery/jquery-2.2.3.min.js"></script>
