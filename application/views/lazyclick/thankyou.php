@@ -46,14 +46,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
 
     <div class='container'>
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog d-flex justify-content-center align-items-center" role="document">
             <div class="modal-content">
                 <div class="modal-body p-0">
                     <div class="crop text-center">
                         <?php if ($error == false) { ?>
-                            <img src="<?php echo base_url(); ?>dist/img/verified.png" width="50%">
+                            <img src="<?php echo base_url(); ?>dist/img/verified.png">
                         <?php } else { ?>
-                            <img src="<?php echo base_url(); ?>dist/img/error.png" width="50%">
+                            <img src="<?php echo base_url(); ?>dist/img/error.png">
                         <?php } ?>
                     </div>
                 </div>
