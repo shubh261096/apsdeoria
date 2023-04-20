@@ -362,6 +362,7 @@ class Vendor extends REST_Controller
                 'wa_number' => $result->wa_number,
                 'isVerifed' => true
             );
+            $response['redirect_url'] = $result->redirect_url;
             $response['error'] = false;
             $response['message'] = "Thank you. WhatsApp Verified";
             $httpStatus = REST_Controller::HTTP_OK;
@@ -370,15 +371,20 @@ class Vendor extends REST_Controller
             $this->sendDataToFirebase($response);
 
             // $this->sendDataToWebhookUrl($response , $result->vendor_webhook_url, "");
-            $this->redirect_to_url($result->redirect_url);
+            // $this->redirect_to_url($result->redirect_url);
         } else {
+            $response['redirect_url'] = null;
             $response['error'] = true;
             $response['message'] = "Link expired!";
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
         }
 
-
-        $this->response($response, $httpStatus);
+        
+        // $this->response($response, $httpStatus);
+        $data['value'] = $response['redirect_url'];
+        $data['message'] = $response['message'];
+        $data['error'] = $response['error'];
+        $this->load->view('lazyclick/thankyou', $data);
     }
 
 
