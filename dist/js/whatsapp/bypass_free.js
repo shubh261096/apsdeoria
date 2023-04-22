@@ -44,8 +44,10 @@ function createOverlayButtonWithImage(onFreeMessageSent, onFreeMessageReceived) 
   }, 500);
 
   const mediaQuery = window.matchMedia('(max-width: 640px)');
-  mediaQuery.addListener(handleViewportChange);
-  handleViewportChange(mediaQuery, container);
+  if (mediaQuery.matches) {
+    handleViewportChange(mediaQuery, container);
+    mediaQuery.addListener(handleViewportChange);
+  }
 
 
   const containerHeading = document.createElement('div');
@@ -62,9 +64,10 @@ function createOverlayButtonWithImage(onFreeMessageSent, onFreeMessageReceived) 
   // Create heading element
   const heading = document.createElement('h4');
   heading.textContent = `Sign in to ${app_id} with Lazyclick`;
-  heading.style.fontSize = '14px';
+  heading.style.fontSize = '16px';
   heading.style.marginLeft = '10px';
-  heading.style.fontFamily = 'Lucida Console, monospace';
+  heading.style.color = '#3c4043';
+  heading.style.fontFamily = 'Roboto-Medium';
 
   // Create cross element
   const crossimage = document.createElement('img');
