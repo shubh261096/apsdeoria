@@ -7,7 +7,7 @@
 function handleViewportChange(event, container) {
   if (event.matches) {
     // Handle viewport change for small screens
-    container.style.position = 'absolute';
+    container.style.position = 'fixed';
     container.style.bottom = '16px';
     container.style.top = 'auto';
   } else {
@@ -28,7 +28,7 @@ function createOverlayButtonWithImage(onFreeMessageSent, onFreeMessageReceived) 
   container.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.3)';
   container.style.flexDirection = 'column';
   container.style.zIndex = '999';
-  container.style.position = 'absolute';
+  container.style.position = 'fixed';
   container.style.top = '16px';
   container.style.right = '-100%';
   container.style.width = 'auto';
@@ -278,7 +278,7 @@ function generateRandomVisibleUnicodes() {
 
 // TODO Not opening in ios devices safari or brave browser
 function openWhatsAppFree(encodedResult, app_id) {
-  const phone = '15550020663';
+  const phone = '917880760128';
   const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedResult}Send this message to continue to ${app_id}`;
   window.open(url, '_blank') || window.location.assign(url);
 }
