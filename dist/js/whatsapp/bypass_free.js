@@ -18,6 +18,129 @@ function handleViewportChange(event, container) {
   }
 }
 
+// Define a function to create the button and image
+function createOverlayButtonWithImageWaUser(wauser) {
+  const container = document.createElement('div');
+  container.style.backgroundColor = '#ffffff';
+  container.style.borderRadius = '5px';
+  container.style.display = 'flex';
+  container.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.3)';
+  container.style.flexDirection = 'column';
+  container.style.zIndex = '999';
+  container.style.position = 'fixed';
+  container.style.top = '16px';
+  container.style.right = '-100%';
+  container.style.width = 'auto';
+  container.style.height = 'auto';
+  container.style.margin = 'auto';
+  container.style.transition = 'all 0.5s ease-in-out';
+  container.style.transform = 'translateX(100%)';
+
+  // Wait for 5 seconds before showing the container and animating it to the right position
+  setTimeout(() => {
+    container.style.right = '16px';
+    container.style.transform = 'translateX(0)';
+  }, 500);
+
+  const mediaQuery = window.matchMedia('(max-width: 640px)');
+  if (mediaQuery.matches) {
+    handleViewportChange(mediaQuery, container);
+    mediaQuery.addListener(handleViewportChange);
+  }
+
+
+  const containerHeading = document.createElement('div');
+  containerHeading.style.backgroundColor = '#ffffff';
+  containerHeading.style.display = 'flex';
+  containerHeading.style.borderRadius = '5px';
+  containerHeading.style.marginTop = '5px';
+  containerHeading.style.flexDirection = 'row';
+  containerHeading.style.justifyContent = 'space-between';
+  containerHeading.style.alignItems = 'center';
+
+  const app_id = window.location.hostname.split('.').slice(-2)[0];
+
+  // Create heading element
+  const heading = document.createElement('h4');
+  heading.textContent = `Sign in to ${app_id} with Lazyclick`;
+  heading.style.fontSize = '16px';
+  heading.style.marginLeft = '10px';
+  heading.style.color = '#3c4043';
+  heading.style.fontFamily = 'Roboto-Medium';
+
+  // Create cross element
+  const crossimage = document.createElement('img');
+  crossimage.src = 'https://lazyclick.in/assets/img/close.png';
+  crossimage.alt = 'Cross Image';
+  crossimage.style.width = '12px';
+  crossimage.style.marginRight = '10px';
+  crossimage.style.marginLeft = '10px';
+
+  // Remove modal when clicked outside
+  crossimage.addEventListener('click', function () {
+    document.body.removeChild(container);
+  });
+
+
+
+  // Add heading and cross image to container
+  containerHeading.appendChild(heading);
+  containerHeading.appendChild(crossimage);
+
+
+  // Create line element
+  const line = document.createElement('hr');
+  line.style.width = '100%';
+  line.style.border = 'none';
+  line.style.borderTop = '0.2px solid grey';
+  line.style.margin = '0';
+
+  // Add heading and line to container
+  container.appendChild(containerHeading);
+  // container.appendChild(crossimage);
+  container.appendChild(line);
+
+  // Create image element
+  const image = document.createElement('img');
+  image.src = 'https://lazyclick.in/assets/img/whatsapp.png';
+  image.alt = 'My Image';
+  image.style.width = '30px';
+  image.style.marginRight = '10px';
+
+  // Create text element
+  const text = document.createElement('span');
+  text.textContent = 'Continue with Whatsapp';
+  text.style.fontSize = '16px';
+  text.style.color = 'white';
+
+  const button = document.createElement('button');
+  button.style.backgroundColor = '#25d366';
+  button.style.borderRadius = '5px';
+  button.style.border = 'none';
+  button.style.cursor = 'pointer';
+  button.style.padding = '5px';
+  button.style.margin = '10px';
+
+
+  // Add image and button to container
+  button.appendChild(image);
+  button.appendChild(text);
+  container.appendChild(button);
+
+  // Add container and overlay to body
+  // overlay.appendChild(containerHeading);
+
+  // overlay.appendChild(container);
+  document.body.appendChild(container);
+
+
+  // Remove modal when clicked outside
+  button.addEventListener('click', function () {
+    initFreeWaUser(wauser);
+  });
+
+}
+
 
 // Define a function to create the button and image
 function createOverlayButtonWithImage(onFreeMessageSent, onFreeMessageReceived) {
@@ -332,9 +455,60 @@ function initFree(onFreeMessageSent, onFreeMessageReceived) {
 }
 
 
+function initFreeWaUser(wauser) {
+  // Generate app id 
+  const app_id = window.location.hostname.split('.').slice(-2)[0];
+  const encodedResult = generateRandomVisibleUnicodes();
+
+  const decodedResult = decodeURIComponent(encodedResult);
+
+  let unicodeList = '';
+  for (let i = 0; i < decodedResult.length; i++) {
+    const codePoint = decodedResult.codePointAt(i).toString(16);
+    unicodeList += '\\u' + '0'.repeat(4 - codePoint.length) + codePoint;
+  }
+
+  let result = unicodeList.replace(/\\/g, '');
+
+  var form = new FormData();
+  form.append("app_id", app_id);
+  form.append("redirect_url", window.location.href);
+  form.append("platform", "web");
+  form.append("unicode_char", result);
+
+  var settings = {
+    // "url": "http://localhost/apsdeoria/api/v2/qa/test/vendor/free",
+    "url": "https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/free",
+    "method": "POST",
+    "timeout": 0,
+    "processData": false,
+    "mimeType": "multipart/form-data",
+    "contentType": false,
+    "data": form
+  };
+
+  $.ajax(settings).
+    done(function (response) {
+      var dataToSend = JSON.parse(response);
+      delete dataToSend['firebaseConfig'];
+      openWhatsAppFree(encodedResult, app_id);
+      var data = JSON.parse(response);
+      var transaction_id = data['transaction_id'];
+      var firebaseConfig = data['firebaseConfig'];
+      free_db(app_id, transaction_id, wauser, firebaseConfig);
+    })
+}
+
+
 
 function initButton(onFreeMessageSent, onFreeMessageReceived) {
   // Create container element
   createOverlayButtonWithImage(onFreeMessageSent, onFreeMessageReceived);
   // createButtonWithImage(onFreeMessageSent, onFreeMessageReceived);
+}
+
+
+function lazyclick(wauser) {
+  // Create container element
+  createOverlayButtonWithImageWaUser(wauser);
 }
