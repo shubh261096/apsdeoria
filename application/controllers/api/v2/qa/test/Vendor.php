@@ -151,10 +151,10 @@ class Vendor extends REST_Controller
             $isVendorAvailable = $this->WebhookModel->isVendorAvailable($app_id);
 
             if ($isVendorAvailable) {
-                $authorization_key = "Bearer EAAau0u0nhZBsBAKAAGr5N3ntnZAjCBxcwMl6i9TeSiMZCCw8AH3E0mf9vujSNGflcrFHxNHqSMC2N29TyYuop6uqWZA5jtbZAZAMmGiZA9VRVGmxm9IHSi20ENZBuDb6sOufsKJU7BvN01ofh0yupNcRA72q6K3Tg97HFY1qgckSKLC8IR2EVhHc";
+                $authorization_key = "Bearer EAAIvjH6tjOwBAICW8fUY14ns1TaJPx26j0imcffcVkxW7VXXn44XSMZC90emVdZAnWFMLsO44XBSlObr6HHtZAAm7Anhr7GWMxrlXFgsu0PKiZAKjYaT60lH2wkkC6TP3njqYQm3zveLKGyBsDSL7mNvyFgbZBZBndflc9TKaGFTyFer2hz0xi";
 
                 // Set POST variables
-                $url = 'https://graph.facebook.com/v15.0/101399809564251/messages';
+                $url = 'https://graph.facebook.com/v16.0/100254659725118/messages';
 
                 $transaction_id = 'txnId' . uniqid() . '_' . preg_replace('/(0)\.(\d+) (\d+)/', '$3$1$2', microtime());
 

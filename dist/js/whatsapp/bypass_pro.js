@@ -74,7 +74,7 @@ function loadScriptsPro(callback) {
 }
 
 function openWhatsAppPro() {
-    const phone = '15550020663';
+    const phone = '917880760128';
     const url = `whatsapp://send?phone=${phone}`;
     window.open(url);
 }
