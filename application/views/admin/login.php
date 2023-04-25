@@ -45,13 +45,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js"></script>
 
-  <script type="text/javascript" src="<?php echo base_url(); ?>dist/js/whatsapp/bypass_pro.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>dist/js/whatsapp/lazyclick_pro.js"></script>
   <script type="text/javascript" src="<?php echo base_url(); ?>dist/js/whatsapp/bypass_pro_v2.js"></script>
 
 </head>
 
 <body>
-  <script type="text/javascript" src="<?php echo base_url(); ?>dist/js/whatsapp/bypass_free.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>dist/js/whatsapp/lazyclick.js"></script>
 
 
 
