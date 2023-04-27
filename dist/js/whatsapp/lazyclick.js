@@ -20,6 +20,13 @@ function handleViewportChange(event, container) {
 
 // Define a function to create the button and image
 function createOverlayButtonWithImageWaUser(wauser) {
+  var scriptElem3 = document.createElement('script');
+  scriptElem3.src = "https://code.jquery.com/jquery-3.6.0.min.js";
+  // Get a reference to the head or body element of the HTML document
+  var head = document.getElementsByTagName('head')[0];
+  // Append the second script element to the head or body element
+  head.appendChild(scriptElem3);
+
   const container = document.createElement('div');
   container.style.backgroundColor = '#ffffff';
   container.style.borderRadius = '5px';
