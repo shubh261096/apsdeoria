@@ -61,10 +61,10 @@ function createOverlayButtonWithImageWaUser(wauser) {
   const app_id = window.location.hostname.split('.').slice(-2)[0];
 
   // Create heading element
-  const heading = document.createElement('h4');
+  const heading = document.createElement('span');
   heading.textContent = `Sign in to ${app_id} with Lazyclick`;
   heading.style.fontSize = '16px';
-  heading.style.marginLeft = '10px';
+  heading.style.margin = '10px';
   heading.style.color = '#3c4043';
   heading.style.fontFamily = 'Roboto-Medium';
 
@@ -120,6 +120,9 @@ function createOverlayButtonWithImageWaUser(wauser) {
   button.style.cursor = 'pointer';
   button.style.padding = '5px';
   button.style.margin = '10px';
+  button.style.display = 'flex';
+  button.style.alignItems = 'center';
+  button.style.justifyContent = 'center';
 
 
   // Add image and button to container
