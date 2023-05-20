@@ -53,7 +53,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
   <script type="text/javascript" src="<?php echo base_url(); ?>dist/js/whatsapp/lazyclick.js"></script>
 
-
+  <script>
+    lazyclick(function (wauser) {
+      console.log(wauser);
+    });
+  </script>
 
   <div class="container">
     <div class="row">
@@ -88,11 +92,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
           <?php echo form_error('password'); ?>
 
           <?php echo form_submit(['id' => 'submit', 'value' => 'Submit', 'class' => 'btn btn-lg btn-primary btn-block']); ?>
-          <script>
-            lazyclick(function (wauser) {
-              console.log(wauser);
-            });
-          </script>
           <?php form_close(); ?>
 
           <input type="button" value="ByPass Free Version" onclick="start()" />
