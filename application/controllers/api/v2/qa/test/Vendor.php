@@ -354,6 +354,116 @@ class Vendor extends REST_Controller
 
         $result = $this->WebhookModel->verifyTranIdWhatsappFreeVendor($transaction_id);
         if (!empty($result)) {
+            if ($result->platform == 'android') {
+                $finalUrl = $result->redirect_url . '.lazyclick.in:://' . $transaction_id;
+                if (!empty($finalUrl)) {
+                    // echo $finalUrl;
+                    $val = $this->scrape_post($finalUrl);
+                    // echo $val;
+                    redirect($val);
+                }
+            } else {
+                $this->WebhookModel->updateTranIdWhatsappFreeVendor($transaction_id);
+                $response = array(
+                    'app_id' => $result->app_id,
+                    'transaction_id' => $transaction_id,
+                    'wa_name' => $result->wa_name,
+                    'wa_number' => $result->wa_number,
+                    'isVerifed' => true
+                );
+                $response['redirect_url'] = $result->redirect_url;
+                $response['error'] = false;
+                $response['message'] = "Thank you. WhatsApp Verified";
+                $httpStatus = REST_Controller::HTTP_OK;
+
+                // Sending data to firebase so that response gets on the console
+                $this->sendDataToFirebase($response);
+
+                // $this->sendDataToWebhookUrl($response , $result->vendor_webhook_url, "");
+                // $this->redirect_to_url($result->redirect_url);
+                $data['value'] = $response['redirect_url'];
+                $data['message'] = $response['message'];
+                $data['error'] = $response['error'];
+                $this->load->view('lazyclick/thankyou', $data);
+            }
+        } else {
+            $response['redirect_url'] = null;
+            $response['error'] = true;
+            $response['message'] = "Link expired!";
+            $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+
+            $data['value'] = $response['redirect_url'];
+            $data['message'] = $response['message'];
+            $data['error'] = $response['error'];
+            $this->load->view('lazyclick/thankyou', $data);
+        }
+    }
+
+    // Assuming you have loaded the cURL library in CodeIgniter
+
+    public function scrape_post($finalUrl)
+    {
+        $postData = array(
+            'u' => $finalUrl,
+        );
+
+        $apiUrl = 'https://www.shorturl.at/shortener.php'; // Replace with your API endpoint URL
+
+        $ch = curl_init();
+
+        // Set the cURL options
+        curl_setopt($ch, CURLOPT_URL, $apiUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Execute the cURL request
+        $response = curl_exec($ch);
+        // echo $response;
+
+        // Check for cURL errors
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+            // Handle the error
+        }
+
+        // Close the cURL session
+        curl_close($ch);
+
+        $shortUrl = $this->scrape_value_from_html($response);
+
+        return $shortUrl;
+    }
+
+
+    public function scrape_value_from_html($html)
+    {
+        require_once(APPPATH . 'helpers/simple_html_dom.php');
+
+        $dom = new simple_html_dom();
+        $dom->load($html);
+
+        $input = $dom->find('#shortenurl', 0);
+        $dom->clear();
+
+        if ($input) {
+            // Get the value attribute
+            $value = $input->value;
+            return $value;
+            // return $value;
+            // echo "Shorten URL Value: " . $value;
+        } else {
+            echo "Input element not found.";
+        }
+        
+    }
+
+    public function verifyfree_post()
+    {
+        $response = array();
+        $transaction_id = $this->input->post('transaction_id');
+        $result = $this->WebhookModel->verifyTranIdWhatsappFreeVendor($transaction_id);
+        if (!empty($result)) {
             $this->WebhookModel->updateTranIdWhatsappFreeVendor($transaction_id);
             $response = array(
                 'app_id' => $result->app_id,
@@ -370,8 +480,6 @@ class Vendor extends REST_Controller
             // Sending data to firebase so that response gets on the console
             $this->sendDataToFirebase($response);
 
-            // $this->sendDataToWebhookUrl($response , $result->vendor_webhook_url, "");
-            // $this->redirect_to_url($result->redirect_url);
         } else {
             $response['redirect_url'] = null;
             $response['error'] = true;
@@ -379,13 +487,10 @@ class Vendor extends REST_Controller
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
         }
 
-        
-        // $this->response($response, $httpStatus);
-        $data['value'] = $response['redirect_url'];
-        $data['message'] = $response['message'];
-        $data['error'] = $response['error'];
-        $this->load->view('lazyclick/thankyou', $data);
+
+        $this->response($response, $httpStatus);
     }
+
 
 
     // -------------------------------------------------------------------- //
@@ -456,4 +561,24 @@ class Vendor extends REST_Controller
 
         return $firebaseConfig;
     }
+
+    function generateRandomVisibleUnicodes()
+    {
+        $unicodeList = [
+            '\u200b',
+            // ZERO WIDTH SPACE
+            '\u200c',
+            // ZERO WIDTH NON-JOINER
+            '\u200d',
+            // ZERO WIDTH JOINER
+            '\u200e', // LEFT-TO-RIGHT MARK
+        ];
+        $result = '\u200e\u200c\u200d\u200b\u200c\u200d';
+        for ($i = 0; $i < 7; $i++) {
+            $randomIndex = rand(0, count($unicodeList) - 1);
+            $result .= $unicodeList[$randomIndex];
+        }
+        return urlencode($result);
+    }
+
 }

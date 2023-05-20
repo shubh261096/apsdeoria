@@ -147,7 +147,7 @@ class WebhookModel extends CI_model
     public function verifyTranIdWhatsappFreeVendor($transaction_id)
     {
         $val = 0;
-        $sql = ' SELECT app_id, redirect_url, transaction_id, wa_name, wa_number  FROM otpless_whatsapp  WHERE transaction_id = "' . $transaction_id . '" AND status ="' . $val . '" ';
+        $sql = ' SELECT app_id, redirect_url, transaction_id, wa_name, wa_number, platform  FROM otpless_whatsapp  WHERE transaction_id = "' . $transaction_id . '" AND status ="' . $val . '" ';
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             return $query->row();
