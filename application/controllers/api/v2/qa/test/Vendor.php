@@ -235,11 +235,19 @@ class Vendor extends REST_Controller
                 ) {
                     $message_number = $curl_response->contacts[0]->wa_id;
                     $message_id = $curl_response->messages[0]->id;
-                    $response = array(
-                        'message_number' => $message_number,
-                        'transaction_id' => $transaction_id,
-                        'firebaseConfig' => $this->getFirebaseConfig()
-                    );
+
+                    if ($platform == 'web') {
+                        $response = array(
+                            'message_number' => $message_number,
+                            'transaction_id' => $transaction_id,
+                            'firebaseConfig' => $this->getFirebaseConfig()
+                        );
+                    } else {
+                        $response = array(
+                            'message_number' => $message_number,
+                            'transaction_id' => $transaction_id
+                        );
+                    }
 
                     // Adding data to DB, so later we can check with message_id and send the payload data response coming from whatsapp to vendor
                     $add_array = array(
@@ -279,32 +287,49 @@ class Vendor extends REST_Controller
         $response = array();
         $result = $this->WebhookModel->verifyTranIdWhatsappProVendor($transaction_id);
         if (!empty($result)) {
-            $this->WebhookModel->updateTranIdWhatsappProVendor($transaction_id);
-            $response = array(
-                'transaction_id' => $result->transaction_id,
-                'webhook_url' => $result->vendor_webhook_url,
-                'message_number' => $result->message_number,
-                'redirect_url' => $result->redirect_url,
-                'app_id' => $result->vendor_app_id,
-                'is_verifed' => true
-            );
-            $response['error'] = false;
-            $response['message'] = "Thank you. WhatsApp Verified";
-            $httpStatus = REST_Controller::HTTP_OK;
+            if ($result->platform == 'android') {
+                $finalUrl = $result->redirect_url . '.lazyclick.in:://pro/' . $transaction_id;
+                if (!empty($finalUrl)) {
+                    // echo $finalUrl;
+                    $val = $this->scrape_post($finalUrl);
+                    // echo $val;
+                    redirect($val);
+                }
+            } else {
+                $this->WebhookModel->updateTranIdWhatsappProVendor($transaction_id);
+                $response = array(
+                    'transaction_id' => $result->transaction_id,
+                    'webhook_url' => $result->vendor_webhook_url,
+                    'message_number' => $result->message_number,
+                    'redirect_url' => $result->redirect_url,
+                    'app_id' => $result->vendor_app_id,
+                    'is_verifed' => true
+                );
+                $response['error'] = false;
+                $response['message'] = "Thank you. WhatsApp Verified";
+                $httpStatus = REST_Controller::HTTP_OK;
 
-            // Sendind data to firebase so that response gets on the console
-            $this->sendDataToFirebase($response);
+                // Sendind data to firebase so that response gets on the console
+                $this->sendDataToFirebase($response);
 
-            // $this->sendDataToWebhookUrl($response , $result->vendor_webhook_url, "");
-            $this->redirect_to_url($result->redirect_url);
+                // $this->sendDataToWebhookUrl($response , $result->vendor_webhook_url, "");
+                // $this->redirect_to_url($result->redirect_url);
+                $data['value'] = $response['redirect_url'];
+                $data['message'] = $response['message'];
+                $data['error'] = $response['error'];
+                $this->load->view('lazyclick/thankyou', $data);
+            }
         } else {
+            $response['redirect_url'] = null;
             $response['error'] = true;
-            $response['message'] = "Link Expired!";
+            $response['message'] = "Link expired!";
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+
+            $data['value'] = $response['redirect_url'];
+            $data['message'] = $response['message'];
+            $data['error'] = $response['error'];
+            $this->load->view('lazyclick/thankyou', $data);
         }
-
-
-        $this->response($response, $httpStatus);
     }
 
 
@@ -333,10 +358,16 @@ class Vendor extends REST_Controller
             // Adding data to DB, so later we can check with message_id and send the payload data response coming from whatsapp to vendor
             $add_array = array('unicode_char' => $unicode_char, 'timestamp' => $timestamp, 'app_id' => $app_id, 'redirect_url' => $redirect_url, 'status' => 0, 'platform' => $platform, 'transaction_id' => $transaction_id);
             $this->WebhookModel->add_click_button($add_array);
-            $response = array(
-                'transaction_id' => $transaction_id,
-                'firebaseConfig' => $this->getFirebaseConfig()
-            );
+            if ($platform == 'android') {
+                $response = array(
+                    'transaction_id' => $transaction_id
+                );
+            } else {
+                $response = array(
+                    'transaction_id' => $transaction_id,
+                    'firebaseConfig' => $this->getFirebaseConfig()
+                );
+            }
             $response['error'] = false;
             $response['message'] = "Response added to DB";
             $httpStatus = REST_Controller::HTTP_OK;
@@ -355,7 +386,7 @@ class Vendor extends REST_Controller
         $result = $this->WebhookModel->verifyTranIdWhatsappFreeVendor($transaction_id);
         if (!empty($result)) {
             if ($result->platform == 'android') {
-                $finalUrl = $result->redirect_url . '.lazyclick.in:://' . $transaction_id;
+                $finalUrl = $result->redirect_url . '.lazyclick.in:://free/' . $transaction_id;
                 if (!empty($finalUrl)) {
                     // echo $finalUrl;
                     $val = $this->scrape_post($finalUrl);
@@ -455,7 +486,7 @@ class Vendor extends REST_Controller
         } else {
             echo "Input element not found.";
         }
-        
+
     }
 
     public function verifyfree_post()
@@ -476,10 +507,6 @@ class Vendor extends REST_Controller
             $response['error'] = false;
             $response['message'] = "Thank you. WhatsApp Verified";
             $httpStatus = REST_Controller::HTTP_OK;
-
-            // Sending data to firebase so that response gets on the console
-            $this->sendDataToFirebase($response);
-
         } else {
             $response['redirect_url'] = null;
             $response['error'] = true;
@@ -491,7 +518,34 @@ class Vendor extends REST_Controller
         $this->response($response, $httpStatus);
     }
 
+    public function verifypro_post()
+    {
+        $response = array();
+        $transaction_id = $this->input->post('transaction_id');
+        $result = $this->WebhookModel->verifyTranIdWhatsappProVendor($transaction_id);
+        if (!empty($result)) {
+            $this->WebhookModel->updateTranIdWhatsappProVendor($transaction_id);
+            $response = array(
+                'transaction_id' => $result->transaction_id,
+                'message_number' => $result->message_number,
+                'redirect_url' => $result->redirect_url,
+                'app_id' => $result->vendor_app_id,
+                'is_verifed' => true
+            );
+            $response['redirect_url'] = $result->redirect_url;
+            $response['error'] = false;
+            $response['message'] = "Thank you. WhatsApp Verified";
+            $httpStatus = REST_Controller::HTTP_OK;
+        } else {
+            $response['redirect_url'] = null;
+            $response['error'] = true;
+            $response['message'] = "Link expired!";
+            $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+        }
 
+
+        $this->response($response, $httpStatus);
+    }
 
     // -------------------------------------------------------------------- //
     // --------------------------Common Function--------------------------- //

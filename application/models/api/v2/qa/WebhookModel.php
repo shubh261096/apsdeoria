@@ -118,7 +118,7 @@ class WebhookModel extends CI_model
     public function verifyTranIdWhatsappProVendor($transaction_id)
     {
         $val = 0;
-        $sql = ' SELECT vtb.vendor_app_id, vtb.vendor_webhook_url, wtb.message_number, wtb.transaction_id, wtb.redirect_url FROM vendor AS vtb INNER JOIN whatsapp AS wtb ON vtb.vendor_app_id = wtb.app_id WHERE wtb.transaction_id = "' . $transaction_id . '" AND wtb.status ="' . $val . '" ';
+        $sql = ' SELECT vtb.vendor_app_id, vtb.vendor_webhook_url, wtb.message_number, wtb.transaction_id, wtb.redirect_url, wtb.platform FROM vendor AS vtb INNER JOIN whatsapp AS wtb ON vtb.vendor_app_id = wtb.app_id WHERE wtb.transaction_id = "' . $transaction_id . '" AND wtb.status ="' . $val . '" ';
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             return $query->row();
