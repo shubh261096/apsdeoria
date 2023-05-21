@@ -552,8 +552,8 @@ class Vendor extends REST_Controller
     // -------------------------------------------------------------------- //
     private function sendDataToFirebase($response)
     {
-        $url = "https://zerootp-100-default-rtdb.firebaseio.com";
-        $token = "GdQu9hJkcx9dSnr8TbtbGMFbtRqNZJvfMke8FVQf";
+        $url = "https://lazyclick-in-default-rtdb.firebaseio.com";
+        $token = "H2N5G32BriM4LjyRZ0Hsh0kORNfjn2sQcc0Rr7vU";
         $path = $response['app_id'];
 
         $firebase = new FirebaseLib($url, $token);
@@ -604,13 +604,13 @@ class Vendor extends REST_Controller
     private function getFirebaseConfig()
     {
         $firebaseConfig = array(
-            'apiKey' => 'AIzaSyD8rl2PACsA5FHpa1NCdigR7BlfrPSY8GI',
-            'authDomain' => 'zerootp-100.firebaseapp.com',
-            'databaseURL' => 'https://zerootp-100-default-rtdb.firebaseio.com',
-            'projectId' => 'zerootp-100',
-            'storageBucket' => 'zerootp-100.appspot.com',
-            'messagingSenderId' => '615329825807',
-            'appId' => '1:615329825807:web:98cf7ee2b6a8f691198f7a'
+            'apiKey' => 'AIzaSyAq57wQRWvV_xWLMpNRVxVuT4cNY8VLJM8',
+            'authDomain' => 'lazyclick-in.firebaseapp.com',
+            'databaseURL' => 'https://lazyclick-in-default-rtdb.firebaseio.com',
+            'projectId' => 'lazyclick-in',
+            'storageBucket' => 'lazyclick-in.appspot.com',
+            'messagingSenderId' => '385520452696',
+            'appId' => '1:385520452696:web:34d44caff42b981e34f62d'
         );
 
         return $firebaseConfig;
