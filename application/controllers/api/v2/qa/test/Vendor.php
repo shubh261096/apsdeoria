@@ -21,6 +21,13 @@ class Vendor extends REST_Controller
         $this->load->helper('commonqa');
     }
 
+    function generateUniqueID($length = 4) {
+        $uniqueID = uniqid();
+        $randomString = substr($uniqueID, - $length);
+    
+        return $randomString;
+    }
+
 
     public function index_get()
     {
@@ -51,7 +58,7 @@ class Vendor extends REST_Controller
                 // Set POST variables
                 $url = 'https://graph.facebook.com/v15.0/101399809564251/messages';
 
-                $transaction_id = 'txnId' . uniqid() . '_' . preg_replace('/(0)\.(\d+) (\d+)/', '$3$1$2', microtime());
+                $transaction_id = $this->generateUniqueID(4);
 
                 $headers = array(
                     'Authorization: ' . $authorization_key,
@@ -156,7 +163,7 @@ class Vendor extends REST_Controller
                 // Set POST variables
                 $url = 'https://graph.facebook.com/v16.0/100254659725118/messages';
 
-                $transaction_id = 'txnId' . uniqid() . '_' . preg_replace('/(0)\.(\d+) (\d+)/', '$3$1$2', microtime());
+                $transaction_id = $this->generateUniqueID(4);
 
                 $dataForDeeplink = "{
                     'messaging_product': 'whatsapp',
@@ -346,7 +353,7 @@ class Vendor extends REST_Controller
             $platform = $this->input->post('platform');
             $unicode_char = $this->input->post('unicode_char');
             $timestamp = time();
-            $transaction_id = 'txnId' . uniqid() . '_' . preg_replace('/(0)\.(\d+) (\d+)/', '$3$1$2', microtime());
+            $transaction_id = $this->generateUniqueID(4);
 
             $isVendorAvailable = $this->WebhookModel->isVendorAvailable($app_id);
 
