@@ -294,7 +294,7 @@ class Webhook extends REST_Controller
                                 'parameters': [
                                     {
                                         'type': 'text',
-                                        'text': 'verifyfree/$transaction_id'
+                                        'text': 'vfree/$transaction_id'
                                     }
                                 ]
                             }

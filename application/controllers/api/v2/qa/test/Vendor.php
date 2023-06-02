@@ -163,7 +163,7 @@ class Vendor extends REST_Controller
                 // Set POST variables
                 $url = 'https://graph.facebook.com/v16.0/100254659725118/messages';
 
-                $transaction_id = $this->generateUniqueID(4);
+                $transaction_id = $this->generateUniqueID(9);
 
                 $dataForDeeplink = "{
                     'messaging_product': 'whatsapp',
@@ -183,7 +183,7 @@ class Vendor extends REST_Controller
                                 'parameters': [
                                     {
                                         'type': 'text',
-                                        'text': 'verifypro/$transaction_id'
+                                        'text': 'vpro/$transaction_id'
                                     }
                                 ]
                             }
@@ -339,6 +339,57 @@ class Vendor extends REST_Controller
         }
     }
 
+    // This function is added to extend the limit of FB URL text char to 9
+    public function vpro_get($transaction_id)
+    {
+        $response = array();
+        $result = $this->WebhookModel->verifyTranIdWhatsappProVendor($transaction_id);
+        if (!empty($result)) {
+            if ($result->platform == 'android') {
+                $finalUrl = $result->redirect_url . '.lazyclick.in:://pro/' . $transaction_id;
+                if (!empty($finalUrl)) {
+                    // echo $finalUrl;
+                    $val = $this->scrape_post($finalUrl);
+                    // echo $val;
+                    redirect($val);
+                }
+            } else {
+                $this->WebhookModel->updateTranIdWhatsappProVendor($transaction_id);
+                $response = array(
+                    'transaction_id' => $result->transaction_id,
+                    'webhook_url' => $result->vendor_webhook_url,
+                    'message_number' => $result->message_number,
+                    'redirect_url' => $result->redirect_url,
+                    'app_id' => $result->vendor_app_id,
+                    'is_verifed' => true
+                );
+                $response['error'] = false;
+                $response['message'] = "Thank you. WhatsApp Verified";
+                $httpStatus = REST_Controller::HTTP_OK;
+
+                // Sendind data to firebase so that response gets on the console
+                $this->sendDataToFirebase($response);
+
+                // $this->sendDataToWebhookUrl($response , $result->vendor_webhook_url, "");
+                // $this->redirect_to_url($result->redirect_url);
+                $data['value'] = $response['redirect_url'];
+                $data['message'] = $response['message'];
+                $data['error'] = $response['error'];
+                $this->load->view('lazyclick/thankyou', $data);
+            }
+        } else {
+            $response['redirect_url'] = null;
+            $response['error'] = true;
+            $response['message'] = "Link expired!";
+            $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+
+            $data['value'] = $response['redirect_url'];
+            $data['message'] = $response['message'];
+            $data['error'] = $response['error'];
+            $this->load->view('lazyclick/thankyou', $data);
+        }
+    }
+
 
     // -------------------------------------------------------------------- //
     // ------------This code is for Free version Yes Button Deeplink------- //
@@ -353,7 +404,7 @@ class Vendor extends REST_Controller
             $platform = $this->input->post('platform');
             $unicode_char = $this->input->post('unicode_char');
             $timestamp = time();
-            $transaction_id = $this->generateUniqueID(4);
+            $transaction_id = $this->generateUniqueID(9);
 
             $isVendorAvailable = $this->WebhookModel->isVendorAvailable($app_id);
 
@@ -412,6 +463,58 @@ class Vendor extends REST_Controller
                 $response['redirect_url'] = $result->redirect_url;
                 $response['error'] = false;
                 $response['message'] = "Thank you. WhatsApp Verified";
+                $httpStatus = REST_Controller::HTTP_OK;
+
+                // Sending data to firebase so that response gets on the console
+                $this->sendDataToFirebase($response);
+
+                // $this->sendDataToWebhookUrl($response , $result->vendor_webhook_url, "");
+                // $this->redirect_to_url($result->redirect_url);
+                $data['value'] = $response['redirect_url'];
+                $data['message'] = $response['message'];
+                $data['error'] = $response['error'];
+                $this->load->view('lazyclick/thankyou', $data);
+            }
+        } else {
+            $response['redirect_url'] = null;
+            $response['error'] = true;
+            $response['message'] = "Link expired!";
+            $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+
+            $data['value'] = $response['redirect_url'];
+            $data['message'] = $response['message'];
+            $data['error'] = $response['error'];
+            $this->load->view('lazyclick/thankyou', $data);
+        }
+    }
+
+    // This function is added to extend the limit of FB URL text char to 9
+    public function vfree_get($transaction_id)
+    {
+        $response = array();
+
+        $result = $this->WebhookModel->verifyTranIdWhatsappFreeVendor($transaction_id);
+        if (!empty($result)) {
+            if ($result->platform == 'android') {
+                $finalUrl = $result->redirect_url . '.lazyclick.in:://free/' . $transaction_id;
+                if (!empty($finalUrl)) {
+                    // echo $finalUrl;
+                    $val = $this->scrape_post($finalUrl);
+                    // echo $val;
+                    redirect($val);
+                }
+            } else {
+                $this->WebhookModel->updateTranIdWhatsappFreeVendor($transaction_id);
+                $response = array(
+                    'app_id' => $result->app_id,
+                    'transaction_id' => $transaction_id,
+                    'wa_name' => $result->wa_name,
+                    'wa_number' => $result->wa_number,
+                    'isVerifed' => true
+                );
+                $response['redirect_url'] = $result->redirect_url;
+                $response['error'] = false;
+                $response['message'] = 'Thank you ' . $result->wa_name;
                 $httpStatus = REST_Controller::HTTP_OK;
 
                 // Sending data to firebase so that response gets on the console
