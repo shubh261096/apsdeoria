@@ -367,6 +367,165 @@ class Webhook extends REST_Controller
     curl_close($ch);
   }
 
+  private function hitWhatsappApiFreeVresionTextLink($transaction_id, $number)
+  {
+    $authorization_key = "Bearer EAAIvjH6tjOwBAICW8fUY14ns1TaJPx26j0imcffcVkxW7VXXn44XSMZC90emVdZAnWFMLsO44XBSlObr6HHtZAAm7Anhr7GWMxrlXFgsu0PKiZAKjYaT60lH2wkkC6TP3njqYQm3zveLKGyBsDSL7mNvyFgbZBZBndflc9TKaGFTyFer2hz0xi";
+
+    // Set POST variables
+    $url = 'https://graph.facebook.com/v16.0/100254659725118/messages';
+
+    $_url = 'https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/vfree/' . $transaction_id;
+    $text_url = $this->generateDynamicLink($_url);
+
+    $dataForDeeplink = "{
+                    'messaging_product': 'whatsapp',
+                    'recipient_type': 'individual',
+                    'to': $number,
+                    'type': 'template',
+                    'template': {
+                        'name': 'text_link',
+                        'language': {
+                            'code': 'en'
+                        },
+                        'components': [
+                            {
+                                'type': 'body',
+                                'parameters': [
+                                    {
+                                        'type': 'text',
+                                        'text': '$text_url'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }";
+    $headers = array(
+      'Authorization: ' . $authorization_key,
+      'Content-Type: application/json'
+    );
+
+    // Open connection
+    $ch = curl_init();
+
+    // Set the url, number of POST vars, POST data
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Disabling SSL Certificate support temporarily
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataForDeeplink);
+
+    // Execute post
+    $curl_response = json_decode(curl_exec($ch));
+
+
+    /**
+     * $response = 
+     *          '{
+     *              "messaging_product": "whatsapp",
+     *              "contacts": [
+     *                            {
+     *                              "input": "918447050052",
+     *                              "wa_id": "918447050052"
+     *                            }
+     *                          ],
+     *              "messages": [
+     *                            {
+     *                              "id": "wamid.HBgMOTE4NDQ3MDUwMDUyFQIAERgSMzBFMDY4QkY3RjFDRDkyM0RBAA=="
+     *                            }
+     *                          ]
+     *          }';
+     * */
+
+    if (
+      (property_exists($curl_response, 'contacts') && isset($curl_response->contacts)) &&
+      (property_exists($curl_response, 'messages') && isset($curl_response->messages))
+    ) {
+      $message_number = $curl_response->contacts[0]->input;
+      $message_id = $curl_response->messages[0]->id;
+      $response = array(
+        'message_number' => $message_number,
+        'transaction_id' => $transaction_id
+      );
+
+      $response['error'] = false;
+      $response['message'] = "Message sent to WhatsApp";
+      $httpStatus = REST_Controller::HTTP_OK;
+    } else {
+      $response['error'] = true;
+      $response['message'] = "WhatsApp Token Expired";
+      $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+    }
+
+    // Close connection
+    curl_close($ch);
+  }
+
+  private function generateDynamicLink($text_url)
+  {
+    $authorization_key = 'AIzaSyAq57wQRWvV_xWLMpNRVxVuT4cNY8VLJM8';
+
+    // Set POST variables
+    $url = 'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=' . $authorization_key;
+
+    $dataForDeeplink = "{
+                    'longDynamicLink': 'https://lazyclick.page.link/?link=$text_url',
+                }";
+    $headers = array(
+      'Content-Type: application/json'
+    );
+
+    // Open connection
+    $ch = curl_init();
+
+    // Set the url, number of POST vars, POST data
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Disabling SSL Certificate support temporarily
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataForDeeplink);
+
+    // Execute post
+    $curl_response = json_decode(curl_exec($ch));
+
+
+    /**{
+      "shortLink": "https://lazyclick.page.link/dp9s9yqvnVt41VQG7",
+      "warning": [
+          {
+              "warningCode": "UNRECOGNIZED_PARAM",
+              "warningMessage": "Android app 'com.lazyclick' lacks SHA256. AppLinks is not enabled for the app. [https://firebase.google.com/docs/dynamic-links/debug#android-sha256-absent]"
+          },
+          {
+              "warningCode": "UNRECOGNIZED_PARAM",
+              "warningMessage": "There is no configuration to prevent phishing on this domain https://lazyclick.page.link. Setup URL patterns to whitelist in the Firebase Dynamic Links console. [https://support.google.com/firebase/answer/9021429]"
+          }
+      ],
+      "previewLink": "https://lazyclick.page.link/dp9s9yqvnVt41VQG7?d=1"
+    }*/
+
+    // Close connection
+    curl_close($ch);
+
+
+    if (
+      (property_exists($curl_response, 'shortLink') && isset($curl_response->shortLink))
+    ) {
+
+      $shortLink = $curl_response->shortLink;
+      return $shortLink;
+    }
+  }
 
 
 
