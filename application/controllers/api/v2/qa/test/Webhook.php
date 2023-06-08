@@ -562,6 +562,9 @@ class Webhook extends REST_Controller
 
     $dataForDeeplink = "{
                     'longDynamicLink': 'https://lazyclick.page.link/?link=$text_url',
+                    'suffix' : {
+                      'option': 'SHORT'
+                    }
                 }";
     $headers = array(
       'Content-Type: application/json'
