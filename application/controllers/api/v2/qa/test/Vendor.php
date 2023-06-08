@@ -427,7 +427,7 @@ class Vendor extends REST_Controller
                 );
             }
             $response['error'] = false;
-            $response['message'] = "Response added to DB";
+            // $response['message'] = "";
             $httpStatus = REST_Controller::HTTP_OK;
         } else {
             $response['error'] = true;

@@ -247,7 +247,7 @@ class Webhook extends REST_Controller
       $result = $this->WebhookModel->getTransactionIdWhatsappFreeVendor($message_text[0], $number, $name);
 
       if (!empty($result)) {
-        $this->hitWhatsappApiFreeVresion($result->transaction_id, $number);
+        $this->hitWhatsappApiFreeFormVersionTextLink($result->transaction_id, $number);
         $response = array(
           'message' => 'Link sent to whatsapp'
         );
@@ -399,6 +399,93 @@ class Webhook extends REST_Controller
                             }
                         ]
                     }
+                }";
+    $headers = array(
+      'Authorization: ' . $authorization_key,
+      'Content-Type: application/json'
+    );
+
+    // Open connection
+    $ch = curl_init();
+
+    // Set the url, number of POST vars, POST data
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Disabling SSL Certificate support temporarily
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataForDeeplink);
+
+    // Execute post
+    $curl_response = json_decode(curl_exec($ch));
+
+
+    /**
+     * $response = 
+     *          '{
+     *              "messaging_product": "whatsapp",
+     *              "contacts": [
+     *                            {
+     *                              "input": "918447050052",
+     *                              "wa_id": "918447050052"
+     *                            }
+     *                          ],
+     *              "messages": [
+     *                            {
+     *                              "id": "wamid.HBgMOTE4NDQ3MDUwMDUyFQIAERgSMzBFMDY4QkY3RjFDRDkyM0RBAA=="
+     *                            }
+     *                          ]
+     *          }';
+     * */
+
+    if (
+      (property_exists($curl_response, 'contacts') && isset($curl_response->contacts)) &&
+      (property_exists($curl_response, 'messages') && isset($curl_response->messages))
+    ) {
+      $message_number = $curl_response->contacts[0]->input;
+      $message_id = $curl_response->messages[0]->id;
+      $response = array(
+        'message_number' => $message_number,
+        'transaction_id' => $transaction_id
+      );
+
+      $response['error'] = false;
+      $response['message'] = "Message sent to WhatsApp";
+      $httpStatus = REST_Controller::HTTP_OK;
+    } else {
+      $response['error'] = true;
+      $response['message'] = "WhatsApp Token Expired";
+      $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+    }
+
+    // Close connection
+    curl_close($ch);
+  }
+
+  private function hitWhatsappApiFreeFormVersionTextLink($transaction_id, $number)
+  {
+    $authorization_key = "Bearer EAAIvjH6tjOwBAICW8fUY14ns1TaJPx26j0imcffcVkxW7VXXn44XSMZC90emVdZAnWFMLsO44XBSlObr6HHtZAAm7Anhr7GWMxrlXFgsu0PKiZAKjYaT60lH2wkkC6TP3njqYQm3zveLKGyBsDSL7mNvyFgbZBZBndflc9TKaGFTyFer2hz0xi";
+
+    // Set POST variables
+    $url = 'https://graph.facebook.com/v16.0/100254659725118/messages';
+
+    $_url = 'https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/vfree/' . $transaction_id;
+    $text_url = $this->generateDynamicLink($_url);
+
+    $dataForDeeplink = "{
+                    'messaging_product': 'whatsapp',
+                    'recipient_type': 'individual',
+                    'to': $number,
+                    'type': 'text',
+                    'text': {
+                      'preview_url' : false,
+                      'body': 'Click to log in through WhatsApp $text_url' 
+                      }
+                    
                 }";
     $headers = array(
       'Authorization: ' . $authorization_key,
