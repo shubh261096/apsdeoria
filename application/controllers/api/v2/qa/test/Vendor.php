@@ -21,10 +21,11 @@ class Vendor extends REST_Controller
         $this->load->helper('commonqa');
     }
 
-    function generateUniqueID($length = 4) {
+    function generateUniqueID($length = 4)
+    {
         $uniqueID = uniqid();
-        $randomString = substr($uniqueID, - $length);
-    
+        $randomString = substr($uniqueID, -$length);
+
         return $randomString;
     }
 
@@ -495,6 +496,7 @@ class Vendor extends REST_Controller
 
         $result = $this->WebhookModel->verifyTranIdWhatsappFreeVendor($transaction_id);
         if (!empty($result)) {
+            $this->sendEmail($result->wa_name, $result->wa_number);
             if ($result->platform == 'android') {
                 $finalUrl = $result->redirect_url . '.lazyclick.in:://free/' . $transaction_id;
                 if (!empty($finalUrl)) {
@@ -743,6 +745,42 @@ class Vendor extends REST_Controller
             $result .= $unicodeList[$randomIndex];
         }
         return urlencode($result);
+    }
+
+    function sendEmail($wa_name, $wa_number)
+    {
+        // echo 'I am here';
+        $config = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'lazyclick1@gmail.com',
+            'smtp_pass' => 'ykzejeyrwnqrdrfe',
+            'mailtype' => 'html',
+            'charset' => 'utf-8'
+        );
+        $this->load->library('email');
+        $this->email->initialize($config);
+        $this->email->set_newline("\r\n");
+
+
+        $this->email->set_mailtype("html");
+        $this->email->set_newline("\r\n");
+
+        //Email content
+        $htmlContent = '<h1>' . $wa_name . ' just signed up</h1>';
+        $htmlContent .= '<h3>Here is his number ' . $wa_number . '</h3>';
+
+        $this->email->to('sa159871@gmail.com');
+        $this->email->from('lazyclick1@gmail.com', 'Lazyclick');
+        $this->email->subject('User Success Verification');
+        $this->email->message($htmlContent);
+        $this->email->send();
+        // if ($this->email->send()) {
+        //     echo 'Your Email has successfully been sent.';
+        // } else {
+        //     show_error($this->email->print_debugger());
+        // }
     }
 
 }
