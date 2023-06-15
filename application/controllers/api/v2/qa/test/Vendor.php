@@ -423,8 +423,7 @@ class Vendor extends REST_Controller
                 );
             } else {
                 $response = array(
-                    'transaction_id' => $transaction_id,
-                    'firebaseConfig' => $this->getFirebaseConfig()
+                    'transaction_id' => $transaction_id
                 );
             }
             $response['error'] = false;

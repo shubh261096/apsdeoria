@@ -2,8 +2,17 @@
 // -------------------------------------------------------------------- //
 
 
-function free_db(app_id, transaction_id, onFreeMessageReceived, firebaseConfig) {
+function free_db(app_id, transaction_id, onFreeMessageReceived) {
     loadScriptsFree(function () {
+        const firebaseConfig = {
+            apiKey: "AIzaSyAq57wQRWvV_xWLMpNRVxVuT4cNY8VLJM8",
+            authDomain: "lazyclick-in.firebaseapp.com",
+            databaseURL: "https://lazyclick-in-default-rtdb.firebaseio.com",
+            projectId: "lazyclick-in",
+            storageBucket: "lazyclick-in.appspot.com",
+            messagingSenderId: "385520452696",
+            appId: "1:385520452696:web:34d44caff42b981e34f62d"
+          };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         // Initalize Database
@@ -118,13 +127,11 @@ function initFree(onFreeMessageSent, onFreeMessageReceived) {
     $.ajax(settings).
         done(function (response) {
             var dataToSend = JSON.parse(response);
-            delete dataToSend['firebaseConfig'];
             onFreeMessageSent(dataToSend);
             openWhatsAppFree(encodedResult, app_id);
             var data = JSON.parse(response);
             var transaction_id = data['transaction_id'];
-            var firebaseConfig = data['firebaseConfig'];
-            free_db(app_id, transaction_id, onFreeMessageReceived, firebaseConfig);
+            free_db(app_id, transaction_id, onFreeMessageReceived);
         })
         .fail(function (response) {
             onFreeMessageSent(response.responseText);
