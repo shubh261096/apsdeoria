@@ -404,6 +404,12 @@ class Vendor extends REST_Controller
             $redirect_url = $this->input->post('redirect_url');
             $platform = $this->input->post('platform');
             $unicode_char = $this->input->post('unicode_char');
+            $prefix = "u200";
+            if (substr($unicode_char, 0, strlen($prefix)) === $prefix) {
+                $unicode_char = $unicode_char;
+            } else {
+                $unicode_char = base64_decode($unicode_char);
+            }
             $timestamp = time();
             $transaction_id = $this->generateUniqueID(9);
 

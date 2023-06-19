@@ -111,7 +111,7 @@ function initFree(onFreeMessageSent, onFreeMessageReceived) {
     form.append("app_id", app_id);
     form.append("redirect_url", window.location.href);
     form.append("platform", "web");
-    form.append("unicode_char", result);
+    form.append("unicode_char", btoa(result));
 
     var settings = {
         // "url": "http://localhost/apsdeoria/api/v2/qa/test/vendor/free",
