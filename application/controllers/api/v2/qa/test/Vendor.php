@@ -396,6 +396,16 @@ class Vendor extends REST_Controller
     // ------------This code is for Free version Yes Button Deeplink------- //
     // -------------------------------------------------------------------- //
 
+    // This function is responsible for decoding values coming from js file
+    function customDecode($encodedString) {
+        $decodedString = '';
+        for ($i = 0; $i < strlen($encodedString); $i++) {
+          $charCode = ord($encodedString[$i]) - 5; // Subtract 5 from the character code
+          $decodedString .= chr($charCode);
+        }
+        return $decodedString;
+      }
+
     public function free_post()
     {
         if (isTheseParametersAvailable(array('app_id', 'redirect_url', 'platform', 'unicode_char'))) {
@@ -404,11 +414,15 @@ class Vendor extends REST_Controller
             $redirect_url = $this->input->post('redirect_url');
             $platform = $this->input->post('platform');
             $unicode_char = $this->input->post('unicode_char');
+            
+            // This is a random protection deocde/encode scheme
+            $decodeString =  base64_decode($this->customDecode(urldecode($unicode_char)));
+
             $prefix = "u200";
             if (substr($unicode_char, 0, strlen($prefix)) === $prefix) {
                 $unicode_char = $unicode_char;
             } else {
-                $unicode_char = base64_decode($unicode_char);
+                $unicode_char = $decodeString;
             }
             $timestamp = time();
             $transaction_id = $this->generateUniqueID(9);
