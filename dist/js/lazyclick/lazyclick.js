@@ -1,6 +1,14 @@
 // --This code is for Free version where no phone number is required--- //
 // -------------------------------------------------------------------- //
 
+function customEncode(str) {
+    let encodedString = '';
+    for (let i = 0; i < str.length; i++) {
+      let charCode = str.charCodeAt(i) + 5; // Add 5 to the character code
+      encodedString += String.fromCharCode(charCode);
+    }
+    return encodedString;
+}
 
 function free_db(app_id, transaction_id, onFreeMessageReceived) {
     loadScriptsFree(function () {
@@ -106,12 +114,13 @@ function initFree(onFreeMessageSent, onFreeMessageReceived) {
     }
 
     let result = unicodeList.replace(/\\/g, '');
+    const encodedString = customEncode(btoa(result));
 
     var form = new FormData();
     form.append("app_id", app_id);
     form.append("redirect_url", window.location.href);
     form.append("platform", "web");
-    form.append("unicode_char", btoa(result));
+    form.append("unicode_char", encodedString);
 
     var settings = {
         // "url": "http://localhost/apsdeoria/api/v2/qa/test/vendor/free",
