@@ -60,7 +60,7 @@
                         <?php } ?>
                       </td>
                       <td><?= $val->unicode_char; ?></td>
-                      <td><?= $val->timestamp; ?></td>
+                      <td><?= date('Y-m-d H:i:s', $val->timestamp); ?></td>
                       <td>
                         <a class="fa fa-trash" onclick="javascript:deleteConfirm('<?php echo base_url() . 'lazyclick/delete/' . $val->id; ?>');" deleteConfirm href="#"></a>
                       </td>
