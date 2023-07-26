@@ -124,6 +124,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
         <ul class="sidebar-menu">
           <li class="header">APPLICATION CONTENT</li>
 
+          <li><a href="<?php echo base_url('lazyclick'); ?>"><i class="fa fa-bell"></i> <span>Lazyclick</span></a></li>
           <li><a href="<?php echo base_url('dashboard'); ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
           <li><a href="<?php echo base_url('teacher'); ?>"><i class="fa fa-user"></i> <span>Teachers</span></a></li>
           <li><a href="<?php echo base_url('student'); ?>"><i class="fa fa-user"></i> <span>Students</span></a></li>

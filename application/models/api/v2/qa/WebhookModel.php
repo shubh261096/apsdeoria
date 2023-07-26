@@ -213,4 +213,26 @@ class WebhookModel extends CI_model
         $this->db->where('message_id', $message_id);
         $this->db->update('whatsapp', $update_rows);
     }
+
+    public function getAllData()
+	{
+		$this->db->select("*");
+		$this->db->from('otpless_whatsapp');
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		}
+	}
+
+    public function deleteRow($row_id)
+	{
+		return $this->db
+			->where('id', $row_id)
+			->delete('otpless_whatsapp');
+	}
+
+    public function getTotalUsers()
+    {
+        return $this->db->count_all('otpless_whatsapp'); 
+    }
 }

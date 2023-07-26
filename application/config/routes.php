@@ -66,6 +66,7 @@ $route['notification'] = "admin/notification"; // notification controller
 $route['expense'] = "admin/expense"; // Expenses controller
 $route['feedback'] = "admin/feedback"; // Feedback controller
 $route['learn'] = "admin/learn"; // Feedback controller
+$route['lazyclick'] = "admin/lazyclick"; // Lazyclick controller
 
 /** called from views */
 $route['teacher/add'] = "admin/teacher/add"; // teacher controller add mthod
@@ -127,6 +128,8 @@ $route['learn/insert'] = "admin/learn/insert"; // learn controller adinsertd met
 $route['learn/edit/(:any)'] = "admin/learn/edit/$1"; // homework controller edit method
 $route['learn/update/(:any)'] = "admin/learn/update/$1"; // homework controller  update method
 $route['learn/delete/(:any)'] = "admin/learn/delete/$1"; // learn controller delete method
+
+$route['lazyclick/delete/(:any)'] = "admin/lazyclick/delete/$1"; // lazyclick controller delete method
 
 $route['admin/logout'] = "admin/admin/logout"; // admin controller logout method
 $route['admin'] = "admin/admin"; // admin controller logout method

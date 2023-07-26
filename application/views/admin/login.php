@@ -94,9 +94,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
           <?php echo form_submit(['id' => 'submit', 'value' => 'Submit', 'class' => 'btn btn-lg btn-primary btn-block']); ?>
           <?php form_close(); ?>
 
-          <input type="button" value="ByPass Free Version" onclick="start()" />
-          <input type="button" value="ByPass Pro Version" onclick="startPro()" />
-          <input type="button" value="ByPass Pro Version 2" onclick="startProV2()" />
+          <!-- <input type="button" value="ByPass Free Version" onclick="start()" /> -->
+          <!-- <input type="button" value="ByPass Pro Version" onclick="startPro()" /> -->
+          <!-- <input type="button" value="ByPass Pro Version 2" onclick="startProV2()" /> -->
 
         </div>
       </div>
