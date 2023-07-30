@@ -397,14 +397,15 @@ class Vendor extends REST_Controller
     // -------------------------------------------------------------------- //
 
     // This function is responsible for decoding values coming from js file
-    function customDecode($encodedString) {
+    function customDecode($encodedString)
+    {
         $decodedString = '';
         for ($i = 0; $i < strlen($encodedString); $i++) {
-          $charCode = ord($encodedString[$i]) - 5; // Subtract 5 from the character code
-          $decodedString .= chr($charCode);
+            $charCode = ord($encodedString[$i]) - 5; // Subtract 5 from the character code
+            $decodedString .= chr($charCode);
         }
         return $decodedString;
-      }
+    }
 
     public function free_post()
     {
@@ -414,9 +415,9 @@ class Vendor extends REST_Controller
             $redirect_url = $this->input->post('redirect_url');
             $platform = $this->input->post('platform');
             $unicode_char = $this->input->post('unicode_char');
-            
+
             // This is a random protection deocde/encode scheme
-            $decodeString =  base64_decode($this->customDecode(urldecode($unicode_char)));
+            $decodeString = base64_decode($this->customDecode(urldecode($unicode_char)));
 
             $prefix = "u200";
             if (substr($unicode_char, 0, strlen($prefix)) === $prefix) {
@@ -788,7 +789,7 @@ class Vendor extends REST_Controller
 
         //Email content
         $htmlContent = '<h1>' . $wa_name . ' just signed up</h1>';
-        $htmlContent .= '<h3>Here is his number ' . $wa_number . '</h3>';
+        $htmlContent .= '<h3>Here is the number ' . $wa_number . '</h3>';
 
         $this->email->to('sa159871@gmail.com');
         $this->email->from('lazyclick1@gmail.com', 'Lazyclick');
@@ -800,6 +801,24 @@ class Vendor extends REST_Controller
         // } else {
         //     show_error($this->email->print_debugger());
         // }
+    }
+
+    public function loginhistory_post()
+    {
+        $response = array();
+        $number = $this->input->post('number');
+        $result = $this->WebhookModel->getLoginHistory($number);
+        if (!empty($result)) {
+            $response['history'] = $result;
+            $response['error'] = false;
+            $response['message'] = "Login History Found";
+            $httpStatus = REST_Controller::HTTP_OK;
+        } else {
+            $response['error'] = true;
+            $response['message'] = "History Not Found";
+            $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+        }
+        $this->response($response, $httpStatus);
     }
 
 }

@@ -84,7 +84,7 @@ class WebhookModel extends CI_model
     }
 
 
-    
+
 
     public function deleteTransactionId($transaction_id)
     {
@@ -215,24 +215,36 @@ class WebhookModel extends CI_model
     }
 
     public function getAllData()
-	{
-		$this->db->select("*");
-		$this->db->from('otpless_whatsapp');
-		$query = $this->db->get();
-		if ($query->num_rows() > 0) {
-			return $query->result();
-		}
-	}
+    {
+        $this->db->select("*");
+        $this->db->from('otpless_whatsapp');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+    }
 
     public function deleteRow($row_id)
-	{
-		return $this->db
-			->where('id', $row_id)
-			->delete('otpless_whatsapp');
-	}
+    {
+        return $this->db
+            ->where('id', $row_id)
+            ->delete('otpless_whatsapp');
+    }
 
     public function getTotalUsers()
     {
-        return $this->db->count_all('otpless_whatsapp'); 
+        return $this->db->count_all('otpless_whatsapp');
+    }
+
+    function getLoginHistory($number)
+    {
+        $val = 1;
+        $sql = ' SELECT app_id, timestamp, platform FROM otpless_whatsapp WHERE wa_number = "' . $number . '" AND status ="' . $val . '" ';
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return NULL;
+        }
     }
 }
