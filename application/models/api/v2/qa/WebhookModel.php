@@ -239,7 +239,7 @@ class WebhookModel extends CI_model
     function getLoginHistory($number)
     {
         $val = 1;
-        $sql = ' SELECT app_id, timestamp, platform FROM otpless_whatsapp WHERE wa_number = "' . $number . '" AND status ="' . $val . '" ';
+        $sql = ' SELECT app_id, timestamp, platform FROM otpless_whatsapp WHERE wa_number = "' . $number . '" AND status ="' . $val . '" ORDER BY id DESC';
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             return $query->result();
