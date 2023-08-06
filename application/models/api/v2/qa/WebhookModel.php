@@ -247,4 +247,8 @@ class WebhookModel extends CI_model
             return NULL;
         }
     }
+
+    function add_android_details($array) {   
+        return $this->db->insert('lazyclick_device_data', $array);
+    }
 }

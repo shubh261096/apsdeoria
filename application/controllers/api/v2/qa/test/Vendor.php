@@ -1,7 +1,5 @@
 <?php
 
-use LDAP\Result;
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
 require APPPATH . 'libraries/REST_Controller.php';
@@ -416,6 +414,11 @@ class Vendor extends REST_Controller
             $platform = $this->input->post('platform');
             $unicode_char = $this->input->post('unicode_char');
 
+            // Some other parameters coming from android
+            $app_name = $this->input->post('app_name');
+            $sdk_version = $this->input->post('sdk_version');
+            $device_details = $this->input->post('device_details');
+
             // This is a random protection deocde/encode scheme
             $decodeString = base64_decode($this->customDecode(urldecode($unicode_char)));
 
@@ -437,8 +440,13 @@ class Vendor extends REST_Controller
 
             // Adding data to DB, so later we can check with message_id and send the payload data response coming from whatsapp to vendor
             $add_array = array('unicode_char' => $unicode_char, 'timestamp' => $timestamp, 'app_id' => $app_id, 'redirect_url' => $redirect_url, 'status' => 0, 'platform' => $platform, 'transaction_id' => $transaction_id);
+
+            // Checking if platform is android - adding some extra details to db
+            $add_android_data = array('app_name' => $app_name , 'sdk_version' => $sdk_version, 'device_details' => $device_details, 'transaction_id' => $transaction_id, 'platform' => $platform);
+
             $this->WebhookModel->add_click_button($add_array);
             if ($platform == 'android') {
+                $this->WebhookModel->add_android_details($add_android_data);
                 $response = array(
                     'transaction_id' => $transaction_id
                 );

@@ -6,7 +6,7 @@ define('FPDF_FONTPATH', APPPATH . 'third_party');
 function isTheseParametersAvailable($params)
 {
     if (count($_POST) > sizeof($params)) { // checking here the count of post data and parameter required.
-        return false;
+        return true;
     }
     foreach ($params as $param) {
         if (!isset($_POST[$param])) {
