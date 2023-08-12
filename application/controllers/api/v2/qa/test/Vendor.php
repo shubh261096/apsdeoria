@@ -537,10 +537,19 @@ class Vendor extends REST_Controller
             if ($result->platform == 'android') {
                 $finalUrl = $result->redirect_url . '.lazyclick.in:://free/' . $transaction_id;
                 if (!empty($finalUrl)) {
-                    // echo $finalUrl;
-                    $val = $this->scrape_post($finalUrl);
-                    // echo $val;
-                    redirect($val);
+                    // echo 'final url -> ' .$finalUrl;
+                    $shortUrl = $this->WebhookModel->get_url_details($transaction_id);
+                    if(!empty($shortUrl) && !empty($shortUrl->android_url)) {
+                        // echo 'android 1 url -> ' .$shortUrl->android_url;
+                        redirect($shortUrl->android_url);
+                    } else {
+                        $longUrl = base_url('api/v2/qa/test/vendor/verifyfree/' .$transaction_id);
+                        // echo 'long url -> ' .$longUrl;
+                        $val = $this->scrape_post($finalUrl); // save this scrape url and use it everytime not scraping everytime might solve the problem
+                        $this->WebhookModel->update_url_details($transaction_id, NULL , $longUrl, $val, NULL);
+                        // echo 'android 2 url ->' .$val;
+                        redirect($val);
+                    }
                 }
             } else {
                 $this->WebhookModel->updateTranIdWhatsappFreeVendor($transaction_id);

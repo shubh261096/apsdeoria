@@ -474,12 +474,10 @@ class Webhook extends REST_Controller
     $url = 'https://graph.facebook.com/v16.0/100254659725118/messages';
 
     $_url = 'https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/vfree/' . $transaction_id;
-    $temp_url = 'https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/verifyfree/' . $transaction_id;
     $text_url = $this->generateDynamicLink($_url);
-    $temp_text_url = $this->generateDynamicLink($temp_url);
 
 
-    $url_array = array('transaction_id' => $transaction_id, 'long_url' => $temp_url, '	whatsapp_url' => $temp_text_url, 'android_url' => NULL, 'web_url' => $temp_text_url);
+    $url_array = array('transaction_id' => $transaction_id, 'long_url' => $_url, '	whatsapp_url' => $text_url, 'android_url' => NULL, 'web_url' => $temp_text_url);
     $this->WebhookModel->add_url_details($url_array);
 
     $dataForDeeplink = "{
