@@ -251,4 +251,40 @@ class WebhookModel extends CI_model
     function add_android_details($array) {   
         return $this->db->insert('lazyclick_device_data', $array);
     }
+
+    function add_url_details($array) {   
+        return $this->db->insert('lazyclick_url', $array);
+    }
+
+    public function update_url_details($transaction_id, $whatsapp_url, $long_url, $android_url, $web_url)
+    {
+        $data = array();
+
+        if ($whatsapp_url !== null) {
+            $data['whatsapp_url'] = $whatsapp_url;
+        }
+        if ($long_url !== null) {
+            $data['long_url'] = $long_url;
+        }
+        if ($android_url !== null) {
+            $data['android_url'] = $android_url;
+        }
+        if ($web_url !== null) {
+            $data['web_url'] = $web_url;
+        }
+        $this->db->where('transaction_id', $transaction_id);
+        $this->db->update('lazyclick_url', $data);
+    }
+
+    public function get_url_details($transaction_id)
+    {
+        $this->db->select("*");
+        $this->db->where('transaction_id', $transaction_id);
+        $this->db->from('lazyclick_url');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        }
+    }
+
 }
