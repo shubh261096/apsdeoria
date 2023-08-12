@@ -477,7 +477,7 @@ class Webhook extends REST_Controller
     $text_url = $this->generateDynamicLink($_url);
 
 
-    $url_array = array('transaction_id' => $transaction_id, 'long_url' => $_url, '	whatsapp_url' => $text_url, 'android_url' => NULL, 'web_url' => $temp_text_url);
+    $url_array = array('transaction_id' => $transaction_id, 'long_url' => $_url, '	whatsapp_url' => $text_url, 'android_url' => NULL, 'web_url' => $text_url);
     $this->WebhookModel->add_url_details($url_array);
 
     $dataForDeeplink = "{

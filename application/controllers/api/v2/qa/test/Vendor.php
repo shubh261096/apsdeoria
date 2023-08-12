@@ -533,7 +533,6 @@ class Vendor extends REST_Controller
 
         $result = $this->WebhookModel->verifyTranIdWhatsappFreeVendor($transaction_id);
         if (!empty($result)) {
-            $this->sendEmail($result->wa_name, $result->wa_number);
             if ($result->platform == 'android') {
                 $finalUrl = $result->redirect_url . '.lazyclick.in:://free/' . $transaction_id;
                 if (!empty($finalUrl)) {
@@ -552,6 +551,7 @@ class Vendor extends REST_Controller
                     }
                 }
             } else {
+                $this->sendEmail($result->wa_name, $result->wa_number);
                 $this->WebhookModel->updateTranIdWhatsappFreeVendor($transaction_id);
                 $response = array(
                     'app_id' => $result->app_id,
@@ -653,6 +653,7 @@ class Vendor extends REST_Controller
         $transaction_id = $this->input->post('transaction_id');
         $result = $this->WebhookModel->verifyTranIdWhatsappFreeVendor($transaction_id);
         if (!empty($result)) {
+            $this->sendEmail($result->wa_name, $result->wa_number);
             $this->WebhookModel->updateTranIdWhatsappFreeVendor($transaction_id);
             $response = array(
                 'app_id' => $result->app_id,
