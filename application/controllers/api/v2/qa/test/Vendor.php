@@ -648,7 +648,7 @@ class Vendor extends REST_Controller
             // return $value;
             // echo "Shorten URL Value: " . $value;
         } else {
-            echo "Input element not found.";
+            echo NULL;
         }
 
     }
