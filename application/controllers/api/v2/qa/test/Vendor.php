@@ -483,7 +483,10 @@ class Vendor extends REST_Controller
                     } else {
                         // $longUrl = base_url('api/v2/qa/test/vendor/verifyfree/' .$transaction_id);
                         // echo 'long url -> ' .$longUrl;
-                        $val = $this->scrape_post($finalUrl); // TODO save this scrape url and use it everytime not scraping everytime might solve the problem
+                        $val = $this->scrape_post($finalUrl);
+                        if(empty($val)) {
+                            $val = $this->generateTinyUrl($finalUrl);
+                        }
                         $this->WebhookModel->update_url_details($transaction_id, NULL , NULL , $val, NULL);
                         // echo 'android 2 url ->' .$val;
                         redirect($val);
@@ -544,7 +547,10 @@ class Vendor extends REST_Controller
                     } else {
                         // $longUrl = base_url('api/v2/qa/test/vendor/vfree/' .$transaction_id);
                         // echo 'long url -> ' .$longUrl;
-                        $val = $this->scrape_post($finalUrl); // save this scrape url and use it everytime not scraping everytime might solve the problem
+                        $val = $this->scrape_post($finalUrl);
+                        if(empty($val)) {
+                            $val = $this->generateTinyUrl($finalUrl);
+                        }
                         $this->WebhookModel->update_url_details($transaction_id, NULL , NULL, $val, NULL);
                         // echo 'android 2 url ->' .$val;
                         redirect($val);

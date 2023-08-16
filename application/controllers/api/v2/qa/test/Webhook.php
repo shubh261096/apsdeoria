@@ -196,6 +196,45 @@ class Webhook extends REST_Controller
   // -------------------------------------------------------------------- //
   public function bypassfreeVersion($data)
   {
+    // {
+    //   "object": "whatsapp_business_account",
+    //   "entry": [
+    //     {
+    //       "id": "122103622736006858",
+    //       "changes": [
+    //         {
+    //           "value": {
+    //             "messaging_product": "whatsapp",
+    //             "metadata": {
+    //               "display_phone_number": "919721153660",
+    //               "phone_number_id": "122093969648018982"
+    //             },
+    //             "contacts": [
+    //               {
+    //                 "profile": {
+    //                   "name": "Shubham Agrawal"
+    //                 },
+    //                 "wa_id": "918853159871"
+    //               }
+    //             ],
+    //             "messages": [
+    //               {
+    //                 "from": "918853159871",
+    //                 "id": "wamid.HBgMOTE4ODUzMTU5ODcxFQIAEhgWM0VCMDI2MDUzQTA3M0Y4OTAzNTBCNwA=",
+    //                 "timestamp": "1692087567",
+    //                 "text": {
+    //                   "body": "hello"
+    //                 },
+    //                 "type": "text"
+    //               }
+    //             ]
+    //           },
+    //           "field": "messages"
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // }
     $data1 = json_decode(json_encode($data));
     $data2 = preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($matches) {
       return 'u' . $matches[1] . '|';
@@ -474,7 +513,10 @@ class Webhook extends REST_Controller
     $url = 'https://graph.facebook.com/v16.0/100254659725118/messages';
 
     $_url = 'https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/vfree/' . $transaction_id;
+    // $temp_url = 'https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/verifyfree/' . $transaction_id;
+
     $text_url = $this->generateDynamicLink($_url);
+    // $temp_text_url = $this->generateDynamicLink($temp_url);
 
 
     $url_array = array('transaction_id' => $transaction_id, 'long_url' => $_url, '	whatsapp_url' => $text_url, 'android_url' => NULL, 'web_url' => $text_url);
