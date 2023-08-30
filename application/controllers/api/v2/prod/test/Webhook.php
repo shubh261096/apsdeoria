@@ -329,6 +329,9 @@ class Webhook extends REST_Controller
 
         $result = $this->ProdWebhookModel->getTransactionIdWhatsappFreeVendor($message_text[0], $number, $name);
         if (!empty($result)) {
+          if ($result->is_paid == 1) {  // The transation is paid
+            $this->ProdWebhookModel->update_credits($result->app_id);
+          }
           $this->prodHitWhatsappApiFreeFormVersionTextLink($result->transaction_id, $number);
           $response = array(
             'message' => 'Link sent to whatsapp'
@@ -345,6 +348,9 @@ class Webhook extends REST_Controller
 
         $result = $this->WebhookModel->getTransactionIdWhatsappFreeVendor($message_text[0], $number, $name);
         if (!empty($result)) {
+          if ($result->is_paid == 1) {  // The transation is paid
+            $this->WebhookModel->update_credits($result->app_id);
+          }
           $this->hitWhatsappApiFreeFormVersionTextLink($result->transaction_id, $number);
           $response = array(
             'message' => 'Link sent to whatsapp'

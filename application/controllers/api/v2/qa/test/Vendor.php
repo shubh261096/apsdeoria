@@ -890,4 +890,100 @@ class Vendor extends REST_Controller
         }
     }
 
+
+    // PIVOT CODE
+    public function paid_post()
+    {
+        $requestHeaders = $this->input->request_headers();
+        $response = array();
+
+        if ($requestHeaders != null && key_exists('x_lazyclick_key', $requestHeaders) && !empty($requestHeaders['x_lazyclick_key'])) {
+            $lazyclickKey = $requestHeaders['x_lazyclick_key'];
+            if (isTheseParametersAvailable(array('app_id', 'redirect_url', 'platform', 'unicode_char'))) {
+                $response = array();
+                $app_id = $this->input->post('app_id');
+                $redirect_url = $this->input->post('redirect_url');
+                $platform = $this->input->post('platform');
+                $unicode_char = $this->input->post('unicode_char');
+
+                // Some other parameters coming from android
+                $app_name = $this->input->post('app_name');
+                $sdk_version = $this->input->post('sdk_version');
+                $device_details = $this->input->post('device_details');
+
+                // This is a random protection deocde/encode scheme
+                $decodeString = base64_decode($this->customDecode(urldecode($unicode_char)));
+                $prefix = 'u200';
+                if (substr($unicode_char, 0, strlen($prefix)) === $prefix) {
+                    $unicode_char = $unicode_char;
+                } else {
+                    $unicode_char = $decodeString;
+                }
+
+                $timestamp = time();
+                $transaction_id = $this->generateUniqueID(9);
+
+                $vendor = $this->WebhookModel->get_vendor($lazyclickKey, $app_id);
+                if ($vendor != NULL) {
+                    if ($vendor->is_active == 1) {
+                        // Convert end date to timestamp
+                        $end_timestamp = strtotime($vendor->end_date);
+                        // Get current timestamp
+                        $current_timestamp = time();
+                        // Compare timestamps
+                        if ($current_timestamp > $end_timestamp) {
+                            $response['error'] = true;
+                            $response['message'] = 'Validity over';
+                            $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+                        } else {
+                            if ($vendor->credits > 0) {
+                                // Adding data to DB, so later we can check with message_id and send the payload data response coming from whatsapp to vendor
+                                $add_array = array('unicode_char' => $unicode_char, 'timestamp' => $timestamp, 'app_id' => $app_id, 'redirect_url' => $redirect_url, 'status' => 0, 'platform' => $platform, 'transaction_id' => $transaction_id, 'is_paid' => 1);
+                                $this->WebhookModel->add_click_button($add_array);
+
+                                if ($platform == 'android') {
+                                    // Checking if platform is android - adding some extra details to db
+                                    $add_android_data = array('app_name' => $app_name, 'sdk_version' => $sdk_version, 'device_details' => $device_details, 'transaction_id' => $transaction_id, 'platform' => $platform);
+                                    $this->WebhookModel->add_android_details($add_android_data);
+                                    $response = array(
+                                        'transaction_id' => $transaction_id
+                                    );
+                                } else {
+                                    $response = array(
+                                        'transaction_id' => $transaction_id
+                                    );
+                                }
+                                $response['error'] = false;
+                                // $response['message'] = "";
+                                $httpStatus = REST_Controller::HTTP_OK;
+                            } else {
+                                $response['error'] = true;
+                                $response['message'] = 'Credits Exhausted';
+                                $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+                            }
+                        }
+                    } else {
+                        $response['error'] = true;
+                        $response['message'] = 'Vendor not active';
+                        $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+                    }
+                } else {
+                    $response['error'] = true;
+                    $response['message'] = 'Vendor not found';
+                    $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+                }
+            } else {
+                $response['error'] = true;
+                $response['message'] = 'Parameters not found';
+                $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+            }
+        } else {
+            $response['error'] = true;
+            $response['message'] = 'Missing Authentication Key';
+            $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+        }
+
+        $this->response($response, $httpStatus);
+    }
+
 }

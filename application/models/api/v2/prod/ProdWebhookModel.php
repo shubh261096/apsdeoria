@@ -167,7 +167,7 @@ class ProdWebhookModel extends CI_model
     /** Query to get transaction id to send message to a link to user as soon as we get a response */
     public function getTransactionIdWhatsappFreeVendor($unicode_char, $number, $name)
     {
-        $sql = ' SELECT transaction_id  FROM otpless_whatsapp WHERE unicode_char = "' . $unicode_char . '" ';
+        $sql = ' SELECT transaction_id, app_id, is_paid FROM otpless_whatsapp WHERE unicode_char = "' . $unicode_char . '" ';
         $query = $this->db->query($sql);
 
 
@@ -285,6 +285,52 @@ class ProdWebhookModel extends CI_model
         if ($query->num_rows() > 0) {
             return $query->row();
         }
+    }
+
+
+    // PIVOT CODE
+    /* Query for gettting vendor details by x-lazyclick-key */
+    public function get_vendor($x_lazyclick_key, $app_id)
+    {
+        $sql_get_vendor = 'SELECT * FROM vendor WHERE x_lazyclick_key = "' . $x_lazyclick_key . '" ';
+        $query = $this->db->query($sql_get_vendor);
+        if ($query->num_rows() > 0) {
+            $rows = $query->result(); // Get all rows
+            $should_insert = true; // Flag to determine if insertion is needed
+
+            foreach ($rows as $row) {
+                if ($row->vendor_app_id == $app_id) {
+                    $should_insert = false;
+                    break; // No need to continue checking
+                }
+            }
+            if($should_insert) {
+                $data = array(
+                    'vendor_name' => $row->vendor_name,
+                    'vendor_app_id' => $app_id,
+                    'vendor_webhook_url' => $row->vendor_webhook_url,
+                    'x_lazyclick_key' => $row->x_lazyclick_key,
+                    'is_whitelabel' => $row->is_whitelabel,
+                    'is_active' => $row->is_active,
+                );
+                $this->db->insert('vendor', $data);
+            }
+            
+            $sql = ' SELECT * FROM vendor JOIN lazyclick_credits ON vendor.x_lazyclick_key = lazyclick_credits.x_lazyclick_key WHERE vendor.x_lazyclick_key = "' . $x_lazyclick_key . '" AND vendor.vendor_app_id ="' . $app_id . '"';
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                return $query->row();
+            } else {
+                return NULL;
+            }
+        } else {
+            return NULL;
+        }
+    }
+
+    public function update_credits($app_id) {
+        $sql = 'UPDATE lazyclick_credits lc JOIN vendor v ON lc.x_lazyclick_key = v.x_lazyclick_key SET lc.credits = lc.credits - 1 WHERE v.vendor_app_id = "' . $app_id . '"';
+        $this->db->query($sql);
     }
 
 }
