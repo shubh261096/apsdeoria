@@ -28,7 +28,7 @@ function handleViewportChange(event, container) {
 }
 
 // Define a function to create the button and image
-function createOverlayButtonWithImageWaUser(wauser) {
+function createOverlayButtonWithImageWaUser(xLazyclickKey, wauser) {
   var scriptElem3 = document.createElement('script');
   scriptElem3.src = "https://code.jquery.com/jquery-3.6.0.min.js";
   // Get a reference to the head or body element of the HTML document
@@ -155,14 +155,18 @@ function createOverlayButtonWithImageWaUser(wauser) {
 
   // Remove modal when clicked outside
   button.addEventListener('click', function () {
-    initFreeWaUser(wauser);
+    if (typeof xLazyclickKey === 'undefined' || xLazyclickKey === null || xLazyclickKey === "") {
+      wauser("Missing Authentication Key");
+    } else {
+      initFreeWaUser(wauser, xLazyclickKey);
+    }
   });
 
 }
 
 
 // Define a function to create the button and image
-function createOverlayButtonWithImage(onFreeMessageSent, onFreeMessageReceived) {
+function createOverlayButtonWithImage(onFreeMessageSent, onFreeMessageReceived, xLazyclickKey) {
   const container = document.createElement('div');
   container.style.backgroundColor = '#ffffff';
   container.style.borderRadius = '5px';
@@ -279,7 +283,7 @@ function createOverlayButtonWithImage(onFreeMessageSent, onFreeMessageReceived) 
 
   // Remove modal when clicked outside
   button.addEventListener('click', function () {
-    initFree(onFreeMessageSent, onFreeMessageReceived);
+    initFree(onFreeMessageSent, onFreeMessageReceived, xLazyclickKey);
   });
 
 }
@@ -434,7 +438,7 @@ function openWhatsAppFree(encodedResult, app_id) {
   window.open(url, '_blank') || window.location.assign(url);
 }
 
-function initFree(onFreeMessageSent, onFreeMessageReceived) {
+function initFree(onFreeMessageSent, onFreeMessageReceived, xLazyclickKey) {
   // Generate app id 
   const app_id = window.location.hostname.split('.').slice(-2)[0];
   const encodedResult = generateRandomVisibleUnicodes();
@@ -456,11 +460,16 @@ function initFree(onFreeMessageSent, onFreeMessageReceived) {
   form.append("platform", "web");
   form.append("unicode_char", encodedString);
 
+  var headers = {
+    "x_lazyclick_key": xLazyclickKey
+  };
+
   var settings = {
-    // "url": "http://localhost/apsdeoria/api/v2/qa/test/vendor/free",
-    "url": "https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/free",
+    // "url": "http://localhost/apsdeoria/api/v2/qa/test/vendor/paid",
+    "url": "https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/paid",
     "method": "POST",
     "timeout": 0,
+    "headers": headers,
     "processData": false,
     "mimeType": "multipart/form-data",
     "contentType": false,
@@ -482,7 +491,7 @@ function initFree(onFreeMessageSent, onFreeMessageReceived) {
 }
 
 
-function initFreeWaUser(wauser) {
+function initFreeWaUser(wauser, xLazyclickKey) {
   // Generate app id 
   const app_id = window.location.hostname.split('.').slice(-2)[0];
   const encodedResult = generateRandomVisibleUnicodes();
@@ -505,11 +514,16 @@ function initFreeWaUser(wauser) {
   form.append("platform", "web");
   form.append("unicode_char", encodedString);
 
+  var headers = {
+    "x_lazyclick_key": xLazyclickKey
+  };
+
   var settings = {
-    // "url": "http://localhost/apsdeoria/api/v2/qa/test/vendor/free",
-    "url": "https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/free",
+    // "url": "http://localhost/apsdeoria/api/v2/qa/test/vendor/paid",
+    "url": "https://www.apsdeoria.com/apszone/api/v2/qa/test/vendor/paid",
     "method": "POST",
     "timeout": 0,
+    "headers": headers,
     "processData": false,
     "mimeType": "multipart/form-data",
     "contentType": false,
@@ -527,14 +541,14 @@ function initFreeWaUser(wauser) {
 
 
 
-function initButton(onFreeMessageSent, onFreeMessageReceived) {
+function initButton(onFreeMessageSent, onFreeMessageReceived, xLazyclickKey) {
   // Create container element
-  createOverlayButtonWithImage(onFreeMessageSent, onFreeMessageReceived);
+  createOverlayButtonWithImage(onFreeMessageSent, onFreeMessageReceived, xLazyclickKey);
   // createButtonWithImage(onFreeMessageSent, onFreeMessageReceived);
 }
 
 
-function lazyclick(wauser) {
+function lazyclick(wauser, xLazyclickKey) {
   // Create container element
-  createOverlayButtonWithImageWaUser(wauser);
+  createOverlayButtonWithImageWaUser(xLazyclickKey, wauser);
 }

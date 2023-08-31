@@ -12,7 +12,7 @@ class Vendor extends REST_Controller
         parent::__construct();
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+        header("Access-Control-Allow-Headers: *");
         $this->load->database();
         $this->load->model('api/v2/prod/ProdWebhookModel', 'WebhookModel');
         $this->load->helper('commonqa');
@@ -24,6 +24,10 @@ class Vendor extends REST_Controller
         $randomString = substr($uniqueID, -$length);
 
         return $randomString;
+    }
+
+    public function index_options() {
+        return $this->response(NULL, REST_Controller::HTTP_OK);
     }
 
     public function index_get()

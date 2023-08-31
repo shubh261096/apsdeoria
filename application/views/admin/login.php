@@ -56,7 +56,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script>
     lazyclick(function (wauser) {
       console.log(wauser);
-    });
+    }, "QxaKTvRw8VD4XnfS");
   </script>
 
   <div class="container">
