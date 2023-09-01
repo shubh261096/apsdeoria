@@ -407,6 +407,15 @@ class Vendor extends REST_Controller
 
     public function free_post()
     {
+        // This service is stopped. For clients deliverable we have put Auth Key Missing
+        $response = array();
+        $response['error'] = true;
+        $response['message'] = 'Missing authentication key';
+        $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+        $this->response($response, $httpStatus);
+        return;
+        exit ();
+
         if (isTheseParametersAvailable(array('app_id', 'redirect_url', 'platform', 'unicode_char'))) {
             $response = array();
             $app_id = $this->input->post('app_id');

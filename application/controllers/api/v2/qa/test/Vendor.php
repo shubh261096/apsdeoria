@@ -1,19 +1,18 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') or exit ('No direct script access allowed');
 
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/FirebaseLib.php';
 
 class Vendor extends REST_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
-        header("Access-Control-Allow-Origin: *");
-        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-        header("Access-Control-Allow-Headers: *");
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: *');
         $this->load->database();
         $this->load->model('api/v2/qa/WebhookModel', 'WebhookModel');
         $this->load->helper('commonqa');
@@ -27,7 +26,8 @@ class Vendor extends REST_Controller
         return $randomString;
     }
 
-    public function index_options() {
+    public function index_options()
+    {
         return $this->response(NULL, REST_Controller::HTTP_OK);
     }
 
@@ -35,7 +35,7 @@ class Vendor extends REST_Controller
     {
         $response = array();
         $response['error'] = true;
-        $response['message'] = "Unauthorized Access";
+        $response['message'] = 'Unauthorized Access';
         $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
         $this->response($response, $httpStatus);
     }
@@ -54,7 +54,7 @@ class Vendor extends REST_Controller
             $isVendorAvailable = $this->WebhookModel->isVendorAvailable($app_id);
 
             if ($isVendorAvailable) {
-                $authorization_key = "Bearer EAAau0u0nhZBsBAKAAGr5N3ntnZAjCBxcwMl6i9TeSiMZCCw8AH3E0mf9vujSNGflcrFHxNHqSMC2N29TyYuop6uqWZA5jtbZAZAMmGiZA9VRVGmxm9IHSi20ENZBuDb6sOufsKJU7BvN01ofh0yupNcRA72q6K3Tg97HFY1qgckSKLC8IR2EVhHc";
+                $authorization_key = 'Bearer EAAau0u0nhZBsBAKAAGr5N3ntnZAjCBxcwMl6i9TeSiMZCCw8AH3E0mf9vujSNGflcrFHxNHqSMC2N29TyYuop6uqWZA5jtbZAZAMmGiZA9VRVGmxm9IHSi20ENZBuDb6sOufsKJU7BvN01ofh0yupNcRA72q6K3Tg97HFY1qgckSKLC8IR2EVhHc';
 
                 $data = "{ 'messaging_product': 'whatsapp', 'to': $number, 'type': 'template', 'template': { 'name': 'verify_login', 'language': { 'code': 'en' } } }";
                 // Set POST variables
@@ -84,7 +84,6 @@ class Vendor extends REST_Controller
 
                 // Execute post
                 $curl_response = json_decode(curl_exec($ch));
-
 
                 /**$
                  * response = '{
@@ -120,11 +119,11 @@ class Vendor extends REST_Controller
                     $this->WebhookModel->addMessageSentOnWhatsappProVendor($add_array);
 
                     $response['error'] = false;
-                    $response['message'] = "Message sent to WhatsApp";
+                    $response['message'] = 'Message sent to WhatsApp';
                     $httpStatus = REST_Controller::HTTP_OK;
                 } else {
                     $response['error'] = true;
-                    $response['message'] = "WhatsApp Token Expired";
+                    $response['message'] = 'WhatsApp Token Expired';
                     $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
                 }
 
@@ -132,17 +131,16 @@ class Vendor extends REST_Controller
                 curl_close($ch);
             } else {
                 $response['error'] = true;
-                $response['message'] = "Vendor Not available";
+                $response['message'] = 'Vendor Not available';
                 $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
             }
         } else {
             $response['error'] = true;
-            $response['message'] = "Parameters not found";
+            $response['message'] = 'Parameters not found';
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
         }
         $this->response($response, $httpStatus);
     }
-
 
     // -------------------------------------------------------------------- //
     // ---------------This code is for Pro Yes Button Deeplink------------- //
@@ -160,7 +158,7 @@ class Vendor extends REST_Controller
             $isVendorAvailable = $this->WebhookModel->isVendorAvailable($app_id);
 
             if ($isVendorAvailable) {
-                $authorization_key = "Bearer EAAIvjH6tjOwBAICW8fUY14ns1TaJPx26j0imcffcVkxW7VXXn44XSMZC90emVdZAnWFMLsO44XBSlObr6HHtZAAm7Anhr7GWMxrlXFgsu0PKiZAKjYaT60lH2wkkC6TP3njqYQm3zveLKGyBsDSL7mNvyFgbZBZBndflc9TKaGFTyFer2hz0xi";
+                $authorization_key = 'Bearer EAAIvjH6tjOwBAICW8fUY14ns1TaJPx26j0imcffcVkxW7VXXn44XSMZC90emVdZAnWFMLsO44XBSlObr6HHtZAAm7Anhr7GWMxrlXFgsu0PKiZAKjYaT60lH2wkkC6TP3njqYQm3zveLKGyBsDSL7mNvyFgbZBZBndflc9TKaGFTyFer2hz0xi';
 
                 // Set POST variables
                 $url = 'https://graph.facebook.com/v16.0/100254659725118/messages';
@@ -218,9 +216,9 @@ class Vendor extends REST_Controller
                 // Close connection
                 curl_close($ch);
 
-
-                /** Success response that comes from Whatsapp
-                 * 
+                /**
+                 * Success response that comes from Whatsapp
+                 *
                  * $response = '{
                  *              "messaging_product": "whatsapp",
                  *              "contacts": [
@@ -235,9 +233,9 @@ class Vendor extends REST_Controller
                  *                              }
                  *                          ]
                  *              }';
-                 * 
-                 * */
-
+                 *
+                 *
+                 */
                 if (
                     (property_exists($curl_response, 'contacts') && isset($curl_response->contacts)) &&
                     (property_exists($curl_response, 'messages') && isset($curl_response->messages))
@@ -271,21 +269,21 @@ class Vendor extends REST_Controller
                     $this->WebhookModel->addMessageSentOnWhatsappProVendor($add_array);
 
                     $response['error'] = false;
-                    $response['message'] = "Message sent to WhatsApp";
+                    $response['message'] = 'Message sent to WhatsApp';
                     $httpStatus = REST_Controller::HTTP_OK;
                 } else {
                     $response['error'] = true;
-                    $response['message'] = "WhatsApp Token Expired";
+                    $response['message'] = 'WhatsApp Token Expired';
                     $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
                 }
             } else {
                 $response['error'] = true;
-                $response['message'] = "Vendor Not available";
+                $response['message'] = 'Vendor Not available';
                 $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
             }
         } else {
             $response['error'] = true;
-            $response['message'] = "Parameters not found";
+            $response['message'] = 'Parameters not found';
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
         }
         $this->response($response, $httpStatus);
@@ -315,7 +313,7 @@ class Vendor extends REST_Controller
                     'is_verifed' => true
                 );
                 $response['error'] = false;
-                $response['message'] = "Thank you. WhatsApp Verified";
+                $response['message'] = 'Thank you. WhatsApp Verified';
                 $httpStatus = REST_Controller::HTTP_OK;
 
                 // Sendind data to firebase so that response gets on the console
@@ -331,7 +329,7 @@ class Vendor extends REST_Controller
         } else {
             $response['redirect_url'] = null;
             $response['error'] = true;
-            $response['message'] = "Link expired!";
+            $response['message'] = 'Link expired!';
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
 
             $data['value'] = $response['redirect_url'];
@@ -366,7 +364,7 @@ class Vendor extends REST_Controller
                     'is_verifed' => true
                 );
                 $response['error'] = false;
-                $response['message'] = "Thank you. WhatsApp Verified";
+                $response['message'] = 'Thank you. WhatsApp Verified';
                 $httpStatus = REST_Controller::HTTP_OK;
 
                 // Sendind data to firebase so that response gets on the console
@@ -382,7 +380,7 @@ class Vendor extends REST_Controller
         } else {
             $response['redirect_url'] = null;
             $response['error'] = true;
-            $response['message'] = "Link expired!";
+            $response['message'] = 'Link expired!';
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
 
             $data['value'] = $response['redirect_url'];
@@ -391,7 +389,6 @@ class Vendor extends REST_Controller
             $this->load->view('lazyclick/thankyou', $data);
         }
     }
-
 
     // -------------------------------------------------------------------- //
     // ------------This code is for Free version Yes Button Deeplink------- //
@@ -402,7 +399,7 @@ class Vendor extends REST_Controller
     {
         $decodedString = '';
         for ($i = 0; $i < strlen($encodedString); $i++) {
-            $charCode = ord($encodedString[$i]) - 5; // Subtract 5 from the character code
+            $charCode = ord($encodedString[$i]) - 5;  // Subtract 5 from the character code
             $decodedString .= chr($charCode);
         }
         return $decodedString;
@@ -410,6 +407,15 @@ class Vendor extends REST_Controller
 
     public function free_post()
     {
+        // This service is stopped. For clients deliverable we have put Auth Key Missing
+        $response = array();
+        $response['error'] = true;
+        $response['message'] = 'Missing authentication key';
+        $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
+        $this->response($response, $httpStatus);
+        return;
+        exit ();
+
         if (isTheseParametersAvailable(array('app_id', 'redirect_url', 'platform', 'unicode_char'))) {
             $response = array();
             $app_id = $this->input->post('app_id');
@@ -425,7 +431,7 @@ class Vendor extends REST_Controller
             // This is a random protection deocde/encode scheme
             $decodeString = base64_decode($this->customDecode(urldecode($unicode_char)));
 
-            $prefix = "u200";
+            $prefix = 'u200';
             if (substr($unicode_char, 0, strlen($prefix)) === $prefix) {
                 $unicode_char = $unicode_char;
             } else {
@@ -445,7 +451,7 @@ class Vendor extends REST_Controller
             $add_array = array('unicode_char' => $unicode_char, 'timestamp' => $timestamp, 'app_id' => $app_id, 'redirect_url' => $redirect_url, 'status' => 0, 'platform' => $platform, 'transaction_id' => $transaction_id);
 
             // Checking if platform is android - adding some extra details to db
-            $add_android_data = array('app_name' => $app_name , 'sdk_version' => $sdk_version, 'device_details' => $device_details, 'transaction_id' => $transaction_id, 'platform' => $platform);
+            $add_android_data = array('app_name' => $app_name, 'sdk_version' => $sdk_version, 'device_details' => $device_details, 'transaction_id' => $transaction_id, 'platform' => $platform);
 
             $this->WebhookModel->add_click_button($add_array);
             if ($platform == 'android') {
@@ -463,7 +469,7 @@ class Vendor extends REST_Controller
             $httpStatus = REST_Controller::HTTP_OK;
         } else {
             $response['error'] = true;
-            $response['message'] = "Parameters not found";
+            $response['message'] = 'Parameters not found';
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
         }
         $this->response($response, $httpStatus);
@@ -480,17 +486,17 @@ class Vendor extends REST_Controller
                 if (!empty($finalUrl)) {
                     // echo 'final url -> ' .$finalUrl;
                     $shortUrl = $this->WebhookModel->get_url_details($transaction_id);
-                    if(!empty($shortUrl) && !empty($shortUrl->android_url)) {
+                    if (!empty($shortUrl) && !empty($shortUrl->android_url)) {
                         // echo 'android 1 url -> ' .$shortUrl->android_url;
                         redirect($shortUrl->android_url);
                     } else {
                         // $longUrl = base_url('api/v2/qa/test/vendor/verifyfree/' .$transaction_id);
                         // echo 'long url -> ' .$longUrl;
                         $val = $this->scrape_post($finalUrl);
-                        if(empty($val)) {
+                        if (empty($val)) {
                             $val = $this->generateTinyUrl($finalUrl);
                         }
-                        $this->WebhookModel->update_url_details($transaction_id, NULL , NULL , $val, NULL);
+                        $this->WebhookModel->update_url_details($transaction_id, NULL, NULL, $val, NULL);
                         // echo 'android 2 url ->' .$val;
                         redirect($val);
                     }
@@ -506,7 +512,7 @@ class Vendor extends REST_Controller
                 );
                 $response['redirect_url'] = $result->redirect_url;
                 $response['error'] = false;
-                $response['message'] = "Thank you. WhatsApp Verified";
+                $response['message'] = 'Thank you. WhatsApp Verified';
                 $httpStatus = REST_Controller::HTTP_OK;
 
                 // Sending data to firebase so that response gets on the console
@@ -522,7 +528,7 @@ class Vendor extends REST_Controller
         } else {
             $response['redirect_url'] = null;
             $response['error'] = true;
-            $response['message'] = "Link expired!";
+            $response['message'] = 'Link expired!';
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
 
             $data['value'] = $response['redirect_url'];
@@ -544,17 +550,17 @@ class Vendor extends REST_Controller
                 if (!empty($finalUrl)) {
                     // echo 'final url -> ' .$finalUrl;
                     $shortUrl = $this->WebhookModel->get_url_details($transaction_id);
-                    if(!empty($shortUrl) && !empty($shortUrl->android_url)) {
+                    if (!empty($shortUrl) && !empty($shortUrl->android_url)) {
                         // echo 'android 1 url -> ' .$shortUrl->android_url;
                         redirect($shortUrl->android_url);
                     } else {
                         // $longUrl = base_url('api/v2/qa/test/vendor/vfree/' .$transaction_id);
                         // echo 'long url -> ' .$longUrl;
                         $val = $this->scrape_post($finalUrl);
-                        if(empty($val)) {
+                        if (empty($val)) {
                             $val = $this->generateTinyUrl($finalUrl);
                         }
-                        $this->WebhookModel->update_url_details($transaction_id, NULL , NULL, $val, NULL);
+                        $this->WebhookModel->update_url_details($transaction_id, NULL, NULL, $val, NULL);
                         // echo 'android 2 url ->' .$val;
                         redirect($val);
                     }
@@ -587,7 +593,7 @@ class Vendor extends REST_Controller
         } else {
             $response['redirect_url'] = null;
             $response['error'] = true;
-            $response['message'] = "Link expired!";
+            $response['message'] = 'Link expired!';
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
 
             $data['value'] = $response['redirect_url'];
@@ -605,7 +611,7 @@ class Vendor extends REST_Controller
             'u' => $finalUrl,
         );
 
-        $apiUrl = 'https://www.shorturl.at/shortener.php'; // Replace with your API endpoint URL
+        $apiUrl = 'https://www.shorturl.at/shortener.php';  // Replace with your API endpoint URL
 
         $ch = curl_init();
 
@@ -633,10 +639,9 @@ class Vendor extends REST_Controller
         return $shortUrl;
     }
 
-
     public function scrape_value_from_html($html)
     {
-        require_once(APPPATH . 'helpers/simple_html_dom.php');
+        require_once (APPPATH . 'helpers/simple_html_dom.php');
 
         $dom = new simple_html_dom();
         $dom->load($html);
@@ -653,7 +658,6 @@ class Vendor extends REST_Controller
         } else {
             echo NULL;
         }
-
     }
 
     public function verifyfree_post()
@@ -673,15 +677,14 @@ class Vendor extends REST_Controller
             );
             $response['redirect_url'] = $result->redirect_url;
             $response['error'] = false;
-            $response['message'] = "Thank you. WhatsApp Verified";
+            $response['message'] = 'Thank you. WhatsApp Verified';
             $httpStatus = REST_Controller::HTTP_OK;
         } else {
             $response['redirect_url'] = null;
             $response['error'] = true;
-            $response['message'] = "Link expired!";
+            $response['message'] = 'Link expired!';
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
         }
-
 
         $this->response($response, $httpStatus);
     }
@@ -702,15 +705,14 @@ class Vendor extends REST_Controller
             );
             $response['redirect_url'] = $result->redirect_url;
             $response['error'] = false;
-            $response['message'] = "Thank you. WhatsApp Verified";
+            $response['message'] = 'Thank you. WhatsApp Verified';
             $httpStatus = REST_Controller::HTTP_OK;
         } else {
             $response['redirect_url'] = null;
             $response['error'] = true;
-            $response['message'] = "Link expired!";
+            $response['message'] = 'Link expired!';
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
         }
-
 
         $this->response($response, $httpStatus);
     }
@@ -720,8 +722,8 @@ class Vendor extends REST_Controller
     // -------------------------------------------------------------------- //
     private function sendDataToFirebase($response)
     {
-        $url = "https://lazyclick-in-default-rtdb.firebaseio.com";
-        $token = "H2N5G32BriM4LjyRZ0Hsh0kORNfjn2sQcc0Rr7vU";
+        $url = 'https://lazyclick-in-default-rtdb.firebaseio.com';
+        $token = 'H2N5G32BriM4LjyRZ0Hsh0kORNfjn2sQcc0Rr7vU';
         $path = $response['app_id'];
 
         $firebase = new FirebaseLib($url, $token);
@@ -742,7 +744,6 @@ class Vendor extends REST_Controller
             );
         }
 
-
         // Open connection
         $ch = curl_init();
 
@@ -761,13 +762,12 @@ class Vendor extends REST_Controller
         // Execute post
         $data['result'] = curl_exec($ch);
         if ($data['result'] === FALSE) {
-            die('Curl failed: ' . curl_error($ch));
+            die ('Curl failed: ' . curl_error($ch));
         }
 
         // Close connection
         curl_close($ch);
     }
-
 
     private function getFirebaseConfig()
     {
@@ -793,7 +793,7 @@ class Vendor extends REST_Controller
             // ZERO WIDTH NON-JOINER
             '\u200d',
             // ZERO WIDTH JOINER
-            '\u200e', // LEFT-TO-RIGHT MARK
+            '\u200e',  // LEFT-TO-RIGHT MARK
         ];
         $result = '\u200e\u200c\u200d\u200b\u200c\u200d';
         for ($i = 0; $i < 7; $i++) {
@@ -819,8 +819,7 @@ class Vendor extends REST_Controller
         $this->email->initialize($config);
         $this->email->set_newline("\r\n");
 
-
-        $this->email->set_mailtype("html");
+        $this->email->set_mailtype('html');
         $this->email->set_newline("\r\n");
 
         //Email content
@@ -847,41 +846,41 @@ class Vendor extends REST_Controller
         if (!empty($result)) {
             $response['history'] = $result;
             $response['error'] = false;
-            $response['message'] = "Login History Found";
+            $response['message'] = 'Login History Found';
             $httpStatus = REST_Controller::HTTP_OK;
         } else {
             $response['error'] = true;
-            $response['message'] = "History Not Found";
+            $response['message'] = 'History Not Found';
             $httpStatus = REST_Controller::HTTP_BAD_REQUEST;
         }
         $this->response($response, $httpStatus);
     }
 
-    private function generateTinyUrl($url) {
-
+    private function generateTinyUrl($url)
+    {
         $curl = curl_init();
         $data = array(
             'url' => $url,
             'domain' => 'tinyurl.com'
         );
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://api.tinyurl.com/create?api_token=9XJSa49cJinW9iAFCOIdPYckW7emCMNNF4basRNLSLKizkiYSQQAb9zFIZPe',
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'POST',
-          CURLOPT_POSTFIELDS => json_encode($data),
-          CURLOPT_HTTPHEADER => array(
-            'accept: application/json',
-            'Content-Type: application/json'
-          ),
+            CURLOPT_URL => 'https://api.tinyurl.com/create?api_token=9XJSa49cJinW9iAFCOIdPYckW7emCMNNF4basRNLSLKizkiYSQQAb9zFIZPe',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array(
+                'accept: application/json',
+                'Content-Type: application/json'
+            ),
         ));
-        
+
         $response = curl_exec($curl);
-        
+
         curl_close($curl);
         // Decode the JSON response
         $responseData = json_decode($response, true);
@@ -892,7 +891,6 @@ class Vendor extends REST_Controller
             return $tinyUrl;
         }
     }
-
 
     // PIVOT CODE
     public function paid_post()
@@ -988,5 +986,4 @@ class Vendor extends REST_Controller
 
         $this->response($response, $httpStatus);
     }
-
 }
