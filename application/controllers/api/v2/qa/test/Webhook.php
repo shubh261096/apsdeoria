@@ -373,6 +373,7 @@ class Webhook extends REST_Controller
 
   private function hitWhatsappApiFreeVresion($transaction_id, $number)
   {
+    // TOKEN CHANGED - Can't update on Gihtub - New Token in WhatsApp with message "New Lazyclick token facebook generated" Replace the token below to make it work.
     $authorization_key = 'Bearer EAAIvjH6tjOwBAICW8fUY14ns1TaJPx26j0imcffcVkxW7VXXn44XSMZC90emVdZAnWFMLsO44XBSlObr6HHtZAAm7Anhr7GWMxrlXFgsu0PKiZAKjYaT60lH2wkkC6TP3njqYQm3zveLKGyBsDSL7mNvyFgbZBZBndflc9TKaGFTyFer2hz0xi';
 
     // Set POST variables
@@ -470,6 +471,7 @@ class Webhook extends REST_Controller
 
   private function hitWhatsappApiFreeVresionTextLink($transaction_id, $number)
   {
+    // TOKEN CHANGED - Can't update on Gihtub - New Token in WhatsApp with message "New Lazyclick token facebook generated" Replace the token below to make it work.
     $authorization_key = 'Bearer EAAIvjH6tjOwBAICW8fUY14ns1TaJPx26j0imcffcVkxW7VXXn44XSMZC90emVdZAnWFMLsO44XBSlObr6HHtZAAm7Anhr7GWMxrlXFgsu0PKiZAKjYaT60lH2wkkC6TP3njqYQm3zveLKGyBsDSL7mNvyFgbZBZBndflc9TKaGFTyFer2hz0xi';
 
     // Set POST variables
@@ -569,6 +571,7 @@ class Webhook extends REST_Controller
   // QA env method
   private function hitWhatsappApiFreeFormVersionTextLink($transaction_id, $number)
   {
+    // TOKEN CHANGED - Can't update on Gihtub - New Token in WhatsApp with message "New Lazyclick token facebook generated" Replace the token below to make it work.
     $authorization_key = 'Bearer EAAIvjH6tjOwBAICW8fUY14ns1TaJPx26j0imcffcVkxW7VXXn44XSMZC90emVdZAnWFMLsO44XBSlObr6HHtZAAm7Anhr7GWMxrlXFgsu0PKiZAKjYaT60lH2wkkC6TP3njqYQm3zveLKGyBsDSL7mNvyFgbZBZBndflc9TKaGFTyFer2hz0xi';
 
     // Set POST variables
@@ -662,6 +665,7 @@ class Webhook extends REST_Controller
   // Prod env method
   private function prodHitWhatsappApiFreeFormVersionTextLink($transaction_id, $number)
   {
+    // TOKEN CHANGED - Can't update on Gihtub - New Token in WhatsApp with message "New Lazyclick token facebook generated" Replace the token below to make it work.
     $authorization_key = 'Bearer EAAIvjH6tjOwBAICW8fUY14ns1TaJPx26j0imcffcVkxW7VXXn44XSMZC90emVdZAnWFMLsO44XBSlObr6HHtZAAm7Anhr7GWMxrlXFgsu0PKiZAKjYaT60lH2wkkC6TP3njqYQm3zveLKGyBsDSL7mNvyFgbZBZBndflc9TKaGFTyFer2hz0xi';
 
     // Set POST variables
