@@ -94,7 +94,7 @@ public class NotificationUtils {
                                 mContext,
                                 0,
                                 resultIntent,
-                                PendingIntent.FLAG_CANCEL_CURRENT
+                                PendingIntent.FLAG_IMMUTABLE
                         );
             }
 
