@@ -986,4 +986,67 @@ class Vendor extends REST_Controller
 
         $this->response($response, $httpStatus);
     }
+
+
+    function sendEmail_post()
+    {
+        $jsonDecodeData = json_decode(file_get_contents('php://input'), true);
+        $rawData = file_get_contents('php://input');
+        // Convert JSON string to a PHP object 
+        $phpObject = json_decode($rawData);
+
+        $name = $phpObject->name;
+        $phone = $phpObject->phoneNumber;
+        $astrologerName = $phpObject->astrologerName;
+        $mesage = $phpObject->message;
+        $dob = $phpObject->dob;
+        $gender = $phpObject->gender;
+        $placeOfBirth = $phpObject->placeOfBirth;
+        $time = $phpObject->time;
+
+
+        // echo 'I am here';
+        $config = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'lazyclick1@gmail.com',
+            'smtp_pass' => 'ykzejeyrwnqrdrfe',
+            'mailtype' => 'html',
+            'charset' => 'utf-8'
+        );
+        $this->load->library('email');
+        $this->email->initialize($config);
+        $this->email->set_newline("\r\n");
+
+        $this->email->set_mailtype('html');
+        $this->email->set_newline("\r\n");
+
+        //Email content
+        $htmlContent = '<h1>' . $name . ' just requested a callback</h1>';
+        $htmlContent .= '<h3>Here is the number ' . $phone . '</h3>';
+        $htmlContent .= '<h4>Here are other the details 
+        <br> Fullname - ' . $name . '
+        <br> Phone Number - ' .$phone . '
+        <br> Astrologer name - ' .$astrologerName . '
+        <br> Message - ' .$mesage . '
+        <br> DOB - ' .$dob . '
+        <br> Gender - ' .$gender . '
+        <br> Place of Birth - ' .$placeOfBirth . '
+        <br> Time of Birth - ' .$time . '
+        </h4>';
+
+        $this->email->to('hello@lazyclick.in');
+        // $this->email->cc('sa159871@gmail.com');
+        $this->email->from('lazyclick1@gmail.com', 'Lazyclick');
+        $this->email->subject('iastro Request Callback Form');
+        $this->email->message($htmlContent);
+        $this->email->send();
+        // if ($this->email->send()) {
+        //     echo 'Your Email has successfully been sent.';
+        // } else {
+        //     show_error($this->email->print_debugger());
+        // }
+    }
+
 }
