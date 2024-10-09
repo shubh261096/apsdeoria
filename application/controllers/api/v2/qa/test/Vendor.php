@@ -1003,6 +1003,7 @@ class Vendor extends REST_Controller
         $gender = $phpObject->gender;
         $placeOfBirth = $phpObject->placeOfBirth;
         $time = $phpObject->time;
+        $timeToCall = $phpObject->timeToCall;
 
 
         // echo 'I am here';
@@ -1028,6 +1029,7 @@ class Vendor extends REST_Controller
         $htmlContent .= '<h4>Here are other the details 
         <br> Fullname - ' . $name . '
         <br> Phone Number - ' .$phone . '
+        <br> Time To Call - ' .$timeToCall . '
         <br> Astrologer name - ' .$astrologerName . '
         <br> Message - ' .$mesage . '
         <br> DOB - ' .$dob . '
