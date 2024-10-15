@@ -995,15 +995,17 @@ class Vendor extends REST_Controller
         // Convert JSON string to a PHP object 
         $phpObject = json_decode($rawData);
 
-        $name = $phpObject->name;
-        $phone = $phpObject->phoneNumber;
-        $astrologerName = $phpObject->astrologerName;
-        $mesage = $phpObject->message;
-        $dob = $phpObject->dob;
-        $gender = $phpObject->gender;
-        $placeOfBirth = $phpObject->placeOfBirth;
-        $time = $phpObject->time;
-        $timeToCall = $phpObject->timeToCall;
+        // Safely accessing properties by checking if they exist
+        $name = isset($phpObject->name) ? $phpObject->name : null;
+        $phone = isset($phpObject->phoneNumber) ? $phpObject->phoneNumber : null;
+        $astrologerName = isset($phpObject->astrologerName) ? $phpObject->astrologerName : null;
+        $message = isset($phpObject->message) ? $phpObject->message : null;
+        $dob = isset($phpObject->dob) ? $phpObject->dob : null;
+        $gender = isset($phpObject->gender) ? $phpObject->gender : null;
+        $placeOfBirth = isset($phpObject->placeOfBirth) ? $phpObject->placeOfBirth : null;
+        $time = isset($phpObject->time) ? $phpObject->time : null;
+        $timeToCall = isset($phpObject->timeToCall) ? $phpObject->timeToCall : null;
+        $languages = isset($phpObject->languages) ? $phpObject->languages : null;
 
 
         // echo 'I am here';
@@ -1031,14 +1033,15 @@ class Vendor extends REST_Controller
         <br> Phone Number - ' .$phone . '
         <br> Time To Call - ' .$timeToCall . '
         <br> Astrologer name - ' .$astrologerName . '
-        <br> Message - ' .$mesage . '
+        <br> Message - ' .$message . '
         <br> DOB - ' .$dob . '
         <br> Gender - ' .$gender . '
         <br> Place of Birth - ' .$placeOfBirth . '
         <br> Time of Birth - ' .$time . '
+        <br> Preferred Languages - ' .$languages . '
         </h4>';
 
-        $this->email->to('hello@lazyclick.in');
+        $this->email->to('hr@iastro.org');
         // $this->email->cc('sa159871@gmail.com');
         $this->email->from('lazyclick1@gmail.com', 'Lazyclick');
         $this->email->subject('iastro Request Callback Form');
