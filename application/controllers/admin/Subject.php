@@ -13,6 +13,8 @@ class Subject extends CI_Controller
       return redirect('admin');
 
     $this->load->model('admin/SubjectModel', 'SubjectModel');
+    $this->load->model('api/v2/prod/SyllabusModel', 'SyllabusModel');
+    $this->load->model('api/v2/prod/CommonModel', 'CommonModel');
     $this->load->helper('commonprod');
   }
 
@@ -152,5 +154,18 @@ class Subject extends CI_Controller
       $this->session->set_flashdata('feedback_class', 'alert-danger');
     }
     return redirect('subject');
+  }
+
+  // Student View
+  public function student()
+  {
+    $student_id = $this->session->userdata('user_id');
+    $class_id = $this->CommonModel->getClassIdFromStudentId($student_id);
+    $response = $this->SyllabusModel->get_syllabusByClass($class_id);
+    $data['SUBJECTS'] = null;
+    if ($data) {
+      $data['SUBJECTS'] =  $response;
+    }
+    $this->load->view('admin/subject/student_subject', $data);
   }
 }

@@ -41,6 +41,10 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
   <!-- DataTables -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/datatables/dataTables.bootstrap.css">
 
+    <!-- fullCalendar 2.2.5-->
+  <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/fullcalendar/fullcalendar.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/fullcalendar/fullcalendar.print.css" media="print">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
   <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -72,14 +76,14 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                <span class="hidden-xs">Shubham Agrawal</span>
+                <span class="hidden-xs"><?php echo $this->session->userdata('user_name') ?></span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
                 <li class="user-header">
                   <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                   <p>
-                    Shubham Agrawal- Developer
+                    <?php echo $this->session->userdata('user_name') ?>
                   </p>
                 </li>
                 <li class="user-footer">
@@ -107,7 +111,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
             <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p>Shubham Agrawal</p>
+            <p><?php echo $this->session->userdata('user_name') ?></p>
             <a href="#"><i class="fa fa-circle text-success"></i>Online</a>
           </div>
         </div>
@@ -123,24 +127,29 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
         </form>
         <ul class="sidebar-menu">
           <li class="header">APPLICATION CONTENT</li>
+          <?php if ($this->session->userdata('user_type') == 'admin'): ?>
+              <li><a href="<?php echo base_url('lazyclick'); ?>"><i class="fa fa-bell"></i> <span>Lazyclick</span></a></li>
+              <li><a href="<?php echo base_url('dashboard'); ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+              <li><a href="<?php echo base_url('teacher'); ?>"><i class="fa fa-user"></i> <span>Teachers</span></a></li>
+              <li><a href="<?php echo base_url('student'); ?>"><i class="fa fa-user"></i> <span>Students</span></a></li>
+              <li><a href="<?php echo base_url('classes'); ?>"><i class="fa fa-users"></i> <span>Classes</span></a></li>
+              <li><a href="<?php echo base_url('subject'); ?>"><i class="fa fa-book"></i> <span>Subject</span></a></li>
+              <li><a href="<?php echo base_url('fees'); ?>"><i class="fa fa-credit-card"></i> <span>Fees</span></a></li>
+              <li><a href="<?php echo base_url('timetable'); ?>"><i class="fa fa-calendar"></i> <span>Timetable</span></a></li>
+              <li><a href="<?php echo base_url('login'); ?>"><i class="fa fa-sign-in"></i> <span>Login Credentials</span></a></li>
+              <li><a href="<?php echo base_url('parents'); ?>"><i class="fa fa-users"></i> <span>Parents</span></a></li>
+              <li><a href="<?php echo base_url('homework'); ?>"><i class="fa fa-book"></i> <span>Homework</span></a></li>
+              <li><a href="<?php echo base_url('notification'); ?>"><i class="fa fa-bell"></i> <span>Notification</span></a></li>
+              <li><a href="<?php echo base_url('feedback'); ?>"><i class="fa fa-comments"></i> <span>Feedback</span></a></li>
+              <li><a href="<?php echo base_url('learn'); ?>"><i class="fa fa-youtube-play"></i> <span>Learning Videos</span></a></li>
 
-          <li><a href="<?php echo base_url('lazyclick'); ?>"><i class="fa fa-bell"></i> <span>Lazyclick</span></a></li>
-          <li><a href="<?php echo base_url('dashboard'); ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-          <li><a href="<?php echo base_url('teacher'); ?>"><i class="fa fa-user"></i> <span>Teachers</span></a></li>
-          <li><a href="<?php echo base_url('student'); ?>"><i class="fa fa-user"></i> <span>Students</span></a></li>
-          <li><a href="<?php echo base_url('classes'); ?>"><i class="fa fa-users"></i> <span>Classes</span></a></li>
-          <li><a href="<?php echo base_url('subject'); ?>"><i class="fa fa-book"></i> <span>Subject</span></a></li>
-          <li><a href="<?php echo base_url('fees'); ?>"><i class="fa fa-credit-card"></i> <span>Fees</span></a></li>
-          <li><a href="<?php echo base_url('timetable'); ?>"><i class="fa fa-calendar"></i> <span>Timetable</span></a></li>
-          <li><a href="<?php echo base_url('login'); ?>"><i class="fa fa-sign-in"></i> <span>Login Credentials</span></a></li>
-          <li><a href="<?php echo base_url('parents'); ?>"><i class="fa fa-users"></i> <span>Parents</span></a></li>
-          <li><a href="<?php echo base_url('homework'); ?>"><i class="fa fa-book"></i> <span>Homework</span></a></li>
-          <li><a href="<?php echo base_url('notification'); ?>"><i class="fa fa-bell"></i> <span>Notification</span></a></li>
-          <li><a href="<?php echo base_url('feedback'); ?>"><i class="fa fa-comments"></i> <span>Feedback</span></a></li>
-          <li><a href="<?php echo base_url('learn'); ?>"><i class="fa fa-youtube-play"></i> <span>Learning Videos</span></a></li>
-
-          <li class="header">SCHOOL CONTENT</li>
-          <li><a href="<?php echo base_url('expense'); ?>"><i class="fa fa-credit-card"></i> <span>Expenses & Accounts</span></a></li>
+              <li class="header">SCHOOL CONTENT</li>
+              <li><a href="<?php echo base_url('expense'); ?>"><i class="fa fa-credit-card"></i> <span>Expenses & Accounts</span></a></li>
+          <?php elseif ($this->session->userdata('user_type') == 'student'): ?>
+              <li><a href="<?php echo base_url('timetable/student'); ?>"><i class="fa fa-calendar"></i> <span>Timetable</span></a></li>
+              <li><a href="<?php echo base_url('subject/student'); ?>"><i class="fa fa-book"></i> <span>Syllabus</span></a></li>
+          <?php endif; ?>
+        </ul>
       </section>
       <!-- /.sidebar -->
     </aside>

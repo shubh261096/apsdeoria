@@ -13,6 +13,7 @@ class Timetable extends CI_Controller
       return redirect('admin');
 
     $this->load->model('admin/TimetableModel', 'TimetableModel');
+    $this->load->model('api/v2/prod/CommonModel', 'CommonModel');
     $this->load->helper('commonprod');
   }
 
@@ -120,5 +121,10 @@ class Timetable extends CI_Controller
       $this->session->set_flashdata('feedback_class', 'alert-danger');
     }
     return redirect('timetable');
+  }
+
+  public function student()
+  {
+    $this->load->view('admin/timetable/student_timetable');
   }
 }

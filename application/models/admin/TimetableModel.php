@@ -60,4 +60,16 @@ class TimetableModel extends CI_Model
 			->where('id', $timetable_id)
 			->delete('timetable');
 	}
+
+    /* Query for getting timetable by week */
+    public function get_timeTableByWeek($class_id) {
+        $query = $this->db->where(['class_id'=>$class_id])
+    				  ->from('timetable')	
+                      ->get();
+        if($query->num_rows()){
+            return $query->result();
+        }else{
+            return FALSE;
+        }
+    }
 }

@@ -91,6 +91,7 @@ $route['subject/edit/(:any)'] = "admin/subject/edit/$1"; // subject controller e
 $route['subject/update/(:any)'] = "admin/subject/update/$1"; // subject controller update method
 $route['subject/delete/(:any)'] = "admin/subject/delete/$1"; // subject controller delete method
 $route['subject/download/(:any)'] = "admin/subject/download/$1"; // subject controller download method
+$route['subject/student'] = "admin/subject/student"; // subject controller delete method
 
 $route['fees/add'] = "admin/fees/add"; // fees controller add method
 $route['fees/insert'] = "admin/fees/insert"; // fees controller insert method
@@ -104,6 +105,7 @@ $route['timetable/insert'] = "admin/timetable/insert"; // timetabale controller 
 $route['timetable/edit/(:any)'] = "admin/timetable/edit/$1"; // timetabale controller edit method
 $route['timetable/update/(:any)'] = "admin/timetable/update/$1"; // timetabale controller update method
 $route['timetable/delete/(:any)'] = "admin/timetable/delete/$1"; // timetabale controller delete method
+$route['timetable/student'] = "admin/timetable/student"; // timetabale controller delete method
 
 $route['parents/add'] = "admin/parents/add"; // parents controller add method
 $route['parents/insert'] = "admin/parents/insert"; // parents controller insert method

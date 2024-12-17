@@ -17,6 +17,9 @@ class Dashboard extends CI_Controller
 
   public function index()
   {
+    if($this->session->userdata('user_type') == 'student') {
+      return redirect('timetable/student');
+    }
     $data['student_count'] = $this->DashboardModel->getTotalStudent();
     $data['teacher_count'] = $this->DashboardModel->getTotalTeacher();
     $data['lazyclick_count'] = $this->WebhookModel->getTotalUsers();
